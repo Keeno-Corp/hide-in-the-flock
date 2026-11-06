@@ -3225,3 +3225,9 @@ SCORE: 8.5
    - **Check:** `interact` with `{action:"pounce",target:"human"}`, `wait` 60 frames and `look:true` shows flakes in the air around `div#tag` in the reveal frame.
 
 SCORE: 8.5
+
+## Iteration 79
+**Did**: no code change. Checked `game.js` for Next item 3: the reveal already has wool `burst` (160+30 flakes, 240 more for the AI) and `camShake.kick(1.0)`/`kick(1.6)` for the human GOTCHA (lines ~552-559).
+**Saw**: phone 390×844, `{state:{wolf:{state:"stalk"}}}` + 30 frames: no stalk toast showed. The toast is only called when the wolf picks a target with `susp >= 1.5` (line 515), so forcing `wolf.state` skips it. 89 sheep, 534 objects, no fault lines, "Never visible" none, HUD and `div#mode` fit with no overlap.
+**Next**: (1) to see the toast, set the player's suspicion high (`topSusp`) rather than `wolf.state`, or call the toast path via an action. (2) lose screen on phone via `{state:{bites:0}}`. (3) dash ring colour after `ShiftRight` in local mode.
+**Open**: stalk toast, lose screen and red dash ring are still unseen on screen.

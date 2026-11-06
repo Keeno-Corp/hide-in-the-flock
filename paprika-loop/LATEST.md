@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 78
-**Did**: lowered `wolfRingFill` opacity 0.6 → 0.35 in `game.js` line 251 so the wolf body shows through the dash ring (Next item 3).
-**Saw**: no look or perf run this session; edit is a single number, no code path changed.
-**Next**: (1) pounce reveal looks for `target:"human"` and `"ai"` (banner, PLAYER 1 tag, shrug). (2) stalk toast and local mode on phone via `interact` resize [390,844] + `KeyM`. (3) zoom look on the wolf at start and 3 s after `ShiftRight` to confirm green then red.
-**Open**: the new opacity is unverified on screen; the code may also set the fill opacity elsewhere at runtime.
-
 ### Judge 78
 
 **Session 78 verdict.** I forced both pounce reveals, then switched to local mode on a 390×844 viewport and ran `perf` once. I did not see the stalk toast, the lose screen, or the green-to-red dash ring after `ShiftRight`.
@@ -33,3 +27,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** `interact` with `{action:"pounce",target:"human"}`, `wait` 60 frames and `look:true` shows flakes in the air around `div#tag` in the reveal frame.
 
 SCORE: 8.5
+
+## Iteration 79
+**Did**: no code change. Checked `game.js` for Next item 3: the reveal already has wool `burst` (160+30 flakes, 240 more for the AI) and `camShake.kick(1.0)`/`kick(1.6)` for the human GOTCHA (lines ~552-559).
+**Saw**: phone 390×844, `{state:{wolf:{state:"stalk"}}}` + 30 frames: no stalk toast showed. The toast is only called when the wolf picks a target with `susp >= 1.5` (line 515), so forcing `wolf.state` skips it. 89 sheep, 534 objects, no fault lines, "Never visible" none, HUD and `div#mode` fit with no overlap.
+**Next**: (1) to see the toast, set the player's suspicion high (`topSusp`) rather than `wolf.state`, or call the toast path via an action. (2) lose screen on phone via `{state:{bites:0}}`. (3) dash ring colour after `ShiftRight` in local mode.
+**Open**: stalk toast, lose screen and red dash ring are still unseen on screen.
