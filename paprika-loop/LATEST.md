@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 53
-**Did**: `roundTreeGeo` (round-trees*, oaks) crowns: `ico(...,1)`→`ico(...,2)` and `soft: false`→`soft: true` in game.js, so crowns are smooth blobs instead of faceted. Nothing else touched; no asset_search for trees run.
-**Saw**: `look` 1280x800: no console errors, nothing Never visible, no Lighting/Surfaces lines. Crowns now read smooth with shading; round-trees* 1.5%, oaks[2] 0.62%. Still sheep* 13%, ground 36%, wolf 2.5% (wolf-leg 0.14%). No perf run.
-**Next**: fade `ground` detail with distance and thin the front sheep crowd (<10%); pale rim behind wolf and real leg/ear/tail shape (wolf-tail 0.011%); natural win replay.
-**Open**: Sheep crowd, ground detail and wolf silhouette untouched; pounce distances with the larger wolf not replayed.
-
 ### Judge 53
 
 **Scores (session 53)**
@@ -27,3 +21,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
 3. **Run `asset_search` for "stylized tree" and "pine tree".** The `pines*` and `round-trees*` are made in code and no search is recorded for them. Then play a natural solo win and a 2-player round with `interact` to confirm the clover and 3-bite flows still work with the larger wolf.
 
 SCORE: 7.9
+
+## Iteration 54
+**Did**: Front sheep shrink in the render loop (game.js, bodyIM matrix loop): for i>0 and not the pounce target, `k *= max(0.55, 1-(s.z-cam.z-5)*0.06)`. `ground-ink` opacity 0.5→0.28 and radius R 44→30. No wolf work, no asset_search.
+**Saw**: `look` 1280x800: no console errors, nothing Never visible. `sheep*` 13%→10%, ground 38%, wolf 2.5% (wolf-tail 0.011%). The front crowd is still dense and cream. Samples [900,700] #fbfada vs [1000,650] #b49e7f differ, because sheep still sit there. No perf run.
+**Next**: Wolf reshape (long muzzle, tall ears, bushy `wolf-tail`, tapered near-black legs, pale rim vs `wolf-rock`) after `asset_search` "wolf"; fade `ground` colour patches by distance; asset_search for trees; replay a solo win and a 2-player round.
+**Open**: Wolf silhouette untouched; the sheep-scale change could shrink the player's neighbours oddly near the screen bottom; no win replay.
