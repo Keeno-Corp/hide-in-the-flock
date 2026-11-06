@@ -19,8 +19,8 @@ function gh(x, z) {
   const d = r - edge;
   const base = 0.35 * Math.sin(x * 0.1) * Math.cos(z * 0.12) + 0.25 * Math.sin(x * 0.23 + z * 0.19);
   const w = clamp((-z + 5) / 25, 0, 1);
-  const ridge = w * 5.5 * Math.exp(-(((r - 38) / 6) ** 2));
-  const mount = 14 * Math.exp(-(((x - 26) ** 2 + (z + 42) ** 2) / 180)) + 11 * Math.exp(-(((x + 30) ** 2 + (z + 38) ** 2) / 150));
+  const ridge = w * 2.5 * Math.exp(-(((r - 38) / 6) ** 2));
+  const mount = 9 * Math.exp(-(((x - 34) ** 2 + (z + 30) ** 2) / 150)) + 7 * Math.exp(-(((x + 36) ** 2 + (z + 28) ** 2) / 130));
   let h = 1.1 + base + ridge + mount;
   h -= sm(-7, 1, d) * 4.5;
   return h;
@@ -76,7 +76,7 @@ scene.add(new THREE.HemisphereLight(0xbfe8ff, 0x7fb83a, 1.35));
     const j = (Math.sin(cx * 12.9898 + cz * 78.233) * 43758.5453) % 1;
     c.copy(grassA).lerp(grassB, Math.abs(j) * 0.9 + 0.1 * Math.sin(cx * 0.3));
     if (r > 30 || cy > 3.5) c.lerp(forest, sm(30, 38, r) * 0.8);
-    if (cy < 0.2 && r > 30) c.lerp(sand, sm(0.2, -0.2, cy));
+    if (cy < 0.9 && r > 30) c.lerp(sand, sm(0.9, 0.1, cy));
     if (ny < 0.76 && cy > 0.4) c.copy(Math.abs(j) > 0.5 ? rock : rock2);
     if (cy > 9) c.lerp(rock2, 0.7);
     for (let k = 0; k < 3; k++) { col[(i + k) * 3] = c.r; col[(i + k) * 3 + 1] = c.g; col[(i + k) * 3 + 2] = c.b; }
@@ -129,12 +129,12 @@ const headIM = new THREE.InstancedMesh(sheepHeadGeo, flat(), N); headIM.name = '
 scene.add(bodyIM, headIM);
 
 // ───────────────────────── wolf ─────────────────────────
-const wolf = { x: -12, z: -9, y: 0, yaw: 0.6, state: 'watch', pose: 'crouch', t: 0, bites: 3, cd: 5, sulk: 0, target: null, abort: 0, stalkT: 0, lookX: 0, lookZ: 0, phase: 0, onRock: true, shrug: 0, pitch: 0 };
-const ROCK = { x: -12, z: -9, top: 3.0 };
+const wolf = { x: -10, z: 3, y: 0, yaw: 0.6, state: 'watch', pose: 'crouch', t: 0, bites: 3, cd: 5, sulk: 0, target: null, abort: 0, stalkT: 0, lookX: 0, lookZ: 0, phase: 0, onRock: true, shrug: 0, pitch: 0 };
+const ROCK = { x: -10, z: 3, top: 3.0 };
 const W = {};
 {
   const grey = 0x6b6a70, light = 0xa8a498, dk = 0x222222;
-  W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(2.8);
+  W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(3.6);
   W.body = new THREE.Group(); W.root.add(W.body);
   const mat = flat();
   const add = (parent, g) => { const m = new THREE.Mesh(g, mat); m.castShadow = true; parent.add(m); return m; };
@@ -189,7 +189,7 @@ const pineGeo = mergeGeometries([
   mk(cone(0.22, 1, 5), 0x5a3d26, { p: [0, 0.5, 0] }).clone(),
   mk(cone(1.1, 1.8, 6), 0x2f6a3a, { p: [0, 1.5, 0], jit: 0.1 }), mk(cone(0.85, 1.6, 6), 0x38783f, { p: [0, 2.5, 0], jit: 0.1 }), mk(cone(0.55, 1.4, 6), 0x42874a, { p: [0, 3.4, 0], jit: 0.1 }),
 ]);
-scatterInst(pineGeo, 330, () => { const [x, z] = polar(29, 58); const h = gh(x, z); if (h < 0.9 || h > 10 || (z > 8 && Math.random() < 0.85)) return null; const s = rnd(0.9, 1.9); return { x, z, s, sy: s * rnd(0.9, 1.4), y: h - 0.2 }; }, { name: 'pines' });
+scatterInst(pineGeo, 300, () => { const [x, z] = polar(29, 58); if (z < -20 && Math.abs(x) < 30 && Math.random() < 0.9) return null; const h = gh(x, z); if (h < 0.9 || h > 10 || (z > 8 && Math.random() < 0.85)) return null; const s = rnd(0.9, 1.9); return { x, z, s, sy: s * rnd(0.9, 1.4), y: h - 0.2 }; }, { name: 'pines' });
 const roundTreeGeo = mergeGeometries([
   mk(cone(0.2, 1.6, 5), 0x6b4a2c, { p: [0, 0.8, 0] }),
   mk(ico(1.0, 0), 0x5d9a2a, { p: [0, 2.1, 0], jit: 0.12 }), mk(ico(0.7, 0), 0x6aa930, { p: [0.55, 1.6, 0.2], jit: 0.12 }), mk(ico(0.6, 0), 0x4f8a28, { p: [-0.5, 1.7, -0.2], jit: 0.12 }),
@@ -273,7 +273,7 @@ function reset(newMode) {
   T = 0; result = null; clock = 0; startleT = rnd(18, 24); zoomT = 16; decoyI = 0; pounce.ph = null; toastT = 0;
   flock.angle = rnd(0, 6.28); flock.target = flock.angle; flock.turnT = 12;
   // clusters of sheep
-  const cl = []; for (let k = 0; k < 9; k++) { const [x, z] = polar(2, 22); cl.push([x, z]); }
+  const cl = []; for (let k = 0; k < 16; k++) { const [x, z] = polar(2, 26); cl.push([x, z]); }
   sheep.forEach((s, i) => {
     const [cx, cz] = cl[i % cl.length]; const [dx, dz] = polar(0, 9);
     let x = cx + dx, z = cz + dz; if (Math.hypot(x - ROCK.x, z - ROCK.z) < 4) { x += 6; z += 6; }

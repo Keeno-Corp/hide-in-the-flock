@@ -6,7 +6,7 @@
 html,body{margin:0;height:100%;background:#9fdcf5;overflow:hidden;font-family:"Arial Rounded MT Bold","Nunito","Segoe UI",system-ui,sans-serif;user-select:none}
 canvas{display:block}
 .panel{position:fixed;background:rgba(27,42,26,.78);color:#fdfdec;border-radius:14px;padding:10px 14px;pointer-events:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}
-#hud{top:12px;left:14px;min-width:200px}
+#hud{z-index:10;top:12px;left:14px;min-width:200px}
 #hud .row{display:flex;align-items:center;gap:10px;margin:3px 0;font-weight:800;font-size:19px;letter-spacing:.5px}
 #hud .lab{font-size:11px;opacity:.75;width:74px;text-transform:uppercase;letter-spacing:1.5px}
 #time{font-size:30px;font-variant-numeric:tabular-nums}
@@ -16,7 +16,7 @@ canvas{display:block}
 .clv.on{background:#6fd33a}
 #sbar{width:120px;height:12px;border-radius:6px;background:#0006;overflow:hidden;border:2px solid #fdfdec55}
 #sfill{height:100%;width:0;background:linear-gradient(90deg,#f2e04a,#e0302a)}
-#mode{top:12px;right:14px;text-align:right;font-weight:800;font-size:15px;line-height:1.45}
+#mode{z-index:10;top:12px;right:14px;text-align:right;font-weight:800;font-size:15px;line-height:1.45}
 #mode b{color:#ffe36a}
 #mode small{opacity:.8;font-weight:600;font-size:12px;display:block}
 #toast{position:fixed;top:84px;left:50%;transform:translateX(-50%);font-weight:800;font-size:22px;color:#fdfdec;background:#1b2a1acc;padding:8px 18px;border-radius:20px;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}

@@ -46,3 +46,9 @@ The request is in PROMPT.md. Each session of the loop appends one section here: 
 3. Check the CPU cost with `perf` `variants` that hide `sheep*`, `tufts*` and `pines*`, because 122 ms of JS a frame is suspicious. Then play local mode with `interact` (M, Enter, arrows), the win and lose screens, and E grazing on `clover`. Keep the `#hud` clear of the cinema band during the pounce.
 
 SCORE: 5.6
+
+## Iteration 2
+**Did**: `gh()` mountains lowered/moved to the sides (9 at 34,-30; 7 at -36,-28) and `ridge` 5.5→2.5 so the sea shows behind the meadow; `pines` 330→300 with 90% of back-centre (z<-20, |x|<30) dropped; sand colour band widened (cy<0.9) in ground vertex colours; `ROCK`/`wolf` moved to (-10, 3) in the left foreground, wolf root scale 2.8→3.6; `reset()` flock now 16 clusters over polar(2,26) instead of 9 over (2,22); `#hud` and `#mode` z-index 10 so the cinema bars no longer clip them.
+**Saw**: opening look: sea 10% (was 4.8%), sky 13%, ground 46%, pines ×149 14%, wolf 0.66% [369,389,510,498] (was 0.096%) and reads as a grey wolf crouched by its rock, sheep ×101 8% spread over the meadow, no Never-visible, no errors. `act pounce ai`: AI SHEEP card, "baa?" bubble, shrug pose and caption all show at 110 frames. Leap/shrug legs are still boxy. No sand beach or cliffs visibly listed; clouds not in frame. perf not run.
+**Next**: (1) lower the camera pitch slightly or push sea/sand into frame (visible sand beach strip, grey cliffs, clouds in the top band); (2) `perf` with variants hiding sheep*/tufts*/pines* to explain the 122 ms JS frame; (3) play local mode (M, Enter, arrows), win/lose screens, E grazing on clover; round off the wolf legs in the leap/shrug pose.
+**Open**: Clouds spawn z -170..10 at y 40-62 and are not seen in the opening frame. Local mode, win/lose screens and clover grazing still unverified.
