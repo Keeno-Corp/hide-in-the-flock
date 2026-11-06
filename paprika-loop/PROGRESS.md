@@ -1605,3 +1605,9 @@ Session 27 verdict. I looked at one 4-cell sheet (start, 6 s, human bite, AI bit
    - The one call that shows it done is `perf` with `costs`. It should read about 120k or less, with the flock silhouette unchanged in a `look`.
 
 SCORE: 7.6
+
+## Iteration 28
+**Did**: game.js: wolf watch scale 3.8 -> 2.8 (pounce/local 4.4 -> 3.4) in `drawWolf`; per-part `wolf-rim` shells replaced by one `wolf-outline` on `wolf-body` only; removed `sheep-heads-ink` and the `round-trees` ink pass (~20k triangles).
+**Saw**: `look` sheet frame 60: subject wolf 5% (was 6.1%), no console errors, outline reads as a thin brown rim, body is still a blobby barrel on stiff legs. `perf costs` not re-run (estimate ~140k).
+**Next**: (1) rebuild `wolf-body` as a lean extruded profile (snout, ears, slim legs, thin tail), the real fix for the silhouette; (2) clover three-leaf inked motif + glow near player; (3) lower `bushes`/`walls`/`rocks` detail to reach ~120k and re-run `perf costs`.
+**Open**: clover not started; wolf silhouette still not the lean WOLF turnaround; no interact replay this session.

@@ -250,7 +250,7 @@ const hullHead = mergeGeometries([mk(ico(0.28, 1), DARK, { p: [0, 0.02, 0.2], s:
   const im = new THREE.MeshBasicMaterial({ color: 0x2b211c, side: THREE.BackSide, fog: false });
   const ob = new THREE.InstancedMesh(hull(hullBody, 0.085), im, N), oh = new THREE.InstancedMesh(hull(hullHead, 0.06), im, N);
   ob.instanceMatrix = bodyIM.instanceMatrix; oh.instanceMatrix = headIM.instanceMatrix; { const pm = new THREE.MeshBasicMaterial({ colorWrite: false, depthWrite: false }); const pb = new THREE.InstancedMesh(hullBody, pm, N), ph = new THREE.InstancedMesh(hullHead, pm, N); pb.instanceMatrix = bodyIM.instanceMatrix; ph.instanceMatrix = headIM.instanceMatrix; pb.name = 'sheep-shadow'; ph.name = 'sheep-heads-shadow'; pb.castShadow = ph.castShadow = true; pb.frustumCulled = ph.frustumCulled = false; scene.add(pb, ph); }
-  ob.name = 'sheep-ink'; oh.name = 'sheep-heads-ink'; ob.frustumCulled = oh.frustumCulled = false; scene.add(ob, oh); }
+  ob.name = 'sheep-ink'; oh.name = 'sheep-heads-ink'; ob.frustumCulled = oh.frustumCulled = false; scene.add(ob); }
 
 // ───────────────────────── wolf ─────────────────────────
 const wolf = { x: -10, z: 3, y: 0, yaw: 0.6, state: 'watch', pose: 'crouch', t: 0, bites: 3, cd: 5, sulk: 0, target: null, abort: 0, stalkT: 0, lookX: 0, lookZ: 0, phase: 0, onRock: true, shrug: 0, pitch: 0 };
@@ -302,7 +302,7 @@ const W = {};
   meshes.forEach(o => {
     const g = o.geometry.clone(), p = g.attributes.position, n = g.attributes.normal;
     for (let i = 0; i < p.count; i++) p.setXYZ(i, p.getX(i) + n.getX(i) * 0.08, p.getY(i) + n.getY(i) * 0.08, p.getZ(i) + n.getZ(i) * 0.08);
-    const h = new THREE.Mesh(g, rimInk); h.name = 'wolf-rim'; o.parent.add(h);
+    if (o.name === 'wolf-body') { const h = new THREE.Mesh(g, rimInk); h.name = 'wolf-outline'; o.parent.add(h); }
   });
   scene.add(W.root);
 }
@@ -345,7 +345,7 @@ scatterInst(roundTreeGeo, 14, () => { const [x, z] = polar(33, 58); if (z > 2 ||
 { const im = new THREE.InstancedMesh(roundTreeGeo, treeMat(), 3); im.name = 'oaks'; im.castShadow = im.receiveShadow = true;
   [[-35, -8, 2.4], [37, -16, 2.2], [-14, -42, 2.8]].forEach(([x, z, s], i) => { dummy.position.set(x, gh(x, z) - 0.1, z); dummy.rotation.set(0, i * 2, 0); dummy.scale.setScalar(s); dummy.updateMatrix(); im.setMatrixAt(i, dummy.matrix); }); scene.add(im); }
 const treeInk = im => { const h = im.geometry.clone(); h.deleteAttribute('color'); const p = h.attributes.position, n = h.attributes.normal; for (let i = 0; i < p.count; i++) p.setXYZ(i, p.getX(i) + n.getX(i) * 0.14, p.getY(i) + n.getY(i) * 0.14, p.getZ(i) + n.getZ(i) * 0.14); const o = new THREE.InstancedMesh(h, new THREE.MeshBasicMaterial({ color: 0x2b211c, side: THREE.BackSide, fog: false }), im.count); o.instanceMatrix = im.instanceMatrix; o.name = im.name + '-ink'; o.frustumCulled = false; scene.add(o); };
-treeInk(scene.getObjectByName('round-trees')); treeInk(scene.getObjectByName('oaks')); treeInk(pinesMesh);
+treeInk(scene.getObjectByName('oaks')); treeInk(pinesMesh);
 const rockGeo = mergeGeometries([mk(ico(0.8, 1), 0xa39a86, { s: [1, 0.7, 1], soft: true }), mk(ico(0.5, 1), 0xb3aa94, { p: [0.6, -0.1, 0.2], soft: true })]);
 scatterInst(rockGeo, 40, () => { const [x, z] = polar(18, 56); const h = gh(x, z); if (Math.hypot(x - ROCK.x, z - ROCK.z) < 5) return null; const s = rnd(0.5, 1.4) * (Math.hypot(x, z) > 32 ? 2.4 : 1); return { x, z, s, y: h + 0.2 * s }; }, { name: 'rocks' });
 const bushGeo = mergeGeometries([mk(ico(0.6, 1), 0x74834a, { s: [1, 0.75, 1], soft: true }), mk(ico(0.45, 1), 0x86954f, { p: [0.45, -0.05, 0.1], soft: true }), mk(ico(0.4, 1), 0x66743f, { p: [-0.4, -0.05, -0.1], soft: true })]);
@@ -853,7 +853,7 @@ function drawSheep(dt) {
 function drawWolf(dt) {
   const w = wolf, r = W.root, pz = w.pose;
   r.position.set(w.x, w.y, w.z); r.rotation.y = w.yaw;
-  { const want = (pz === 'leap' || pz === 'land' || pz === 'shrug' || pz === 'grin') ? 2.4 : (pounce.ph || mode !== "solo" ? 4.4 : 3.8); r.scale.setScalar(r.scale.x + (want - r.scale.x) * Math.min(1, dt * 10 + 0.05)); }
+  { const want = (pz === 'leap' || pz === 'land' || pz === 'shrug' || pz === 'grin') ? 2.4 : (pounce.ph || mode !== "solo" ? 3.4 : 2.8); r.scale.setScalar(r.scale.x + (want - r.scale.x) * Math.min(1, dt * 10 + 0.05)); }
   const ph = w.phase, t = clock;
   W.body.position.set(0, 0, 0); W.body.rotation.set(0, 0, 0); W.head.rotation.set(0, 0, 0); W.head.position.set(0, 0.88, 1.08);
   W.legs.forEach(l => l.rotation.set(0, 0, 0)); W.tail.rotation.set(0, 0, 0);

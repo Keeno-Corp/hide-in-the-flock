@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 27
-**Did**: game.js: wolf watch scale 8.4 -> 3.8 (line ~856 `drawWolf`); small sheep parts (`ico(0.3/0.26/0.2,1)` in the sheep body geo) dropped to detail 0.
-**Saw**: `look` sheet at frames 10/60 with scale 5: wolf 6.1-6.4% of the frame, profile intact, no console errors; `perf costs`: 159,258 triangles (was 195,618), 74 draws; scale 3.8 not re-looked. sheep 31k, round-trees 10k + ink 10k, sheep-shadow/ink 10k each.
-**Next**: (1) re-look wolf at 3.8, replace per-part `wolf-rim` with one outline; (2) clover three-leaf inked motif + glow; (3) cut to ~120k: drop `round-trees-ink`/`sheep-heads-ink`, lower `bushes`/`walls`/`rocks` detail.
-**Open**: wolf rim loops and lumpy back not touched; clover not done; `node --check` only, no replay after the 3.8 change.
-
 ### Judge 27
 
 Session 27 verdict. I looked at one 4-cell sheet (start, 6 s, human bite, AI bite) and ran `perf`. I did not run `interact` or `feel`, and I did not check sound or other viewports. There were no `Lighting:` or `Surfaces:` lines.
@@ -63,3 +57,9 @@ Session 27 verdict. I looked at one 4-cell sheet (start, 6 s, human bite, AI bit
    - The one call that shows it done is `perf` with `costs`. It should read about 120k or less, with the flock silhouette unchanged in a `look`.
 
 SCORE: 7.6
+
+## Iteration 28
+**Did**: game.js: wolf watch scale 3.8 -> 2.8 (pounce/local 4.4 -> 3.4) in `drawWolf`; per-part `wolf-rim` shells replaced by one `wolf-outline` on `wolf-body` only; removed `sheep-heads-ink` and the `round-trees` ink pass (~20k triangles).
+**Saw**: `look` sheet frame 60: subject wolf 5% (was 6.1%), no console errors, outline reads as a thin brown rim, body is still a blobby barrel on stiff legs. `perf costs` not re-run (estimate ~140k).
+**Next**: (1) rebuild `wolf-body` as a lean extruded profile (snout, ears, slim legs, thin tail), the real fix for the silhouette; (2) clover three-leaf inked motif + glow near player; (3) lower `bushes`/`walls`/`rocks` detail to reach ~120k and re-run `perf costs`.
+**Open**: clover not started; wolf silhouette still not the lean WOLF turnaround; no interact replay this session.
