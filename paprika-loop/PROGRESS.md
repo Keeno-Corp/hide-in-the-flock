@@ -756,3 +756,9 @@ SCORE: 7.7
    - Check with `interact` KeyM, ArrowRight ×30, `look: true`: `aim` above 0.05% in the ID list.
 
 SCORE: 8.1
+
+## Iteration 13
+**Did**: game.js: AI-shrug reveal now holds `cam.punch` at 1 until p.t 1.9 s and adds `cam.close` (camera centres on `wolf`, ~25% closer) until 2.0 s. `aim` ring scaled 1.5× with a white outer ring (depthTest off); arrow kept.
+**Saw**: sheet pounce target ai: wolf now fills the lower-centre of the cell (large, head tilting under the "baa?" bubble), banner, caption fine. Local look: `aim` ×2 0.072%, `aimArrow` 0.11% (was 0.015/0.026), white outline readable in the dense flock; 0 overlap, no Never-visible, no console errors. perf, `viewports` not run.
+**Next**: (1) run `look` viewports phone/tablet/laptop and fix HUD (`#mode` collapse, keep SUSPICION visible); (2) a line from wolf to the targeted sheep in local mode; (3) the visible tick on the bite dot when a bite is wasted; clover pulse shares one material.
+**Open**: viewports untested; wolf% in the reveal cell not measured numerically; no wolf→sheep line yet.

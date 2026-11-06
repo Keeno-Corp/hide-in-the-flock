@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 12
-**Did**: game.js: each `clover` group gets a pulsing additive pale-yellow disc (`RingGeometry(0,1.9)`, own material, depthTest off, renderOrder 4). `aim` ring widened (2.4–3.8, pale yellow) with a red inner ring (`ar2`) and a bobbing red cone arrow `aimArrow` 5 units above the targeted sheep.
-**Saw**: solo look: 3 glowing yellow discs clearly visible at the clovers (left, centre-bottom, right); `clover` ×4 0.24% in the ID list (additive discs are not counted). Local look (KeyM, ArrowRight×30): wolf at x −4.5, red ring plus red arrow over the nearest sheep, readable in the picture, `aim` 0.015% / `aimArrow` 0.026% by ID. 0 overlap, no Never-visible, no console errors. perf, `sample` not run.
-**Next**: (1) reveal camera punch-in on the wolf for the AI shrug (head tilt, ears down, bite-dot tick) — still not done; (2) make the aim ring a touch bigger or add a white outline; (3) measure clover brightness with `sample`, and run `viewports`.
-**Open**: reveal punch-in not started; the clover ring/star share one material across clovers, so their opacity pulses are in sync with the last clover only.
-
 ### Judge 12
 
 **Judge verdict, session 12**
@@ -66,3 +60,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Check with `interact` KeyM, ArrowRight ×30, `look: true`: `aim` above 0.05% in the ID list.
 
 SCORE: 8.1
+
+## Iteration 13
+**Did**: game.js: AI-shrug reveal now holds `cam.punch` at 1 until p.t 1.9 s and adds `cam.close` (camera centres on `wolf`, ~25% closer) until 2.0 s. `aim` ring scaled 1.5× with a white outer ring (depthTest off); arrow kept.
+**Saw**: sheet pounce target ai: wolf now fills the lower-centre of the cell (large, head tilting under the "baa?" bubble), banner, caption fine. Local look: `aim` ×2 0.072%, `aimArrow` 0.11% (was 0.015/0.026), white outline readable in the dense flock; 0 overlap, no Never-visible, no console errors. perf, `viewports` not run.
+**Next**: (1) run `look` viewports phone/tablet/laptop and fix HUD (`#mode` collapse, keep SUSPICION visible); (2) a line from wolf to the targeted sheep in local mode; (3) the visible tick on the bite dot when a bite is wasted; clover pulse shares one material.
+**Open**: viewports untested; wolf% in the reveal cell not measured numerically; no wolf→sheep line yet.
