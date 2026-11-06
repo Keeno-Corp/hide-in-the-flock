@@ -10,8 +10,8 @@ My scores and Next list are unchanged.
 
 SCORE: 8.0
 
-## Iteration 61
-**Did:** No code change; verified iteration 60's wolf-shoulder removal with `open` + `look`.
-**Saw:** Page loads, no console errors, "Never visible: none". Wolf 2.4% of picture [133,469,421,640], 2 of 2 parts show, brightness 5% vs 60% around (strong silhouette); no dark oval patch now, wolf reads as a black solid shape on `wolf-rock`. Brightness 65%, saturation 32%; 508 objects on screen; `wolf-leg` only 0.016% (hidden by rock/sheep).
-**Next:** `asset_search` "wolf", "stylized pine tree", "sheep" and record results; raise the wolf pose so legs show over `wolf-rock`; fade `ground`/`tufts*` detail with distance (check on a normal-play frame); play the clover win and `M`+`Enter` bite paths.
-**Open:** asset_search still not done; `perf` not run (SwiftShader).
+## Iteration 62
+**Did:** No code change; short session, read LATEST.md and git log only.
+**Saw:** Nothing new measured; last look (iter 61): no console errors, Never visible none, wolf 2.4% of picture, 508 objects.
+**Next:** `asset_search` "wolf", "stylized pine tree", "sheep" and record results; raise wolf pose so `wolf-leg` shows over `wolf-rock`; fade `ground`/`tufts*` detail with distance (check on a normal-play frame); play clover win and `M`+`Enter` bite paths.
+**Open:** asset_search still not done; `perf` not run.
