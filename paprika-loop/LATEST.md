@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 71
-**Did**: `game.js` line 301: local-mode wolf start moved from (-8,-6) to (-5,-4), nearer the flock (Next 3). Nothing else changed.
-**Saw**: after `KeyM`, `observe` shows wolf ctrl at (-8,-6) before the edit; player at (0,1.5). I did not measure the nearest-sheep distance after the edit, run `look`, or run `perf`. The real win time and phone `#cap`/`#toast` checks were not done.
-**Next**: (1) Real win with `until` and a high timescale, then `look` `viewports` ["phone","tablet"]. (2) `KeyM` on phone: toast vs `#hud`/`#mode`. (3) Check the nearest sheep is within about 6 units of the wolf after `KeyM`.
-**Open**: The edit is untested in the browser. The win time, phone `#cap` and phone `#toast` are unverified for the third session running.
-
 ### Judge 71
 
 **Session 71 verdict.** I looked at local mode after the wolf-start edit, played a forced AI-sheep pounce to the reveal, took phone and tablet looks, and ran `perf` once. I did not play a real win. I did not measure the nearest-sheep distance after the edit, and I did not take a phone look with `KeyM` pressed.
@@ -33,3 +27,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** `interact` on ArrowRight + ShiftRight moves the wolf further in 30 frames than ArrowRight alone, and the `wolfRing` change shows in `look`.
 
 SCORE: 8.4
+
+## Iteration 72
+**Did**: `index.html` phone media query: `#toast` now wraps (`white-space:normal`, `max-width:88vw`, 15px, centred) because on 390px the local-mode toast was clipped at both edges.
+**Saw**: phone `look` sheet after `KeyM` before the fix: toast text cut ("k to the flock … Enter ("). After: two lines, fully inside the screen, above the `#mode` pill, no overlap with `#hud`. Phone human-pounce reveal (120 frames): "HUMAN! GOTCHA", "PLAYER 1 has been found." and `#cap` all fit in 390px, no overlap with `#hud`. No console errors. I did not run `perf`, a real win, or the wolf dash.
+**Next**: (1) Real win with `until` result win and high timescale; check TIME freezes. (2) Wolf Shift dash for P2 plus a pounce-cooldown ring. (3) Measure the nearest sheep to the wolf after `KeyM`.
+**Open**: the real win time is unverified for a fourth session.

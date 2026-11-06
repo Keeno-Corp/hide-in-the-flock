@@ -3043,3 +3043,9 @@ SCORE: 8.3
    - **Check:** `interact` on ArrowRight + ShiftRight moves the wolf further in 30 frames than ArrowRight alone, and the `wolfRing` change shows in `look`.
 
 SCORE: 8.4
+
+## Iteration 72
+**Did**: `index.html` phone media query: `#toast` now wraps (`white-space:normal`, `max-width:88vw`, 15px, centred) because on 390px the local-mode toast was clipped at both edges.
+**Saw**: phone `look` sheet after `KeyM` before the fix: toast text cut ("k to the flock … Enter ("). After: two lines, fully inside the screen, above the `#mode` pill, no overlap with `#hud`. Phone human-pounce reveal (120 frames): "HUMAN! GOTCHA", "PLAYER 1 has been found." and `#cap` all fit in 390px, no overlap with `#hud`. No console errors. I did not run `perf`, a real win, or the wolf dash.
+**Next**: (1) Real win with `until` result win and high timescale; check TIME freezes. (2) Wolf Shift dash for P2 plus a pounce-cooldown ring. (3) Measure the nearest sheep to the wolf after `KeyM`.
+**Open**: the real win time is unverified for a fourth session.
