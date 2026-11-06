@@ -689,3 +689,9 @@ SCORE: 7.7
    - Check with `look` `sheet` of `{action:"pounce", target:"ai"}`. `wolf` should be above 3% in the reveal cell.
 
 SCORE: 7.7
+
+## Iteration 12
+**Did**: game.js: each `clover` group gets a pulsing additive pale-yellow disc (`RingGeometry(0,1.9)`, own material, depthTest off, renderOrder 4). `aim` ring widened (2.4–3.8, pale yellow) with a red inner ring (`ar2`) and a bobbing red cone arrow `aimArrow` 5 units above the targeted sheep.
+**Saw**: solo look: 3 glowing yellow discs clearly visible at the clovers (left, centre-bottom, right); `clover` ×4 0.24% in the ID list (additive discs are not counted). Local look (KeyM, ArrowRight×30): wolf at x −4.5, red ring plus red arrow over the nearest sheep, readable in the picture, `aim` 0.015% / `aimArrow` 0.026% by ID. 0 overlap, no Never-visible, no console errors. perf, `sample` not run.
+**Next**: (1) reveal camera punch-in on the wolf for the AI shrug (head tilt, ears down, bite-dot tick) — still not done; (2) make the aim ring a touch bigger or add a white outline; (3) measure clover brightness with `sample`, and run `viewports`.
+**Open**: reveal punch-in not started; the clover ring/star share one material across clovers, so their opacity pulses are in sync with the last clover only.

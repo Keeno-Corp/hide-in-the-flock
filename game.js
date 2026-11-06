@@ -232,6 +232,8 @@ const clovers = [];
     const sp = new THREE.Group(); sp.position.y = 2.2; sp.scale.setScalar(2);
     sp.add(new THREE.Mesh(box(0.1, 0.9, 0.02), star), new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.6, 9, 8, 1, true), star), new THREE.Mesh(box(0.7, 0.08, 0.02), star)); g.add(sp);
     const cr = new THREE.Mesh(new THREE.RingGeometry(1.1, 1.7, 28).rotateX(-Math.PI / 2), star); cr.position.y = 0.25; cr.material = star; sp.userData.ring = cr; g.add(cr);
+    const dm = new THREE.MeshBasicMaterial({ color: 0xfff08a, transparent: true, opacity: 0.8, depthWrite: false, depthTest: false, fog: false, blending: THREE.AdditiveBlending });
+    const disc = new THREE.Mesh(new THREE.RingGeometry(0, 1.9, 32).rotateX(-Math.PI / 2), dm); disc.position.y = 0.3; disc.renderOrder = 4; g.add(disc);
     scene.add(g); clovers.push({ x, z, g, mesh: m, star: sp, prog: 0, eaten: false });
   });
 }
@@ -240,7 +242,7 @@ const clovers = [];
 const ringMat = c => new THREE.MeshBasicMaterial({ color: c, transparent: true, opacity: 0.4, depthWrite: false, fog: false });
 const marker = new THREE.Mesh(new THREE.RingGeometry(0.85, 1.1, 28).rotateX(-Math.PI / 2), ringMat(0xfff2a0)); marker.name = 'player'; scene.add(marker);
 const reach = new THREE.Mesh(new THREE.RingGeometry(3.4, 3.6, 40).rotateX(-Math.PI / 2), ringMat(0xe0302a)); reach.name = 'reach'; reach.visible = false; scene.add(reach);
-const aim = new THREE.Mesh(new THREE.RingGeometry(1.6, 2.5, 28).rotateX(-Math.PI / 2), ringMat(0xff6a2a)); aim.material.opacity = 0.95; aim.material.depthTest = false; aim.renderOrder = 5; aim.name = 'aim'; aim.visible = false; scene.add(aim);
+const aim = new THREE.Mesh(new THREE.RingGeometry(2.4, 3.8, 32).rotateX(-Math.PI / 2), ringMat(0xfff06a)); aim.material.opacity = 0.95; aim.material.depthTest = false; aim.renderOrder = 5; aim.name = 'aim'; { const am = new THREE.MeshBasicMaterial({ color: 0xff3a1a, depthTest: false, fog: false }); const ar = new THREE.Mesh(new THREE.ConeGeometry(0.9, 1.8, 4).rotateX(Math.PI), am); ar.renderOrder = 6; ar.position.y = 5; ar.name = 'aimArrow'; aim.add(ar); const ar2 = new THREE.Mesh(new THREE.RingGeometry(1.5, 2.4, 32).rotateX(-Math.PI / 2), am); ar2.renderOrder = 5; aim.add(ar2); aim.userData.arrow = ar; } aim.visible = false; scene.add(aim);
 const outline = new THREE.Group(); outline.visible = false; outline.name = 'outline';
 {
   const om = new THREE.MeshBasicMaterial({ color: 0xff2a1a, side: THREE.BackSide, depthTest: false }); om.fog = false;
@@ -667,7 +669,7 @@ function drawWolf(dt) {
   const loc = mode === 'local';
   reach.visible = loc && !pounce.ph && !result; reach.position.set(w.x, gh(w.x, w.z) + 0.15, w.z);
   aim.visible = false;
-  if (loc && !pounce.ph && !result) { let best = null, bd = 9; for (const s of sheep) { const d = Math.hypot(s.x - w.x, s.z - w.z); if (d < bd) { bd = d; best = s; } } if (best) { aim.visible = true; aim.position.set(best.x, best.y + 0.2, best.z); aim.scale.setScalar(1 + 0.2 * Math.sin(clock * 9)); aim.material.opacity = 0.7 + 0.25 * Math.sin(clock * 9); } }
+  if (loc && !pounce.ph && !result) { let best = null, bd = 9; for (const s of sheep) { const d = Math.hypot(s.x - w.x, s.z - w.z); if (d < bd) { bd = d; best = s; } } if (best) { aim.visible = true; aim.position.set(best.x, best.y + 0.2, best.z); aim.scale.setScalar(1 + 0.2 * Math.sin(clock * 9)); aim.userData.arrow.position.y = 5 + Math.sin(clock * 7); aim.material.opacity = 0.7 + 0.25 * Math.sin(clock * 9); } }
 }
 
 // ───────────────────────── camera ─────────────────────────

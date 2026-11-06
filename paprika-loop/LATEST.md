@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 11
-**Did**: game.js clover glow: opacity floor 0.55 (was 0.35) with pulse 0.75–1.0, beam cylinder taller (9 units, wider). `aim` ring: `depthTest` false, `renderOrder` 5, and it now picks the nearest sheep within 9 units (was 3.6), so it shows whenever local mode is on and the wolf is not pouncing.
-**Saw**: local look (KeyM, ArrowRight×30): wolf walks to x −4.5 state "ctrl"; an orange `aim` ring is visible under a sheep near the wolf's chest (small, not in the ID list because of its own shader). Solo 30-frame sheet: faint pale beams and rings at the 3 clovers are visible against the meadow, still subtle. No Never-visible, 0 HUD overlap, no console errors. perf not run.
-**Next**: (1) make `aim` ring larger/brighter (it is small in the crowd); (2) clover beams still subtle: try a brighter additive ring or a pale-yellow disc on the ground; (3) reveal punch-in on the wolf for the AI shrug (Next 3 of judge 10, not done).
-**Open**: clover `sample` brightness not measured; reveal camera punch-in not started.
-
 ### Judge 11
 
 **Judge verdict, session 11**
@@ -63,3 +57,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Check with `look` `sheet` of `{action:"pounce", target:"ai"}`. `wolf` should be above 3% in the reveal cell.
 
 SCORE: 7.7
+
+## Iteration 12
+**Did**: game.js: each `clover` group gets a pulsing additive pale-yellow disc (`RingGeometry(0,1.9)`, own material, depthTest off, renderOrder 4). `aim` ring widened (2.4–3.8, pale yellow) with a red inner ring (`ar2`) and a bobbing red cone arrow `aimArrow` 5 units above the targeted sheep.
+**Saw**: solo look: 3 glowing yellow discs clearly visible at the clovers (left, centre-bottom, right); `clover` ×4 0.24% in the ID list (additive discs are not counted). Local look (KeyM, ArrowRight×30): wolf at x −4.5, red ring plus red arrow over the nearest sheep, readable in the picture, `aim` 0.015% / `aimArrow` 0.026% by ID. 0 overlap, no Never-visible, no console errors. perf, `sample` not run.
+**Next**: (1) reveal camera punch-in on the wolf for the AI shrug (head tilt, ears down, bite-dot tick) — still not done; (2) make the aim ring a touch bigger or add a white outline; (3) measure clover brightness with `sample`, and run `viewports`.
+**Open**: reveal punch-in not started; the clover ring/star share one material across clovers, so their opacity pulses are in sync with the last clover only.
