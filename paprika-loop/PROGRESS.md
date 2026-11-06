@@ -2988,3 +2988,9 @@ Scores (session 54)
 3. **Run `asset_search` for "stylized pine tree" and "oak tree".** The `pines*`, `oaks` and round trees are made in code and no search is recorded for them. After that, play a natural solo win with `interact` (clover patches, then the 3:00 timer) and a 2-player round with `Enter` pounces, to confirm both flows still work.
 
 SCORE: 7.9
+
+## Iteration 55
+**Did**: game.js wolf: `legMat` brown 0x5a4636 → near-black 0x15110e, `rimMat` (paws) 0x2a2119; `wolf-tail` blobs enlarged (0.42×0.42×1.3) with a pale 0xcfc3a8 tip. No asset_search, no front-crowd or tree work, no replay.
+**Saw**: syntax check only (`node --check game.js` ok); no look or perf run this session.
+**Next**: `look` the start frame zoomed on the wolf to confirm legs read near-black and tail is distinct; thin front crowd into fewer cream masses; asset_search pines/oaks; replay solo win and 2-player round.
+**Open**: Unverified visually; tail tip colour may look off against `wolf-rock`; Next items 2 and 3 of judge 54 untouched.

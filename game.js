@@ -263,8 +263,8 @@ const W = {};
   W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(3.6);
   W.body = new THREE.Group(); W.root.add(W.body);
   const mat = new THREE.MeshBasicMaterial({ color: PAL.wolf, fog: false });
-  const legMat = new THREE.MeshBasicMaterial({ color: 0x5a4636, fog: false });
-  const rimMat = new THREE.MeshBasicMaterial({ color: 0x8a6c52, fog: false });
+  const legMat = new THREE.MeshBasicMaterial({ color: 0x15110e, fog: false });
+  const rimMat = new THREE.MeshBasicMaterial({ color: 0x2a2119, fog: false });
   const add = (parent, g, mm) => { const m = new THREE.Mesh(g, mm || mat); m.castShadow = true; parent.add(m); return m; };
   // smooth rounded masses only (WOLF.png: sleek long-snouted silhouette, tall ears, bush tail, slim legs)
   const blob = (sx, sy, sz, px, py, pz, rx = 0, ry = 0, rz = 0) => new THREE.SphereGeometry(0.5, 16, 12).scale(sx, sy, sz).rotateX(rx).rotateY(ry).rotateZ(rz).translate(px, py, pz);
@@ -301,7 +301,7 @@ const W = {};
     W.legs.push(g);
   });
   W.tail = new THREE.Group(); W.tail.name = 'wolf-tail'; W.tail.position.set(0, 0.8, -1.3); W.body.add(W.tail);
-  add(W.tail, blob(0.3, 0.3, 1.0, 0, -0.25, -0.4, -0.9)); add(W.tail, blob(0.12, 0.12, 0.4, 0, -0.05, -0.65, -0.3), rimMat);
+  add(W.tail, blob(0.42, 0.42, 1.3, 0, -0.3, -0.5, -0.9)); add(W.tail, blob(0.2, 0.2, 0.5, 0, -0.05, -0.85, -0.3), new THREE.MeshBasicMaterial({ color: 0xcfc3a8, fog: false }));
   // ink rim: a lighter brown shell pushed out along the normals, drawn behind each wolf mesh
   const rimInk = new THREE.MeshBasicMaterial({ color: 0x8a7058, side: THREE.BackSide, fog: false });
   const meshes = []; W.body.traverse(o => { if (o.isMesh && o.geometry && o.geometry.attributes.normal && o.material !== eyeMat) meshes.push(o); });
