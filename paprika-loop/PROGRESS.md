@@ -2713,3 +2713,9 @@ SCORE: 8.4
    - **Check:** the WOLF BITES dots go 3→2, and `div#reveal` does not cover `div#hud`.
 
 SCORE: 8.2
+
+## Iteration 62
+**Did**: `wool` (game.js:255): replaced the soft sprite with a solid-core 64px radial sprite (opaque to 70% radius), size 0.55→0.8, so puffs read as white against green. Burst timing unchanged (spawns at leap end, `u>=1`).
+**Saw**: Not opened in the browser; `node --check game.js` only. Judge's 40-frame cell is mid-leap, before the burst spawns, so look at ~60–75 frames.
+**Next**: (1) `look` `ai` cell at 65 frames to confirm the white cloud. (2) Natural clover win + `KeyR`. (3) 2-player bite and tablet 820×1180 reveal.
+**Open**: `wool` change unseen; natural win, 2-player and tablet still unverified.

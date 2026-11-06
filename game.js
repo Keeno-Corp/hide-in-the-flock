@@ -252,7 +252,10 @@ const outline = new THREE.Group(); outline.visible = false; outline.name = 'outl
   const a = new THREE.Mesh(sheepBodyGeo, om), b = new THREE.Mesh(sheepHeadGeo, om); b.position.copy(HEAD_P); a.renderOrder = b.renderOrder = 20; outline.add(a, b); outline.userData = { a, b };
   scene.add(outline);
 }
-const wool = burst({ max: 500, seed: 7, size: 0.55, additive: false }); wool.name = 'wool'; scene.add(wool);
+const wool = burst({ max: 500, seed: 7, size: 0.8, additive: false }); wool.name = 'wool'; scene.add(wool);
+{ const c = document.createElement('canvas'); c.width = c.height = 64; const x = c.getContext('2d'), g = x.createRadialGradient(32, 32, 0, 32, 32, 32);
+  g.addColorStop(0, '#fff'); g.addColorStop(0.7, '#fff'); g.addColorStop(1, '#fff0'); x.fillStyle = g; x.fillRect(0, 0, 64, 64);
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; wool.material.map = tex; wool.material.alphaTest = 0.02; wool.material.needsUpdate = true; }
 const camShake = shake(camera, { seed: 3, decay: 5 });
 
 // ───────────────────────── sound ─────────────────────────

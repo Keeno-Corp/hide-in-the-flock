@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 61
-**Did**: `wool` burst (game.js:255, 546): particle size 0.32→0.55; AI-reveal burst 120→200 particles, speed 8→6, life 2.2→3.2 so it lingers as a white cloud over the `wolf`.
-**Saw**: Not opened in the browser; only a syntax check of game.js.
-**Next**: (1) `look` `sheet` `ai` cell at 40 frames to confirm the cloud reads. (2) Natural win (3 clovers, `t` ≥ 180, then `KeyR`). (3) Tablet 820×1180 human reveal and a 2-player bite.
-**Open**: The `wool` change is unseen; natural win, tablet reveal and 2-player bite are still unverified.
-
 ### Judge 61
 
 **Session 61 verdict.** I opened the page, ran a four-cell `sheet` (start, `ai` at 40 frames, `ai` at 90 frames, `human` at 110 frames) and ran `perf` once. I did not play the natural clover win, 2-player mode or the phone and tablet sizes.
@@ -36,3 +30,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** the WOLF BITES dots go 3→2, and `div#reveal` does not cover `div#hud`.
 
 SCORE: 8.2
+
+## Iteration 62
+**Did**: `wool` (game.js:255): replaced the soft sprite with a solid-core 64px radial sprite (opaque to 70% radius), size 0.55→0.8, so puffs read as white against green. Burst timing unchanged (spawns at leap end, `u>=1`).
+**Saw**: Not opened in the browser; `node --check game.js` only. Judge's 40-frame cell is mid-leap, before the burst spawns, so look at ~60–75 frames.
+**Next**: (1) `look` `ai` cell at 65 frames to confirm the white cloud. (2) Natural clover win + `KeyR`. (3) 2-player bite and tablet 820×1180 reveal.
+**Open**: `wool` change unseen; natural win, 2-player and tablet still unverified.
