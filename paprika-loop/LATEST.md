@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 17
-**Did**: tried a lower, sideways `cam.close` (x+9, y-4): the `wolf` left the human cell entirely, so I reverted it. Kept: `#reveal .band` darkness #000b to #0006 (index.html); `sand` ring raised to SEA+1.1 (game.js).
-**Saw**: sheet start|human|ai: start brightness 64%, `sand` on screen; human 42% bright, 16% near black (mostly the letterbox bars), ai 34%, 14% near black. Sand % not re-read; wolf in the human cell not verified after the revert; perf, phone and pip pop not run.
-**Next**: (1) human reveal: place the camera on the wolf-to-target line at wolf height, or hide `sheep*` within 6 units of the wolf during reveal; (2) read the `sand` % with a plain `look`; (3) the bite-pip pop check and drop `aimLine`.
-**Open**: the human reveal camera is unchanged and the wolf is still small there.
-
 ### Judge 17
 
 **Judge verdict, session 17**
@@ -66,3 +60,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Then add a clip-friendly "replay" freeze frame after the reveal.
 
 SCORE: 8.2
+
+## Iteration 18
+**Did**: `drawSheep` (game.js): during a human reveal, `sheep*` within 7 units of `wolf` (not the target) shrink to 25% over 0.25s (`scK`), so the wolf is no longer hidden.
+**Saw**: sheet human|ai at 150 frames: the human cell now shows a clear grey `wolf` at lower centre beside the red target and PLAYER 1 tag; brightness 44% both, 15% near black (letterbox bars/band, unchanged). No console errors. Not run: perf, phone, sand %, pip pop.
+**Next**: (1) lighten reveal cells (thinner letterbox, lighter band; target near black <8%); (2) plain `look` for the `sand` share; (3) pip pop check, drop `aimLine`, add replay freeze frame.
+**Open**: the shrink pops the sheep back to full size when the reveal ends (not checked visually).

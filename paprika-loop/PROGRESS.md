@@ -1099,3 +1099,9 @@ SCORE: 8.2
    - Then add a clip-friendly "replay" freeze frame after the reveal.
 
 SCORE: 8.2
+
+## Iteration 18
+**Did**: `drawSheep` (game.js): during a human reveal, `sheep*` within 7 units of `wolf` (not the target) shrink to 25% over 0.25s (`scK`), so the wolf is no longer hidden.
+**Saw**: sheet human|ai at 150 frames: the human cell now shows a clear grey `wolf` at lower centre beside the red target and PLAYER 1 tag; brightness 44% both, 15% near black (letterbox bars/band, unchanged). No console errors. Not run: perf, phone, sand %, pip pop.
+**Next**: (1) lighten reveal cells (thinner letterbox, lighter band; target near black <8%); (2) plain `look` for the `sand` share; (3) pip pop check, drop `aimLine`, add replay freeze frame.
+**Open**: the shrink pops the sheep back to full size when the reveal ends (not checked visually).

@@ -617,6 +617,7 @@ function checkWin() {
 
 // ───────────────────────── rendering sheep ─────────────────────────
 const mB = new THREE.Matrix4(), mH = new THREE.Matrix4(), mL = new THREE.Matrix4(), q = new THREE.Quaternion(), q2 = new THREE.Quaternion(), v3 = new THREE.Vector3(), sc = new THREE.Vector3(SS, SS, SS), e3 = new THREE.Euler();
+const scK = new THREE.Vector3();
 function drawSheep(dt) {
   for (let i = 0; i < N; i++) {
     const s = sheep[i]; const sp = Math.hypot(s.vx, s.vz);
@@ -625,6 +626,8 @@ function drawSheep(dt) {
     const bob = Math.abs(Math.sin(s.phase * 2)) * 0.07 * Math.min(1, sp);
     const roll = Math.sin(s.phase) * 0.06 * Math.min(1, sp);
     e3.set(s.hop > 0 ? s.spin * 0.1 : 0, s.yaw, roll, 'YXZ'); q.setFromEuler(e3);
+    let k = 1; if (pounce.ph === 'reveal' && pounce.human && s !== pounce.target && Math.hypot(s.x - wolf.x, s.z - wolf.z) < 7) k = Math.max(0.25, 1 - pounce.t * 4);
+    if (k < 1) { scK.setScalar(SS * k); mB.compose(v3.set(s.x, s.y + bob + s.hop, s.z), q, scK); } else
     mB.compose(v3.set(s.x, s.y + bob + s.hop, s.z), q, sc);
     bodyIM.setMatrixAt(i, mB);
     const nodding = s.graze ? Math.sin(clock * 5 + i) * 0.17 : 0;
