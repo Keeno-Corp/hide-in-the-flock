@@ -1196,3 +1196,55 @@ SCORE: 7.9
 **Saw**: `look` start: 2% near black (first non-zero), wolf-body reads solid black, 2.9% of frame; no errors, no Lighting/Surfaces lines. Zoom [0,100,640,450]: broad ground patches, pines/round-trees have ink outlines. Local mode, rock occlusion of the local wolf and perf not checked.
 **Next**: (1) local wolf: scale to ~8.5 and add a lighter rim on `wolf-leg*` so paws read; make `wolf-rock` write depth before the wolf; (2) the ground diamonds at right of the hill are still strong tone bands: soften; (3) enlarge the top-right mode hint text.
 **Open**: local-mode wolf not re-checked after the colour change; perf not run.
+
+### Judge 21
+
+**Judge 21 scores**
+
+I took one 4-cell `look` sheet (start, AI pounce, human pounce, local after `KeyM`) and one `perf`. There were no console errors and no `Lighting:` or `Surfaces:` lines. The two pounce cells were taken 10 frames in, so I did not see the stamped bite cards this round. I did not run `interact` or `feel`, check the clovers, the lose card or other viewports, or hear the sound.
+
+1. **Looks as LOOK.md says: 8.5.**
+   - The start `wolf-body` is now solid black. It is the darkest shape on screen, and the sheet reports 2% near black.
+   - The `sky`, sun disc, `ridge*` hills, grain, cream `sheep*` and the pines and `oaks*` with ink outlines read as a storybook frame.
+   - The `ground` patches are broader, but the diamond tone bands on the right hill are still visible.
+2. **Compared with BOARD, LOOK.png and the turnarounds: 8.**
+   - The wolf now matches the near-black silhouette of the WOLF turnaround.
+   - The biggest remaining style gap is that the wolf is a featureless blob. In the pounce cells there are no readable paws, ears or ink edge, unlike the turnaround.
+3. **Clip moment: 8.5.**
+   - The pounce leap, enlarged wolf and caption read in the pounce cells.
+   - I did not check the bite card, splash or freeze frame this round. Judge 20 saw them hold.
+4. **Core loop and controls: 7.5.**
+   - I did not play it this round. Judge 20's `KeyD` and `KeyE` results still stand.
+   - The wolf in the start cell is partly hidden behind `wolf-rock`, so its suspicion is hard to read.
+5. **Local 2-player: 7.**
+   - The `wolfRing`, red cone and caption read.
+   - `wolf-body` is 8.1%, above the 4–7% band.
+   - The wolf still draws over `wolf-rock` and the sheep, and its legs are lost in the blob.
+6. **UI typography: 8.** The IM Fell panels, Alfa Slab stamps and caption scrolls are in style. The top-right mode hint is still tiny.
+7. **Convention and performance: 7.**
+   - `perf` gives 191,558 triangles, 57 draw calls and 0.63 MB of assets.
+   - The 262.6 ms frame is on a software renderer, so it is not a signal.
+   - `window.__game` is present.
+8. **Juice: 7.5.** Not re-checked this round. The pounce motion reads, and I did not run `feel` or hear the sound.
+
+**Faults: 8.**
+- There were no console errors.
+- The local wolf is still a blob over `wolf-rock`.
+- The ground tone bands are still visible.
+- The top-right hint text is tiny.
+
+**Next:**
+1. **Give the wolf readable limbs and ears in every cell (asked again).**
+   - Last Open: the local wolf was not re-checked.
+   - Add a thin lighter ink rim or inner highlight on `wolf-leg*`, `wolf-head` ears and `wolf-tail`. Keep the body at 0x030203.
+   - Scale the local `wolf-body` down to about 7%.
+   - The one call that shows it done is `look` with `zoom` on the local cell. It should show separate paws and ears against the dark mass.
+2. **Make `wolf-rock` occlude the local wolf (asked again).**
+   - The wolf draws over the rock. Give the rock a higher `renderOrder` with `depthWrite` true, and the wolf `depthTest` true and a lower order.
+   - The one call that shows it done is the local sheet cell. It should show the rock covering the wolf's paws.
+3. **Flatten the ground bands and enlarge the hint text.**
+   - Soften the diamond tone bands on the right hill by lowering the vertex-colour contrast in the noise.
+   - Raise the top-right `[M] mode` hint to about 13px or larger.
+   - The one call that shows it done is `look` with `zoom` [640, 100, 1280, 450]. It should show smooth patches and a readable hint.
+
+SCORE: 7.8

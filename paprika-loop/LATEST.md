@@ -1,60 +1,59 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-### Judge 20
-
-**Judge 20 scores (Must have, in order)**
-
-I took one 4-cell `look` sheet (start, AI pounce, human pounce, local after `KeyM`), one `perf` and one short `interact` (hold `KeyD` for 40 frames, then `KeyE` for 30). There were no `Lighting:` or `Surfaces:` lines and no console errors. I did not run `feel`, check the clovers or the lose card, hear the sound, or check other viewports.
-
-1. **Looks as LOOK.md says: 8.**
-   - The `sky`, sun disc, `ridge*`, grain, cream `sheep*` and flat-facet `ground` read as a storybook frame.
-   - `pines*` and `round-trees*` now look as flat masses, but their faceted fills are still visible.
-   - The tool still reports 0% near black in every cell. The start `wolf-body` is 2.5% and is not the stark darkest shape.
-2. **Compared with BOARD, LOOK.png and the turnarounds: 7.5.**
-   - The biggest remaining style gap is the wolf's body colour. It reads dark brown and not near black, so it does not match the WOLF turnaround.
-   - The `ground` facet pattern now looks like patchwork triangles, not painted masses. The tile edges are visible.
-3. **Clip moment: 9.**
-   - The AI cell now shows the "SHEEP" card with "BAA?", "Just a sheep. Bite lost." and the "baa?" bubble. The ink splash and duotone freeze read clearly.
-   - The human cell shows "GOTCHA HUMAN", the red "PLAYER 1" ribbon and the caption "And so the hidden one was found."
-   - Both clip frames read in 5 seconds.
-4. **Core loop and controls: 7.5.**
-   - `interact` with `KeyD` moved `player.x` to 1.27, and `KeyE` set `player.grazing` true.
-   - `topSusp` moved to 0.21, so the suspicion meter responds, and the baa sounds fired.
-   - The Motion line says the wolf stopped at frame 22 and did not move again. I did not check whether that is intended.
-5. **Local 2-player: 8.**
-   - `wolf-body` is 8.1%, a little above the 4–7% target band.
-   - The `wolfRing` and red cone read. The wolf still draws over the `wolf-rock` and sheep and is a flat blob, so the paws and legs are lost.
-6. **UI typography: 8.5.** The IM Fell panels, Alfa Slab stamps and caption scrolls are in style. The top-right mode hint text is still tiny.
-7. **Convention and performance: 7.**
-   - `perf` gives 191,558 triangles, 57 draw calls and 0.63 MB of assets.
-   - The 264 ms frame is on a software renderer with host load 5.3, so it is not a signal.
-   - `window.__game` is present.
-8. **Juice: 7.5.** The pounce, ink splash and stamp cards read, and the baa sounds fired. I did not run `feel` and did not hear the gong or the silence before the stamp.
-
-**Faults: 7.5.**
-- There were no console errors.
-- 0% near black in all four cells.
-- The local wolf is still a flat blob with no paws or legs readable, and 8.1% is above target.
-- The start wolf is small and partly hidden behind `wolf-rock`.
-
-**Next:**
-1. **Make the wolf near black (asked again).**
-   - Last Open: wolf body colour not checked against lifting.
-   - Find what lifts `wolf-body`: the toon ramp, fog, the grain pass or an emissive/ambient term. Force an unlit material or colour 0x050305 with `fog:false`.
-   - The one call that shows it done is the start `look` with `sample` on the wolf body. It should read below 20 per channel and "near black" should be above 1%.
-2. **Give the local wolf readable limbs and scale it to 7% (asked again).**
-   - Scale the local `wolf-body` to about 8.5 and add a lighter ink outline, or a rim on the `wolf-leg*`, so paws and ears separate from the dark mass.
-   - Make the local wolf hide behind `wolf-rock` when it should. Last Open: renderOrder alone does not do it, so the rock needs to write depth before the wolf, or the wolf needs a different draw order.
-   - The one call that shows it done is the local sheet cell after `KeyM`. It should show `wolf-rock` covering the wolf's paws and `wolf-body` at 7%.
-3. **Soften the `ground` triangle patchwork and finish the trees.**
-   - Merge the flat per-triangle `ground` colours into larger painted patches: quantise by noise cell, not by triangle.
-   - Add the dark outline to `pines*` and `round-trees*` crowns.
-   - The one call that shows it done is `look` with `zoom` [0, 100, 640, 450] at frame 150. It should show broad flat patches with no visible triangle edges.
-
-SCORE: 7.9
-
 ## Iteration 21
 **Did**: game.js. `PAL.wolf` 0x0a0709 -> 0x030203. Post shader's paper lift `mix(col,paper*.35,.045)` now scaled by `smoothstep(.02,.2,lum(col))`, so near-black stays black. Removed the per-triangle colour copy loop on `ground`: vertex colours are smooth again, giving noise-shaped patches, no triangle edges.
 **Saw**: `look` start: 2% near black (first non-zero), wolf-body reads solid black, 2.9% of frame; no errors, no Lighting/Surfaces lines. Zoom [0,100,640,450]: broad ground patches, pines/round-trees have ink outlines. Local mode, rock occlusion of the local wolf and perf not checked.
 **Next**: (1) local wolf: scale to ~8.5 and add a lighter rim on `wolf-leg*` so paws read; make `wolf-rock` write depth before the wolf; (2) the ground diamonds at right of the hill are still strong tone bands: soften; (3) enlarge the top-right mode hint text.
 **Open**: local-mode wolf not re-checked after the colour change; perf not run.
+
+### Judge 21
+
+**Judge 21 scores**
+
+I took one 4-cell `look` sheet (start, AI pounce, human pounce, local after `KeyM`) and one `perf`. There were no console errors and no `Lighting:` or `Surfaces:` lines. The two pounce cells were taken 10 frames in, so I did not see the stamped bite cards this round. I did not run `interact` or `feel`, check the clovers, the lose card or other viewports, or hear the sound.
+
+1. **Looks as LOOK.md says: 8.5.**
+   - The start `wolf-body` is now solid black. It is the darkest shape on screen, and the sheet reports 2% near black.
+   - The `sky`, sun disc, `ridge*` hills, grain, cream `sheep*` and the pines and `oaks*` with ink outlines read as a storybook frame.
+   - The `ground` patches are broader, but the diamond tone bands on the right hill are still visible.
+2. **Compared with BOARD, LOOK.png and the turnarounds: 8.**
+   - The wolf now matches the near-black silhouette of the WOLF turnaround.
+   - The biggest remaining style gap is that the wolf is a featureless blob. In the pounce cells there are no readable paws, ears or ink edge, unlike the turnaround.
+3. **Clip moment: 8.5.**
+   - The pounce leap, enlarged wolf and caption read in the pounce cells.
+   - I did not check the bite card, splash or freeze frame this round. Judge 20 saw them hold.
+4. **Core loop and controls: 7.5.**
+   - I did not play it this round. Judge 20's `KeyD` and `KeyE` results still stand.
+   - The wolf in the start cell is partly hidden behind `wolf-rock`, so its suspicion is hard to read.
+5. **Local 2-player: 7.**
+   - The `wolfRing`, red cone and caption read.
+   - `wolf-body` is 8.1%, above the 4–7% band.
+   - The wolf still draws over `wolf-rock` and the sheep, and its legs are lost in the blob.
+6. **UI typography: 8.** The IM Fell panels, Alfa Slab stamps and caption scrolls are in style. The top-right mode hint is still tiny.
+7. **Convention and performance: 7.**
+   - `perf` gives 191,558 triangles, 57 draw calls and 0.63 MB of assets.
+   - The 262.6 ms frame is on a software renderer, so it is not a signal.
+   - `window.__game` is present.
+8. **Juice: 7.5.** Not re-checked this round. The pounce motion reads, and I did not run `feel` or hear the sound.
+
+**Faults: 8.**
+- There were no console errors.
+- The local wolf is still a blob over `wolf-rock`.
+- The ground tone bands are still visible.
+- The top-right hint text is tiny.
+
+**Next:**
+1. **Give the wolf readable limbs and ears in every cell (asked again).**
+   - Last Open: the local wolf was not re-checked.
+   - Add a thin lighter ink rim or inner highlight on `wolf-leg*`, `wolf-head` ears and `wolf-tail`. Keep the body at 0x030203.
+   - Scale the local `wolf-body` down to about 7%.
+   - The one call that shows it done is `look` with `zoom` on the local cell. It should show separate paws and ears against the dark mass.
+2. **Make `wolf-rock` occlude the local wolf (asked again).**
+   - The wolf draws over the rock. Give the rock a higher `renderOrder` with `depthWrite` true, and the wolf `depthTest` true and a lower order.
+   - The one call that shows it done is the local sheet cell. It should show the rock covering the wolf's paws.
+3. **Flatten the ground bands and enlarge the hint text.**
+   - Soften the diamond tone bands on the right hill by lowering the vertex-colour contrast in the noise.
+   - Raise the top-right `[M] mode` hint to about 13px or larger.
+   - The one call that shows it done is `look` with `zoom` [640, 100, 1280, 450]. It should show smooth patches and a readable hint.
+
+SCORE: 7.8
