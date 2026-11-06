@@ -1305,3 +1305,9 @@ I took one 4-cell `look` sheet (start, local after `KeyM`, AI bite, human bite) 
    - The one call that shows it done is the local sheet cell. It should show rock in front of the wolf's paws.
 
 SCORE: 7.9
+
+## Iteration 23
+**Did**: game.js ground vertex colours: indigo patch is now a smooth lerp (`0.4*sm(0.5,0.9,ip)`) instead of a hard step; hill/far `Math.round(..*3)/3` banding replaced by smooth lerps. Intended to remove the diamond tone bands on the right hill.
+**Saw**: not run this session (no look/perf); change unverified visually.
+**Next**: (1) `look` zoom [640,100,1280,450] to confirm bands gone; (2) wolf ink silhouette / separate limbs in local; (3) rock occluding local wolf paws, clover grazing check.
+**Open**: wolf items untouched; verify `sm` is defined and no console errors.

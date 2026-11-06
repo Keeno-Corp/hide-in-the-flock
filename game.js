@@ -171,10 +171,10 @@ const PLAY_R = 30;
     const patch = Math.sin(cx * 0.09 + Math.sin(cz * 0.07) * 2) + Math.sin(cz * 0.11 - cx * 0.05) * 0.8 + wob;
     c.copy(sage).lerp(warm, patch > -0.35 ? 1 : 0).lerp(ochre, patch > 1.1 ? 1 : 0);
     c.lerp(olive, (Math.sin(cx * 0.21 - cz * 0.17) * Math.sin(cz * 0.13 + cx * 0.09) + wob * 0.8) > 0.58 ? 0.8 : 0);
-    if (r > 34) c.lerp(hill, Math.round(sm(34, 70, r) * 3) / 3 * 0.75);
-    if (r > 90) c.lerp(far, Math.round(sm(90, 190, r) * 3) / 3 * 0.7);
+    if (r > 34) c.lerp(hill, sm(34, 70, r) * 0.75);
+    if (r > 90) c.lerp(far, sm(90, 190, r) * 0.7);
     if (ny < 0.8 && cy > 3) c.lerp(rock, 0.6);
-    { const ip = Math.sin(cx * 0.14 + 1.7) * Math.sin(cz * 0.12 - 0.6) + 0.5 * Math.sin(cx * 0.3 + cz * 0.22); if (ip > 0.62 && r < 60) c.lerp(indigo, 0.55); }
+    { const ip = Math.sin(cx * 0.14 + 1.7) * Math.sin(cz * 0.12 - 0.6) + 0.5 * Math.sin(cx * 0.3 + cz * 0.22); if (r < 60) c.lerp(indigo, 0.4 * sm(0.5, 0.9, ip)); }
     col[i * 3] = c.r; col[i * 3 + 1] = c.g; col[i * 3 + 2] = c.b;
   }
   g.setAttribute('color', new THREE.BufferAttribute(col, 3));

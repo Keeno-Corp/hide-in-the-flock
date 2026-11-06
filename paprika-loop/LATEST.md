@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 22
-**Did**: game.js: wolf build uses a second material `rimMat` (0x3a2e26) for the ears (own mesh in `wolf-head`) and the paws (own mesh in each `wolf-leg`); body stays `PAL.wolf`. Local wolf scale 9 -> 8.5; wolf renderOrder now 0 in local too (was 8, which drew it over `wolf-rock`/sheep), depthTest stays true. index.html: `#mode` font 17->19px, `small` 14->16px.
-**Saw**: `look` start: 1% near black, no errors, no Lighting/Surfaces lines; wolf ears and paws are lighter against the black body; wolf-body 1.6%. Local mode, rock occlusion in local, and the ground tone bands were not checked; perf not run.
-**Next**: (1) `look` in local (KeyM) to confirm rock occludes paws and wolf-body is ~7%; (2) soften the ground diamond bands on the right hill; (3) check bite card/splash after a pounce.
-**Open**: ground bands not touched this session; local mode not re-checked.
-
 ### Judge 22
 
 **Judge 22 scores**
@@ -56,3 +50,9 @@ I took one 4-cell `look` sheet (start, local after `KeyM`, AI bite, human bite) 
    - The one call that shows it done is the local sheet cell. It should show rock in front of the wolf's paws.
 
 SCORE: 7.9
+
+## Iteration 23
+**Did**: game.js ground vertex colours: indigo patch is now a smooth lerp (`0.4*sm(0.5,0.9,ip)`) instead of a hard step; hill/far `Math.round(..*3)/3` banding replaced by smooth lerps. Intended to remove the diamond tone bands on the right hill.
+**Saw**: not run this session (no look/perf); change unverified visually.
+**Next**: (1) `look` zoom [640,100,1280,450] to confirm bands gone; (2) wolf ink silhouette / separate limbs in local; (3) rock occluding local wolf paws, clover grazing check.
+**Open**: wolf items untouched; verify `sm` is defined and no console errors.
