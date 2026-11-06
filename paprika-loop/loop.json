@@ -717,6 +717,17 @@
       "score": null,
       "judgeTurns": 0,
       "judgeTokens": 0
+    },
+    {
+      "n": 66,
+      "turns": 19,
+      "tokens": 613281,
+      "costUsd": 0.2969223999999999,
+      "minutes": 1.9,
+      "commit": "eaa24b9",
+      "score": 8.1,
+      "judgeTurns": 8,
+      "judgeTokens": 113268
     }
   ],
   "best": {

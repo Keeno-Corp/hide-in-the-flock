@@ -2873,3 +2873,9 @@ SCORE: 7.9
    - **Check:** `viewports` tablet then `look` `zoom` on the bottom strip shows legible text.
 
 SCORE: 8.1
+
+## Iteration 67
+**Did**: `game.js` HUD: `#time` stops updating once `result` is set, so the final time stays (no 0:00 reset-look). `index.html` `#cap`: dark pill background, bigger clamp font, bottom at least 28px so it reads on tall viewports.
+**Saw**: Not looked at in a browser this session (small edits, no tool run).
+**Next**: (1) Local 2-player bite 3→2 plus target ring on aimed sheep. (2) Look at `#cap` at 820×1180. (3) Flock depth.
+**Open**: `#cap` pill styling unverified; `#cap` is `width:max-content` with `margin:0 auto` while `position:fixed;left:0;right:0` — should center, unchecked. Time freeze untested on natural win.

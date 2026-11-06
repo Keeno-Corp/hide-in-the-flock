@@ -728,7 +728,7 @@ function step(rdt) {
   wool.update(rdt);
   // ui
   const left = Math.max(0, 180 - T), m = Math.floor(left / 60), sec = Math.floor(left % 60);
-  const tt = `${m}:${String(sec).padStart(2, '0')}`; if ($('time').textContent !== tt) $('time').textContent = tt;
+  const tt = `${m}:${String(sec).padStart(2, '0')}`; if (!result && $('time').textContent !== tt) $('time').textContent = tt;
   renderBites(); renderClovers();
   $('sfill').style.width = clamp(P.susp / 1.5, 0, 1) * 100 + '%';
   if (toastT > 0) { toastT -= rdt; if (toastT <= 0) $('toast').style.opacity = 0; }
