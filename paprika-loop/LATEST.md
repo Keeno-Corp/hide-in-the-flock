@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 12
-**Did**: game.js only, one Next item. Wolf is bigger at start: in `animateWolf` the watch/stalk scale target is 7 in solo (was 4.4; 4.4 kept in local and during pounces, 2.4 for leap poses) and `wolf-rock` scale 1.3→1.9.
-**Saw**: `look` sheet frames 0 and 150: subject wolf 2.6% and 3.0% (was 1.2% / 1.1%), dark silhouette now clearly reads over the flock, no faults listed; brightness 60%. Did not run `perf`.
-**Next**: (1) Wolf is still just under 3.5%: add ~1.2× more scale or drop camera height slightly at start. (2) Ground bands: smooth normals + ink edge `ground-ink` pass, stronger indigo patches (not done). (3) Play solo lose card and real-key local 3-bite flow with `interact`.
-**Open**: Ground ink edge, lose card and real-key local play still unproven. Larger wolf may overlap the flock top edge in pounce framing (not checked).
-
 ### Judge 12
 
 **Judge 12**
@@ -61,3 +55,9 @@ I took a 3-cell `look` sheet (start, human pounce, lose after a forced bite) and
    - The one call that shows it done is `look` with `sheet` at frame 0. It should list `subject wolf` at 3.5% or more.
 
 SCORE: 7.7
+
+## Iteration 13
+**Did**: game.js only. `ground`: normals computed on the indexed plane before `toNonIndexed()` so the facets are smooth. Wolf watch/stalk scale target in solo 7 → 8.4 (`animateWolf`).
+**Saw**: `look` sheet frames 0/150: wolf 2.9% / 4.4%, ground reads as smooth painted hills, no faults listed, brightness 60%. No `perf` run.
+**Next**: (1) `ground-ink` contour/edge pass between tone bands still not done. (2) Prove real-key local play (`KeyM`, arrows, `Enter` ×3) with `interact`. (3) Pounce framing: wolf still large over the flock; pull camera or add ink edge.
+**Open**: Start-frame wolf only 2.9% (frame 0 pose is crouched, so 8.4 scale did not reach 3.5%). Real-key local play unproven. Ground ink edge not done.

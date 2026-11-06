@@ -162,7 +162,7 @@ const PLAY_R = 30;
   let g = new THREE.PlaneGeometry(S, S, N, N); g.rotateX(-Math.PI / 2);
   const p = g.attributes.position;
   for (let i = 0; i < p.count; i++) p.setY(i, gh(p.getX(i), p.getZ(i)));
-  g = g.toNonIndexed(); g.computeVertexNormals();
+  g.computeVertexNormals(); g = g.toNonIndexed();
   const pos = g.attributes.position, nor = g.attributes.normal, col = new Float32Array(pos.count * 3);
   const ochre = new THREE.Color(0xc2b062), sage = new THREE.Color(0x9aa86a), olive = new THREE.Color(0x6a7e46), warm = new THREE.Color(0xb1b274), hill = new THREE.Color(0x707a5c), far = new THREE.Color(0x8a8a78), rock = new THREE.Color(0x9a927f), indigo = new THREE.Color(0x4c5688), c = new THREE.Color();
   for (let i = 0; i < pos.count; i++) {
@@ -824,7 +824,7 @@ function drawSheep(dt) {
 function drawWolf(dt) {
   const w = wolf, r = W.root, pz = w.pose;
   r.position.set(w.x, w.y, w.z); r.rotation.y = w.yaw;
-  { const want = (pz === 'leap' || pz === 'land' || pz === 'shrug' || pz === 'grin') ? 2.4 : (pounce.ph || mode !== "solo" ? 4.4 : 7); r.scale.setScalar(r.scale.x + (want - r.scale.x) * Math.min(1, dt * 10 + 0.05)); }
+  { const want = (pz === 'leap' || pz === 'land' || pz === 'shrug' || pz === 'grin') ? 2.4 : (pounce.ph || mode !== "solo" ? 4.4 : 8.4); r.scale.setScalar(r.scale.x + (want - r.scale.x) * Math.min(1, dt * 10 + 0.05)); }
   const ph = w.phase, t = clock;
   W.body.position.set(0, 0, 0); W.body.rotation.set(0, 0, 0); W.head.rotation.set(0, 0, 0); W.head.position.set(0, 0.88, 1.08);
   W.legs.forEach(l => l.rotation.set(0, 0, 0)); W.tail.rotation.set(0, 0, 0);
