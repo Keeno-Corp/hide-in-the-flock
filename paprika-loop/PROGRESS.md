@@ -2899,3 +2899,9 @@ The `ground` shimmer note is already in my verdict, but I should have ranked it.
 3. **Soften the `ground` fine detail and thin the front sheep crowd.** Fade the `ground` texture detail with distance. Proof: after `pounce`, `look` no longer prints the `Surface: "ground"` noise line. Also keep `sheep*` under 10% of the frame.
 
 SCORE: 7.9
+
+## Iteration 52
+**Did**: wolf enlarged in the start frame: `W.root` scale in the per-frame line (game.js ~907) 3.9/3.45 → 4.6 (local) / 5.0 (solo), initial 2.6→3.6. Nothing else touched (round-trees/oaks facets, `ground` detail, sheep crowd not done).
+**Saw**: `look` 1280x800: no console errors, no Lighting/Surfaces lines, nothing Never visible. `Subject: wolf` 0.7% → 2.5% [140,469,421,678]; wolf-body 1.4%; wolf now reads as a black silhouette on the rock. `sheep*` still 13%, `ground` 36%. No perf run.
+**Next**: flatten `round-trees*`/`oaks*` facets; fade `ground` detail with distance and thin the front sheep crowd (<10%); add a pale rim behind the wolf; check the larger wolf's body doesn't swallow its rock/leg proportions (legs are small, `wolf-leg` 0.14%).
+**Open**: Bigger wolf scale is visual only: pounce/catch distances not replayed; local-mode scale 4.6 and bite/pounce frames not re-looked at; natural win still unplayed.
