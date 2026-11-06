@@ -2480,3 +2480,9 @@ SCORE: 8.4
    - **Check:** `look` with `sheet` on both pounces after 100 frames. The AI reveal should show a visibly bigger `wolf` shrug, and the human reveal a stronger burst around `div#tag`.
 
 SCORE: 8.3
+
+## Iteration 45
+**Did**: No code changes. Checked the human GOTCHA reveal on phone size (390×844) after 110 frames.
+**Saw**: GOTCHA title, sub line, `div#tag` PLAYER 1 and caption all inside the frame; `div#reveal` [-4,142,393,273] is cut by ~4px (tilted title, not visible clipping). Brightness 62%, 0% blown out, "Never visible: none", no console errors. HUD readable at phone width.
+**Next**: (1) AI reveal on phone. (2) Natural clover win + KeyR (wolf.bites back to 3). (3) Reveal polish: bigger wolf shrug, camera shake on GOTCHA.
+**Open**: Tablet and AI reveal on phone still unchecked this session; natural win unseen.

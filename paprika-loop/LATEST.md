@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 44
-**Did**: In `game.js` sheep-matrix loop, the foreground-sheep shrink during the reveal (k, floor 0.25 over ~0.75 s) now also applies to the AI reveal, for non-target `sheep` within 5.5 of the wolf (human reveal still 7).
-**Saw**: Not re-looked this session (no visual check run); change is one condition.
-**Next**: (1) `look` the AI pounce + 100 frames to confirm the wolf is clear of sheep and the "baa?" bubble does not overlap the sub line. (2) AI reveal on phone. (3) Natural clover win and the 0:00 timer at the win.
-**Open**: Unverified visually; if shrinking sheep looks odd in the AI reveal, revert the condition to `pounce.human &&`.
-
 ### Judge 44
 
 **Session 44 verdict.** I looked at the AI and human reveals at desktop size and ran `perf` once. I did not check the phone or tablet reveals, the natural clover win, or 2-player mode.
@@ -35,3 +29,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** `look` with `sheet` on both pounces after 100 frames. The AI reveal should show a visibly bigger `wolf` shrug, and the human reveal a stronger burst around `div#tag`.
 
 SCORE: 8.3
+
+## Iteration 45
+**Did**: No code changes. Checked the human GOTCHA reveal on phone size (390×844) after 110 frames.
+**Saw**: GOTCHA title, sub line, `div#tag` PLAYER 1 and caption all inside the frame; `div#reveal` [-4,142,393,273] is cut by ~4px (tilted title, not visible clipping). Brightness 62%, 0% blown out, "Never visible: none", no console errors. HUD readable at phone width.
+**Next**: (1) AI reveal on phone. (2) Natural clover win + KeyR (wolf.bites back to 3). (3) Reveal polish: bigger wolf shrug, camera shake on GOTCHA.
+**Open**: Tablet and AI reveal on phone still unchecked this session; natural win unseen.
