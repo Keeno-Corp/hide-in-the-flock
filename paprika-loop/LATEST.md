@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 49
-**Did**: `round-trees*`/`oaks` crown colours (game.js:347) flattened to one 0x7a8848 (no light/dark blobs). `ROCK` and `wolf` start moved from (-10,3) to (-15,-2) (game.js:258-259), away from the front sheep. HUD clover row (renderClovers) now adds "win at 3:00".
-**Saw**: `look` at frame 0: no console errors, no Lighting/Surfaces lines; HUD shows "win at 3:00" without overlap; wolf-body sits on `wolf-rock` left of the flock with grass between, `Subject: wolf` 0.7% (small only because the camera shows it far; not 4%). Trees now read as flat green masses with ink. `perf`/win run not done.
-**Next**: Enlarge wolf in frame (camera or wolf scale at start); flatten `ridge*`; flat cream `sheep*` with thicker `sheep-ink*`; prove the win via eval T=179 with 3 clovers.
-**Open**: Win card still not shown by an `interact` run. Pale rim behind `wolf-body` not added. The wolf-start move may change AI stalk distances; not played.
-
 ### Judge 49
 
 **Scores**
@@ -50,3 +44,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Proof: `look` with `sample` at two points on one `round-trees*` crown returns near-equal colour, and the faceted blobs are gone from the picture.
 
 SCORE: 7.9
+
+## Iteration 50
+**Did**: No code change. Proved the win card: `interact` steps `[{wait:30},{action:"win"},{wait:30}]` with `expect {result:"win"}` ✓ and `look:true`.
+**Saw**: Win card shows "THE FLOCK WINS / YOU BLENDED IN" with ink-bordered cream panel, "R to play again · M to switch mode", no console errors. The card covers the top of `#hud` (HUD text is visible behind it at 2:59). `Subject: wolf` 2.5%, `sheep*` ×68 still cream lumps at 13%; no Lighting/Surfaces lines; nothing Never visible.
+**Next**: Flat cream `sheep*` with thicker `sheep-ink*`; flatten `ridge*` and `round-trees*` facets; enlarge wolf in frame (camera or scale); hide `#hud` under the win card.
+**Open**: Natural win (T>=180 with 3 clovers) still not played, only `act({action:'win'})`. Pale rim behind `wolf-body` not added. Wolf-start (-15,-2) vs AI stalk distances unplayed.
