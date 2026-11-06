@@ -1646,3 +1646,9 @@ SCORE: 8.1
    - **Also:** fix the 8px `div#reveal` overflow on phone. Use `left:0; right:0` or `width:100vw`, and check that the "HTML over the canvas" line no longer says cut off.
 
 SCORE: 8.2
+
+## Iteration 26
+**Did**: game.js reveal phase: `#reveal` banner fades out after p.t 2.0, a `#replayTag` ("▶ REPLAY", created in JS) shows from 2.1 until the reveal ends, `aimLine` hidden at 2.0; AI-target close-up factor in `updateCamera` 0.5 -> 0.7; human reveal scale 1.05 only above 640px (to stop the 8px phone overflow).
+**Saw**: no tools run; `node --check game.js` passes.
+**Next**: (1) `look` sheet `pounce human` at 260 for banner gone + REPLAY tag, `ai150` at 390x844 for wolf size, and check `div#reveal` no longer cut off; (2) the camera does not actually zoom back until p.t 2.0 only, check the ease reads as a replay; (3) full solo round with real keys.
+**Open**: all changes unverified; page never opened this session.

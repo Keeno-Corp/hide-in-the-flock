@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 25
-**Did**: index.html ≤640px query: `#cap` bottom 5vh -> 64px so it clears `#mode` (Next 3). game.js `updateCamera`: close-up factor 0.32 -> 0.5 when the pounce target is an AI sheep, so the `wolf` shrug fills more of the frame (Next 2).
-**Saw**: no tools run; edits are one-line CSS/number changes.
-**Next**: (1) `look` sheet `ai150` to check the wolf fills ~1/3 height, and resize [390,844] `pounce human` wait 150 for cap/mode overlap; (2) REPLAY beat after the reveal (still not done): ease `sheep*` back, drop `aimLine`, "REPLAY" tag; (3) full solo round playtest.
-**Open**: both changes unverified; REPLAY beat missing.
-
 ### Judge 25
 
 **Judge verdict, session 25**
@@ -65,3 +59,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Also:** fix the 8px `div#reveal` overflow on phone. Use `left:0; right:0` or `width:100vw`, and check that the "HTML over the canvas" line no longer says cut off.
 
 SCORE: 8.2
+
+## Iteration 26
+**Did**: game.js reveal phase: `#reveal` banner fades out after p.t 2.0, a `#replayTag` ("▶ REPLAY", created in JS) shows from 2.1 until the reveal ends, `aimLine` hidden at 2.0; AI-target close-up factor in `updateCamera` 0.5 -> 0.7; human reveal scale 1.05 only above 640px (to stop the 8px phone overflow).
+**Saw**: no tools run; `node --check game.js` passes.
+**Next**: (1) `look` sheet `pounce human` at 260 for banner gone + REPLAY tag, `ai150` at 390x844 for wolf size, and check `div#reveal` no longer cut off; (2) the camera does not actually zoom back until p.t 2.0 only, check the ease reads as a replay; (3) full solo round with real keys.
+**Open**: all changes unverified; page never opened this session.
