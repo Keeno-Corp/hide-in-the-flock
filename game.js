@@ -643,7 +643,7 @@ function startPounce(t) {
 }
 function localPounce() {
   if (pounce.ph || result || wolf.bites <= 0) return;
-  let best = null, bd = 4.6;
+  let best = null, bd = 7;
   for (const s of sheep) { const d = Math.hypot(s.x - wolf.x, s.z - wolf.z); if (d < bd) { bd = d; best = s; } }
   if (best) startPounce(best); else toast('Nothing in reach: close in on a sheep!', 1.3);
 }
@@ -863,7 +863,7 @@ function drawWolf(dt) {
   reach.visible = loc && !pounce.ph && !result; reach.position.set(w.x, gh(w.x, w.z) + 0.15, w.z);
   aim.visible = false; aimLine.visible = false;
   wolfRing.visible = loc && !pounce.ph && !result; if (wolfRing.visible) { wolfRing.position.set(w.x, gh(w.x, w.z) + 0.3, w.z); wolfRing.scale.setScalar(1 + 0.15 * Math.sin(clock * 8)); const rdy = 1 - Math.min(1, (w.dashCd || 0) / 2.5); wolfRing.userData.fill.scale.setScalar(Math.max(0.02, rdy)); wolfRing.userData.fill.material.color.setHex(rdy >= 1 ? 0x8e9a58 : 0xb3261e); }
-  if (loc && !pounce.ph && !result) { let best = null, bd = 9; for (const s of sheep) { const d = Math.hypot(s.x - w.x, s.z - w.z); if (d < bd) { bd = d; best = s; } } if (best) { aim.visible = true; aim.position.set(best.x, best.y + 0.2, best.z); aim.scale.setScalar(1.5 + 0.2 * Math.sin(clock * 9)); aim.userData.arrow.position.y = 5 + Math.sin(clock * 7); { const dx = best.x - w.x, dz = best.z - w.z, L = Math.hypot(dx, dz) || 1; aimLine.visible = true; aimLine.position.set((w.x + best.x) / 2, best.y + 0.6, (w.z + best.z) / 2); aimLine.rotation.y = Math.atan2(-dz, dx); aimLine.scale.set(L, 1, 1); } const inR = bd < 4.6; aim.material.opacity = inR ? 0.7 + 0.25 * Math.sin(clock * 9) : 0.25; reach.material.color.setHex(inR ? 0xe0a03a : 0xb3261e); reach.scale.setScalar(inR ? 1.35 : 1); aim.userData.arrow.visible = inR; } }
+  if (loc && !pounce.ph && !result) { let best = null, bd = 9; for (const s of sheep) { const d = Math.hypot(s.x - w.x, s.z - w.z); if (d < bd) { bd = d; best = s; } } if (best) { aim.visible = true; aim.position.set(best.x, best.y + 0.2, best.z); aim.scale.setScalar(1.5 + 0.2 * Math.sin(clock * 9)); aim.userData.arrow.position.y = 5 + Math.sin(clock * 7); { const dx = best.x - w.x, dz = best.z - w.z, L = Math.hypot(dx, dz) || 1; aimLine.visible = true; aimLine.position.set((w.x + best.x) / 2, best.y + 0.6, (w.z + best.z) / 2); aimLine.rotation.y = Math.atan2(-dz, dx); aimLine.scale.set(L, 1, 1); } const inR = bd < 7; aim.material.opacity = inR ? 0.7 + 0.25 * Math.sin(clock * 9) : 0.25; reach.material.color.setHex(inR ? 0xe0a03a : 0xb3261e); reach.scale.setScalar(inR ? 1.35 : 1); aim.userData.arrow.visible = inR; } }
 }
 
 // ───────────────────────── camera ─────────────────────────

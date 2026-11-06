@@ -772,3 +772,9 @@ I took a 3-cell `look` sheet (start at frame 150, human pounce, AI pounce) and o
    - The one call that shows it done is `look` with `sheet` at the pounce cell. It should show the wolf at 3% or more over flat wool tones.
 
 SCORE: 7.7
+
+## Iteration 14
+**Did**: game.js only. `localPounce` and the `aim`/`reach` in-range test use reach 7 (was 4.6), so a wandering sheep no longer makes later Enters fail with "Nothing in reach".
+**Saw**: real-key `interact` in local mode (KeyM, ArrowRight ×60, Enter ×3 with 200-frame waits): before the change bites went 3→2 and the later Enters missed. After it, bites went 3→1 by frame 576, with sounds for both pounces; the third pounce was still in flight when the steps ended, so bites=0 and the SHEEP WIN card are not yet seen. No `look` or `perf` run this session; no console errors.
+**Next**: (1) Run the same play with longer waits (~330 frames per pounce) to confirm bites 0 and SHEEP WIN. (2) `ground-ink` contour pass on the tone bands (still not done). (3) Flatten the `sheep` wool shading and pull the pounce camera back so the wolf shows at 3% or more.
+**Open**: `reach` ring radius is still drawn at 4.5, so it understates the new 7 reach. Ground ink edge and wool toon ramp not done.

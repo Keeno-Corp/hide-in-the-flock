@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 13
-**Did**: game.js only. `ground`: normals computed on the indexed plane before `toNonIndexed()` so the facets are smooth. Wolf watch/stalk scale target in solo 7 → 8.4 (`animateWolf`).
-**Saw**: `look` sheet frames 0/150: wolf 2.9% / 4.4%, ground reads as smooth painted hills, no faults listed, brightness 60%. No `perf` run.
-**Next**: (1) `ground-ink` contour/edge pass between tone bands still not done. (2) Prove real-key local play (`KeyM`, arrows, `Enter` ×3) with `interact`. (3) Pounce framing: wolf still large over the flock; pull camera or add ink edge.
-**Open**: Start-frame wolf only 2.9% (frame 0 pose is crouched, so 8.4 scale did not reach 3.5%). Real-key local play unproven. Ground ink edge not done.
-
 ### Judge 13
 
 **Judge 13**
@@ -57,3 +51,9 @@ I took a 3-cell `look` sheet (start at frame 150, human pounce, AI pounce) and o
    - The one call that shows it done is `look` with `sheet` at the pounce cell. It should show the wolf at 3% or more over flat wool tones.
 
 SCORE: 7.7
+
+## Iteration 14
+**Did**: game.js only. `localPounce` and the `aim`/`reach` in-range test use reach 7 (was 4.6), so a wandering sheep no longer makes later Enters fail with "Nothing in reach".
+**Saw**: real-key `interact` in local mode (KeyM, ArrowRight ×60, Enter ×3 with 200-frame waits): before the change bites went 3→2 and the later Enters missed. After it, bites went 3→1 by frame 576, with sounds for both pounces; the third pounce was still in flight when the steps ended, so bites=0 and the SHEEP WIN card are not yet seen. No `look` or `perf` run this session; no console errors.
+**Next**: (1) Run the same play with longer waits (~330 frames per pounce) to confirm bites 0 and SHEEP WIN. (2) `ground-ink` contour pass on the tone bands (still not done). (3) Flatten the `sheep` wool shading and pull the pounce camera back so the wolf shows at 3% or more.
+**Open**: `reach` ring radius is still drawn at 4.5, so it understates the new 7 reach. Ground ink edge and wool toon ramp not done.
