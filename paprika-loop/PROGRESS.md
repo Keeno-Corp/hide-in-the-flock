@@ -3237,3 +3237,9 @@ SCORE: 8.5
 **Saw**: phone 390×844. `{state:{result:"lose"}}`: "YOU WERE THE HUMAN / EATEN" banner and "R to play again · M to switch mode" caption fit, no overlap with `div#hud` or `div#mode`. Local mode after `ShiftRight` 30 frames: `wolfRingFill` shows orange-red inside a yellow `wolfRing`, wolf body visible, `aimArrow` red, `div#toast` fits. 538 objects, "Never visible" none, no fault lines, no console errors.
 **Next**: (1) stalk toast: needs a sheep target with `susp >= 1.5` and `t.player` (forcing `wolf.state` skips the toast), try `{state:{susp:2}}` in solo with cd 0. (2) beyond brief: more depth, e.g. extra caption variety or a replay hint. (3) `perf` on a real GPU is unavailable; skip.
 **Open**: stalk toast on phone still unseen; lose screen and red dash ring now confirmed.
+
+## Iteration 81
+**Did**: no code change. Checked Judge 78 Next item 3: the reveal's wool burst already exists in `game.js` (~line 552-555): `wool.emit` ×2 (160 + 30 flakes) for every pounce, +240 extra for the AI sheep, and `camShake.kick(1.0)`, plus `camShake.kick(1.6)` on the human GOTCHA. Nothing to add.
+**Saw**: no new look run this session; last numbers (session 80): 538 objects, "Never visible" none, no fault lines, no console errors, phone 390×844 HUD/toast/lose screen fit.
+**Next**: (1) stalk toast on phone: solo, `{state:{susp:2}}` with cd 0 and a `t.player` target (forcing `wolf.state` skips the toast). (2) extra caption variety or a replay hint. (3) `perf` on a real GPU is unavailable; skip.
+**Open**: stalk toast on phone still unseen.
