@@ -177,6 +177,7 @@ const PLAY_R = 30;
     { const ip = Math.sin(cx * 0.14 + 1.7) * Math.sin(cz * 0.12 - 0.6) + 0.5 * Math.sin(cx * 0.3 + cz * 0.22); if (ip > 0.62 && r < 60) c.lerp(indigo, 0.55); }
     col[i * 3] = c.r; col[i * 3 + 1] = c.g; col[i * 3 + 2] = c.b;
   }
+  for (let i = 0; i + 2 < pos.count; i += 3) for (let k = 1; k < 3; k++) for (let j = 0; j < 3; j++) col[(i + k) * 3 + j] = col[i * 3 + j];
   g.setAttribute('color', new THREE.BufferAttribute(col, 3));
   const m = new THREE.Mesh(g, new THREE.MeshToonMaterial({ vertexColors: true, gradientMap: toonGround }));
   m.name = 'ground'; m.receiveShadow = true; scene.add(m);
@@ -325,7 +326,7 @@ const pineGeo = mergeGeometries([
 const pinesMesh = scatterInst(pineGeo, 32, () => { const [x, z] = polar(52, 130); if (z > 4) return null; const h = gh(x, z); const s = rnd(1.1, 2.4) * (Math.hypot(x, z) > 70 ? 1.6 : 1); return { x, z, s, sy: s * rnd(1.0, 1.5), y: h - 0.2 }; }, { name: 'pines' });
 const roundTreeGeo = mergeGeometries([
   mk(cone(0.24, 2.0, 7), 0x4a3324, { p: [0, 1.0, 0], soft: true }),
-  mk(ico(1.2, 2), 0x6f7d44, { p: [0, 2.9, 0], s: [1, 1.2, 1], soft: true }), mk(ico(0.85, 2), 0x84914f, { p: [0.7, 2.4, 0.25], soft: true }), mk(ico(0.75, 2), 0x5f6e3b, { p: [-0.65, 2.45, -0.2], soft: true }), mk(ico(0.6, 2), 0x93a05a, { p: [0.15, 3.7, 0.1], soft: true }),
+  mk(ico(1.2, 2), 0x6f7d44, { p: [0, 2.9, 0], s: [1, 1.2, 1], soft: false }), mk(ico(0.85, 2), 0x84914f, { p: [0.7, 2.4, 0.25], soft: false }), mk(ico(0.75, 2), 0x5f6e3b, { p: [-0.65, 2.45, -0.2], soft: false }), mk(ico(0.6, 2), 0x93a05a, { p: [0.15, 3.7, 0.1], soft: false }),
 ]);
 scatterInst(roundTreeGeo, 14, () => { const [x, z] = polar(33, 58); if (z > 2 || Math.hypot(x, z) < 33) return null; const s = rnd(1.1, 1.7); return { x, z, s }; }, { name: 'round-trees' });
 // two big framing oaks at the meadow's edge
@@ -879,7 +880,7 @@ function drawWolf(dt) {
   reach.visible = loc && !pounce.ph && !result; reach.scale.setScalar(1.55); reach.position.set(w.x, gh(w.x, w.z) + 0.15, w.z);
   aim.visible = false; aimLine.visible = false;
   wolfRing.visible = loc && !pounce.ph && !result; if (wolfRing.visible) { wolfRing.position.set(w.x, gh(w.x, w.z) + 0.3, w.z); wolfRing.scale.setScalar(1 + 0.15 * Math.sin(clock * 8)); const rdy = 1 - Math.min(1, (w.dashCd || 0) / 2.5); wolfRing.userData.fill.scale.setScalar(Math.max(0.02, rdy)); wolfRing.userData.fill.material.color.setHex(rdy >= 1 ? 0x8e9a58 : 0xb3261e); }
-  { const k = loc ? 9 : 8; W.root.scale.setScalar(k); W.root.traverse(o => { if (o.material) { o.material.depthTest = !loc; o.renderOrder = loc ? 8 : 0; } }); }
+  { const k = loc ? 9 : 8; W.root.scale.setScalar(k); W.root.traverse(o => { if (o.material) { o.material.depthTest = true; o.renderOrder = loc ? 8 : 0; } }); }
   wolfMark.visible = wolfRing.visible; if (wolfMark.visible) wolfMark.position.set(w.x, gh(w.x, w.z) + 7.5 + Math.sin(clock * 6) * 0.5, w.z);
   if (loc && !pounce.ph && !result) { let best = null, bd = 9; for (const s of sheep) { const d = Math.hypot(s.x - w.x, s.z - w.z); if (d < bd) { bd = d; best = s; } } if (best) { aim.visible = true; aim.position.set(best.x, best.y + 0.2, best.z); aim.scale.setScalar(1.5 + 0.2 * Math.sin(clock * 9)); aim.userData.arrow.position.y = 5 + Math.sin(clock * 7); { const dx = best.x - w.x, dz = best.z - w.z, L = Math.hypot(dx, dz) || 1; aimLine.visible = true; aimLine.position.set((w.x + best.x) / 2, best.y + 0.6, (w.z + best.z) / 2); aimLine.rotation.y = Math.atan2(-dz, dx); aimLine.scale.set(L, 1, 1); } const inR = bd < 7; aim.material.opacity = inR ? 0.7 + 0.25 * Math.sin(clock * 9) : 0.25; reach.material.color.setHex(inR ? 0xe0a03a : 0xb3261e); reach.scale.setScalar(inR ? 1.7 : 1.55); aim.userData.arrow.visible = inR; } }
 }

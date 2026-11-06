@@ -1131,3 +1131,9 @@ I took a 4-cell `look` sheet (start, AI pounce, human pounce, local after `KeyM`
    - The one call that shows it done is the local sheet cell after `KeyM`. It should show `wolf-rock` in front of the wolf's paws.
 
 SCORE: 7.9
+
+## Iteration 20
+**Did**: game.js. `ground` vertex colours now flat per triangle (colour of the first vertex copied to the other two). `roundTreeGeo` ico crowns use soft:false (faceted; `oaks` and `round-trees` share it). Local-mode wolf no longer sets depthTest=false (depthTest true; renderOrder 8 only), so trees and rocks occlude it.
+**Saw**: `look` sheet start|local at 150/60 frames: no errors, no Lighting/Surfaces lines; start wolf 2.5%, local wolf 8%; 0% near black still; ground reads as flat tone facets, trees as flat masses. Local wolf still draws in front of `wolf-rock` paws region (rock is under it, not in front). No perf run.
+**Next**: (1) AI-pounce wolf is a blob filling the frame: pull the camera back or scale `wolf-body`; (2) check wolf body colour is not lifted by toon ramp/fog/grain (sample reads above 20/channel); (3) local wolf scale 9 gives 8%, back to 7% maybe 8.5.
+**Open**: pounce frame and perf not re-checked; renderOrder alone does not stop the local wolf hiding behind the rock when it should be occluded.

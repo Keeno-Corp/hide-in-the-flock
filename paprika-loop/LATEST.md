@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 19
-**Did**: game.js only, two small edits. Palette `wolf` 0x17110e→0x0a0709 (darkest shape). Local-mode `W.root` scale 10.4→9 (solo stays 8).
-**Saw**: not run (no `look`/`perf` this session); `node --check` passes.
-**Next**: (1) `look` start frame 150: check "near black" >1% and local wolf at 4–7%; (2) quantise `ground` vertex colours to 3 flat tones (the patch lerps are mostly binary already, the smooth part is the `r`-based hill/far blends and the olive 0.55 indigo mix); trees already use a 2-step `toon2` ramp, so faceted look is from `mk(... soft:true)` normals — try soft:false on the ico crowns; (3) replace local `depthTest:false` on wolf with renderOrder only.
-**Open**: tree flattening and depthTest change not done; wolf colour/scale unverified visually.
-
 ### Judge 19
 
 Wolf in the local cell is 7% (target met); the wolf still reads as dark brown, not near black, in this tool.
@@ -60,3 +54,9 @@ I took a 4-cell `look` sheet (start, AI pounce, human pounce, local after `KeyM`
    - The one call that shows it done is the local sheet cell after `KeyM`. It should show `wolf-rock` in front of the wolf's paws.
 
 SCORE: 7.9
+
+## Iteration 20
+**Did**: game.js. `ground` vertex colours now flat per triangle (colour of the first vertex copied to the other two). `roundTreeGeo` ico crowns use soft:false (faceted; `oaks` and `round-trees` share it). Local-mode wolf no longer sets depthTest=false (depthTest true; renderOrder 8 only), so trees and rocks occlude it.
+**Saw**: `look` sheet start|local at 150/60 frames: no errors, no Lighting/Surfaces lines; start wolf 2.5%, local wolf 8%; 0% near black still; ground reads as flat tone facets, trees as flat masses. Local wolf still draws in front of `wolf-rock` paws region (rock is under it, not in front). No perf run.
+**Next**: (1) AI-pounce wolf is a blob filling the frame: pull the camera back or scale `wolf-body`; (2) check wolf body colour is not lifted by toon ramp/fog/grain (sample reads above 20/channel); (3) local wolf scale 9 gives 8%, back to 7% maybe 8.5.
+**Open**: pounce frame and perf not re-checked; renderOrder alone does not stop the local wolf hiding behind the rock when it should be occluded.
