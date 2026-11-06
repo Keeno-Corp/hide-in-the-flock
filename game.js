@@ -690,6 +690,7 @@ function updateCamera(dt, rdt) {
   if (pounce.ph === 'reveal' && pounce.t < 2.0) { tx = wolf.x; tz = wolf.z - 2; }
   cam.close += ((pounce.ph === 'reveal' && pounce.t < 2.0 ? 1 : 0) - cam.close) * (1 - Math.exp(-rdt * (pounce.ph === 'reveal' ? 3.5 : 6)));
   rim.position.set(wolf.x + 1.5, 4, wolf.z + 4); rim.intensity = 90 * cam.close;
+  renderer.toneMappingExposure = 1.05 - 0.17 * cam.close;
   const kf = 1 - Math.exp(-rdt * (cam.punch > 0.05 ? 7 : 2.4));
   cam.x += (tx - cam.x) * kf; cam.z += (tz - cam.z) * kf; cam.zoom += (zoom - cam.zoom) * kf;
   const sc2 = (1 - 0.3 * cam.punch - (pounce.target && !pounce.human ? 0.42 : 0.2) * cam.close) * cam.zoom;

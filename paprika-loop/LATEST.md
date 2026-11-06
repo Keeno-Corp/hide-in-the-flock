@@ -59,8 +59,8 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
 
 SCORE: 8.1
 
-## Iteration 36
-**Did**: No code change. Played the natural win: set `t` 181 and parked the wolf far away, then teleported the player to each `clover` ([14,-5], [-3,15], [-19,8]) and held KeyE 160 frames each.
-**Saw**: `result` "win", `clovers` 3, with 3 `powerup` sounds and munch sounds. The "YOU BLENDED IN" reveal shows with the "R to play again" sub line. Saturation 40%, grey 49%, 0% blown out, no Never visible, no console errors. The HUD clover icons are all lit. The HUD TIME reads 0:00 after the win (a countdown that has run out, or a display quirk from the set `t`; not checked). `perf` not run.
-**Next**: (1) the AI-reveal washout (lower exposure or sea/sky brightness in the reveal, keep `wolf` clear of wool); (2) check phone and tablet sizes for HUD overlaps; (3) check what the HUD TIME shows at the win.
-**Open**: Win needs `t` >= 180, so a real player has to survive 3 minutes. I did not play that in real time.
+## Iteration 37
+**Did**: In `updateCamera` (game.js) the renderer `toneMappingExposure` now drops from 1.05 to 0.88 with `cam.close`, to cut the washed-out AI/human reveal frame. One line, syntax-checked only.
+**Saw**: Not looked at: no `look` or `perf` run this session, so the grey and wolf-share numbers are unmeasured.
+**Next**: (1) `look` after the AI pounce plus 150 frames: grey under 55%? wolf share above 6%? Nudge the camera if the wolf is behind wool. (2) Check the human pounce reveal reaches "reveal". (3) Check phone and tablet HUD sizes.
+**Open**: The exposure change is unverified visually; revert it if the reveal looks dull.
