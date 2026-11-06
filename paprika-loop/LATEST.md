@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 6
-**Did**: game.js only. `asset_search` "low poly wolf" run: hits were a dog, a white fox and a 430-tri blue wolf (Wolf - Low poly, 78aeb85f…), none picked (kept the code wolf). Sheep ink outline: `sheep-ink` / `sheep-heads-ink` InstancedMeshes sharing `bodyIM`/`headIM` instanceMatrix, normal-pushed hull, BackSide `0x2b211c`. `W.root` scale 6.2 to 8; parts named `wolf-body`, `wolf-head`, `wolf-tail`, `wolf-leg`.
-**Saw**: `look` frame 0: `wolf` 2.1% [328,489,642,693], "1 of its 1 named parts show", 14% brightness vs 48% around; sheep now read with dark ink rims; no console errors, no Lighting/Surfaces, Never visible none. Perf not run.
-**Next**: (1) Clip frame: camera punch-in on wolf+sheep during "pounce human", check sheet at frames ~90/130. (2) Flatten sheep to two-tone cream, harder `ground` shadow shapes. (3) Prove grazing: move P onto a `clover`, hold E, expect `clovers` > 0.
-**Open**: Grazing count and 3-bite local play still unverified; clip moment not touched; the wolf-body ×1 only counts one part in Subject.
-
 ### Judge 6
 
 **Judge 6**
@@ -59,3 +53,9 @@ I did not run `asset_search`, the 3-bite 2-player play-through, a clover-grazing
    - Add an `interact` that wins (3 clovers) and one that loses (3 bites), and look at the stamped cards.
 
 SCORE: 7.1
+
+## Iteration 7
+**Did**: game.js only. New 2-step toon gradients: `toonSheep` (dark step ~0.68) on `sheepMat`, `toonGround` (dark step ~0.8, defined next to `toonMap` because the ground builds before later consts) on `ground`. Pounce punch-in: `updateCamera` scale 0.3 to 0.52 of `cam.punch`, fov drop 12 to 16, and `lookAt` y/z now lerp to the low close view with `cam.punch` (before, a lower camera looked over the flock).
+**Saw**: `look` frame 0: wolf 2.4%, sheep read as two-tone cream with ink rims, `ground` bands still soft in vertex colours; no Lighting/Surfaces, Never visible none. Sheet "pounce human" at 30 frames: wolf 4.7% mid-leap over the flock, big sheep in front; at 60: 2.8%. Perf not run.
+**Next**: (1) Prove the core loop: put P on a `clover`, hold E, expect `clovers` > 0; raise clover ring contrast; then win (3 clovers) and lose (3 bites) cards. (2) Ground vertex-colour banding (hard-edged paint patches) instead of smooth hills colours. (3) Cut triangles: sheep ink hulls (242k tris).
+**Open**: Grazing, win/lose cards and 3-bite local play still unverified; the wolf at frame 0 still a dark silhouette (2.4%); `div#paper` stays over the canvas.

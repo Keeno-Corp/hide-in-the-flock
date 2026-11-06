@@ -142,6 +142,7 @@ const hemi = new THREE.HemisphereLight(0xdcc8d0, 0x4c5688, 2.5); scene.add(hemi)
 
 // toon bands: shade / mid / lit
 const toonMap = (() => { const n = 24, d = new Uint8Array(n * 4); for (let i = 0; i < n; i++) { const nl = ((i + 0.5) / n) * 2 - 1, v = nl < 0.02 ? 0 : nl < 0.4 ? 0.82 : 1; d[i * 4] = d[i * 4 + 1] = d[i * 4 + 2] = Math.round(v * 255); d[i * 4 + 3] = 255; } const t = new THREE.DataTexture(d, n, 1, THREE.RGBAFormat); t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t; })();
+const toonGround = (() => { const d = new Uint8Array([205,200,190,255, 255,255,255,255]); const t = new THREE.DataTexture(d, 2, 1, THREE.RGBAFormat); t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t; })();
 
 // ───────────────────────── terrain: a dusk meadow ringed by hills ─────────────────────────
 function gh(x, z) {
@@ -176,7 +177,7 @@ const PLAY_R = 30;
     col[i * 3] = c.r; col[i * 3 + 1] = c.g; col[i * 3 + 2] = c.b;
   }
   g.setAttribute('color', new THREE.BufferAttribute(col, 3));
-  const m = new THREE.Mesh(g, new THREE.MeshToonMaterial({ vertexColors: true, gradientMap: toonMap }));
+  const m = new THREE.Mesh(g, new THREE.MeshToonMaterial({ vertexColors: true, gradientMap: toonGround }));
   m.name = 'ground'; m.receiveShadow = true; scene.add(m);
 }
 
@@ -220,7 +221,8 @@ const sheepHeadGeo = mergeGeometries([
 const SS = 1.8;
 const HEAD_P = new THREE.Vector3(0, 0.78, 0.6);
 const N_AI = 100, N = N_AI + 1;
-const sheepMat = flat({ emissive: 0x4a3e30 }); const bodyIM = new THREE.InstancedMesh(sheepBodyGeo, sheepMat, N); bodyIM.name = 'sheep'; bodyIM.castShadow = true; bodyIM.frustumCulled = false;
+const toonSheep = (() => { const d = new Uint8Array([176,170,160,255, 255,255,255,255]); const t = new THREE.DataTexture(d, 2, 1, THREE.RGBAFormat); t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t; })();
+const sheepMat = flat({ emissive: 0x4a3e30, gradientMap: toonSheep }); const bodyIM = new THREE.InstancedMesh(sheepBodyGeo, sheepMat, N); bodyIM.name = 'sheep'; bodyIM.castShadow = true; bodyIM.frustumCulled = false;
 const headIM = new THREE.InstancedMesh(sheepHeadGeo, sheepMat, N); headIM.name = 'sheep-heads'; headIM.castShadow = true; headIM.frustumCulled = false;
 { const tints = [0xffffff, 0xfaf0dc, 0xefe2c6, 0xffffff, 0xf2e6cf, 0xe0d4bb]; const c = new THREE.Color();
   for (let i = 0; i < N; i++) { const j = i === 0 ? 13 : i, t = tints[(j * 7 + (j >> 2)) % tints.length]; c.setHex(t).multiplyScalar(0.92 + ((j * 37) % 17) / 17 * 0.1); bodyIM.setColorAt(i, c); headIM.setColorAt(i, new THREE.Color(0xffffff)); } }
@@ -870,10 +872,10 @@ function updateCamera(dt, rdt) {
   rim.position.set(wolf.x + 1.5, 4, wolf.z + 4); rim.intensity = 90 * cam.close;
     const kf = 1 - Math.exp(-rdt * (cam.punch > 0.05 ? 7 : 2.4));
   cam.x += (tx - cam.x) * kf; cam.z += (tz - cam.z) * kf; cam.zoom += (zoom - cam.zoom) * kf;
-  const sc2 = (1 - 0.3 * cam.punch - (pounce.target && !pounce.human ? 0.42 : 0.2) * cam.close) * cam.zoom;
+  const sc2 = (1 - 0.52 * cam.punch - (pounce.target && !pounce.human ? 0.42 : 0.2) * cam.close) * cam.zoom;
   camera.position.set(cam.x, 16 * sc2 + 3 + (pounce.target && !pounce.human ? 5 * cam.close : 0), cam.z + 44 * sc2 + 8);
-  camera.lookAt(cam.x, lerp(10.5, 3.0, cam.close), cam.z - 8 * (1 - cam.close) - 1 * cam.close);
-  let fov = 42 - 12 * cam.punch - (pounce.ph === 'reveal' ? 9 * Math.max(0, 1 - pounce.t / 0.6) : 0); { const a = innerWidth / innerHeight; if (a < 1.4) fov = Math.min(80, (2 * Math.atan(Math.tan(fov * Math.PI / 360) * 1.4 / a)) * 180 / Math.PI); } if (Math.abs(camera.fov - fov) > 0.01) { camera.fov = fov; camera.updateProjectionMatrix(); }
+  camera.lookAt(cam.x, lerp(10.5, 3.0, Math.max(cam.close, cam.punch * 0.9)), cam.z - 8 * (1 - Math.max(cam.close, cam.punch * 0.9)) - 1 * cam.close);
+  let fov = 42 - 16 * cam.punch - (pounce.ph === 'reveal' ? 9 * Math.max(0, 1 - pounce.t / 0.6) : 0); { const a = innerWidth / innerHeight; if (a < 1.4) fov = Math.min(80, (2 * Math.atan(Math.tan(fov * Math.PI / 360) * 1.4 / a)) * 180 / Math.PI); } if (Math.abs(camera.fov - fov) > 0.01) { camera.fov = fov; camera.updateProjectionMatrix(); }
   pinesMesh.visible = cam.close < 0.8;
   { const ly = camera.position.y; }
   camShake.update(rdt);
