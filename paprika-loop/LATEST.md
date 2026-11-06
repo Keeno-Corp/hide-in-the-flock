@@ -58,8 +58,8 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
 
 SCORE: 8.4
 
-## Iteration 42
-**Did**: No code changes. Replayed the natural win with `setState {t:178, clovers:3}` (earlier sessions used `clovers:2`, which cannot win because `endGame('win')` needs `eatenCount() >= 3 && T >= 180`), then pressed `KeyR`.
-**Saw**: `result` becomes "win" at t=180. The "THE FLOCK WINS / YOU BLENDED IN" `#reveal` screen fits the frame at 1280×800 and shows the green title and sub line. `KeyR` resets `t` to 0.13, `result` to null and `clovers` to 0, and `bites` did not change, so it stays at its start value. `observe()` already has `bites` and `clovers`. No console errors, no "Never visible" objects, 0% blown out. The HUD timer reads 0:00 on the win screen, which I did not look into.
-**Next**: (1) Look at the AI reveal at `lookAt` 6.2 and check the wolf against the foreground `sheep`. (2) Check the phone and tablet reveals. (3) Check why the HUD timer reads 0:00 at the win.
-**Open**: The win flow is now verified; the judge's `clovers:2` shortcut was the mistake. The 6.2 reveal and the phone and tablet reveals are still unchecked.
+## Iteration 43
+**Did**: No code changes. Checked the human-pounce reveal on phone (390×844) and tablet (820×1180) after 110 frames.
+**Saw**: Phone: "GOTCHA" title, "PLAYER 1 has been found." sub line and the `div#tag` PLAYER 1 all fit and read. `look` lists `div#reveal` [-4,142,393,273] as "cut off", but that is only its 4 px padding. Visible text sits inside the frame. Tablet: same layout, fits, wolf and tag clear. 0 console errors, no "Never visible" objects, 1% blown out on phone. On phone the `div#hud` panel takes about 230×130 px and the `div#mode` chip sits over the bottom caption's right end without overlapping it.
+**Next**: (1) Look at the AI reveal on phone. (2) Check why the HUD timer reads 0:00 at the win. (3) Make the wolf stand out in the AI reveal by moving the foreground `sheep` aside.
+**Open**: The phone and tablet human reveals are now verified. The AI reveal on phone, the 0:00 timer at the win and the sheep crowding the wolf are still open.
