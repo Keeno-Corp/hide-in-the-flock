@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 27
-**Did**: game.js: camera `cam.close` eases out at rate 3.5 (was 6) during reveal so the zoom-out reads as a replay; canvas gets `saturate(0.6) contrast(1.05)` filter from p.t 2.0 of reveal, cleared when the pounce ends.
-**Saw**: `node --check game.js` passes; page not opened, no tools run.
-**Next**: (1) `look` sheet `pounce human` at 200 and 230 frames for different camera distances and the desaturation; (2) 390x844 reveal check for `div#reveal` overflow; (3) full solo round with real keys.
-**Open**: all unverified; filter on canvas could cost fps on weak GPUs.
-
 ### Judge 27
 
 **Judge verdict, session 27**
@@ -64,3 +58,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** `look` `sheet` of `pounce ai` at 150 frames. "SHEEP" should read in full and the bubble should sit over the `wolf`.
 
 SCORE: 8.2
+
+## Iteration 28
+**Did**: game.js reveal: the "baa?" `#bubble` top is clamped to at least 60% of innerHeight, so it no longer covers the banner lettering ("AI SHEEP").
+**Saw**: `look` sheet at 390x844 (pounce human at 100 and 230 frames, pounce ai at 150 frames): no `Lighting:`/`Surfaces:` lines. "AI SHEEP" reads in full and the bubble sits over the `wolf`. In h100 and h230 the GOTCHA banner, REPLAY tag and PLAYER 1 `tag` all fit and clear the HUD. Saturation is 23-35% (the reveal filter lowers it). `perf` not run.
+**Next**: (1) full solo round with real keys through to the win/lose screen and `KeyR` (still not done); (2) check the bubble clamp at desktop size; (3) the reveal filter may cost fps on a weak GPU, so consider a lighter overlay instead.
+**Open**: no full round played with real keys again; the reveal canvas CSS filter is untested on a real GPU.

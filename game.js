@@ -566,7 +566,7 @@ function updatePounce(rdt) {
   { let rp = document.getElementById('replayTag'); if (!rp) { rp = document.createElement('div'); rp.id = 'replayTag'; rp.textContent = '\u25B6 REPLAY'; rp.style.cssText = 'position:fixed;left:50%;top:14vh;transform:translateX(-50%);z-index:8;pointer-events:none;font:900 28px system-ui,sans-serif;letter-spacing:4px;color:#fff;background:#000a;padding:6px 16px;border-radius:6px;display:none'; document.body.appendChild(rp); } rp.style.display = p.t > 2.1 ? 'block' : 'none'; renderer.domElement.style.filter = p.t > 2.0 ? 'saturate(0.6) contrast(1.05)' : ''; if (p.t > 2.0) aimLine.visible = false; }
   if (t.hop !== undefined) { t.hopV -= 14 * rdt * (p.t < 1 ? 0.5 : 1); t.hop = Math.max(0, t.hop + t.hopV * rdt); if (t.hop === 0 && t.hopV < 0) { t.hopV = 0; t.spin *= 0.8; } }
   if (p.human) { const g = bodyMatrixOf(t); outline.position.set(t.x, t.y + t.hop, t.z); outline.rotation.y = t.yaw + t.spin * 0.0; outline.scale.setScalar(SS * 1.1); place($('tag'), t.x, t.y + 3.6, t.z); { const r = $('tag').getBoundingClientRect(); if (r.top < innerHeight * 0.5 && r.top > innerHeight * 0.12) $('tag').style.top = innerHeight * 0.62 + 'px'; }; }
-  else place($("bubble"), t.x, t.y + 4.2, t.z);
+  else { place($("bubble"), t.x, t.y + 4.2, t.z); { const bt = parseFloat($('bubble').style.top); if (bt < innerHeight * 0.6) $('bubble').style.top = innerHeight * 0.6 + 'px'; } }
   if (!p.human) { w.shrug = 1; }
   if (!p.human && p.t < 1.9) cam.punch = 1; else if (u > 0.72) cam.punch = Math.max(0, cam.punch - rdt * 1.6);
   $('bt').style.height = $('bb').style.height = 3 * cam.punch + 'vh';
