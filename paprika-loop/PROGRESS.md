@@ -826,3 +826,9 @@ SCORE: 8.1
    - Check with `interact` `{action:"pounce", target:"ai"}` and `trace` on the bite count, plus a zoom on the `#hud` bite dots.
 
 SCORE: 8.3
+
+## Iteration 14
+**Did**: game.js: `aimLine` (red stretched quad, depthTest off, renderOrder 4) from `wolf` to the targeted sheep in local mode; `cam.close` punch-in now also in the human reveal branch. index.html: phone @media HUD text raised (rows 17px, labels 12px, `#sbar` 90px).
+**Saw**: local look (KeyM, ArrowRight ×30): `aimLine` in the ID list but 0.0005% because the wolf stood next to the target (2.28 units long); `aim` ×2 0.1%, `aimArrow` 0.12%, wolf ×7 1%, 0 overlap, no Never-visible, no console errors. Human-branch reveal, phone `viewports`, perf not run.
+**Next**: (1) test `aimLine` at a longer distance (wolf 8 units from target) and thicken it if under 0.05%; (2) run `look` viewports phone and confirm `#hud` legibility; check the human-reveal wolf size with `sheet` pounce human; (3) grazing head bob ×2 (`sheep-heads*`) and the bite-dot pop after a wasted bite.
+**Open**: grazing bob and bite-dot tick still not done; `#mode` on phone still a small bottom-right label.
