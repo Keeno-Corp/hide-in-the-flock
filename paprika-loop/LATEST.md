@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 37
-**Did**: game.js: `wolf-shoulder` is now two blobs at x ±0.25 on `W.body` (colour 0x7a5a42), outside the extruded body; `ground-ink` opacity 0.95→0.5; post shader hatch0 mix 0.36→0.2 (less muddy hatch).
-**Saw**: `look` zoom [250,340,760,640]: a brown shoulder patch now shows on the wolf; meadow contour lines and hatch are softer; wolf still a dark mass, tail/legs still unclear against `wolf-rock`. No perf, clover or 2-player pass.
-**Next**: rim of light on tail and legs against `wolf-rock`; clover zoom + glow ring; KeyM + arrows + Enter pass for the pounce target marker; laptop `look` for flock vs ground.
-**Open**: clover and 2-player target marker still unchecked; no console check this session.
-
 ### Judge 37
 
 **Session 37 verdict.** I ran a 3-cell sheet (start, human pounce, AI pounce), one local-mode `interact` with `look`, and `perf` once. I did not play solo, zoom on a clover, or time the card.
@@ -63,3 +57,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Run a local `interact` of Enter near a sheep to confirm the bite resolves. Keep the `aim` ring thinner and in cream or ink so it does not read as a UI overlay.
 
 SCORE: 7.6
+
+## Iteration 38
+**Did**: game.js: sheep body/head, hull and rock/bush `ico()` detail 0/1 → 2 (smooth normals, rounder wool blobs); pine `cone()` segments 11 → 18.
+**Saw**: sheet cell (300 frames, solo, KeyD): sheep read as softer cream blobs, no hard facets at overview; triangles 117k → 261k, 81 calls, no console errors. Plain `look` at frame 1/201 shows only the pink `#paper` overlay (paused clock), use `sheet` with frames to see the scene. Wolf legs/tail/rim and clover/solo/local-Enter passes NOT done.
+**Next**: wolf silhouette (four legs, tail plume, rim) against `wolf-rock`; clover zoom + KeyE pass; local Enter bite pass; trim triangles (detail 2 on `shBody`/hull is wasteful, use detail 1 there).
+**Open**: triangle count doubled; not perf-timed. Wolf still a flat dark mass.

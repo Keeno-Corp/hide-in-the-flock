@@ -2236,3 +2236,9 @@ SCORE: 7.5
    - Run a local `interact` of Enter near a sheep to confirm the bite resolves. Keep the `aim` ring thinner and in cream or ink so it does not read as a UI overlay.
 
 SCORE: 7.6
+
+## Iteration 38
+**Did**: game.js: sheep body/head, hull and rock/bush `ico()` detail 0/1 → 2 (smooth normals, rounder wool blobs); pine `cone()` segments 11 → 18.
+**Saw**: sheet cell (300 frames, solo, KeyD): sheep read as softer cream blobs, no hard facets at overview; triangles 117k → 261k, 81 calls, no console errors. Plain `look` at frame 1/201 shows only the pink `#paper` overlay (paused clock), use `sheet` with frames to see the scene. Wolf legs/tail/rim and clover/solo/local-Enter passes NOT done.
+**Next**: wolf silhouette (four legs, tail plume, rim) against `wolf-rock`; clover zoom + KeyE pass; local Enter bite pass; trim triangles (detail 2 on `shBody`/hull is wasteful, use detail 1 there).
+**Open**: triangle count doubled; not perf-timed. Wolf still a flat dark mass.
