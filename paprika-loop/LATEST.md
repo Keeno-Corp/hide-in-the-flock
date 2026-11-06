@@ -1,62 +1,61 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-### Judge 29
-
-**Judge verdict, session 29**
-
-1. **Looks as LOOK.md says: 8.**
-   - The play camera shows `sea`, `cliff`, `pines*` ×136, `sand`, `cloud` ×34, `wolf-rock`, `rocks*` and `sheep*` ×97, all bright and low-poly. The look reports no `Lighting:` or `Surfaces:` lines.
-   - Saturation is 45% on the play frame. On the reveal frame it drops to 26% and grey is 74% of the hues. The `div.band` still covers 25% of the canvas. The overlays are lighter than in session 28 but not measured with `sample`.
-
-2. **Plays as DESIGN.md says: 8.**
-   - I held Space for 3000 frames (about 50 s). `wolf.state` went from "watch" to "stalk" at frame 559. `bites` ended at 1, so two AI-sheep bites landed. `topSusp` was `player: false`, and no `result` was set.
-   - The run was a long continuous graze, and the player stayed at 0 suspicion.
-   - The win screen is still unseen, for the fourth session running.
-
-3. **Clip moment: 9.**
-   - A forced AI pounce reached `pounce.ph` "reveal" with the wolf pose "shrug". It shows a big "AI SHEEP" title, a "BITE WASTED" kicker, and the subline "Just a sheep. Bite wasted."
-   - The "baa?" `div#bubble` sits over the wolf at [601, 411, 746, 479] and is not clipped. The `div#cap` caption reads "Mistaken identity. Nature is humbling." and the bite pips drop to 2.
-   - The sound log runs `boom`, `stab1` to `stab3`, `thud`, `hit`, `womp` and `baa`. It reads clearly in a 5-second clip.
-
-4. **Looks like refs/01.jpg: 9.**
-   - All of `sea`, `cliff`, `sand`, `pines*`, `cloud` and the crouched `wolf` on `wolf-rock` are in the play frame, and the clovers show as glowing rings.
-
-5. **Solo fun and fair: 7.**
-   - The cooldown of 18 s after an AI bite did not stop two AI bites inside 50 s. I did not time the gap between them, so I can't say whether the 18 s change did anything.
-   - The player never lost suspicion while grazing, so a graze-only player is safe but cannot win without reaching the clovers.
-   - I did not see a win this session.
-
-6. **Local 2-player: 8.**
-   - Carried over from earlier sessions. I did not re-run it.
-
-7. **`window.__game`, no build, ~100 sheep: 8.**
-   - The page is plain, starts playing on load, and `observe` works.
-   - `perf` gave 118 ms per frame, which is no signal on a software renderer (76 draw calls, 102.7k triangles, 0 MB assets). The reveal canvas CSS filter is still untimed on a real GPU.
-
-8. **Juice: 8.**
-   - 53 sounds started in the graze run, including `baa`, `baa2`, `wind`, `boom`, `stab*`, `thud`, `hit` and `womp`. The caption voice is funny.
-
-9. **Works at any window size, HUD readable: 8.**
-   - At 1280×800 there are 0 overlaps and nothing is cut off. Not re-run at other sizes.
-
-10. **Faults: 8.**
-    - There are no console errors and no `Never visible` object.
-
-**Next:**
-1. **Play a full winning round (asked again, 4th time).**
-   - **Do:** use `interact` to step to each `clover` ring (`cloverProgress`) and hold KeyE until `clovers` reaches 3. If walking there is too slow, use `{state: {...}}` to place the player on each ring.
-   - **Check:** `interact` with `until: {result: "win"}` and `look: true`. It should show a win screen with a restart prompt that matches the lose screen's polish.
-2. **Check the AI-bite cooldown (asked again).**
-   - **Do:** log `t` at each AI bite. If two bites still land under 18 s apart, find which code path sets `w.cd` and fix it.
-   - **Check:** `interact` that grazes 90 s with `trace` on `bites`. The first change in `bites` and the next should be at least 18 s apart.
-3. **Make the reveal overlay lighter again (asked again).**
-   - **Do:** cut the grey desaturation on the reveal filter further, from the 26% saturation measured now, and keep the `div.band` strip to the title area only.
-   - **Check:** `look` after a forced pounce with `sample` at about (200, 600). It should read a vivid green, and saturation in the reply should be above 35%.
-
-SCORE: 8.1
-
 ## Iteration 30
 **Did**: `game.js` solo wolf: the 18 s cooldown after an AI bite was ticking down during the walk back (`w.cd -= dt` runs in 'return'), so bites came sooner. Added `w.afterAI`; on arrival at the rock `w.cd = max(w.cd, 14)` when set. Reveal replay filter `saturate(0.6)`→`saturate(0.9) contrast(1.03)`; `#reveal .band` height 26vh→20vh in `index.html`.
 **Saw**: `node --check game.js` passes. No `look`, `perf` or play run this session; the win screen is still unseen.
 **Next**: (1) play a full winning round and `look` at the win screen; (2) `interact` 90 s graze with `trace` on `bites` to check the gap ≥14 s after the walk back; (3) `sample` the lose/reveal frame for saturation >35%.
 **Open**: all three changes are unmeasured; reveal filter untested on a real GPU.
+
+### Judge 30
+
+**Judge verdict, session 30**
+
+1. **Looks as LOOK.md says: 8.**
+   - The play frame shows `sea`, `cliff`, `sand`, `pines*` ×136, `cloud` ×34, `wolf-rock`, `rocks*`, `sheep*` ×97 and `clover` ×4 glowing. The look reports no `Lighting:` or `Surfaces:` lines.
+   - Saturation is 45% on the play frame. On the reveal frame it is still 26%, with grey at 75% of the hues, the same as session 29. The `saturate(0.9)` change did not move it in this measure.
+   - The replay frame reads 35% saturation. I did not take a `sample`.
+
+2. **Plays as DESIGN.md says: 7.**
+   - A forced AI pounce took `wolf.state` from "watch" to "pounce" at frame 31, and `bites` dropped 3→2 at frame 109.
+   - I set `{state:{clovers:3,result:"win"}}`. `clovers` showed 3 pips in the HUD, but no `result` change was reported and no win screen appeared. The replay ran instead. The win screen has now gone unseen for five sessions.
+   - I did not run the 90 s graze, so the `w.afterAI` cooldown is unverified.
+
+3. **Clip moment: 9.**
+   - The reveal shows a large "AI SHEEP" title, the "BITE WASTED" kicker, the "Just a sheep. Bite wasted." subline, the "baa?" `div#bubble` over the wolf in the "shrug" pose, and the `div#cap` caption "Mistaken identity. Nature is humbling."
+   - A "▶ REPLAY" `div#replayTag` follows. Nine sounds played: `boom`, `stab1` to `stab3`, `thud`, `hit`, `womp` ×2 and `baa`.
+   - The `div.band` is thinner, but the title area is still washed grey.
+
+4. **Looks like refs/01.jpg: 9.**
+   - The play camera has the sea, sand, cliff, pines, clouds and the crouched `wolf` on `wolf-rock`, all bright and low-poly.
+
+5. **Solo fun and fair: 7.**
+   - I did not see a win, and the cooldown change is unmeasured. The suspicion bar and clover glows read clearly.
+
+6. **Local 2-player: 8.**
+   - Carried over from earlier sessions. I did not re-run it.
+
+7. **`window.__game`, no build, ~100 sheep: 8.**
+   - The page starts playing on load and `observe` works.
+   - `perf` gave 118.9 ms per frame, which is no signal on this software renderer (76 draw calls, 102.7k triangles, 0 MB assets).
+
+8. **Juice: 8.**
+   - Baas, `womp`, `boom`, `stab*`, `thud` and `hit` all fire. The caption voice is funny.
+
+9. **Works at any window size, HUD readable: 8.**
+   - At 1280×800 there are 0 overlaps and nothing is cut off. I did not re-run other sizes.
+
+10. **Faults: 8.**
+    - There are no console errors and no `Never visible` object.
+
+**Next:**
+1. **Reach the win screen (asked again, 5th time).**
+   - **Do:** find which `result` field or win condition `game.js` actually reads, since setting `result` through `setState` did nothing. Then give `window.__game` an action such as `{action:"win"}`, or let `setState` accept `result`.
+   - **Check:** `interact` with `steps:[{action:"win"},{wait:60}]` and `look:true` should show a win title and a restart prompt, with `result` equal to "win" in the reply.
+2. **Make the reveal frame vivid (asked again).**
+   - **Do:** the 26% saturation and 75% grey are unchanged. Look for what greys the frame besides the filter: the `#reveal` overlay tint, the letterbox, or the grey wolf and wool filling the view. Lighten the overlay and keep the band to the title only.
+   - **Check:** `look` after `{action:"pounce",target:"ai"}` and `wait:150`. Saturation should be above 35%, and `sample` at (200, 600) should read a vivid green.
+3. **Verify the AI-bite cooldown (asked again).**
+   - **Do:** run a 90 s graze with `trace:["bites","wolf.state"]`.
+   - **Check:** the gap between two `bites` changes should be at least 14 s after the walk back.
+
+SCORE: 8.0
