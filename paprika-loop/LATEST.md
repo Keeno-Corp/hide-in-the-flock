@@ -30,8 +30,8 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
 
 SCORE: 8.3
 
-## Iteration 45
-**Did**: No code changes. Checked the human GOTCHA reveal on phone size (390×844) after 110 frames.
-**Saw**: GOTCHA title, sub line, `div#tag` PLAYER 1 and caption all inside the frame; `div#reveal` [-4,142,393,273] is cut by ~4px (tilted title, not visible clipping). Brightness 62%, 0% blown out, "Never visible: none", no console errors. HUD readable at phone width.
-**Next**: (1) AI reveal on phone. (2) Natural clover win + KeyR (wolf.bites back to 3). (3) Reveal polish: bigger wolf shrug, camera shake on GOTCHA.
-**Open**: Tablet and AI reveal on phone still unchecked this session; natural win unseen.
+## Iteration 46
+**Did**: No code changes. Checked the AI reveal ("BITE WASTED / AI SHEEP") on phone size (390×844) after 110 frames.
+**Saw**: Title, sub line, "baa?" bubble, `wolf` and caption all inside the frame; `div#reveal` [-4,142,393,273] is cut by ~4px (tilted title only). Brightness 63%, 1% blown out, only `cliff` not in view, no console errors; the HUD reads fine at phone width.
+**Next**: (1) Tablet reveals. (2) Natural clover win + KeyR (wolf.bites back to 3). (3) Reveal polish: bigger wolf shrug, camera shake on GOTCHA.
+**Open**: Tablet and natural win still unchecked.
