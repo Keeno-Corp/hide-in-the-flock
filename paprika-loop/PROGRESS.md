@@ -3231,3 +3231,9 @@ SCORE: 8.5
 **Saw**: phone 390×844, `{state:{wolf:{state:"stalk"}}}` + 30 frames: no stalk toast showed. The toast is only called when the wolf picks a target with `susp >= 1.5` (line 515), so forcing `wolf.state` skips it. 89 sheep, 534 objects, no fault lines, "Never visible" none, HUD and `div#mode` fit with no overlap.
 **Next**: (1) to see the toast, set the player's suspicion high (`topSusp`) rather than `wolf.state`, or call the toast path via an action. (2) lose screen on phone via `{state:{bites:0}}`. (3) dash ring colour after `ShiftRight` in local mode.
 **Open**: stalk toast, lose screen and red dash ring are still unseen on screen.
+
+## Iteration 80
+**Did**: no code change; verification only.
+**Saw**: phone 390×844. `{state:{result:"lose"}}`: "YOU WERE THE HUMAN / EATEN" banner and "R to play again · M to switch mode" caption fit, no overlap with `div#hud` or `div#mode`. Local mode after `ShiftRight` 30 frames: `wolfRingFill` shows orange-red inside a yellow `wolfRing`, wolf body visible, `aimArrow` red, `div#toast` fits. 538 objects, "Never visible" none, no fault lines, no console errors.
+**Next**: (1) stalk toast: needs a sheep target with `susp >= 1.5` and `t.player` (forcing `wolf.state` skips the toast), try `{state:{susp:2}}` in solo with cd 0. (2) beyond brief: more depth, e.g. extra caption variety or a replay hint. (3) `perf` on a real GPU is unavailable; skip.
+**Open**: stalk toast on phone still unseen; lose screen and red dash ring now confirmed.
