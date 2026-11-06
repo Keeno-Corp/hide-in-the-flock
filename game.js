@@ -272,7 +272,7 @@ const W = {};
   // lean side-profile silhouette: one extruded polygon (z forward, y up), thin in x
   {
     const sh = new THREE.Shape();
-    const pts = [[-1.5, 0.45], [-1.25, 0.9], [-0.8, 1.08], [-0.3, 1.06], [0.15, 1.14], [0.5, 1.34], [0.85, 1.32], [1.08, 1.24], [1.1, 1.02], [0.88, 0.82], [0.5, 0.66], [0.1, 0.76], [-0.3, 0.78], [-0.6, 0.62], [-0.85, 0.78], [-1.2, 0.66]];
+    const pts = [[-1.62, 0.3], [-1.3, 0.95], [-0.9, 1.06], [-0.4, 1.0], [0.1, 1.1], [0.5, 1.16], [0.85, 1.05], [1.05, 0.88], [1.0, 0.7], [0.7, 0.5], [0.3, 0.62], [-0.2, 0.7], [-0.55, 0.58], [-0.95, 0.6], [-1.25, 0.62], [-1.45, 0.38]];
     sh.moveTo(pts[0][0], pts[0][1]); pts.slice(1).forEach(p => sh.lineTo(p[0], p[1])); sh.closePath();
     const eg = new THREE.ExtrudeGeometry(sh, { depth: 0.32, bevelEnabled: true, bevelThickness: 0.1, bevelSize: 0.08, bevelSegments: 2, curveSegments: 6 });
     eg.translate(0, 0, -0.16).rotateY(-Math.PI / 2);
@@ -285,15 +285,15 @@ const W = {};
     blob(0.08, 0.06, 0.1, 0, -0.03, 1.0),                    // nose
   ]));
   add(W.head, mergeGeometries([
-    new THREE.ConeGeometry(0.09, 0.5, 6).translate(0, 0.23, 0).rotateZ(-0.18).translate(0.14, 0.15, -0.04),
-    new THREE.ConeGeometry(0.09, 0.5, 6).translate(0, 0.23, 0).rotateZ(0.18).translate(-0.14, 0.15, -0.04),
+    new THREE.ConeGeometry(0.1, 0.55, 6).translate(0, 0.26, 0).rotateZ(-0.12).translate(0.12, 0.2, 0.0),
+    new THREE.ConeGeometry(0.1, 0.55, 6).translate(0, 0.26, 0).rotateZ(0.12).translate(-0.12, 0.2, -0.1),
   ]), rimMat);
   const eyeMat = new THREE.MeshBasicMaterial({ color: 0xe9c46a, fog: false });
   [-1, 1].forEach(sx => { const e = new THREE.Mesh(new THREE.SphereGeometry(0.035, 8, 6).scale(1.3, 0.8, 1), eyeMat); e.position.set(sx * 0.15, 0.06, 0.36); W.head.add(e); });
   W.legs = [];
   [[-1, 0.72], [1, 0.72], [-1, -0.6], [1, -0.6]].forEach(([sx, z]) => {
     const g = new THREE.Group(); g.name = 'wolf-leg'; g.position.set(sx * 0.13, 0.72, z); W.body.add(g);
-    add(g, taper(0.075, 0.03, 0.55, 0, -0.27, 0), legMat);
+    add(g, taper(0.11, 0.05, 0.6, 0, -0.3, 0), legMat);
     add(g, blob(0.1, 0.06, 0.22, 0, -0.55, 0.06), rimMat);
     W.legs.push(g);
   });

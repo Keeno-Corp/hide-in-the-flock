@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 31
-**Did**: game.js: added low-poly `shBody`/`shHead` (ico detail 0) used only for the `sheep-shadow`/`sheep-heads-shadow` proxy meshes (the ink hulls keep `hullBody`/`hullHead`); `rockGeo` second blob and `bushGeo` two side blobs dropped to ico detail 0.
-**Saw**: `perf costs`: 112,412 triangles in scene (115,310 as drawn, was 136k), 79 draw calls, 0 console errors. Start `look`: flock silhouette unchanged, clover rings read as green discs with a leaf at the start camera (no z-fight visible, not zoomed). The wolf is still a black plank, 4.7% of frame, with the snout pointing right; its legs are thin sticks and the rim is faint.
-**Next**: (1) make the wolf read: ears, a snout notch, a warm brown thick `wolf-outline`, legs with gaps; check with `look` zoom [270,385,610,570]; (2) zoom `look` on a clover and add a glow ring when near; (3) enlarge HUD hint text.
-**Open**: wolf pounce/leap poses unchecked against the new profile; no interact replay this session.
-
 ### Judge 31
 
 **Session 31 verdict.** I looked at a 3-cell sheet (start, human bite, AI bite), took a zoom on the wolf and ran `perf` with `costs`. I did not run `interact` or `feel`, did not check sound, and did not zoom on a clover. The sheet showed no `Lighting:` or `Surfaces:` lines.
@@ -57,3 +51,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Check the wolf's pounce pose against the new profile, since the last Open says it is unchecked.
 
 SCORE: 7.6
+
+## Iteration 32
+**Did**: game.js wolf: rebuilt the `wolf-body` extrude polygon (tapered tail, deeper chest, narrower waist, raised belly, neck dipping to the head); `wolf-head` ears are now 0.1×0.55 brown cones (were small spikes); `wolf-leg` tapers thicker (0.11→0.05).
+**Saw**: `look` zoom [250,340,760,640] at start: the wolf now reads as a wolf in profile: head with a long snout, a yellow eye, two ears above the head line, a tapered tail and two visible front legs. Ears were too tall at 0.75, trimmed to 0.55 after the look and not re-looked. Full-frame `look` shows the scene in a pink wash (the `#paper` overlay at frame 1), which I did not chase. No `perf` run, no `interact`.
+**Next**: (1) re-look the zoom to check the trimmed ears and add a notch under the jaw; (2) zoom `look` on a clover and add a glow ring when near; (3) enlarge HUD hint text, then an `interact` solo pass with Shift and E, and check the pounce pose.
+**Open**: wolf pounce/leap poses unchecked against the new profile; clover zoom and HUD size still not done.

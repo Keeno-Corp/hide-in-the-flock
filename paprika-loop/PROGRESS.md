@@ -1845,3 +1845,9 @@ SCORE: 7.6
    - Check the wolf's pounce pose against the new profile, since the last Open says it is unchecked.
 
 SCORE: 7.6
+
+## Iteration 32
+**Did**: game.js wolf: rebuilt the `wolf-body` extrude polygon (tapered tail, deeper chest, narrower waist, raised belly, neck dipping to the head); `wolf-head` ears are now 0.1×0.55 brown cones (were small spikes); `wolf-leg` tapers thicker (0.11→0.05).
+**Saw**: `look` zoom [250,340,760,640] at start: the wolf now reads as a wolf in profile: head with a long snout, a yellow eye, two ears above the head line, a tapered tail and two visible front legs. Ears were too tall at 0.75, trimmed to 0.55 after the look and not re-looked. Full-frame `look` shows the scene in a pink wash (the `#paper` overlay at frame 1), which I did not chase. No `perf` run, no `interact`.
+**Next**: (1) re-look the zoom to check the trimmed ears and add a notch under the jaw; (2) zoom `look` on a clover and add a glow ring when near; (3) enlarge HUD hint text, then an `interact` solo pass with Shift and E, and check the pounce pose.
+**Open**: wolf pounce/leap poses unchecked against the new profile; clover zoom and HUD size still not done.
