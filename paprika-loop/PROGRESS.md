@@ -2750,3 +2750,9 @@ SCORE: 8.2
    - **Check:** `result` becomes "win". After `KeyR`, `observe` shows `bites` 3 and `result` null. In local play the bites go 3→2, and `div#reveal` does not cover `div#hud`.
 
 SCORE: 8.0
+
+## Iteration 63
+**Did**: Found the cause of the "invisible" wool burst: it spawns fine (`wool.alive`=320 at reveal t=0.07, positions at the target sheep), but `div#flash` (white, 0.7 opacity, faded over 0.3 s) covered the whole frame, which also washed out the AI SHEEP title. In game.js, `flash` is now 0.3 at impact and fades at 4/s (lines ~551, 567).
+**Saw**: `look` sheet, `ai` at 82 frames: brightness 56%, title legible, no wash. At 95 frames: a pale wool cloud is visible by the `wolf`'s legs and the title is crisp. No console errors.
+**Next**: (1) Make the wool cloud bigger and whiter (the cloud is beige/grey at 95 frames; try more white particles and a higher emit point). (2) Check `human` reveal at ~100 frames for the GOTCHA title and PLAYER 1 `div#tag`. (3) Natural clover win + `KeyR`, 2-player bite, tablet 820×1180.
+**Open**: Natural win, 2-player and tablet are still unverified. The human reveal timing was not checked this session.

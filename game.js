@@ -548,7 +548,7 @@ function updatePounce(rdt) {
       wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 1, t.z), { count: 30, speed: 3, spread: Math.PI, life: 2, gravity: 2, color: 0xffffff });
       if (!p.human) wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 1.2, t.z), { count: 200, speed: 6, spread: Math.PI * 0.9, life: 3.2, gravity: 4, color: 0xfff0d0 });
       camShake.kick(1.0); play('thud', 1); play('hit', 0.6); t.hopV = 6; t.spin = rnd(-6, 6);
-      $('flash').style.opacity = 0.7;
+      $('flash').style.opacity = 0.3;
       if (p.human) {
         outline.visible = true; wolf.pose = 'land'; sting();
         camShake.kick(1.6); showResult('GOTCHA', 'HUMAN!  That was PLAYER 1.', 'HUMAN!', '#ff3a2a'); $('rk').textContent = 'HUMAN!'; $('rsub').textContent = 'PLAYER 1 has been found.'; $("vig").style.opacity = 0.25;
@@ -564,7 +564,7 @@ function updatePounce(rdt) {
   }
   // reveal
   const dur = p.human ? 3.6 : 3.0, u = p.t / dur;
-  $('flash').style.opacity = Math.max(0, 0.7 - p.t * 2.4);
+  $('flash').style.opacity = Math.max(0, 0.3 - p.t * 4);
   const pop = p.t < 0.35 ? 0.4 + 0.9 * ease(p.t / 0.35) : 1.0 + Math.sin(p.t * 3) * 0.02;
   $('reveal').style.transform = `scale(${pop * (p.human && innerWidth > 640 ? 1.05 : 1)})`;
   $('reveal').style.opacity = p.t < 0.1 ? p.t * 10 : p.t > 2.0 ? Math.max(0, 1 - (p.t - 2.0) * 4) : 1;
