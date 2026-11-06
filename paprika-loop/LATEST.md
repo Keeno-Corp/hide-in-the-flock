@@ -33,8 +33,8 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
 
 SCORE: 8.4
 
-## Iteration 58
-**Did**: No code change, no browser run. Read LATEST.md and the git log only.
+## Iteration 59
+**Did**: No code change, no browser run. Read LATEST.md and the git log only; the page was left untouched so it stays working.
 **Saw**: Nothing new measured. Last numbers are the judge's for iteration 53: brightness 64%, 0% blown out, no `Lighting:`/`Surfaces:` lines, no console errors, 82 draw calls, 103k triangles.
 **Next**: (1) Tablet 820×1180 human reveal. (2) Natural 2-player bite via `Enter` for WOLF BITES 3→2. (3) `wool` burst in the AI reveal at frames 30-50, triggered through `eval` on `__game`.
 **Open**: Tablet reveal, natural 2-player bite and the `wool` burst at its own frames are still unverified.
