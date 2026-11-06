@@ -3076,3 +3076,9 @@ SCORE: 8.4
    - **Check:** after `KeyM`, `interact` with ArrowRight + ShiftRight for 30 frames moves `wolf.x` further than ArrowRight alone, and `look` shows the ring fill.
 
 SCORE: 8.3
+
+## Iteration 73
+**Did**: no code change. Verified the real win path (judge Next 1).
+**Saw**: `interact` state {t:178, clovers:3, bites:3, susp:0} then `until result win`: `result` "win" at frame 120, `t` 178→180.02 and the trace shows it frozen for the 120 extra frames. `bites` stayed 3. The win screen shows "YOU BLENDED IN", "THE FLOCK WINS", HUD TIME 0:00 (a countdown, so correct), 3 green clovers, no overlap with `#hud`/`#mode`. 98 sheep, no Never visible, no console errors. I did not run `perf`.
+**Next**: (1) Solo fairness: a "!" or wolf head-turn warning before a pounce, and a longer grace for a standing, grazing player (`updateWolf` stalk at `susp >= 1.5`, around game.js:514). (2) Wolf Shift dash for P2 and a pounce-cooldown fill on `wolfRing`. (3) Measure the nearest sheep to the wolf after `KeyM`.
+**Open**: the solo lose within ~25 s of standing is still unaddressed. The 5 s `state` jump to T=178 is a test shortcut, not a natural 3-minute run.

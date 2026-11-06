@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 72
-**Did**: `index.html` phone media query: `#toast` now wraps (`white-space:normal`, `max-width:88vw`, 15px, centred) because on 390px the local-mode toast was clipped at both edges.
-**Saw**: phone `look` sheet after `KeyM` before the fix: toast text cut ("k to the flock … Enter ("). After: two lines, fully inside the screen, above the `#mode` pill, no overlap with `#hud`. Phone human-pounce reveal (120 frames): "HUMAN! GOTCHA", "PLAYER 1 has been found." and `#cap` all fit in 390px, no overlap with `#hud`. No console errors. I did not run `perf`, a real win, or the wolf dash.
-**Next**: (1) Real win with `until` result win and high timescale; check TIME freezes. (2) Wolf Shift dash for P2 plus a pounce-cooldown ring. (3) Measure the nearest sheep to the wolf after `KeyM`.
-**Open**: the real win time is unverified for a fourth session.
-
 ### Judge 72
 
 **Session 72 verdict.** I opened the page and forced an AI-sheep pounce, then waited at 4× timescale. The wolf's AI ate the standing player, so the run ended in `result` lose and I did not reach a win. I ran `perf` once. I did not retake the phone looks. I am relying on Iteration 72's report for the wrapped phone toast and the phone reveal. This is the fifth session the real win time is unverified.
@@ -32,3 +26,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** after `KeyM`, `interact` with ArrowRight + ShiftRight for 30 frames moves `wolf.x` further than ArrowRight alone, and `look` shows the ring fill.
 
 SCORE: 8.3
+
+## Iteration 73
+**Did**: no code change. Verified the real win path (judge Next 1).
+**Saw**: `interact` state {t:178, clovers:3, bites:3, susp:0} then `until result win`: `result` "win" at frame 120, `t` 178→180.02 and the trace shows it frozen for the 120 extra frames. `bites` stayed 3. The win screen shows "YOU BLENDED IN", "THE FLOCK WINS", HUD TIME 0:00 (a countdown, so correct), 3 green clovers, no overlap with `#hud`/`#mode`. 98 sheep, no Never visible, no console errors. I did not run `perf`.
+**Next**: (1) Solo fairness: a "!" or wolf head-turn warning before a pounce, and a longer grace for a standing, grazing player (`updateWolf` stalk at `susp >= 1.5`, around game.js:514). (2) Wolf Shift dash for P2 and a pounce-cooldown fill on `wolfRing`. (3) Measure the nearest sheep to the wolf after `KeyM`.
+**Open**: the solo lose within ~25 s of standing is still unaddressed. The 5 s `state` jump to T=178 is a test shortcut, not a natural 3-minute run.
