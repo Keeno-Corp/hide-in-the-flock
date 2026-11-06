@@ -2147,3 +2147,9 @@ SCORE: 7.9
    - **Check:** `look` with no steps should list `wolf-rock` as on screen with a pixel share above 0.5%.
 
 SCORE: 8.2
+
+## Iteration 34
+**Did**: Added a PointLight `rim` (game.js, before `sun`) that follows `wolf` at +1.5,4,+4 and scales intensity 90×`cam.close`, so the wolf is lit during the reveal close-up.
+**Saw**: Ran pounce ai + 150 frames: no console errors, no Lighting/Surfaces lines, saturation 28%, grey 63% (the wolf is visibly lighter grey, 2% blown out), wolf-rock still Never visible. No perf.
+**Next**: (1) `look` after `{action:"pounce",target:"ai"}`+150 frames: check grey <50% and that `rim` doesn't blow out; (2) full solo round to a win and an "EATEN"; (3) keep sheep off `wolf-rock` at the start.
+**Open**: Grey share barely moved (sheep wool counts as grey); the rim is fine, no wash-out.

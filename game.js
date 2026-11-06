@@ -52,6 +52,7 @@ addEventListener('resize', () => { renderer.setSize(innerWidth, innerHeight); ca
   const sky = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ vertexColors: true, side: THREE.BackSide, fog: false, depthWrite: false }));
   sky.name = 'sky'; scene.add(sky);
 }
+const rim = new THREE.PointLight(0xfff4e0, 0, 14, 1.2); scene.add(rim);
 const sun = new THREE.DirectionalLight(0xfff1d8, 2.8);
 sun.position.set(-30, 55, 28);
 sun.castShadow = true;
@@ -688,6 +689,7 @@ function updateCamera(dt, rdt) {
   if (pounce.ph && pounce.target) { const m = pounce.target; tx = lerp(tx, (wolf.x + m.x) / 2, cam.punch); tz = lerp(tz, (wolf.z + m.z) / 2, cam.punch); }
   if (pounce.ph === 'reveal' && pounce.t < 2.0) { tx = wolf.x; tz = wolf.z - 2; }
   cam.close += ((pounce.ph === 'reveal' && pounce.t < 2.0 ? 1 : 0) - cam.close) * (1 - Math.exp(-rdt * (pounce.ph === 'reveal' ? 3.5 : 6)));
+  rim.position.set(wolf.x + 1.5, 4, wolf.z + 4); rim.intensity = 90 * cam.close;
   const kf = 1 - Math.exp(-rdt * (cam.punch > 0.05 ? 7 : 2.4));
   cam.x += (tx - cam.x) * kf; cam.z += (tz - cam.z) * kf; cam.zoom += (zoom - cam.zoom) * kf;
   const sc2 = (1 - 0.3 * cam.punch - (pounce.target && !pounce.human ? 0.42 : 0.2) * cam.close) * cam.zoom;

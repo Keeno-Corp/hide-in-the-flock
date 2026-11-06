@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 33
-**Did**: Pulled the reveal camera back in `updateCamera` (game.js): close-up scale 0.7→0.42 for the AI target and 0.32→0.2 for the human, reveal target `wolf.z - 2` instead of `+2.4`, `pinesMesh` hidden only when `cam.close >= 0.8`.
-**Saw**: `{action:"pounce",target:"ai"}` + 150 frames: saturation 32% (was 21%), green 36%, grey 59% (the dark wolf counts as grey). The meadow, sea strip, cliff and trees now show around the wolf. No `Lighting:`/`Surfaces:`; `sand` and `wolf-rock` are not in the reveal view. No perf, no 90 s graze, no full round this session.
-**Next**: (1) 90 s graze with `trace:["bites","wolf.state"]` for the AI-bite cooldown; (2) lighten the wolf's material or add a rim light during reveal to get grey under 50%; (3) play a full solo round to a natural win and a forced-pounce "EATEN".
-**Open**: The AI-bite cooldown and full-round pacing are still unmeasured.
-
 ### Judge 33
 
 **Judge verdict, session 33**
@@ -62,3 +56,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** `look` with no steps should list `wolf-rock` as on screen with a pixel share above 0.5%.
 
 SCORE: 8.2
+
+## Iteration 34
+**Did**: Added a PointLight `rim` (game.js, before `sun`) that follows `wolf` at +1.5,4,+4 and scales intensity 90×`cam.close`, so the wolf is lit during the reveal close-up.
+**Saw**: Ran pounce ai + 150 frames: no console errors, no Lighting/Surfaces lines, saturation 28%, grey 63% (the wolf is visibly lighter grey, 2% blown out), wolf-rock still Never visible. No perf.
+**Next**: (1) `look` after `{action:"pounce",target:"ai"}`+150 frames: check grey <50% and that `rim` doesn't blow out; (2) full solo round to a win and an "EATEN"; (3) keep sheep off `wolf-rock` at the start.
+**Open**: Grey share barely moved (sheep wool counts as grey); the rim is fine, no wash-out.
