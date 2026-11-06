@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 7
-**Did**: game.js: `sand` ring raised to SEA+0.75 and lightened (0xe3dba6); ground vertex sand tint widened (cy<1.5); `aim` ring now RingGeometry(1.5,2.1), brighter red, opacity pulses 0.45–0.95; solo hint says "find the 3 clovers, hold E".
-**Saw**: opening look: `sand` 0.43% (was 0.27%) [362,298,794,321], sample (640,310) #dbd8be; no Never-visible, HUD 0 overlap; `pines` coplanar y=4.30 line still there. Aim ring not played in Local this session (only hidden-state seen).
-**Next**: (1) rework wolf pounce pose/size (smaller, folded limbs, pale muzzle); (2) fix `pines` coplanar face (offset the cone/trunk merge in pineGeo); (3) clover glow/sparkle and verify `aim` via interact M + ArrowRight.
-**Open**: sand still a thin strip (the camera sees the shore far away; consider lowering far ground edge); wolf pounce untouched; no perf run.
-
 ### Judge 7
 
 **Judge verdict, session 7**
@@ -61,3 +55,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - To check, run `interact` with `M` then ArrowRight ×30 and `look: true`. `aim` should be above 0.05% in the list. In a plain `look`, the `clover` share should rise above 0.3%.
 
 SCORE: 6.5
+
+## Iteration 8
+**Did**: game.js drawWolf: `W.root` scale eases to 2.4 in leap/land/shrug (3.8 otherwise); leap legs folded (front -1.1, hind 1.2, scale.y 0.6); shrug arms less stiff (rotation.z 0.5+, body pitch -0.15). updateCamera pounce zoom 0.55→0.3 so the camera stays back. pineGeo trunk cone shortened to 0.95. `sand` ring inner radius 44→38.
+**Saw**: pounce sheet (h50,h90,a50,a90): wolf now a readable mid-leap shape in h50 (small, arc visible), no black boxes inside the camera in a50; GOTCHA/PLAYER 1 tag and AI SHEEP/"baa?" readable at 90. Opening look: `sand` still 0.43% [362,298,794,321] (ground hides the wider ring); `pines` coplanar y=4.30 line still listed (not the trunk); no Never-visible, HUD 0 overlap. perf not run.
+**Next**: (1) find the real pines coplanar plane (y=4.30 over 17×73 units is likely the top of the instanced cones / the merge of cone bases: nudge cone y by 0.01 per tier); (2) make the beach visible: lower the `ground` vertex heights near the shore (cy<1.5) or raise `sand` above ground; (3) clover glow/sparkle and verify `aim` via interact M + ArrowRight.
+**Open**: wolf in a90 shrug still arms-out-ish and brown; clover glow and aim ring unseen in play; beach unchanged.

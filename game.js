@@ -86,7 +86,7 @@ scene.add(new THREE.HemisphereLight(0xbfe8ff, 0x7fb83a, 1.35));
   m.name = 'ground'; m.receiveShadow = true; scene.add(m);
   const sea = new THREE.Mesh(new THREE.PlaneGeometry(900, 900).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: 0x2a98e0, roughness: 0.35, transparent: true, opacity: 0.86 }));
   sea.name = 'sea'; sea.position.y = SEA; scene.add(sea);
-  const sandRing = new THREE.Mesh(new THREE.RingGeometry(44, 72, 64, 1).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xc5d6a2 }));
+  const sandRing = new THREE.Mesh(new THREE.RingGeometry(38, 72, 64, 1).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xc5d6a2 }));
   sandRing.name = 'sand'; sandRing.position.y = SEA + 0.75; sandRing.material.color.set(0xe3dba6); scene.add(sandRing);
   const cliff = new THREE.Mesh(new THREE.IcosahedronGeometry(9, 1), new THREE.MeshStandardMaterial({ color: 0x8d8f94, flatShading: true, roughness: 1 }));
   cliff.name = 'cliff'; cliff.scale.set(1.3, 1.5, 1); cliff.position.set(34, 5, -44); scene.add(cliff);
@@ -190,7 +190,7 @@ function scatterInst(geo, count, gen, { shadow = true, name = '' } = {}) {
 }
 const polar = (r0, r1) => { const a = rnd(0, 6.283), r = rnd(r0, r1); return [Math.cos(a) * r, Math.sin(a) * r]; };
 const pineGeo = mergeGeometries([
-  mk(cone(0.22, 1, 5), 0x5a3d26, { p: [0, 0.5, 0] }).clone(),
+  mk(cone(0.22, 0.95, 5), 0x5a3d26, { p: [0, 0.475, 0] }).clone(),
   mk(cone(1.1, 1.8, 6), 0x2f6a3a, { p: [0, 1.5, 0], jit: 0.1 }), mk(cone(0.85, 1.6, 6), 0x38783f, { p: [0, 2.5, 0], jit: 0.1 }), mk(cone(0.55, 1.4, 6), 0x42874a, { p: [0, 3.4, 0], jit: 0.1 }),
 ]);
 scatterInst(pineGeo, 300, () => { const [x, z] = polar(29, 58); if (z < -20 && Math.random() < 0.97) return null; const h = gh(x, z); if (h < 0.9 || h > 10 || (z > 8 && Math.random() < 0.85)) return null; const s = rnd(0.9, 1.9); return { x, z, s, sy: s * rnd(0.9, 1.4), y: h - 0.2 }; }, { name: 'pines' });
@@ -633,6 +633,7 @@ function drawSheep(dt) {
 function drawWolf(dt) {
   const w = wolf, r = W.root, pz = w.pose;
   r.position.set(w.x, w.y, w.z); r.rotation.y = w.yaw;
+  { const want = (pz === 'leap' || pz === 'land' || pz === 'shrug') ? 2.4 : 3.8; r.scale.setScalar(r.scale.x + (want - r.scale.x) * Math.min(1, dt * 10 + 0.05)); }
   const ph = w.phase, t = clock;
   W.body.position.set(0, 0, 0); W.body.rotation.set(0, 0, 0); W.head.rotation.set(0, 0, 0); W.head.position.set(0, 0.88, 1.08);
   W.legs.forEach(l => l.rotation.set(0, 0, 0)); W.tail.rotation.set(0, 0, 0);
@@ -647,19 +648,19 @@ function drawWolf(dt) {
     W.tail.rotation.y = Math.sin(ph) * 0.3;
   } else if (pz === 'leap') {
     W.body.rotation.x = w.pitch; W.head.rotation.x = -0.1;
-    W.legs.forEach((l, i) => { l.rotation.x = i < 2 ? -1.5 : 1.1; l.scale.y = 1; });
+    W.legs.forEach((l, i) => { l.rotation.x = i < 2 ? -1.1 : 1.2; l.scale.y = 0.6; });
   } else if (pz === 'land') {
     W.body.position.y = -0.3; W.body.rotation.x = 0.3; W.legs.forEach(l => l.scale.y = 0.6); W.head.rotation.x = 0.4;
   } else if (pz === 'shrug') {
     const k = Math.sin(clock * 7);
-    W.body.position.y = 0.1 + Math.abs(k) * 0.12; W.body.rotation.x = -0.35; W.head.rotation.z = Math.sin(clock * 3.5) * 0.45; W.head.rotation.x = -0.15;
-    W.legs.forEach((l, i) => { if (i < 2) { l.rotation.x = -0.9 - Math.abs(k) * 0.4; l.rotation.z = (i ? 1 : -1) * (0.9 + Math.abs(k) * 0.3); } else l.rotation.x = 0.5; });
+    W.body.position.y = 0.1 + Math.abs(k) * 0.12; W.body.rotation.x = -0.15; W.head.rotation.z = Math.sin(clock * 3.5) * 0.45; W.head.rotation.x = 0.1;
+    W.legs.forEach((l, i) => { if (i < 2) { l.rotation.x = -0.5; l.rotation.z = (i ? 1 : -1) * (0.5 + Math.abs(k) * 0.4); l.scale.y = 0.7; } else l.rotation.x = 0.5; });
     W.tail.rotation.y = Math.sin(clock * 6) * 0.6;
   } else if (pz === 'sulk') {
     W.body.position.y = -0.4; W.head.rotation.x = 0.7; W.head.position.y = 0.5; W.legs.forEach(l => l.scale.y = 0.4); W.body.rotation.z = 0.02;
   }
   if (pz !== 'crouch' && pz !== 'walk' && pz !== 'sulk') { /* legs scale reset handled each pose */ }
-  if (pz !== 'land' && pz !== 'sulk' && pz !== 'crouch' && pz !== 'walk') W.legs.forEach(l => l.scale.y = 1);
+  if (pz !== 'land' && pz !== 'sulk' && pz !== 'crouch' && pz !== 'walk' && pz !== 'leap') W.legs.forEach(l => l.scale.y = 1);
   r.visible = true;
   // aim rings (local mode)
   const loc = mode === 'local';
@@ -677,7 +678,7 @@ function updateCamera(dt, rdt) {
   if (pounce.ph && pounce.target) { const m = pounce.target; tx = lerp(tx, (wolf.x + m.x) / 2, cam.punch); tz = lerp(tz, (wolf.z + m.z) / 2, cam.punch); }
   const kf = 1 - Math.exp(-rdt * (cam.punch > 0.05 ? 7 : 2.4));
   cam.x += (tx - cam.x) * kf; cam.z += (tz - cam.z) * kf; cam.zoom += (zoom - cam.zoom) * kf;
-  const sc2 = (1 - 0.55 * cam.punch) * cam.zoom;
+  const sc2 = (1 - 0.3 * cam.punch) * cam.zoom;
   camera.position.set(cam.x, 15 * sc2 + 3, cam.z + 32 * sc2 + 6);
   camera.lookAt(cam.x, 5, cam.z - 8);
   let fov = 50 - 16 * cam.punch; { const a = innerWidth / innerHeight; if (a < 1.4) fov = Math.min(80, (2 * Math.atan(Math.tan(fov * Math.PI / 360) * 1.4 / a)) * 180 / Math.PI); } if (Math.abs(camera.fov - fov) > 0.01) { camera.fov = fov; camera.updateProjectionMatrix(); }
