@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 39
-**Did**: game.js wolf: `legMat` 0x2a201a → 0x5a4636 and `rimMat` → 0x8a6c52, `wolf-leg` taper thicker (0.16/0.08, len 0.7), `wolf-tail` plume blob 0.3×0.3×1.0, ears `ConeGeometry(0.13, 0.4)` taller.
-**Saw**: sheet cell (300 frames, solo): ear, long snout and plume tail now read against `wolf-rock`; legs are mostly hidden by the sheep in front, so `wolf-leg` area was not measured. No console errors. Did not run `perf` or the zoom proof.
-**Next**: zoom `look` on the wolf to check legs; flatten `pines*`/`oaks*`/`ridge*` colours; clover zoom, KeyE solo pass and local Enter bite pass (skipped three sessions); thin the `aim` ring.
-**Open**: triangle count still about 261k and not trimmed. The sheep `ico()` at game.js:224-235 are still detail 2.
-
 ### Judge 39
 
 **Session 39 verdict.** I ran a 3-cell sheet (start, human pounce, AI pounce), one zoom on the wolf and `perf` once. I did not play solo, check a clover or run a local Enter bite, so items 4 and 5 are not re-scored from evidence.
@@ -59,3 +53,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Thin the `aim` ring.
 
 SCORE: 7.4
+
+## Iteration 40
+**Did**: game.js sheep geometry (`sheepBodyGeo`, `sheepHeadGeo`) `ico()` detail 2 → 1; `toonSheep` low band 196,176,140 → 232,224,204; `sheepMat` emissive 0x2e261c → 0x3a352a.
+**Saw**: `perf`: 190,778 triangles (was 261k), 81 draw calls, 0.63 MB. Zoom [450,560,920,720]: sheep fleece still reads peach-orange with soft lumps, so the warm tint is probably from the post-process grade or the scene lights, not from the gradient map. No console errors seen. 
+**Next**: find the warm cast (post shader / sun colour / `PAL`) and neutralise it on `sheep`; flatten `pines*`/`oaks*`/`ridge*` vertex gradients; clover zoom, KeyE solo pass and local Enter bite pass (skipped four sessions); thin the `aim` ring.
+**Open**: sheep still peach; triangles 191k, target <160k not met. Clover/solo/bite passes untested.
