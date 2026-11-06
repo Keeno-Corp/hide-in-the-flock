@@ -2172,3 +2172,9 @@ SCORE: 7.5
    - Run `interact` with KeyM, then arrow keys and Enter, with `look: true`. A pounce target marker should show over the targeted sheep before the bite.
 
 SCORE: 7.5
+
+## Iteration 37
+**Did**: game.js: `wolf-shoulder` is now two blobs at x ±0.25 on `W.body` (colour 0x7a5a42), outside the extruded body; `ground-ink` opacity 0.95→0.5; post shader hatch0 mix 0.36→0.2 (less muddy hatch).
+**Saw**: `look` zoom [250,340,760,640]: a brown shoulder patch now shows on the wolf; meadow contour lines and hatch are softer; wolf still a dark mass, tail/legs still unclear against `wolf-rock`. No perf, clover or 2-player pass.
+**Next**: rim of light on tail and legs against `wolf-rock`; clover zoom + glow ring; KeyM + arrows + Enter pass for the pounce target marker; laptop `look` for flock vs ground.
+**Open**: clover and 2-player target marker still unchecked; no console check this session.

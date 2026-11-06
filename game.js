@@ -63,7 +63,7 @@ const post = new THREE.ShaderMaterial({
     col=mix(col,paper*.35,.045*smoothstep(.02,.2,lum(col)));
     float grain=h21(floor(fc)+.37)-.5; float fib=vn(vec2(fc.x*.7+fc.y*.1,fc.y*.045))-.5;
     col*=1.+grain*.11+fib*.07;
-    float Ld=lum(col); float hatch0=step(.62,fract((fc.x-fc.y)*.14+vn(fc*.02)*.8))*smoothstep(.2,.07,Ld)*(1.-sky)*smoothstep(1./600.,1./90.,c); col=mix(col,ink,hatch0*.36);
+    float Ld=lum(col); float hatch0=step(.62,fract((fc.x-fc.y)*.14+vn(fc*.02)*.8))*smoothstep(.2,.07,Ld)*(1.-sky)*smoothstep(1./600.,1./90.,c); col=mix(col,ink,hatch0*.2);
     col=mix(col,ink,edge*.95);
     vec2 q=vUv-.5; float v=smoothstep(.35,.95,length(q*vec2(1.1,1.)));
     col=mix(col,col*vec3(.72,.62,.55),v*.55);
@@ -192,7 +192,7 @@ const PLAY_R = 30;
       if (pts.length >= 2) seg(pts[0][0], pts[0][1], pts[1][0], pts[1][1]); if (pts.length === 4) seg(pts[2][0], pts[2][1], pts[3][0], pts[3][1]);
     }
     const gi = new THREE.BufferGeometry(); gi.setAttribute('position', new THREE.Float32BufferAttribute(V, 3));
-    const li = new THREE.Mesh(gi, new THREE.MeshBasicMaterial({ color: 0x33231a, side: THREE.DoubleSide, transparent: true, opacity: 0.95, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 }));
+    const li = new THREE.Mesh(gi, new THREE.MeshBasicMaterial({ color: 0x33231a, side: THREE.DoubleSide, transparent: true, opacity: 0.5, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 }));
     li.name = 'ground-ink'; scene.add(li);
   }
 }
@@ -292,7 +292,7 @@ const W = {};
   ]));
   const eyeMat = new THREE.MeshBasicMaterial({ color: 0xe9c46a, fog: false });
   [-1, 1].forEach(sx => { const e = new THREE.Mesh(new THREE.SphereGeometry(0.035, 8, 6).scale(1.3, 0.8, 1), eyeMat); e.position.set(sx * 0.15, 0.06, 0.36); W.head.add(e); });
-  add(W.body, mergeGeometries([blob(0.22, 0.55, 1.1, 0.0, 0.92, 0.35, 0, 0, 0)]), new THREE.MeshBasicMaterial({ color: 0x6b4f3a, fog: false })).name = 'wolf-shoulder'; W.body.children[W.body.children.length-1].scale.set(1.25,1,1);
+  add(W.body, mergeGeometries([blob(0.1, 0.5, 0.9, 0.25, 0.9, 0.3), blob(0.1, 0.5, 0.9, -0.25, 0.9, 0.3)]), new THREE.MeshBasicMaterial({ color: 0x7a5a42, fog: false })).name = 'wolf-shoulder';
   W.legs = [];
   [[-1, 0.72], [1, 0.72], [-1, -0.6], [1, -0.6]].forEach(([sx, z]) => {
     const g = new THREE.Group(); g.name = 'wolf-leg'; g.position.set(sx * 0.13, 0.72, z); W.body.add(g);
