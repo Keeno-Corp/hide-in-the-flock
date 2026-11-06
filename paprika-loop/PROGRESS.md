@@ -2975,3 +2975,9 @@ SCORE: 8.3
    - **Check:** `look` with `target: player` and a zoom on the flock show it indistinguishable among its neighbours.
 
 SCORE: 8.3
+
+## Iteration 70
+**Did**: `game.js` line 135-136: player sheep (i=0) now takes tint and `SZ` from the flock's own distribution (uses j=13 as its index) instead of white/1.0. `index.html`: `#toast` top 84px → 136px, clear of `#hud`/`#mode`.
+**Saw**: `look` solo 1280×800: 101 sheep, no console errors, Never-visible none, 0 overlap in HUD. Toast in local mode not looked at (only the CSS moved); no perf run.
+**Next**: (1) `KeyM` + `look` to confirm the toast overlap is 0. (2) Real win to check `#time` freeze; phone/tablet `#cap` look. (3) Reveal freeze-frame/zoom flash.
+**Open**: Win time and small-screen `#cap` still unverified; the phone `#toast` rule (bottom:60px) is unchanged.

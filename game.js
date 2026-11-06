@@ -132,8 +132,8 @@ const N_AI = 100, N = N_AI + 1;
 const bodyIM = new THREE.InstancedMesh(sheepBodyGeo, flat(), N); bodyIM.name = 'sheep'; bodyIM.castShadow = true; bodyIM.frustumCulled = false;
 const headIM = new THREE.InstancedMesh(sheepHeadGeo, flat(), N); headIM.name = 'sheep-heads'; headIM.castShadow = true; headIM.frustumCulled = false;
 { const tints = [0xffffff, 0xf4ecd8, 0xd9d6cf, 0xffffff, 0xece3cf, 0xbdb7ad]; const c = new THREE.Color();
-  for (let i = 0; i < N; i++) { const t = i === 0 ? 0xffffff : tints[(i * 7 + (i >> 2)) % tints.length]; c.setHex(t).multiplyScalar(0.92 + ((i * 37) % 17) / 17 * 0.1); bodyIM.setColorAt(i, c); headIM.setColorAt(i, new THREE.Color(0xffffff)); } }
-const SZ = Array.from({ length: N }, (_, i) => i === 0 ? 1 : 0.88 + ((i * 53) % 23) / 23 * 0.3);
+  for (let i = 0; i < N; i++) { const j = i === 0 ? 13 : i, t = tints[(j * 7 + (j >> 2)) % tints.length]; c.setHex(t).multiplyScalar(0.92 + ((j * 37) % 17) / 17 * 0.1); bodyIM.setColorAt(i, c); headIM.setColorAt(i, new THREE.Color(0xffffff)); } }
+const SZ = Array.from({ length: N }, (_, i) => 0.88 + (((i === 0 ? 13 : i) * 53) % 23) / 23 * 0.3);
 scene.add(bodyIM, headIM);
 
 // ───────────────────────── wolf ─────────────────────────
