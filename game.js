@@ -131,14 +131,14 @@ addEventListener('resize', () => { renderer.setSize(innerWidth, innerHeight); ca
   });
 }
 const rim = new THREE.PointLight(0xffe2b8, 0, 14, 1.2); scene.add(rim);
-const sun = new THREE.DirectionalLight(0xffd8a8, 3.6);
+const sun = new THREE.DirectionalLight(0xfff0dc, 3.6);
 sun.position.copy(SUN_DIR).multiplyScalar(110);
 sun.castShadow = true;
 sun.shadow.mapSize.set(4096, 4096);
 Object.assign(sun.shadow.camera, { left: -44, right: 44, top: 44, bottom: -44, near: 10, far: 260 });
 sun.shadow.bias = -0.0008; sun.shadow.normalBias = 0.06;
 scene.add(sun, sun.target);
-const hemi = new THREE.HemisphereLight(0xdcc8d0, 0x4c5688, 2.5); scene.add(hemi);
+const hemi = new THREE.HemisphereLight(0xe4dcdc, 0x4c5688, 2.5); scene.add(hemi);
 
 // toon bands: shade / mid / lit
 const toonMap = (() => { const n = 24, d = new Uint8Array(n * 4); for (let i = 0; i < n; i++) { const nl = ((i + 0.5) / n) * 2 - 1, v = nl < 0.02 ? 0 : nl < 0.4 ? 0.82 : 1; d[i * 4] = d[i * 4 + 1] = d[i * 4 + 2] = Math.round(v * 255); d[i * 4 + 3] = 255; } const t = new THREE.DataTexture(d, n, 1, THREE.RGBAFormat); t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t; })();

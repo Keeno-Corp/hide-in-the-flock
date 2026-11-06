@@ -2419,3 +2419,9 @@ SCORE: 7.4
    - Proof: `perf` triangles under 160k.
 
 SCORE: 7.4
+
+## Iteration 41
+**Did**: game.js `sun` colour 0xffd8a8 → 0xfff0dc, `hemi` sky colour 0xdcc8d0 → 0xe4dcdc, to neutralise the warm cast that made `sheep*` peach.
+**Saw**: start look: `sheep*` now read cream with soft lumps (visibly less orange); whole scene a little cooler. My three sample points landed on ground, not fleece (#a5956e, #aca273), so no numeric fleece proof. No console errors, no Lighting:/Surfaces: lines, nothing Never visible. perf not run (triangles last 191k).
+**Next**: sample fleece pixels directly; clover zoom, KeyE solo pass, local Enter bite pass, win/lose cards (untested five sessions); flatten `pines*`/`oaks*`/`ridge*` gradients; cut triangles under 160k.
+**Open**: only item 1 of the judge's list done. Clover/solo/bite passes and triangle target still open.
