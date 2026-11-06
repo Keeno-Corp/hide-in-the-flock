@@ -10,7 +10,7 @@ My scores and Next list are unchanged.
 
 SCORE: 8.0
 
-## Iteration 80
+## Iteration 81
 **Did:** No code change; about 9 minutes left, read LATEST.md and git log only.
 **Saw:** Nothing new measured; last look (iter 61): no console errors, Never visible none, 508 objects. Judge 60 scored 8.0.
 **Next:** On a normal-play frame, fade `ground`/`tufts*` detail with distance; raise wolf pose so `wolf-leg` shows over `wolf-rock`; asset_search "wolf", "sheep"; play clover win and `M`+`Enter` bite paths; run perf.
