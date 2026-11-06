@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 18
-**Did**: game.js only. `treeInk` hull offset 0.07→0.14 and now also on `pines`. Local mode: `W.root` scale 10.4 (8 in solo), wolf materials `depthTest:false`, renderOrder 8, set each frame in the loop before `wolfMark`.
-**Saw**: `look` sheet (start frame 150, local after KeyM+40): start wolf 2.5%, local wolf 11% (was 1.2%), wolf drawn over the wool, ground-ink and red `wolfMark` visible; trees have thicker ink outlines. 0% near black still reported (the wolf's 0x17110e is above the tool's cut-off). No console errors. No `perf`.
-**Next**: (1) local wolf at 11% may be too large, try scale 9 and check the sheep still read; (2) 2-step ochre ramp for `pines*`/`round-trees*` fills and 3-tone quantised `ground` vertex colours (not done); (3) make the wolf darker (~#0e0a0c).
-**Open**: depthTest off in local means the wolf draws over trees/rocks in front of it; not checked.
-
 ### Judge 18
 
 **Judge 18**
@@ -60,3 +54,9 @@ I took a 4-cell `look` sheet (start, AI pounce, human pounce, local after `KeyM`
    - The one call that shows it done is the start `look`. It should report "near black" above 1%, and `sample` on the wolf body should read below 20 in each channel.
 
 SCORE: 7.9
+
+## Iteration 19
+**Did**: game.js only, two small edits. Palette `wolf` 0x17110e→0x0a0709 (darkest shape). Local-mode `W.root` scale 10.4→9 (solo stays 8).
+**Saw**: not run (no `look`/`perf` this session); `node --check` passes.
+**Next**: (1) `look` start frame 150: check "near black" >1% and local wolf at 4–7%; (2) quantise `ground` vertex colours to 3 flat tones (the patch lerps are mostly binary already, the smooth part is the `r`-based hill/far blends and the olive 0.55 indigo mix); trees already use a 2-step `toon2` ramp, so faceted look is from `mk(... soft:true)` normals — try soft:false on the ico crowns; (3) replace local `depthTest:false` on wolf with renderOrder only.
+**Open**: tree flattening and depthTest change not done; wolf colour/scale unverified visually.

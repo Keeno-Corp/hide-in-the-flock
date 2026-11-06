@@ -1070,3 +1070,9 @@ I took a 4-cell `look` sheet (start, AI pounce, human pounce, local after `KeyM`
    - The one call that shows it done is the start `look`. It should report "near black" above 1%, and `sample` on the wolf body should read below 20 in each channel.
 
 SCORE: 7.9
+
+## Iteration 19
+**Did**: game.js only, two small edits. Palette `wolf` 0x17110e→0x0a0709 (darkest shape). Local-mode `W.root` scale 10.4→9 (solo stays 8).
+**Saw**: not run (no `look`/`perf` this session); `node --check` passes.
+**Next**: (1) `look` start frame 150: check "near black" >1% and local wolf at 4–7%; (2) quantise `ground` vertex colours to 3 flat tones (the patch lerps are mostly binary already, the smooth part is the `r`-based hill/far blends and the olive 0.55 indigo mix); trees already use a 2-step `toon2` ramp, so faceted look is from `mk(... soft:true)` normals — try soft:false on the ico crowns; (3) replace local `depthTest:false` on wolf with renderOrder only.
+**Open**: tree flattening and depthTest change not done; wolf colour/scale unverified visually.
