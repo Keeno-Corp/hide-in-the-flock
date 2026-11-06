@@ -3122,3 +3122,9 @@ SCORE: 8.3
 **Saw**: `setState {clovers:2, t:179}`, player teleported to the 3rd clover (-19,8), E held: `result` win at frame 145, `cloverProgress` [0,0,1.01]. `look` shows "THE FLOCK WINS / YOU BLENDED IN / ... R to play again · M to switch mode" with the HUD (TIME 0:00, 3 clovers lit, 3 red bite dots). 120 more frames: `t` and `result` unchanged. 0 console errors, "Never visible: none". Did not run `perf` or a phone look.
 **Next**: (1) Wolf Shift dash for P2 plus a pounce-cooldown fill on `wolfRing`. (2) Show the stalk toast on screen (set `wolf.state` to stalk the human, `look` at phone and desktop). (3) Measure the nearest sheep to the wolf after `KeyM`.
 **Open**: the stalk toast and the 2-player dash are still unbuilt or unseen. Clover positions are (14,-5), (-3,15), (-19,8).
+
+## Iteration 76
+**Did**: built P2's wolf dash in `game.js` `updateWolf` (local mode): RightShift gives 0.3 s at speed 15 (walk is 7), cooldown `wolf.dashCd` 2.5 s. In local mode the sheep's run is now ShiftLeft only. Added `wolfRingFill` (child of `wolfRing`): disc scaling with dash readiness, red while charging, green when ready. Mode panel text now says "RShift DASH".
+**Saw**: after `KeyM`, ArrowRight + ShiftRight 30 frames moved `wolf.x` by 5.9 (= 0.3·15 + 0.2·7; walking alone would be 3.5). `look`: red fill inside the yellow `wolfRing`, panels 0 overlap, 0 console errors, Never visible: none. No `perf` or phone look.
+**Next**: (1) show the stalk toast on screen (set `wolf.state` to stalk the human; `look` at phone and desktop). (2) Measure nearest sheep to the wolf after `KeyM`. (3) Phone look in local mode (panel is longer now).
+**Open**: the dash cooldown fill was seen only charging (red); the green ready state is unseen. The first plain-walk trace measured 8.5 (includes the start-up frames), so the dash/walk comparison is by formula.

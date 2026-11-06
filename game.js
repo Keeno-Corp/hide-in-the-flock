@@ -248,7 +248,7 @@ const marker = new THREE.Mesh(new THREE.RingGeometry(0.85, 1.1, 28).rotateX(-Mat
 const reach = new THREE.Mesh(new THREE.RingGeometry(4.4, 4.6, 40).rotateX(-Math.PI / 2), ringMat(0xe0302a)); reach.name = 'reach'; reach.visible = false; scene.add(reach);
 const aim = new THREE.Mesh(new THREE.RingGeometry(2.4, 3.8, 32).rotateX(-Math.PI / 2), ringMat(0xfff06a)); aim.material.opacity = 0.95; aim.material.depthTest = false; aim.renderOrder = 5; aim.name = 'aim'; { const am = new THREE.MeshBasicMaterial({ color: 0xff3a1a, depthTest: false, fog: false }); const ar = new THREE.Mesh(new THREE.ConeGeometry(0.9, 1.8, 4).rotateX(Math.PI), am); ar.renderOrder = 6; ar.position.y = 5; ar.name = 'aimArrow'; aim.add(ar); const ar2 = new THREE.Mesh(new THREE.RingGeometry(1.5, 2.4, 32).rotateX(-Math.PI / 2), am); ar2.renderOrder = 5; aim.add(ar2); { const wm = new THREE.MeshBasicMaterial({ color: 0xffffff, depthTest: false, fog: false, transparent: true, opacity: 0.9 }); const ro = new THREE.Mesh(new THREE.RingGeometry(3.8, 4.2, 32).rotateX(-Math.PI / 2), wm); ro.renderOrder = 5; aim.add(ro); } aim.userData.arrow = ar; } aim.visible = false; scene.add(aim);
 const aimLine = new THREE.Mesh(new THREE.PlaneGeometry(1, 1.6).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xff3a1a, depthTest: false, fog: false, transparent: true, opacity: 0.8 })); aimLine.renderOrder = 4; aimLine.name = 'aimLine'; aimLine.visible = false; scene.add(aimLine);
-const wolfRing = new THREE.Mesh(new THREE.RingGeometry(5.2, 6.2, 36).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xffe14a, depthTest: false, fog: false, transparent: true, opacity: 0.9 })); wolfRing.renderOrder = 6; wolfRing.name = 'wolfRing'; wolfRing.visible = false; scene.add(wolfRing);
+const wolfRing = new THREE.Mesh(new THREE.RingGeometry(5.2, 6.2, 36).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xffe14a, depthTest: false, fog: false, transparent: true, opacity: 0.9 })); wolfRing.renderOrder = 6; wolfRing.name = 'wolfRing'; { const f = new THREE.Mesh(new THREE.CircleGeometry(5.1, 28).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0x8ee04a, depthTest: false, fog: false, transparent: true, opacity: 0.35 })); f.renderOrder = 6; f.name = 'wolfRingFill'; wolfRing.add(f); wolfRing.userData.fill = f; } wolfRing.visible = false; scene.add(wolfRing);
 const outline = new THREE.Group(); outline.visible = false; outline.name = 'outline';
 {
   const om = new THREE.MeshBasicMaterial({ color: 0xff2a1a, side: THREE.BackSide, depthTest: false }); om.fog = false;
@@ -313,7 +313,7 @@ function updateModeUI() {
   $('mname').textContent = mode === 'solo' ? 'SOLO' : 'LOCAL 2-PLAYER';
   $('ctl').innerHTML = mode === 'solo'
     ? 'WASD / Arrows walk · Shift run (suspicious!)<br>E / Space graze · find the 3 clovers, hold E<br>R restart'
-    : 'P1 sheep: WASD · Shift run · E graze<br>P2 wolf: Arrows move · Enter POUNCE<br>R restart';
+    : 'P1 sheep: WASD · Shift run · E graze<br>P2 wolf: Arrows move · RShift DASH · Enter POUNCE<br>R restart';
 }
 function toast(t, d = 2.2) { const e = $('toast'); e.textContent = t; e.style.opacity = 1; toastT = d; }
 function hideReveal() {
@@ -420,7 +420,7 @@ function movePlayer(dt) {
   const solo = mode === 'solo';
   const L = kd('KeyA') || (solo && kd('ArrowLeft')), R = kd('KeyD') || (solo && kd('ArrowRight')), U = kd('KeyW') || (solo && kd('ArrowUp')), D = kd('KeyS') || (solo && kd('ArrowDown'));
   const gz = kd('KeyE') || (solo && kd('Space'));
-  const run = kd('ShiftLeft', 'ShiftRight');
+  const run = mode === 'solo' ? kd('ShiftLeft', 'ShiftRight') : kd('ShiftLeft');
   let ix = (R ? 1 : 0) - (L ? 1 : 0), iz = (D ? 1 : 0) - (U ? 1 : 0);
   const m = Math.hypot(ix, iz);
   s.graze = gz && !m;
@@ -489,9 +489,10 @@ function updateWolf(dt) {
   if (wolf.state === 'pounce') return;
   const w = wolf;
   if (mode === 'local') {
+    w.dashCd = Math.max(0, (w.dashCd || 0) - dt); w.dashT = w.dashT || 0;
     if (pounce.ph) return;
     const ix = (kd('ArrowRight') ? 1 : 0) - (kd('ArrowLeft') ? 1 : 0), iz = (kd('ArrowDown') ? 1 : 0) - (kd('ArrowUp') ? 1 : 0), m = Math.hypot(ix, iz);
-    if (m && !result) { w.x += ix / m * 7 * dt; w.z += iz / m * 7 * dt; w.yaw += angDiff(w.yaw, Math.atan2(ix, iz)) * Math.min(1, dt * 10); w.phase += dt * 9; w.pose = 'walk'; } else w.pose = 'crouch';
+    if (m && !result) { if (kd('ShiftRight') && w.dashCd <= 0) { w.dashT = 0.3; w.dashCd = 2.5; } if (w.dashT > 0) w.dashT -= dt; const sp = w.dashT > 0 ? 15 : 7; w.x += ix / m * sp * dt; w.z += iz / m * sp * dt; w.yaw += angDiff(w.yaw, Math.atan2(ix, iz)) * Math.min(1, dt * 10); w.phase += dt * 9; w.pose = 'walk'; } else w.pose = 'crouch';
     const r = Math.hypot(w.x, w.z); if (r > PLAY_R) { w.x *= PLAY_R / r; w.z *= PLAY_R / r; }
     w.y = lerp(w.y, wolfGround(), Math.min(1, dt * 12));
     return;
@@ -684,7 +685,7 @@ function drawWolf(dt) {
   const loc = mode === 'local';
   reach.visible = loc && !pounce.ph && !result; reach.position.set(w.x, gh(w.x, w.z) + 0.15, w.z);
   aim.visible = false; aimLine.visible = false;
-  wolfRing.visible = loc && !pounce.ph && !result; if (wolfRing.visible) { wolfRing.position.set(w.x, gh(w.x, w.z) + 0.3, w.z); wolfRing.scale.setScalar(1 + 0.15 * Math.sin(clock * 8)); }
+  wolfRing.visible = loc && !pounce.ph && !result; if (wolfRing.visible) { wolfRing.position.set(w.x, gh(w.x, w.z) + 0.3, w.z); wolfRing.scale.setScalar(1 + 0.15 * Math.sin(clock * 8)); const rdy = 1 - Math.min(1, (w.dashCd || 0) / 2.5); wolfRing.userData.fill.scale.setScalar(Math.max(0.02, rdy)); wolfRing.userData.fill.material.color.setHex(rdy >= 1 ? 0x8ee04a : 0xe0302a); }
   if (loc && !pounce.ph && !result) { let best = null, bd = 9; for (const s of sheep) { const d = Math.hypot(s.x - w.x, s.z - w.z); if (d < bd) { bd = d; best = s; } } if (best) { aim.visible = true; aim.position.set(best.x, best.y + 0.2, best.z); aim.scale.setScalar(1.5 + 0.2 * Math.sin(clock * 9)); aim.userData.arrow.position.y = 5 + Math.sin(clock * 7); { const dx = best.x - w.x, dz = best.z - w.z, L = Math.hypot(dx, dz) || 1; aimLine.visible = true; aimLine.position.set((w.x + best.x) / 2, best.y + 0.6, (w.z + best.z) / 2); aimLine.rotation.y = Math.atan2(-dz, dx); aimLine.scale.set(L, 1, 1); } const inR = bd < 4.6; aim.material.opacity = inR ? 0.7 + 0.25 * Math.sin(clock * 9) : 0.25; reach.material.color.setHex(inR ? 0xffe04a : 0xe0302a); reach.scale.setScalar(inR ? 1.35 : 1); aim.userData.arrow.visible = inR; } }
 }
 
