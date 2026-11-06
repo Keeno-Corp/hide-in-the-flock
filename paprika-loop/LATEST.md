@@ -1,31 +1,37 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-### Judge 20
+## Iteration 21
+**Did**: Made the `pines` instanced mesh a named const `pinesMesh` (game.js); it is hidden while `cam.close >= 0.5` (the AI/human reveal close-up), so no pine crosses the `wolf`.
+**Saw**: sheet ai|human at 150 frames: the `wolf` is fully visible in the AI cell, with the "baa?" bubble beside it. Brightness 59%/54%, near black 6%/6%, no console errors. Background pines pop out and in at the reveal ends, hidden by the letterbox. Not run: perf, phone viewport, sheep pop.
+**Next**: (1) `look` viewports phone and sheet pounce human at phone size; the phone `@media` rule exists in index.html but is unchecked; (2) `interact` pounce human 200 frames to check the sheep pop; (3) a short "REPLAY" beat, drop `aimLine`.
+**Open**: pine pop at the reveal ends (could fade the scale); the phone layout and the sheep pop are still unchecked.
 
-**Judge verdict, session 20**
+### Judge 21
+
+**Judge verdict, session 21**
 
 1. **Looks as LOOK.md says: 8.**
-   - The `start` cell shows the sea, `cliff`, `sand`, `pines*` ×136, `wolf-rock`, the `wolf`, the `sheep*` flock and the clouds. Brightness is 64%, saturation 45%, 0% near black.
+   - The `start` cell shows the sea, `cliff`, `sand`, `pines*` ×143, `wolf-rock`, the `wolf`, the `sheep*` flock and the clouds.
+   - Brightness is 64%, saturation 44%, 0% near black.
    - There are no `Lighting:` or `Surfaces:` lines.
 
 2. **Plays as DESIGN.md says: 8.**
-   - The HUD shows TIME 2:59, the three CLOVERS outlines, the WOLF BITES dots and the SUSPICION bar. The `clover` rings glow on the meadow.
-   - I ran `interact` with the pounce action, not with the keys.
+   - The HUD shows TIME, the three CLOVERS outlines, the WOLF BITES dots and the SUSPICION bar, and the `clover` rings glow on the meadow.
+   - I ran `interact` with the pounce action only, not with the keys, and I did not play a full round.
 
 3. **Clip moment: 8.**
-   - **Human cell:** the `wolf` lies flat in frame under a big red "GOTCHA". The red PLAYER 1 tag and "PLAYER 1 has been found." sit above it.
-   - **AI cell:** "AI SHEEP", "Just a sheep. Bite wasted." and the "baa?" bubble all show.
-   - **Darkness:** the target is met. Near black is 6% in both cells (was 9%) and brightness is 54%.
-   - **Wolf in the AI cell:** the `wolf` is still half behind the pines and the bubble. It does not read clearly as the shrug.
-   - **Sheep pop:** I did not check the sheep shrink-and-pop at the end of the reveal.
+   - **AI cell:** the `wolf` is now fully visible, with no pine across it. The "AI SHEEP" banner, "Just a sheep. Bite wasted." and the "baa?" bubble sit beside its head. The bubble sits close to the head, but the wolf is still a dark, pale-tinted shape in the foreground and the shrug does not read clearly.
+   - **Human cell:** "GOTCHA", "HUMAN!", the red PLAYER 1 tag and the red silhouette all read. The `wolf` lies flat and dark.
+   - **Left half of the frame:** a pink wash covers the left of the human cells, apparently from the foreground `rocks*` and `sheep*` tinted by the reveal overlay. It looks like a fault.
+   - **Darkness:** near black is 6% in both cells.
+   - **Not checked:** the sheep pop and the end of the reveal.
 
 4. **Looks like refs/01.jpg: 9.**
    - The sea, `cliff`, `pines*`, `sand`, clouds and `wolf-rock` all show from the play camera.
    - The picture is bright and low-poly.
-   - The `human` cell is a little hazy and warm.
 
 5. **Solo fun and fair: 8.**
-   - SUSPICION, the `clover` rings, the end screen with restart and the caption line are all present.
+   - SUSPICION, the `clover` rings, the win/lose screens and the caption line are present ("Even in nature, nobody blends in forever.").
    - I did not play a full round.
 
 6. **Local 2-player: 8.**
@@ -33,37 +39,35 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
 
 7. **`window.__game`, no build, ~100 sheep: 8.**
    - `window.__game` is present.
-   - `perf` reads 232.8 ms on SwiftShader (host load 5.4), so it is no signal.
-   - It shows 77 draw calls, 102.8k triangles and 0 MB of assets.
+   - `perf` reads 123 ms on SwiftShader on a busy host (load 6.7), so it is no signal.
+   - It shows 76 draw calls, 102.7k triangles and 0 MB of assets.
 
 8. **Juice: 8.**
    - The banners, bubble, tag, captions and wool are strong.
    - I did not check the sound.
 
-9. **Works at any window size, HUD readable: 7.**
-   - The laptop 1440×900 cell is fine.
-   - The phone cell is a narrow portrait strip with a tiny HUD panel. The controls hint ("(M) Mode: SOLO") sits at the bottom corner and is small. I did not look at the reveal text at phone size.
+9. **Works at any window size, HUD readable: 6.**
+   - **Phone viewport:** the HUD panel and the "(M) Mode: SOLO" hint are tiny at 390 px. The hint is hard to read.
+   - **Phone reveal:** I did not look at the reveal text at phone size. My "phone late" cell ran at the default size, so it says nothing about the phone.
+   - **Laptop:** fine.
 
 10. **Faults: 9.**
     - There are no console errors and no `Never visible` object.
-    - The only open fault is the AI-cell `wolf` partly hidden.
+    - The pines pop in and out at the reveal ends, hidden by the letterbox.
+    - There is a pink wash on the left of the reveal cells.
 
 **Next:**
-1. **Make the `wolf` clear in the AI reveal.**
-   - Raise or shift the reveal camera so the foreground `pines*` don't cross the `wolf`, for example by hiding pines near the camera during `cam.punch`.
-   - Move the "baa?" bubble beside the head.
-   - Check with `look` `sheet` on `pounce ai`, 150 frames. The whole `wolf` should show without a pine across it.
-2. **Make the phone layout work.**
-   - Scale the HUD up with `clamp()` or `vw`, and enlarge the mode hint at narrow widths.
-   - Run `look` `viewports` `["phone"]` and `sheet` `pounce human` at phone size. The "GOTCHA" and PLAYER 1 tag should fit the width.
+1. **Phone layout (asked again).**
+   - Scale the HUD and the "(M) Mode" hint with `clamp()` or `vw` at widths under 500 px.
+   - Check with `look` `viewports` `["phone"]`: the HUD text is about twice as big, the hint is readable and it does not cover the sheep.
+   - Then run `look` `sheet` with `pounce human` at 150 frames and `state`/`steps` `resize: [390, 844]`. "GOTCHA" and the PLAYER 1 tag should fit the width.
+2. **Clean the reveal colour.**
+   - Find the source of the pink wash on the left of the human cell: an overlay gradient, a vignette tint, or `rocks*` and `sheep*` lit red.
+   - Remove it or make it neutral.
+   - Check with `look` `sample` on the left pixels of the `human` cell, around [60, 200]. They should read as grass green and sheep white, not pink.
 3. **Check the sheep pop, then add a short "REPLAY" beat (asked again).**
-   - Run `interact` `{action:"pounce", target:"human"}` with `frames: 200` and `look: true`. The `sheep*` should ease back without a pop.
-   - Then add a 0.4 s zoom-back with a "REPLAY" tag after the reveal and drop `aimLine`. Check by `look` `sheet` at about frame 170.
+   - Run `interact` `pounce human` with `frames: 200` and `look: true`. The `sheep*` should ease back without a pop.
+   - Then add a 0.4 s zoom-back with a "REPLAY" tag and drop `aimLine`.
+   - Check by `look` `sheet` at about frame 170.
 
-SCORE: 8.2
-
-## Iteration 21
-**Did**: Made the `pines` instanced mesh a named const `pinesMesh` (game.js); it is hidden while `cam.close >= 0.5` (the AI/human reveal close-up), so no pine crosses the `wolf`.
-**Saw**: sheet ai|human at 150 frames: the `wolf` is fully visible in the AI cell, with the "baa?" bubble beside it. Brightness 59%/54%, near black 6%/6%, no console errors. Background pines pop out and in at the reveal ends, hidden by the letterbox. Not run: perf, phone viewport, sheep pop.
-**Next**: (1) `look` viewports phone and sheet pounce human at phone size; the phone `@media` rule exists in index.html but is unchecked; (2) `interact` pounce human 200 frames to check the sheep pop; (3) a short "REPLAY" beat, drop `aimLine`.
-**Open**: pine pop at the reveal ends (could fade the scale); the phone layout and the sheep pop are still unchecked.
+SCORE: 8.0
