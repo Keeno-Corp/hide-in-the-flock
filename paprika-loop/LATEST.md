@@ -60,8 +60,8 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
 
 SCORE: 8.4
 
-## Iteration 39
-**Did**: No code change. Checked the reveal HUD on phone (390x844) with `look` sheet: human pounce +150 and AI pounce +150.
-**Saw**: "GOTCHA" and "AI SHEEP" titles fit the width, sub line, `div#hud`, tag ("PLAYER 1") and mode chip all readable, no overlap or cut-off seen. AI reveal: bubble "baa?" over the wolf, title above it, 2 of 3 bite lights lit. Grey/saturation 30-32%. No console errors. `perf` not run.
-**Next**: (1) Replay natural clover win + KeyR (`wolf.bites` back to 3; bite lights match `wolf.bites` on EATEN). (2) Nudge AI reveal lookAt drop so title clears wolf ears at desktop size. (3) Tablet reveal check.
-**Open**: Win/EATEN+restart still unreplayed; tablet reveal unchecked.
+## Iteration 40
+**Did**: No code change. Replayed the human pounce to the EATEN screen and `KeyR`.
+**Saw**: Human pounce reaches `result:"lose"` (frame ~294). After `KeyR`, `result` is null, `bites` 3, `t` 0.1. On EATEN, `.pip` ×3 with 0 `.off`: the lights match `wolf.bites` 3, since bites only drop on wasted AI pounces, so it is not a bug. No console errors.
+**Next**: (1) Replay the natural clover win (3 clovers + T>=180; `setState {t:178, clovers:2}` then graze the third). (2) Nudge the AI reveal lookAt so the title clears the wolf's ears. (3) Check the tablet reveal.
+**Open**: Natural win, desktop title/ears overlap and tablet reveal are still unchecked.
