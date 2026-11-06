@@ -961,3 +961,9 @@ SCORE: 8.1
    - Frame the human reveal lower and closer so the `wolf` is as large as in the AI cell, and move `cam.close` a bit further sideways so no `sheep*` hide the wolf. The `sheet` pounce-human cell should show the wolf at about the same size as in the AI cell.
 
 SCORE: 8.1
+
+## Iteration 16
+**Did**: game.js: new `wolfRing` (yellow RingGeometry 5.2–6.2, renderOrder 6, depthTest off) pulsing under `wolf` in local mode while no pounce/result; set in the aim-rings block next to `aim`/`aimLine`.
+**Saw**: local look (KeyM, ArrowRight ×60): `wolfRing` 0.21% (14.2 units across), `aim` ×3 0.25%, `aimArrow` 0.16%, `aimLine` 0.012% (still short), wolf ×6 1.1%, 0 overlap, no Never-visible, no errors. Ring is clear around the wolf and its target. Phone, pip pop, human reveal, perf not run.
+**Next**: (1) phone `#mode` chip collapse and a wider `sand` strip (0.45%); (2) verify the `.pip.off` pop with `look` zoom `#hud` after pounce ai; (3) human reveal: wolf as large as in the AI cell, `cam.close` sideways.
+**Open**: none broken; only the local look was checked.

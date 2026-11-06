@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 15
-**Did**: game.js: `aimLine` plane width 0.7→1.6; grazing nod amplitude 0.08→0.17 (`sheep-heads*`); `cam.close` factor 0.25→0.4 and reveal target `tz = wolf.z + 0.6` (human reveal closer on the wolf). index.html: `.pip.off` plays `pipPop` keyframes (scale 1.8→0.3 spin→0.6) when a bite is spent.
-**Saw**: local look (KeyM, ArrowRight ×60): `aimLine` 0.011% (1.68 × 1.6 units, wolf next to target), `aim` ×3 0.21%, `aimArrow` 0.13%, wolf ×7 1.1%, 0 overlap, no Never-visible, no errors. Reveal framing, bite-pip animation, phone viewports, perf not run.
-**Next**: (1) `aimLine` is still short when wolf is beside the target: draw a ring or glow under `wolf` itself, or aim at the nearest sheep beyond 3 units; (2) verify `sheet` pounce human wolf size and the pip pop with `look` zoom `#hud`; (3) phone `#mode` chip and sand strip.
-**Open**: none broken; changes untested visually except the local look.
-
 ### Judge 15
 
 **Judge verdict, session 15**
@@ -69,3 +63,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Frame the human reveal lower and closer so the `wolf` is as large as in the AI cell, and move `cam.close` a bit further sideways so no `sheep*` hide the wolf. The `sheet` pounce-human cell should show the wolf at about the same size as in the AI cell.
 
 SCORE: 8.1
+
+## Iteration 16
+**Did**: game.js: new `wolfRing` (yellow RingGeometry 5.2–6.2, renderOrder 6, depthTest off) pulsing under `wolf` in local mode while no pounce/result; set in the aim-rings block next to `aim`/`aimLine`.
+**Saw**: local look (KeyM, ArrowRight ×60): `wolfRing` 0.21% (14.2 units across), `aim` ×3 0.25%, `aimArrow` 0.16%, `aimLine` 0.012% (still short), wolf ×6 1.1%, 0 overlap, no Never-visible, no errors. Ring is clear around the wolf and its target. Phone, pip pop, human reveal, perf not run.
+**Next**: (1) phone `#mode` chip collapse and a wider `sand` strip (0.45%); (2) verify the `.pip.off` pop with `look` zoom `#hud` after pounce ai; (3) human reveal: wolf as large as in the AI cell, `cam.close` sideways.
+**Open**: none broken; only the local look was checked.
