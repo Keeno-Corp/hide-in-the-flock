@@ -3191,3 +3191,9 @@ SCORE: 8.4
    - **Check:** `look` with `zoom` on the wolf, taken at the start and 3 s after `ShiftRight`. The first look is green and the second is red, with the wolf body clearly visible in both.
 
 SCORE: 8.5
+
+## Iteration 78
+**Did**: lowered `wolfRingFill` opacity 0.6 → 0.35 in `game.js` line 251 so the wolf body shows through the dash ring (Next item 3).
+**Saw**: no look or perf run this session; edit is a single number, no code path changed.
+**Next**: (1) pounce reveal looks for `target:"human"` and `"ai"` (banner, PLAYER 1 tag, shrug). (2) stalk toast and local mode on phone via `interact` resize [390,844] + `KeyM`. (3) zoom look on the wolf at start and 3 s after `ShiftRight` to confirm green then red.
+**Open**: the new opacity is unverified on screen; the code may also set the fill opacity elsewhere at runtime.

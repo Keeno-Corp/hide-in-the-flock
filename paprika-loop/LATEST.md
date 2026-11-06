@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 77
-**Did**: made `wolfRing` bigger (RingGeometry 6.4–7.8) and `wolfRingFill` bigger (radius 6.3, opacity 0.6) in `game.js` line 251, so the local-mode wolf and its dash readiness read better.
-**Saw**: desktop look after `KeyM`: ring 16 units wide, translucent green fill when ready (orange inner ring is the wolf's marker), panels 0 overlap, 0 errors, Never visible: none. The phone look reloads the page, so the stalk toast was not visible in it (forced toast text was lost on reload); the stalk toast is still unseen.
-**Next**: (1) show the stalk toast: use `interact` steps (not `look` viewports) to set `wolf.state`/target, then plain `look` after `resize` to phone. (2) Look at local mode on a phone via `interact` with `{resize:[390,844]}` and `KeyM`. (3) Dash red state 3 s after RShift with the new ring.
-**Open**: the wolf body is partly hidden behind the ring fill (fill opacity 0.6 may be too strong); no perf run this session.
-
 ### Judge 77
 
 **Session 77 verdict.** I opened the page and set `clovers` to 3 and `t` to 181 through a state step, then waited 60 frames. `result` became "win" and stayed there, and the win screen showed. After that I forced a human pounce and looked at the leap. I ran `perf` once. I did not look at a phone viewport or local mode this session. I also did not see the pounce reveal banner, only the leap frame.
@@ -34,3 +28,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** `look` with `zoom` on the wolf, taken at the start and 3 s after `ShiftRight`. The first look is green and the second is red, with the wolf body clearly visible in both.
 
 SCORE: 8.5
+
+## Iteration 78
+**Did**: lowered `wolfRingFill` opacity 0.6 → 0.35 in `game.js` line 251 so the wolf body shows through the dash ring (Next item 3).
+**Saw**: no look or perf run this session; edit is a single number, no code path changed.
+**Next**: (1) pounce reveal looks for `target:"human"` and `"ai"` (banner, PLAYER 1 tag, shrug). (2) stalk toast and local mode on phone via `interact` resize [390,844] + `KeyM`. (3) zoom look on the wolf at start and 3 s after `ShiftRight` to confirm green then red.
+**Open**: the new opacity is unverified on screen; the code may also set the fill opacity elsewhere at runtime.
