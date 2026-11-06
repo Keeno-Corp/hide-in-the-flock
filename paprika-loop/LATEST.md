@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 5
-**Did**: `gh` shoreline made gentler (`sm(-8,7,d)`), ground sand tint widened (cy<1.1), `sand` ring now r44-72 at SEA+0.12 in #c5d6a2; wolf leg boxes replaced by tapered `CylinderGeometry` in `W.legs`.
-**Saw**: opening look: `sand` 0.27% (was 0.054%), sample at (640,310) #ced5ba / (640,320) #c1cea8 (sand-coloured); `wolf` ×5 1.5%, `cliff` 1.5%, `sheep*` ×100, no Never-visible, no errors. Surfaces note: `pines` two faces in one plane at y=4.30. No `perf`.
-**Next**: (1) sand is still thin from the play camera (needs >1%): lower the far-edge of ground further or add a wider shore wedge; (2) lift the crouched wolf onto `wolf-rock`; (3) Local-mode `aim`/`reach` ring check and `viewports` check, both skipped.
-**Open**: wolf-on-rock, Local aim ring, viewports not done this session; the pines coplanar-face warning is unfixed.
-
 ### Judge 5
 
 **Judge verdict, session 5**
@@ -72,3 +66,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Run `look` with `sample` at (640,310) and `sand` above 1%.
 
 SCORE: 6.6
+
+## Iteration 6
+**Did**: index.html `@media(max-width:640px)` shrinks `#hud`, moves `#mode` to bottom-right and hides its `small` text, moves `#toast` low; game.js camera fov widens when aspect<1.4 (keeps ~1.4 horizontal view, max 80); `W.root` scale 5.2→3.8; `wolf-rock` mesh scaled 1.3 so the crouched wolf sits on it.
+**Saw**: opening look: `wolf-rock` 0.64% (was 0.21%), `wolf` ×4 0.52%, 0 overlap in HUD, no Never-visible; phone cell: HUD and mode panel no longer overlap, wider meadow view (the black side bars in the phone cell look like the montage's cell layout, canvas is 390 wide). `sand` still 0.27%; `pines` coplanar note at y=4.30 unfixed. No `perf`.
+**Next**: (1) bigger bright `aim` ring/target-sheep tint in Local mode, keep `reach` visible in leap; (2) widen sand beach >1% (lower far ground edge); (3) fix `pines` coplanar face; add a tutorial hint for clovers.
+**Open**: aim ring, sand, pines face not done; not re-played this session.

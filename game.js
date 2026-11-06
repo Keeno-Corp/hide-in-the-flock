@@ -138,7 +138,7 @@ const ROCK = { x: -10, z: 3, top: 3.0 };
 const W = {};
 {
   const grey = 0x8a7560, light = 0xc9b393, dk = 0x222222;
-  W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(5.2);
+  W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(3.8);
   W.body = new THREE.Group(); W.root.add(W.body);
   const mat = flat();
   const add = (parent, g) => { const m = new THREE.Mesh(g, mat); m.castShadow = true; parent.add(m); return m; };
@@ -173,7 +173,7 @@ const rockMat = flat();
     mk(ico(1.5, 1), 0x777268, { p: [1.4, 0.5, 1.0], s: [1, 0.8, 1], jit: 0.12 }),
     mk(ico(1.2, 1), 0x9a9487, { p: [-1.0, 0.9, -0.6], jit: 0.12 }),
   ]);
-  const m = new THREE.Mesh(g, rockMat); m.position.set(ROCK.x, gh(ROCK.x, ROCK.z) + 0.2, ROCK.z); m.castShadow = m.receiveShadow = true; m.name = 'wolf-rock'; scene.add(m);
+  const m = new THREE.Mesh(g, rockMat); m.position.set(ROCK.x, gh(ROCK.x, ROCK.z) + 0.2, ROCK.z); m.castShadow = m.receiveShadow = true; m.name = 'wolf-rock'; m.scale.setScalar(1.3); scene.add(m);
 }
 
 // ───────────────────────── scenery (instanced) ─────────────────────────
@@ -680,7 +680,7 @@ function updateCamera(dt, rdt) {
   const sc2 = (1 - 0.55 * cam.punch) * cam.zoom;
   camera.position.set(cam.x, 15 * sc2 + 3, cam.z + 32 * sc2 + 6);
   camera.lookAt(cam.x, 5, cam.z - 8);
-  const fov = 50 - 16 * cam.punch; if (Math.abs(camera.fov - fov) > 0.01) { camera.fov = fov; camera.updateProjectionMatrix(); }
+  let fov = 50 - 16 * cam.punch; { const a = innerWidth / innerHeight; if (a < 1.4) fov = Math.min(80, (2 * Math.atan(Math.tan(fov * Math.PI / 360) * 1.4 / a)) * 180 / Math.PI); } if (Math.abs(camera.fov - fov) > 0.01) { camera.fov = fov; camera.updateProjectionMatrix(); }
   camShake.update(rdt);
 }
 
