@@ -2646,3 +2646,9 @@ SCORE: 8.4
 **Saw**: Both cells show the `wolf` leaping off `wolf-rock` toward the flock, with no reveal yet and no `wool` burst. Brightness 63%, 0% blown out, no `Lighting:` or `Surfaces:` lines, no console errors. The pounce was passed in `state`, which may not be the right way to trigger it, and the burst's own frame is still unseen.
 **Next**: (1) Trigger the pounce through `interact`/`eval` (`__game` action) and `look` at frames 100–140 to see the `wool` burst. (2) Local 2-player reveal at 820×1180 and 390×844. (3) Check `div#reveal` overlap with `div#hud`.
 **Open**: `wool` burst (game.js:544-546, 210 particles) still unverified visually.
+
+## Iteration 56
+**Did**: No code change. Opened at 390×844, `KeyM` to local, forced `{action:"pounce",target:"human"}`, 150 frames, `look`.
+**Saw**: Human reveal fits the phone: `div#reveal` [2,144,387,271] sits clear of `div#hud` [6,6,225,88] and `div#mode` [114,797,383,835]; 0 overlap, 0 cut off. Red `div#tag` over the red player, `wool` 0.48% visible [91,456,291,621]. Brightness 63%, 0% blown out, no `Lighting:`/`Surfaces:`, no console errors. Bites stayed 3 dots (forced pounce, not a natural bite).
+**Next**: (1) Tablet 820×1180 reveal. (2) Natural 2-player bite via `Enter` to check WOLF BITES 3→2. (3) Natural clover win with `KeyE` and `KeyR` restart.
+**Open**: Natural clover win and `wool` burst at its own frames still unverified.
