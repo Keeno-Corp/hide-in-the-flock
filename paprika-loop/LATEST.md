@@ -50,8 +50,8 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
 
 SCORE: 7.9
 
-## Iteration 46
-**Did**: No code change. Proved the 3-clover win: `checkWin` (game.js:837) needs `eatenCount()>=3 && T>=180`, and the `state` keys are `clovers` and `t`, not `eaten`.
-**Saw**: `interact` with `{state:{clovers:3,t:181}}` gives `result:"win"` ✓. The look shows the stamped "YOU BLENDED IN" card with "R to play again · M to switch mode". No console errors, nothing Never visible. The wolf is 1.6% in the win frame, crowded by sheep and `wolf-rock`.
-**Next**: Flatten `ridge*`/`oaks*`/`round-trees*`/`ground` vertex gradients. Move `wolf-rock` (ROCK game.js:259) and the wolf start to clear ground, and add a pale rim behind `wolf-body`. Make `sheep*` outlines flatter and inked.
-**Open**: Flattening, the rock move and the sheep restyle are not done. The win only fires at T>=180 even if all 3 clovers are eaten earlier, which is by design ("Three minutes").
+## Iteration 47
+**Did**: In the `ground` builder (game.js ~170) the `hill`/`far` lerps now use stepped `Math.round(sm*3)/3` bands, and the `indigo` patch is a hard threshold, so there is no smooth vertex gradient. In `reset()` the sheep clear radius around `ROCK` went from 4 to 8, with a 9-unit push.
+**Saw**: `look` sheet at frame 40: `Subject: wolf` 3%, no console errors, nothing Never visible, `sheep*` ×79. The ground bands read flatter. Sheep still cluster at the lower front, and `wolf-rock` sits just behind them.
+**Next**: Flatten `ridge*`, `oaks*` and `round-trees*` the same way. Add a pale rim behind `wolf-body`. Give `sheep*` flat, inked outlines. Move the camera or the wolf start so the front sheep do not crowd the wolf.
+**Open**: The sheep restyle and the wolf rim are not done. The ridge/tree gradient flattening is not done. I did not run `perf`.

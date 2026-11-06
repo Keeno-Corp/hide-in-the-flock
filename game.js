@@ -171,10 +171,10 @@ const PLAY_R = 30;
     const patch = Math.sin(cx * 0.09 + Math.sin(cz * 0.07) * 2) + Math.sin(cz * 0.11 - cx * 0.05) * 0.8 + wob;
     c.copy(sage).lerp(warm, patch > -0.35 ? 1 : 0).lerp(ochre, patch > 1.1 ? 1 : 0);
     c.lerp(olive, (Math.sin(cx * 0.21 - cz * 0.17) * Math.sin(cz * 0.13 + cx * 0.09) + wob * 0.8) > 0.58 ? 0.8 : 0);
-    if (r > 34) c.lerp(hill, sm(34, 70, r) * 0.75);
-    if (r > 90) c.lerp(far, sm(90, 190, r) * 0.7);
+    if (r > 34) c.lerp(hill, Math.round(sm(34, 70, r) * 3) / 3 * 0.75);
+    if (r > 90) c.lerp(far, Math.round(sm(90, 190, r) * 3) / 3 * 0.7);
     if (ny < 0.8 && cy > 3) c.lerp(rock, 0.6);
-    { const ip = Math.sin(cx * 0.14 + 1.7) * Math.sin(cz * 0.12 - 0.6) + 0.5 * Math.sin(cx * 0.3 + cz * 0.22); if (r < 60) c.lerp(indigo, 0.4 * sm(0.5, 0.9, ip)); }
+    { const ip = Math.sin(cx * 0.14 + 1.7) * Math.sin(cz * 0.12 - 0.6) + 0.5 * Math.sin(cx * 0.3 + cz * 0.22); if (r < 60) c.lerp(indigo, ip > 0.7 ? 0.4 : 0); }
     col[i * 3] = c.r; col[i * 3 + 1] = c.g; col[i * 3 + 2] = c.b;
   }
   g.setAttribute('color', new THREE.BufferAttribute(col, 3));
@@ -463,7 +463,7 @@ function reset(newMode) {
   const cl = []; for (let k = 0; k < 16; k++) { const [x, z] = polar(2, 26); cl.push([x, z]); }
   sheep.forEach((s, i) => {
     const [cx, cz] = cl[i % cl.length]; const [dx, dz] = polar(0, 9);
-    let x = cx + dx, z = cz + dz; if (Math.hypot(x - ROCK.x, z - ROCK.z) < 4) { x += 6; z += 6; }
+    let x = cx + dx, z = cz + dz; if (Math.hypot(x - ROCK.x, z - ROCK.z) < 8) { x += 9; z += 9; }
     if (Math.hypot(x, z) > 27) { x *= 0.8; z *= 0.8; }
     Object.assign(s, { x, z, vx: 0, vz: 0, yaw: rnd(0, 6.28), st: Math.random() < 0.5 ? 'graze' : 'walk', t: rnd(1, 6), runT: 0, zoom: 0, susp: 0, still: 0, yawRate: 0, speedMax: rnd(0.9, 1.4), pitch: 0, frozen: false, immune: 0, hop: 0, hopV: 0, spin: 0, graze: false, phase: rnd(0, 6) });
   });
