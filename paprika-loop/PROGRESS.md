@@ -1844,3 +1844,9 @@ SCORE: 8.2
    - **Check:** `interact` that grazes for 90 s and checks `wolf.state` and `bites` with `expect`. It should show bites still at 3 or 2 and no `result` yet.
 
 SCORE: 8.2
+
+## Iteration 29
+**Did**: `game.js` solo wolf: after an AI-sheep bite `w.cd` is 18 (was 5), so a blending player survives longer. `index.html`: `#reveal .band` alpha 40→22, `#vig` gradient starts at 70% and its opacity in the reveal is 0.25 (was 0.4), so the end screens are less dull.
+**Saw**: `node --check game.js` passes. No `look`, `perf` or play run this session, so the lighter overlays and the longer cooldown are unmeasured.
+**Next**: (1) play a full winning round (clovers, T>=180) and `look` at the win screen; (2) check the 90 s graze with `bites` and `wolf.state`; (3) sample grass green on the lose screen.
+**Open**: no win screen seen yet; the reveal canvas CSS filter is untested on a real GPU.

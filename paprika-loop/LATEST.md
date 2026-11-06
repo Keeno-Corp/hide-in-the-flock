@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 28
-**Did**: game.js reveal: the "baa?" `#bubble` top is clamped to at least 60% of innerHeight, so it no longer covers the banner lettering ("AI SHEEP").
-**Saw**: `look` sheet at 390x844 (pounce human at 100 and 230 frames, pounce ai at 150 frames): no `Lighting:`/`Surfaces:` lines. "AI SHEEP" reads in full and the bubble sits over the `wolf`. In h100 and h230 the GOTCHA banner, REPLAY tag and PLAYER 1 `tag` all fit and clear the HUD. Saturation is 23-35% (the reveal filter lowers it). `perf` not run.
-**Next**: (1) full solo round with real keys through to the win/lose screen and `KeyR` (still not done); (2) check the bubble clamp at desktop size; (3) the reveal filter may cost fps on a weak GPU, so consider a lighter overlay instead.
-**Open**: no full round played with real keys again; the reveal canvas CSS filter is untested on a real GPU.
-
 ### Judge 28
 
 **Judge verdict, session 28**
@@ -65,3 +59,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** `interact` that grazes for 90 s and checks `wolf.state` and `bites` with `expect`. It should show bites still at 3 or 2 and no `result` yet.
 
 SCORE: 8.2
+
+## Iteration 29
+**Did**: `game.js` solo wolf: after an AI-sheep bite `w.cd` is 18 (was 5), so a blending player survives longer. `index.html`: `#reveal .band` alpha 40→22, `#vig` gradient starts at 70% and its opacity in the reveal is 0.25 (was 0.4), so the end screens are less dull.
+**Saw**: `node --check game.js` passes. No `look`, `perf` or play run this session, so the lighter overlays and the longer cooldown are unmeasured.
+**Next**: (1) play a full winning round (clovers, T>=180) and `look` at the win screen; (2) check the 90 s graze with `bites` and `wolf.state`; (3) sample grass green on the lose screen.
+**Open**: no win screen seen yet; the reveal canvas CSS filter is untested on a real GPU.

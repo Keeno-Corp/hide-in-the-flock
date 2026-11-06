@@ -546,7 +546,7 @@ function updatePounce(rdt) {
       $('flash').style.opacity = 0.7;
       if (p.human) {
         outline.visible = true; wolf.pose = 'land'; sting();
-        showResult('GOTCHA', 'HUMAN!  That was PLAYER 1.', 'HUMAN!', '#ff3a2a'); $('rk').textContent = 'HUMAN!'; $('rsub').textContent = 'PLAYER 1 has been found.'; $("vig").style.opacity = 0.4;
+        showResult('GOTCHA', 'HUMAN!  That was PLAYER 1.', 'HUMAN!', '#ff3a2a'); $('rk').textContent = 'HUMAN!'; $('rsub').textContent = 'PLAYER 1 has been found.'; $("vig").style.opacity = 0.25;
         $('tag').style.display = 'block'; caption(pick(caps.human));
       } else {
         showResult('AI SHEEP', 'Just a sheep.', 'Bite wasted', '#fdfdec'); $('rsub').textContent = 'Just a sheep. Bite wasted.';
@@ -575,12 +575,12 @@ function updatePounce(rdt) {
     if (p.human) {
       wolf.state = 'done'; t.frozen = true;
       if (mode === 'solo') endGame('lose', 'EATEN', 'The wolf got you · ' + eatenCount() + '/3 clovers', 'You were the human'); else endGame('wolf', 'WOLF WINS', 'Player 2 found PLAYER 1', 'Gotcha');
-      outline.visible = true; $('tag').style.display = 'block'; $("vig").style.opacity = 0.4; $('bb').style.height = '0';
+      outline.visible = true; $('tag').style.display = 'block'; $("vig").style.opacity = 0.25; $('bb').style.height = '0';
     } else {
       t.immune = 6; t.susp = 0; t.zoom = 1.2; t.dir = rnd(0, 6.28);
       w.pose = 'crouch'; w.shrug = 0;
       if (mode === 'solo') {
-        w.state = 'return'; w.cd = 5;
+        w.state = 'return'; w.cd = 18;
         if (w.bites <= 0) { w.sulk = 18; w.state = 'watch'; w.cd = 5; toast('Out of bites! The wolf is sulking…', 2.4); w.x = w.x; }
       } else {
         w.state = 'ctrl';
