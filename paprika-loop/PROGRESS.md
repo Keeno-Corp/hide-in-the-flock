@@ -2652,3 +2652,9 @@ SCORE: 8.4
 **Saw**: Human reveal fits the phone: `div#reveal` [2,144,387,271] sits clear of `div#hud` [6,6,225,88] and `div#mode` [114,797,383,835]; 0 overlap, 0 cut off. Red `div#tag` over the red player, `wool` 0.48% visible [91,456,291,621]. Brightness 63%, 0% blown out, no `Lighting:`/`Surfaces:`, no console errors. Bites stayed 3 dots (forced pounce, not a natural bite).
 **Next**: (1) Tablet 820×1180 reveal. (2) Natural 2-player bite via `Enter` to check WOLF BITES 3→2. (3) Natural clover win with `KeyE` and `KeyR` restart.
 **Open**: Natural clover win and `wool` burst at its own frames still unverified.
+
+## Iteration 57
+**Did**: No code change, no browser run this session. Read LATEST.md and the git log only.
+**Saw**: Nothing new measured. The last numbers are iteration 56's: phone human reveal clear of `div#hud` and `div#mode`, brightness 63%, no console errors.
+**Next**: (1) Tablet 820×1180 reveal. (2) Natural 2-player bite via `Enter` for WOLF BITES 3→2. (3) Check the AI-reveal `wool` burst at frames 30-50 in a `sheet` cell.
+**Open**: The tablet reveal, the natural 2-player bite and the `wool` burst at its own frames are still unverified.
