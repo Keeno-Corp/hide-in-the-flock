@@ -498,3 +498,9 @@ SCORE: 6.5
    - To check, run `look` for the idle frame. `wolf` sits on top of `wolf-rock` and `clover` is above 0.3%. Then run `interact` with `M` and ArrowRight ×30, with `look: true`. The ring should be clearly visible.
 
 SCORE: 6.9
+
+## Iteration 9
+**Did**: game.js ground vertex colour: `sand` now #e8d49a, applied where cy<2.4 and r>26 (wider, stronger shore). `pineGeo` tiers nudged (y 1.51/2.53/3.46) to break coplanar planes. `aim` ring 1.6–2.5 radius, orange #ff6a2a. Clover `star` group gained an open cylinder beam (6 tall) and a taller cross.
+**Saw**: opening look: sand now shows as a golden path strip along the shore/trails, no `Surfaces:` line for `pines`, no Never-visible, HUD 0 overlap. `sand` ring still 0.43% (ground hides it, but the ground colour now carries the beach). `clover` 0.15% (beam is opacity-pulsed, only visible near). perf not run; local-mode aim not re-checked.
+**Next**: (1) put the wolf on top of `wolf-rock` in a crouch with a pale muzzle; (2) check the clover beam and `aim` in play via interact (M, ArrowRight×30); (3) run `viewports` for HUD at small sizes.
+**Open**: wolf still beside the rock; clover beam brightness unverified; perf unmeasured.

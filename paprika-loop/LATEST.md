@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 8
-**Did**: game.js drawWolf: `W.root` scale eases to 2.4 in leap/land/shrug (3.8 otherwise); leap legs folded (front -1.1, hind 1.2, scale.y 0.6); shrug arms less stiff (rotation.z 0.5+, body pitch -0.15). updateCamera pounce zoom 0.55→0.3 so the camera stays back. pineGeo trunk cone shortened to 0.95. `sand` ring inner radius 44→38.
-**Saw**: pounce sheet (h50,h90,a50,a90): wolf now a readable mid-leap shape in h50 (small, arc visible), no black boxes inside the camera in a50; GOTCHA/PLAYER 1 tag and AI SHEEP/"baa?" readable at 90. Opening look: `sand` still 0.43% [362,298,794,321] (ground hides the wider ring); `pines` coplanar y=4.30 line still listed (not the trunk); no Never-visible, HUD 0 overlap. perf not run.
-**Next**: (1) find the real pines coplanar plane (y=4.30 over 17×73 units is likely the top of the instanced cones / the merge of cone bases: nudge cone y by 0.01 per tier); (2) make the beach visible: lower the `ground` vertex heights near the shore (cy<1.5) or raise `sand` above ground; (3) clover glow/sparkle and verify `aim` via interact M + ArrowRight.
-**Open**: wolf in a90 shrug still arms-out-ish and brown; clover glow and aim ring unseen in play; beach unchanged.
-
 ### Judge 8
 
 **Judge verdict, session 8**
@@ -67,3 +61,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - To check, run `look` for the idle frame. `wolf` sits on top of `wolf-rock` and `clover` is above 0.3%. Then run `interact` with `M` and ArrowRight ×30, with `look: true`. The ring should be clearly visible.
 
 SCORE: 6.9
+
+## Iteration 9
+**Did**: game.js ground vertex colour: `sand` now #e8d49a, applied where cy<2.4 and r>26 (wider, stronger shore). `pineGeo` tiers nudged (y 1.51/2.53/3.46) to break coplanar planes. `aim` ring 1.6–2.5 radius, orange #ff6a2a. Clover `star` group gained an open cylinder beam (6 tall) and a taller cross.
+**Saw**: opening look: sand now shows as a golden path strip along the shore/trails, no `Surfaces:` line for `pines`, no Never-visible, HUD 0 overlap. `sand` ring still 0.43% (ground hides it, but the ground colour now carries the beach). `clover` 0.15% (beam is opacity-pulsed, only visible near). perf not run; local-mode aim not re-checked.
+**Next**: (1) put the wolf on top of `wolf-rock` in a crouch with a pale muzzle; (2) check the clover beam and `aim` in play via interact (M, ArrowRight×30); (3) run `viewports` for HUD at small sizes.
+**Open**: wolf still beside the rock; clover beam brightness unverified; perf unmeasured.

@@ -69,14 +69,14 @@ scene.add(new THREE.HemisphereLight(0xbfe8ff, 0x7fb83a, 1.35));
   for (let i = 0; i < p.count; i++) p.setY(i, gh(p.getX(i), p.getZ(i)));
   g = g.toNonIndexed(); g.computeVertexNormals();
   const pos = g.attributes.position, nor = g.attributes.normal, col = new Float32Array(pos.count * 3);
-  const grassA = new THREE.Color(0x8fc82a), grassB = new THREE.Color(0x79ac2c), sand = new THREE.Color(0xd9d79c), rock = new THREE.Color(0x777268), rock2 = new THREE.Color(0x8c877b), forest = new THREE.Color(0x5f8a3e), c = new THREE.Color();
+  const grassA = new THREE.Color(0x8fc82a), grassB = new THREE.Color(0x79ac2c), sand = new THREE.Color(0xe8d49a), rock = new THREE.Color(0x777268), rock2 = new THREE.Color(0x8c877b), forest = new THREE.Color(0x5f8a3e), c = new THREE.Color();
   for (let i = 0; i < pos.count; i += 3) {
     const cx = (pos.getX(i) + pos.getX(i + 1) + pos.getX(i + 2)) / 3, cz = (pos.getZ(i) + pos.getZ(i + 1) + pos.getZ(i + 2)) / 3, cy = (pos.getY(i) + pos.getY(i + 1) + pos.getY(i + 2)) / 3;
     const ny = nor.getY(i), r = Math.hypot(cx, cz);
     const j = (Math.sin(cx * 12.9898 + cz * 78.233) * 43758.5453) % 1;
     c.copy(grassA).lerp(grassB, Math.abs(j) * 0.9 + 0.1 * Math.sin(cx * 0.3));
     if (r > 30 || cy > 3.5) c.lerp(forest, sm(30, 38, r) * 0.8);
-    if (cy < 1.5 && r > 30) c.lerp(sand, sm(1.5, 0.6, cy));
+    if (cy < 2.4 && r > 26) c.lerp(sand, Math.min(1, sm(2.4, 1.0, cy) * 1.2));
     if (ny < 0.76 && cy > 0.4) c.copy(Math.abs(j) > 0.5 ? rock : rock2);
     if (cy > 9) c.lerp(rock2, 0.7);
     for (let k = 0; k < 3; k++) { col[(i + k) * 3] = c.r; col[(i + k) * 3 + 1] = c.g; col[(i + k) * 3 + 2] = c.b; }
@@ -191,7 +191,7 @@ function scatterInst(geo, count, gen, { shadow = true, name = '' } = {}) {
 const polar = (r0, r1) => { const a = rnd(0, 6.283), r = rnd(r0, r1); return [Math.cos(a) * r, Math.sin(a) * r]; };
 const pineGeo = mergeGeometries([
   mk(cone(0.22, 0.95, 5), 0x5a3d26, { p: [0, 0.475, 0] }).clone(),
-  mk(cone(1.1, 1.8, 6), 0x2f6a3a, { p: [0, 1.5, 0], jit: 0.1 }), mk(cone(0.85, 1.6, 6), 0x38783f, { p: [0, 2.5, 0], jit: 0.1 }), mk(cone(0.55, 1.4, 6), 0x42874a, { p: [0, 3.4, 0], jit: 0.1 }),
+  mk(cone(1.1, 1.8, 6), 0x2f6a3a, { p: [0, 1.51, 0], jit: 0.1 }), mk(cone(0.85, 1.6, 6), 0x38783f, { p: [0, 2.53, 0], jit: 0.1 }), mk(cone(0.55, 1.4, 6), 0x42874a, { p: [0, 3.46, 0], jit: 0.1 }),
 ]);
 scatterInst(pineGeo, 300, () => { const [x, z] = polar(29, 58); if (z < -20 && Math.random() < 0.97) return null; const h = gh(x, z); if (h < 0.9 || h > 10 || (z > 8 && Math.random() < 0.85)) return null; const s = rnd(0.9, 1.9); return { x, z, s, sy: s * rnd(0.9, 1.4), y: h - 0.2 }; }, { name: 'pines' });
 const roundTreeGeo = mergeGeometries([
@@ -230,7 +230,7 @@ const clovers = [];
     const g = new THREE.Group(); g.position.set(x, gh(x, z), z); g.name = 'clover';
     const m = new THREE.Mesh(geo, cm); m.receiveShadow = true; g.add(m);
     const sp = new THREE.Group(); sp.position.y = 2.2; sp.scale.setScalar(2);
-    sp.add(new THREE.Mesh(box(0.08, 0.7, 0.02), star), new THREE.Mesh(box(0.7, 0.08, 0.02), star)); g.add(sp);
+    sp.add(new THREE.Mesh(box(0.1, 0.9, 0.02), star), new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.5, 6, 8, 1, true), star), new THREE.Mesh(box(0.7, 0.08, 0.02), star)); g.add(sp);
     scene.add(g); clovers.push({ x, z, g, mesh: m, star: sp, prog: 0, eaten: false });
   });
 }
@@ -239,7 +239,7 @@ const clovers = [];
 const ringMat = c => new THREE.MeshBasicMaterial({ color: c, transparent: true, opacity: 0.4, depthWrite: false, fog: false });
 const marker = new THREE.Mesh(new THREE.RingGeometry(0.85, 1.1, 28).rotateX(-Math.PI / 2), ringMat(0xfff2a0)); marker.name = 'player'; scene.add(marker);
 const reach = new THREE.Mesh(new THREE.RingGeometry(3.4, 3.6, 40).rotateX(-Math.PI / 2), ringMat(0xe0302a)); reach.name = 'reach'; reach.visible = false; scene.add(reach);
-const aim = new THREE.Mesh(new THREE.RingGeometry(1.5, 2.1, 28).rotateX(-Math.PI / 2), ringMat(0xff3a2a)); aim.material.opacity = 0.95; aim.name = 'aim'; aim.visible = false; scene.add(aim);
+const aim = new THREE.Mesh(new THREE.RingGeometry(1.6, 2.5, 28).rotateX(-Math.PI / 2), ringMat(0xff6a2a)); aim.material.opacity = 0.95; aim.name = 'aim'; aim.visible = false; scene.add(aim);
 const outline = new THREE.Group(); outline.visible = false; outline.name = 'outline';
 {
   const om = new THREE.MeshBasicMaterial({ color: 0xff2a1a, side: THREE.BackSide, depthTest: false }); om.fog = false;
