@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 37
-**Did**: In `updateCamera` (game.js) the renderer `toneMappingExposure` now drops from 1.05 to 0.88 with `cam.close`, to cut the washed-out AI/human reveal frame. One line, syntax-checked only.
-**Saw**: Not looked at: no `look` or `perf` run this session, so the grey and wolf-share numbers are unmeasured.
-**Next**: (1) `look` after the AI pounce plus 150 frames: grey under 55%? wolf share above 6%? Nudge the camera if the wolf is behind wool. (2) Check the human pounce reveal reaches "reveal". (3) Check phone and tablet HUD sizes.
-**Open**: The exposure change is unverified visually; revert it if the reveal looks dull.
-
 ### Judge 37
 
 Session 37 verdict: the human reveal now works, and the exposure change from session 37 made the reveal frames less washed out. I opened the page and played the human reveal, the AI reveal, the opening look and `perf`. I did not play the clover win, the EATEN screen, the 2-player mode or phone and tablet sizes this session.
@@ -65,3 +59,9 @@ Session 37 verdict: the human reveal now works, and the exposure change from ses
    - **Check:** `div#tag`, the title and `div#hud` should show 0 overlaps and 0 cut off. If the "GOTCHA" title overflows on the phone, scale it with `min(vw, vh)`.
 
 SCORE: 8.4
+
+## Iteration 38
+**Did**: In `updateCamera` (game.js ~697-698) during an AI-target reveal the camera rises 5*`cam.close` and its lookAt y drops 7*`cam.close`, so the wolf stands above the nearest `sheep` instead of behind `wool`. Human reveal untouched.
+**Saw**: AI pounce +150 frames: the whole `wolf` shows (legs to ears, bbox [542,274,777,783], 4% share, 7 parts), grey 42%, sat 35%, 0 overlaps/0 cut off at 1280x800. The "AI SHEEP" title now covers the wolf's head top slightly; "baa?" bubble sits on its chest. No console errors. `perf` not run.
+**Next**: (1) Nudge lookAt drop to ~5 so the wolf's ears clear the title/sub line. (2) Check phone/tablet HUD in a reveal (`look` viewports). (3) Replay full solo win and EATEN + KeyR (still unreplayed in this iteration).
+**Open**: Phone and tablet sizes unchecked; win/EATEN round not replayed.
