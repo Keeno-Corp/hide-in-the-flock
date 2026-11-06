@@ -157,7 +157,7 @@ function gh(x, z) {
 }
 const PLAY_R = 30;
 {
-  const N = 300, S = 440;
+  const N = 110, S = 440;
   let g = new THREE.PlaneGeometry(S, S, N, N); g.rotateX(-Math.PI / 2);
   const p = g.attributes.position;
   for (let i = 0; i < p.count; i++) p.setY(i, gh(p.getX(i), p.getZ(i)));
@@ -168,8 +168,8 @@ const PLAY_R = 30;
     const cx = pos.getX(i), cz = pos.getZ(i), cy = pos.getY(i), ny = nor.getY(i), r = Math.hypot(cx, cz);
     const wob = 0.32 * Math.sin(cx * 0.55 + cz * 0.35) * Math.sin(cz * 0.5 - cx * 0.3) + 0.15 * Math.sin(cx * 1.3 + cz * 0.9);
     const patch = Math.sin(cx * 0.09 + Math.sin(cz * 0.07) * 2) + Math.sin(cz * 0.11 - cx * 0.05) * 0.8 + wob;
-    c.copy(sage).lerp(warm, sm(-0.4, -0.3, patch)).lerp(ochre, sm(1.05, 1.15, patch));
-    c.lerp(olive, sm(0.55, 0.62, Math.sin(cx * 0.21 - cz * 0.17) * Math.sin(cz * 0.13 + cx * 0.09) + wob * 0.8) * 0.8);
+    c.copy(sage).lerp(warm, patch > -0.35 ? 1 : 0).lerp(ochre, patch > 1.1 ? 1 : 0);
+    c.lerp(olive, (Math.sin(cx * 0.21 - cz * 0.17) * Math.sin(cz * 0.13 + cx * 0.09) + wob * 0.8) > 0.58 ? 0.8 : 0);
     if (r > 34) c.lerp(hill, sm(34, 70, r) * 0.75);
     if (r > 90) c.lerp(far, sm(90, 190, r) * 0.7);
     if (ny < 0.8 && cy > 3) c.lerp(rock, 0.6);
@@ -229,7 +229,7 @@ scene.add(bodyIM, headIM);
 
 // ───────────────────────── wolf ─────────────────────────
 const wolf = { x: -10, z: 3, y: 0, yaw: 0.6, state: 'watch', pose: 'crouch', t: 0, bites: 3, cd: 5, sulk: 0, target: null, abort: 0, stalkT: 0, lookX: 0, lookZ: 0, phase: 0, onRock: true, shrug: 0, pitch: 0 };
-const ROCK = { x: -10, z: 3, top: 3.15 };
+const ROCK = { x: -10, z: 3, top: 4.1 };
 const W = {};
 {
   const grey = PAL.wolf, light = 0x1d1511, dk = 0x0e0a08;
@@ -773,7 +773,7 @@ function updateClovers(dt) {
     c.star.children.concat(c.g.children.filter(o => o.geometry && o.geometry.type === 'RingGeometry')).forEach(m => m.material.opacity = (c.eaten ? 0 : 0.55 + 0.45 * near) * (0.75 + 0.25 * Math.sin(clock * 5 + c.x)));
     c.star.rotation.y = clock * 0.8; c.star.scale.setScalar(0.7 + 0.4 * Math.sin(clock * 5 + c.x) ** 2); c.star.position.y = 2.2 + Math.sin(clock * 2) * 0.15;
     if (c.eaten) return;
-    if (d < 1.9 && P.graze && !P.frozen && !result) {
+    if (d < 2.6 && P.graze && !P.frozen && !result) {
       c.prog += dt / 2.4; c.mesh.scale.setScalar(1 - 0.5 * c.prog); munchT -= dt;
       if (munchT <= 0) { play('munch', 1); munchT = 0.38; }
       if (c.prog >= 1) { c.eaten = true; c.mesh.scale.setScalar(0.25); toast(`Clover eaten! ${eatenCount()}/3`, 1.8); play('powerup', 0.5); checkWin(); }

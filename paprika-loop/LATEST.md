@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 4
-**Did**: game.js only. `SS` 1.3 to 1.8 (sheep ~1.4× larger); `sheepMat` emissive 0x645440 to 0x4a3e30 and leg colour 0x1c1514 so dark legs and heads read against the wool; `wolf` root scale 4.4 to 6.2; `tufts` count 520 to 180.
-**Saw**: `look` frame 0: `wolf` 1.4% of the frame [348,516,593,671], silhouette now readable above `wolf-rock` (still "0 of its 0 named parts show"); `sheep*` ×98 are bigger with dark legs and heads; `tufts*` ×92; no console errors, no Lighting/Surfaces lines, Never visible none. I did not run `perf` or `asset_search`.
-**Next**: (1) Flatten `ground` into 2–3 painted bands and fade the post-pass hatching with distance. (2) Move the wolf a bit off the rock edge or raise it so it passes 1.5% and the named parts show. (3) Play grazing, win/lose and local 2-player; run `perf` for triangles (target under 200k).
-**Open**: Ground bands, `asset_search` for sheep/wolf, `perf`, and the grazing and 2-player flows were not done.
-
 ### Judge 4
 
 **Judge 4**
@@ -59,3 +53,9 @@ Sheep and wolf are bigger since session 3. The `ground` and the wolf's position 
    - The check is an `interact` with E held on a `clover`, where the state's clover count goes above 0.
 
 SCORE: 6.9
+
+## Iteration 5
+**Did**: game.js only. `ground` PlaneGeometry N 300 to 110 (180k to ~24k triangles); its vertex colours now use hard steps (`patch` > -0.35 warm, > 1.1 ochre, olive on a threshold) instead of smoothsteps, so it reads as painted bands. `ROCK.top` 3.15 to 4.1 so `wolf` stands above `wolf-rock`. Clover graze radius 1.9 to 2.6.
+**Saw**: `look` frame 0: `wolf` 1.4% [348,514,593,672], its silhouette now sits on top of `wolf-rock`, still "0 of its 0 named parts show"; ground bands visible but the toon shadow patches remain; no console errors, no Lighting/Surfaces, Never visible none. `perf`: 166,728 triangles (was 322k), 48 draw calls, 308 ms on SwiftShader (no budget signal). I did not run `asset_search` or play graze/2-player.
+**Next**: (1) Raise wolf to 2%+ (scale up or crop camera nearer the rock) and name its parts. (2) Give `sheep*` ink outlines or flat two-tone cream. (3) `interact` with E held within 2.6 of a `clover` and confirm `clovers` > 0 in state; play the 3 bites in local mode.
+**Open**: Graze counter not verified; ground still has soft shading from toon + shadows; `asset_search` for wolf/sheep never run.
