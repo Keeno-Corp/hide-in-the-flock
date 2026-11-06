@@ -536,7 +536,7 @@ function updatePounce(rdt) {
     const gy = Math.max(gh(w.x, w.z), 0.2); w.y = lerp(p.fy, gy, e) + Math.sin(u * Math.PI) * 3.4;
     w.pitch = lerp(-0.7, 0.9, u); w.onRock = false;
     cam.punch = Math.min(1, cam.punch + rdt * 2.2);
-    $('bt').style.height = $('bb').style.height = 5 * cam.punch + 'vh';
+    $('bt').style.height = $('bb').style.height = 3 * cam.punch + 'vh';
     if (u >= 1) {
       p.ph = 'reveal'; p.t = 0; w.pose = 'land'; w.pitch = 0;
       for (const o of sheep) { if (o === t || o.player) continue; const dx = o.x - t.x, dz = o.z - t.z, d = Math.hypot(dx, dz); if (d < 6) { o.st = 'run'; o.runT = 1.4; o.dir = Math.atan2(dx, dz) + rnd(-0.3, 0.3); } }
@@ -565,10 +565,10 @@ function updatePounce(rdt) {
   $('reveal').style.opacity = p.t < 0.1 ? p.t * 10 : 1;
   if (t.hop !== undefined) { t.hopV -= 14 * rdt * (p.t < 1 ? 0.5 : 1); t.hop = Math.max(0, t.hop + t.hopV * rdt); if (t.hop === 0 && t.hopV < 0) { t.hopV = 0; t.spin *= 0.8; } }
   if (p.human) { const g = bodyMatrixOf(t); outline.position.set(t.x, t.y + t.hop, t.z); outline.rotation.y = t.yaw + t.spin * 0.0; outline.scale.setScalar(SS * 1.1); place($('tag'), t.x, t.y + 3.6, t.z); { const r = $('tag').getBoundingClientRect(); if (r.top < innerHeight * 0.5 && r.top > innerHeight * 0.12) $('tag').style.top = innerHeight * 0.62 + 'px'; }; }
-  else place($('bubble'), t.x, t.y + 3.2, t.z);
+  else place($("bubble"), t.x, t.y + 4.2, t.z);
   if (!p.human) { w.shrug = 1; }
   if (!p.human && p.t < 1.9) cam.punch = 1; else if (u > 0.72) cam.punch = Math.max(0, cam.punch - rdt * 1.6);
-  $('bt').style.height = $('bb').style.height = 5 * cam.punch + 'vh';
+  $('bt').style.height = $('bb').style.height = 3 * cam.punch + 'vh';
   if (u >= 1) {
     p.ph = null; t.frozen = false; w.target = null; hideReveal(); cam.punch = 0;
     if (p.human) {
@@ -726,7 +726,7 @@ function step(rdt) {
   if (mode === 'solo' && T > 175 && eatenCount() < 3 && !result) { $('time').style.color = '#ff6a5a'; } else $('time').style.color = '';
   if (!pounce.ph && wolf.state !== 'stalk' && !result) $('cap').style.opacity = 0;
   if (result && pounce.ph === null) { /* result overlay stays */ }
-  if (!pounce.ph && !result) { $('bt').style.height = $('bb').style.height = 5 * cam.punch + 'vh'; }
+  if (!pounce.ph && !result) { $('bt').style.height = $('bb').style.height = 3 * cam.punch + 'vh'; }
   // clouds
   clouds.forEach((c, i) => { c.position.x += rdt * (0.8 + i * 0.1); if (c.position.x > 160) c.position.x = -160; });
   drawSheep(dt); drawWolf(dt); updateCamera(dt, rdt);

@@ -1237,3 +1237,9 @@ SCORE: 8.3
    - Also run `look` with `viewports: ["phone","laptop"]` to check the HUD and reveal text at small sizes. This has not been run for several sessions.
 
 SCORE: 8.3
+
+## Iteration 20
+**Did**: Letterbox bars `#bt`/`#bb` 5vh→3vh (game.js, all `cam.punch` heights); AI-reveal `#bubble` placed higher (`t.y + 4.2`) so it clears the `wolf`.
+**Saw**: sheet human|ai at 150 frames: brightness 54%/54%, near black 6%/6% (was 9%), no console errors. The `wolf` in the AI cell is still partly behind the foreground pines. Not run: perf, viewports, sheep-shrink pop at reveal end, sand share.
+**Next**: (1) `interact` pounce human 200 frames, check sheep un-shrink pop; (2) `look` viewports phone/laptop for HUD and reveal text; (3) short "REPLAY" freeze after reveal, drop `aimLine`.
+**Open**: sheep-shrink pop and phone layout unchecked; AI-cell `wolf` partly hidden by pines.

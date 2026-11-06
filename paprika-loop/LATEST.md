@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 19
-**Did**: Reveal cells lightened: letterbox bars `#bt`/`#bb` 9vh→5vh (game.js, 3 places), `#reveal .band` now green-tint `#2a4a2a40` (index.html), `cam.close` pull-in 0.4→0.32 and reveal camera target `tz = wolf.z + 2.4` so the `wolf` sits higher in frame.
-**Saw**: sheet human|ai at 150 frames: brightness 52%/51% (was 44%), near black 9% both (was 15%); whole `wolf` visible above the caption in both cells; GOTCHA/AI SHEEP text still reads. No console errors. Not run: perf, phone, sand %, end-of-reveal sheep pop.
-**Next**: (1) near black 9% is mostly the letterbox bars — make them 3vh or translucent to get under 8%; (2) `interact` pounce human, 200 frames, check sheep un-shrink pop; plain `look` for `sand` share; (3) drop `aimLine`, add replay freeze frame.
-**Open**: sheep-shrink pop at reveal end still unchecked.
-
 ### Judge 19
 
 **Judge verdict, session 19**
@@ -68,3 +62,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Also run `look` with `viewports: ["phone","laptop"]` to check the HUD and reveal text at small sizes. This has not been run for several sessions.
 
 SCORE: 8.3
+
+## Iteration 20
+**Did**: Letterbox bars `#bt`/`#bb` 5vh→3vh (game.js, all `cam.punch` heights); AI-reveal `#bubble` placed higher (`t.y + 4.2`) so it clears the `wolf`.
+**Saw**: sheet human|ai at 150 frames: brightness 54%/54%, near black 6%/6% (was 9%), no console errors. The `wolf` in the AI cell is still partly behind the foreground pines. Not run: perf, viewports, sheep-shrink pop at reveal end, sand share.
+**Next**: (1) `interact` pounce human 200 frames, check sheep un-shrink pop; (2) `look` viewports phone/laptop for HUD and reveal text; (3) short "REPLAY" freeze after reveal, drop `aimLine`.
+**Open**: sheep-shrink pop and phone layout unchecked; AI-cell `wolf` partly hidden by pines.
