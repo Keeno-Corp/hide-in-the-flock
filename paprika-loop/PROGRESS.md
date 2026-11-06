@@ -2108,3 +2108,9 @@ Correction: line ~905 forced wolf scale to 8/8.5 each frame (the real size); now
    - Raise the HUD panel font size, and check with `look` `viewports` ["laptop"]. The HUD text should be readable.
 
 SCORE: 7.5
+
+## Iteration 36
+**Did**: game.js: wolf per-frame scale (line ~905) 3/3.4 → 3.45/3.9 (~15% bigger); added `wolf-shoulder` lighter brown blob on `W.body`. index.html: `#reveal` top 9vh→3vh, `#rbig` clamp 54/11vw/160 → 40/7vw/100 (smaller card, off the wolf); `#hud .row` font 22→27px.
+**Saw**: `look` zoom [250,340,760,640]: wolf larger, still a near-black mass with snout and jaw visible; the shoulder patch is NOT visible (probably inside the extruded body). Clover/2-player passes not run; no perf.
+**Next**: make the shoulder patch show (offset x outward on both sides, or a lighter belly/chest decal); check tail and legs against the rock; clover zoom + glow ring; KeyM/Enter 2-player pass; `look` viewports ["laptop"] for HUD and card.
+**Open**: bite card placement and HUD size unverified visually; shoulder patch hidden.

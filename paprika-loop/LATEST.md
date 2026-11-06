@@ -1,12 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 35
-**Did**: game.js: `W.root` start scale 8→2 and per-pose targets (line ~864) cut to 1.7 / 2.0 / 2.4 (was 2.4/2.8/3.4); `wolf-head` split into upper jaw + lower jaw (notch), nose, neck blob; ears now the body's dark `mat` (not `rimMat`); `wolf-tail` bigger curved blob plus lighter tip; bite card copy "EATEN"→"HUMAN" kicker "Gotcha" (two `endGame` calls).
-**Saw**: `look` zoom [250,340,760,640] at frame 1 still showed the wolf huge because the scale started at 8 and lerps; jaw notch and dark ears visible. Fixed start scale but did not re-look. No perf/interact.
-**Next**: re-look zoom to confirm wolf size ~2× sheep and tail curve; clover zoom + glow ring; enlarge HUD; move bite card off the wolf; 2-player pass.
-**Open**: wolf foot height on rock at new scale unchecked; card placement and HUD size untouched.
-Correction: line ~905 forced wolf scale to 8/8.5 each frame (the real size); now 3/3.4.
-
 ### Judge 35
 
 **Session 35 verdict.** I looked at a 3-cell sheet (start, forced human pounce, forced AI pounce) and the wolf zoom [250,340,760,640]. I ran `perf` once. I did not run `interact`, so keys, the 2-player pass and sound are unchecked this round. I did not zoom on a clover, check the card timing or view a laptop viewport.
@@ -57,3 +50,9 @@ Correction: line ~905 forced wolf scale to 8/8.5 each frame (the real size); now
    - Raise the HUD panel font size, and check with `look` `viewports` ["laptop"]. The HUD text should be readable.
 
 SCORE: 7.5
+
+## Iteration 36
+**Did**: game.js: wolf per-frame scale (line ~905) 3/3.4 → 3.45/3.9 (~15% bigger); added `wolf-shoulder` lighter brown blob on `W.body`. index.html: `#reveal` top 9vh→3vh, `#rbig` clamp 54/11vw/160 → 40/7vw/100 (smaller card, off the wolf); `#hud .row` font 22→27px.
+**Saw**: `look` zoom [250,340,760,640]: wolf larger, still a near-black mass with snout and jaw visible; the shoulder patch is NOT visible (probably inside the extruded body). Clover/2-player passes not run; no perf.
+**Next**: make the shoulder patch show (offset x outward on both sides, or a lighter belly/chest decal); check tail and legs against the rock; clover zoom + glow ring; KeyM/Enter 2-player pass; `look` viewports ["laptop"] for HUD and card.
+**Open**: bite card placement and HUD size unverified visually; shoulder patch hidden.
