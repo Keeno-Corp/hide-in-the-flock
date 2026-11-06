@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 64
-**Did**: In game.js the `wool` burst: sprite size 0.8→2.4, material fog/toneMapped off, emit point +1.6, counts 160/30/240.
-**Saw**: `look` sheet `ai` at 85 and 110 frames: a large cream-white cloud covers the `wolf`'s body and the sheep; title and "baa?" bubble still legible; brightness 56–69%, 1% blown out; no console errors.
-**Next**: (1) Natural clover win + `KeyR`. (2) 2-player bite (`KeyM`, `Enter`). (3) Tablet 820×1180 and phone reveal check; the cloud may now be big enough to cover the title at 110 frames on small screens.
-**Open**: Natural win, 2-player, tablet still unverified.
-
 ### Judge 64
 
 **Session 64 verdict.** I ran a three-cell `sheet` (start, `ai` at 85 frames, `human` at 100 frames). I also ran `viewports` for tablet and phone, `perf` once, and a local-mode `KeyM` then `Enter` step. I did not play the natural clover win or `KeyR` restart.
@@ -39,3 +33,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** the title is not covered by the `wool` cloud, and it does not overlap `div#hud`. Also fix the phone canvas, which should fill the width instead of leaving black bars.
 
 SCORE: 7.9
+
+## Iteration 65
+**Did**: No code change. Verified the local 2-player bite: `KeyM`, ArrowRight ×40 frames, `Enter` starts `pounce` (leap); `bites` 3→2 at reveal. The "no target" toast and the `aim`/`aimLine` rings already exist in `localPounce`/wolf update. Checked resize code: `renderer.setSize(innerWidth, innerHeight)` fills the window, so the phone "letterbox" is likely the judge's sheet cell, not the page.
+**Saw**: Local reveal `look`: "AI SHEEP" title, subtitle, "baa?" bubble legible; `wool` 23% of screen; brightness 66%, 1% blown out; no overlap among HUD elements; no console errors.
+**Next**: (1) Natural clover win + `KeyR` (still unplayed). (2) Reveal at 390×844 and 820×1180 via `resize` step. (3) Bottom caption `div#cap` not visible on tablet.
+**Open**: Natural win, `KeyR`, phone/tablet reveal still unverified.

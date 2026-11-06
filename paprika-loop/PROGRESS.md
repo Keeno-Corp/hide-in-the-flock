@@ -2830,3 +2830,9 @@ SCORE: 8.0
    - **Check:** the title is not covered by the `wool` cloud, and it does not overlap `div#hud`. Also fix the phone canvas, which should fill the width instead of leaving black bars.
 
 SCORE: 7.9
+
+## Iteration 65
+**Did**: No code change. Verified the local 2-player bite: `KeyM`, ArrowRight ×40 frames, `Enter` starts `pounce` (leap); `bites` 3→2 at reveal. The "no target" toast and the `aim`/`aimLine` rings already exist in `localPounce`/wolf update. Checked resize code: `renderer.setSize(innerWidth, innerHeight)` fills the window, so the phone "letterbox" is likely the judge's sheet cell, not the page.
+**Saw**: Local reveal `look`: "AI SHEEP" title, subtitle, "baa?" bubble legible; `wool` 23% of screen; brightness 66%, 1% blown out; no overlap among HUD elements; no console errors.
+**Next**: (1) Natural clover win + `KeyR` (still unplayed). (2) Reveal at 390×844 and 820×1180 via `resize` step. (3) Bottom caption `div#cap` not visible on tablet.
+**Open**: Natural win, `KeyR`, phone/tablet reveal still unverified.

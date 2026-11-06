@@ -695,6 +695,17 @@
       "score": 8,
       "judgeTurns": 7,
       "judgeTokens": 117335
+    },
+    {
+      "n": 64,
+      "turns": 9,
+      "tokens": 229101,
+      "costUsd": 0.21270499999999998,
+      "minutes": 2,
+      "commit": "c5bacdb",
+      "score": 7.9,
+      "judgeTurns": 9,
+      "judgeTokens": 148958
     }
   ],
   "best": {
