@@ -252,7 +252,7 @@ const outline = new THREE.Group(); outline.visible = false; outline.name = 'outl
   const a = new THREE.Mesh(sheepBodyGeo, om), b = new THREE.Mesh(sheepHeadGeo, om); b.position.copy(HEAD_P); a.renderOrder = b.renderOrder = 20; outline.add(a, b); outline.userData = { a, b };
   scene.add(outline);
 }
-const wool = burst({ max: 500, seed: 7, size: 0.32, additive: false }); wool.name = 'wool'; scene.add(wool);
+const wool = burst({ max: 500, seed: 7, size: 0.55, additive: false }); wool.name = 'wool'; scene.add(wool);
 const camShake = shake(camera, { seed: 3, decay: 5 });
 
 // ───────────────────────── sound ─────────────────────────
@@ -543,7 +543,7 @@ function updatePounce(rdt) {
       for (const o of sheep) { if (o === t || o.player) continue; const dx = o.x - t.x, dz = o.z - t.z, d = Math.hypot(dx, dz); if (d < 6) { o.st = 'run'; o.runT = 1.4; o.dir = Math.atan2(dx, dz) + rnd(-0.3, 0.3); } }
       wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 1, t.z), { count: 90, speed: 6, spread: Math.PI * 0.7, life: 1.6, gravity: 5, color: 0xfff6dc });
       wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 1, t.z), { count: 30, speed: 3, spread: Math.PI, life: 2, gravity: 2, color: 0xffffff });
-      if (!p.human) wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 1.2, t.z), { count: 120, speed: 8, spread: Math.PI * 0.9, life: 2.2, gravity: 4, color: 0xfff0d0 });
+      if (!p.human) wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 1.2, t.z), { count: 200, speed: 6, spread: Math.PI * 0.9, life: 3.2, gravity: 4, color: 0xfff0d0 });
       camShake.kick(1.0); play('thud', 1); play('hit', 0.6); t.hopV = 6; t.spin = rnd(-6, 6);
       $('flash').style.opacity = 0.7;
       if (p.human) {

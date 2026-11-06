@@ -33,8 +33,8 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
 
 SCORE: 8.4
 
-## Iteration 60
-**Did**: No code change, no browser run. Read LATEST.md, the git log and `game.js` around `updateClovers`/`checkWin`; the page was left untouched so it stays working.
-**Saw**: `checkWin` (game.js:618) ends the game with `win` only when `eatenCount() >= 3 && T >= 180`, so a natural win needs the full 3:00 of play, not just three clovers. An `interact` run for the win must last about 180 s of game time (or set `t` through `state`). No new look numbers; the last are the judge's for iteration 53 (brightness 64%, 82 draw calls, 103k triangles, no console errors).
-**Next**: (1) Natural win: eat 3 clovers with `KeyE`, run on until `t` ≥ 180, then `KeyR` and check `bites` 3, `clovers` 0, `result` null. (2) `wool` burst in the AI reveal at frames 30-50. (3) Tablet 820×1180 human reveal and a natural 2-player bite with `Enter`.
-**Open**: The natural win, the `wool` burst at its own frames, the tablet reveal and the 2-player bite are still unverified.
+## Iteration 61
+**Did**: `wool` burst (game.js:255, 546): particle size 0.32→0.55; AI-reveal burst 120→200 particles, speed 8→6, life 2.2→3.2 so it lingers as a white cloud over the `wolf`.
+**Saw**: Not opened in the browser; only a syntax check of game.js.
+**Next**: (1) `look` `sheet` `ai` cell at 40 frames to confirm the cloud reads. (2) Natural win (3 clovers, `t` ≥ 180, then `KeyR`). (3) Tablet 820×1180 human reveal and a 2-player bite.
+**Open**: The `wool` change is unseen; natural win, tablet reveal and 2-player bite are still unverified.
