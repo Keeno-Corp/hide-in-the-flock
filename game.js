@@ -221,7 +221,7 @@ const flat = (mat = {}) => new THREE.MeshToonMaterial({ vertexColors: true, grad
 // ───────────────────────── sheep geometry (shared by all 101) ─────────────────────────
 const WOOL = PAL.wool, DARK = PAL.face;
 const sheepBodyGeo = mergeGeometries([
-  mk(ico(0.5, 2), WOOL, { p: [0, 0.62, 0], s: [1, 0.82, 1.3], jit: 0, soft: true }),
+  mk(ico(0.5, 1), WOOL, { p: [0, 0.62, 0], s: [1, 0.82, 1.3], jit: 0, soft: true }),
   mk(ico(0.3, 1), WOOL, { p: [0.22, 0.98, 0.22], jit: 0, soft: true }), mk(ico(0.3, 1), WOOL, { p: [-0.22, 0.98, 0.1], jit: 0, soft: true }),
   mk(ico(0.46, 1), 0x4a5278, { p: [0, 0.36, 0], s: [0.95, 0.4, 1.25], soft: true }),
   mk(ico(0.3, 1), WOOL, { p: [0, 1.0, -0.3], jit: 0, soft: true }), mk(ico(0.26, 1), WOOL, { p: [0.3, 0.7, -0.62], jit: 0, soft: true }),
@@ -316,9 +316,9 @@ const W = {};
 const rockMat = flat();
 {
   const g = mergeGeometries([
-    mk(ico(2.2, 2), 0xa39a86, { p: [0, 0.4, 0], s: [1.2, 0.8, 1], soft: true }),
-    mk(ico(1.5, 2), 0x8f8774, { p: [1.4, 0.5, 1.0], s: [1, 0.8, 1], soft: true }),
-    mk(ico(1.2, 2), 0xb3aa94, { p: [-1.0, 0.9, -0.6], soft: true }),
+    mk(ico(2.2, 1), 0xa39a86, { p: [0, 0.4, 0], s: [1.2, 0.8, 1], soft: true }),
+    mk(ico(1.5, 1), 0x8f8774, { p: [1.4, 0.5, 1.0], s: [1, 0.8, 1], soft: true }),
+    mk(ico(1.2, 1), 0xb3aa94, { p: [-1.0, 0.9, -0.6], soft: true }),
   ]);
   const m = new THREE.Mesh(g, rockMat); m.position.set(ROCK.x, gh(ROCK.x, ROCK.z) + 0.2, ROCK.z); m.castShadow = m.receiveShadow = true; m.name = 'wolf-rock'; m.scale.setScalar(1.5); scene.add(m);
 }
@@ -339,12 +339,12 @@ const polar = (r0, r1) => { const a = rnd(0, 6.283), r = rnd(r0, r1); return [Ma
 // pines: dark triangle tiers (indigo-green), oaks: teardrop crowns, walls: dry-stone runs
 const pineGeo = mergeGeometries([
   mk(cone(0.2, 0.9, 7), 0x3a2a20, { p: [0, 0.45, 0], soft: true }),
-  mk(cone(1.15, 2.0, 18), 0x34503f, { p: [0, 1.7, 0], jit: 0.0, soft: true }), mk(cone(0.9, 1.8, 18), 0x3a5a45, { p: [0, 2.8, 0], soft: true }), mk(cone(0.6, 1.6, 18), 0x41644a, { p: [0, 3.8, 0], soft: true }),
+  mk(cone(1.15, 2.0, 10), 0x34503f, { p: [0, 1.7, 0], jit: 0.0, soft: true }), mk(cone(0.9, 1.8, 10), 0x3a5a45, { p: [0, 2.8, 0], soft: true }), mk(cone(0.6, 1.6, 10), 0x41644a, { p: [0, 3.8, 0], soft: true }),
 ]);
 const pinesMesh = scatterInst(pineGeo, 32, () => { const [x, z] = polar(52, 130); if (z > 4) return null; const h = gh(x, z); const s = rnd(1.1, 2.4) * (Math.hypot(x, z) > 70 ? 1.6 : 1); return { x, z, s, sy: s * rnd(1.0, 1.5), y: h - 0.2 }; }, { name: 'pines' });
 const roundTreeGeo = mergeGeometries([
   mk(cone(0.24, 2.0, 7), 0x4a3324, { p: [0, 1.0, 0], soft: true }),
-  mk(ico(1.2, 2), 0x6f7d44, { p: [0, 2.9, 0], s: [1, 1.2, 1], soft: false }), mk(ico(0.85, 2), 0x84914f, { p: [0.7, 2.4, 0.25], soft: false }), mk(ico(0.75, 2), 0x5f6e3b, { p: [-0.65, 2.45, -0.2], soft: false }), mk(ico(0.6, 2), 0x93a05a, { p: [0.15, 3.7, 0.1], soft: false }),
+  mk(ico(1.2, 1), 0x6f7d44, { p: [0, 2.9, 0], s: [1, 1.2, 1], soft: false }), mk(ico(0.85, 1), 0x84914f, { p: [0.7, 2.4, 0.25], soft: false }), mk(ico(0.75, 1), 0x5f6e3b, { p: [-0.65, 2.45, -0.2], soft: false }), mk(ico(0.6, 1), 0x93a05a, { p: [0.15, 3.7, 0.1], soft: false }),
 ]);
 scatterInst(roundTreeGeo, 14, () => { const [x, z] = polar(33, 58); if (z > 2 || Math.hypot(x, z) < 33) return null; const s = rnd(1.1, 1.7); return { x, z, s }; }, { name: 'round-trees' });
 // two big framing oaks at the meadow's edge
@@ -352,9 +352,9 @@ scatterInst(roundTreeGeo, 14, () => { const [x, z] = polar(33, 58); if (z > 2 ||
   [[-35, -8, 2.4], [37, -16, 2.2], [-14, -42, 2.8]].forEach(([x, z, s], i) => { dummy.position.set(x, gh(x, z) - 0.1, z); dummy.rotation.set(0, i * 2, 0); dummy.scale.setScalar(s); dummy.updateMatrix(); im.setMatrixAt(i, dummy.matrix); }); scene.add(im); }
 const treeInk = im => { const h = im.geometry.clone(); h.deleteAttribute('color'); const p = h.attributes.position, n = h.attributes.normal; for (let i = 0; i < p.count; i++) p.setXYZ(i, p.getX(i) + n.getX(i) * 0.14, p.getY(i) + n.getY(i) * 0.14, p.getZ(i) + n.getZ(i) * 0.14); const o = new THREE.InstancedMesh(h, new THREE.MeshBasicMaterial({ color: 0x2b211c, side: THREE.BackSide, fog: false }), im.count); o.instanceMatrix = im.instanceMatrix; o.name = im.name + '-ink'; o.frustumCulled = false; scene.add(o); };
 treeInk(scene.getObjectByName('oaks')); treeInk(pinesMesh);
-const rockGeo = mergeGeometries([mk(ico(0.8, 2), 0xa39a86, { s: [1, 0.7, 1], soft: true }), mk(ico(0.5, 2), 0xb3aa94, { p: [0.6, -0.1, 0.2], soft: true })]);
+const rockGeo = mergeGeometries([mk(ico(0.8, 1), 0xa39a86, { s: [1, 0.7, 1], soft: true }), mk(ico(0.5, 1), 0xb3aa94, { p: [0.6, -0.1, 0.2], soft: true })]);
 scatterInst(rockGeo, 40, () => { const [x, z] = polar(18, 56); const h = gh(x, z); if (Math.hypot(x - ROCK.x, z - ROCK.z) < 5) return null; const s = rnd(0.5, 1.4) * (Math.hypot(x, z) > 32 ? 2.4 : 1); return { x, z, s, y: h + 0.2 * s }; }, { name: 'rocks' });
-const bushGeo = mergeGeometries([mk(ico(0.6, 2), 0x74834a, { s: [1, 0.75, 1], soft: true }), mk(ico(0.45, 2), 0x86954f, { p: [0.45, -0.05, 0.1], soft: true }), mk(ico(0.4, 2), 0x66743f, { p: [-0.4, -0.05, -0.1], soft: true })]);
+const bushGeo = mergeGeometries([mk(ico(0.6, 1), 0x74834a, { s: [1, 0.75, 1], soft: true }), mk(ico(0.45, 1), 0x86954f, { p: [0.45, -0.05, 0.1], soft: true }), mk(ico(0.4, 1), 0x66743f, { p: [-0.4, -0.05, -0.1], soft: true })]);
 scatterInst(bushGeo, 34, () => { const [x, z] = polar(8, 33); if (Math.hypot(x - ROCK.x, z - ROCK.z) < 4) return null; return { x, z, s: rnd(0.6, 1.1), y: gh(x, z) + 0.25 }; }, { name: 'bushes' });
 const tuftGeo = mergeGeometries([0, 1, 2].map(i => mk(cone(0.1, 0.55, 3), i === 1 ? 0xd2bd6c : 0x98a257, { p: [Math.cos(i * 2.1) * 0.12, 0.25, Math.sin(i * 2.1) * 0.12], r: [Math.sin(i * 2.1) * 0.35, 0, -Math.cos(i * 2.1) * 0.35], jit: 0.12 })));
 scatterInst(tuftGeo, 180, () => { const [x, z] = polar(0, 33); return { x, z, s: rnd(0.7, 1.6), y: gh(x, z) - 0.05 }; }, { shadow: false, name: 'tufts' });
@@ -913,7 +913,7 @@ function drawWolf(dt) {
 function updateCamera(dt, rdt) {
   let tx = P.x, tz = P.z, zoom = 1;
   const dW = Math.hypot(wolf.x - P.x, wolf.z - P.z);
-  if (mode === 'solo') { const k = dW < 32 ? (T < 12 ? 0.28 + 0.2 * (1 - T / 12) : 0.28) : 0; tx += (wolf.x - P.x) * k; tz += (wolf.z - P.z) * k; }
+  if (mode === 'solo') { if (dW < 32) zoom = 0.82; const k = dW < 32 ? (T < 12 ? 0.28 + 0.2 * (1 - T / 12) : 0.28) : 0; tx += (wolf.x - P.x) * k; tz += (wolf.z - P.z) * k; }
   else { tx += (wolf.x - P.x) * 0.75; tz += (wolf.z - P.z) * 0.75; zoom = 0.6 + clamp((dW - 20) / 40, 0, 0.4); }
   if (pounce.ph && pounce.target) { const m = pounce.target; tx = lerp(tx, (wolf.x + m.x) / 2, cam.punch); tz = lerp(tz, (wolf.z + m.z) / 2, cam.punch); }
   if (pounce.ph === 'reveal' && pounce.t < 2.0) { tx = wolf.x; tz = wolf.z - 2; }

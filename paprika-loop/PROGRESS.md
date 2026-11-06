@@ -2582,3 +2582,9 @@ SCORE: 7.8
    - Also run a full 3-clover win with `eaten=3` at T≥180, and check that the win card appears.
 
 SCORE: 7.9
+
+## Iteration 44
+**Did**: Cut triangles: `pineGeo`/oak cones 18→10 segments, `roundTreeGeo`, `rockGeo`, `bushGeo`, `wolf-rock` icos and the sheep body ico detail 2→1 (game.js ~224, 319-360). Solo camera zoom 0.82 when wolf within 32 (game.js:916, lerped by cam.zoom).
+**Saw**: `perf` 151,104 triangles (was 190,778), 81 draw calls. Start frame: no console errors, no Lighting/Surfaces lines. `subject wolf` 0.57% at frame 0 (the zoom lerps in, so frame 0 does not show it; wolf sits behind `wolf-rock` among `sheep*`).
+**Next**: measure the wolf % after ~60 frames; raise wolf visibility (move `wolf-rock`/wolf start off the sheep crowd, rim light); flatten `ridge*`/`oaks*`/`ground` vertex gradients; run the full 3-clover win.
+**Open**: gradient flattening not done; wolf size goal (3%) not met; 3-clover win not run.

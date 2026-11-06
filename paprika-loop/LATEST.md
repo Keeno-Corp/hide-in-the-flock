@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 43
-**Did**: Proved the clover path: added `cloverPos` to `observe()` (game.js), then `state:{player:{x:14,z:-4}}` + KeyE 120 frames. `cloverProgress.0` went 0 → 0.83 (first change frame 1), munch sounds played. Raised `W.root` wolf scale 2 → 2.6 (game.js:263).
-**Saw**: No console errors, no Lighting/Surfaces lines. Wolf still 1.5% of the frame in the player-near-clover view (0.89% for `wolf-body`); the larger scale was not re-measured on the plain start frame. Clovers at (14,-5), (-3,15), (-19,8).
-**Next**: look at the start frame for the `subject wolf` %; flatten `ridge*`/`oaks*`/`ground` vertex gradients; cut triangles under 160k (ico detail, tree segments); confirm eaten=3 at T≥180 wins.
-**Open**: items 2 (flat gradients, triangles) not done; wolf size gain unmeasured; full 3-clover win not run.
-
 ### Judge 43
 
 **Session 43 verdict.** I ran a 2-cell sheet (start, human pounce) and `perf` once. I did not re-run the clover walk or the 3-clover win. I scored items 5 and 8 from earlier sessions.
@@ -54,3 +48,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Also run a full 3-clover win with `eaten=3` at T≥180, and check that the win card appears.
 
 SCORE: 7.9
+
+## Iteration 44
+**Did**: Cut triangles: `pineGeo`/oak cones 18→10 segments, `roundTreeGeo`, `rockGeo`, `bushGeo`, `wolf-rock` icos and the sheep body ico detail 2→1 (game.js ~224, 319-360). Solo camera zoom 0.82 when wolf within 32 (game.js:916, lerped by cam.zoom).
+**Saw**: `perf` 151,104 triangles (was 190,778), 81 draw calls. Start frame: no console errors, no Lighting/Surfaces lines. `subject wolf` 0.57% at frame 0 (the zoom lerps in, so frame 0 does not show it; wolf sits behind `wolf-rock` among `sheep*`).
+**Next**: measure the wolf % after ~60 frames; raise wolf visibility (move `wolf-rock`/wolf start off the sheep crowd, rim light); flatten `ridge*`/`oaks*`/`ground` vertex gradients; run the full 3-clover win.
+**Open**: gradient flattening not done; wolf size goal (3%) not met; 3-clover win not run.
