@@ -232,29 +232,36 @@ const W = {};
   const grey = PAL.wolf, light = 0x1d1511, dk = 0x0e0a08;
   W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(4.4);
   W.body = new THREE.Group(); W.root.add(W.body);
-  const mat = new THREE.MeshBasicMaterial({ vertexColors: true, fog: false });
+  const mat = new THREE.MeshBasicMaterial({ color: PAL.wolf, fog: false });
   const add = (parent, g) => { const m = new THREE.Mesh(g, mat); m.castShadow = true; parent.add(m); return m; };
+  // smooth rounded masses only (WOLF.png: sleek long-snouted silhouette, tall ears, bush tail, slim legs)
+  const blob = (sx, sy, sz, px, py, pz, rx = 0, ry = 0, rz = 0) => new THREE.SphereGeometry(0.5, 16, 12).scale(sx, sy, sz).rotateX(rx).rotateY(ry).rotateZ(rz).translate(px, py, pz);
+  const taper = (r0, r1, len, px, py, pz, rx = 0, rz = 0) => new THREE.CylinderGeometry(r1, r0, len, 10).rotateX(rx).rotateZ(rz).translate(px, py, pz);
   add(W.body, mergeGeometries([
-    mk(ico(0.5, 1), grey, { p: [0, 0.7, 0], s: [0.7, 0.62, 1.7], jit: 0.02 }),
-    mk(ico(0.5, 1), grey, { p: [0, 0.78, 0.62], s: [0.62, 0.62, 0.7], jit: 0.08 }),
-    mk(ico(0.3, 0), light, { p: [0, 0.55, 0.45], s: [0.9, 0.6, 1.2] }),
-    mk(ico(0.3, 0), 0x1c1410, { p: [0, 0.85, -0.2], s: [1, 0.7, 1.4], jit: 0.1 }),
+    blob(0.62, 0.62, 0.95, 0, 0.82, 0.5),      // deep chest
+    blob(0.5, 0.52, 0.85, 0, 0.78, -0.35),     // rump
+    blob(0.4, 0.4, 1.0, 0, 0.8, 0.1),          // waist link
+    blob(0.4, 0.55, 0.55, 0, 0.98, 0.7, -0.5), // shoulder ruff
+    taper(0.17, 0.11, 0.6, 0, 1.0, 0.98, 1.0), // neck
   ]));
-  W.head = new THREE.Group(); W.head.position.set(0, 0.88, 1.08); W.body.add(W.head);
+  W.head = new THREE.Group(); W.head.position.set(0, 1.12, 1.1); W.body.add(W.head);
   add(W.head, mergeGeometries([
-    mk(ico(0.5, 1), grey, { p: [0, 0, 0.05], s: [0.62, 0.55, 0.78], jit: 0.08 }),
-    mk(box(0.22, 0.17, 0.46), light, { p: [0, -0.07, 0.45] }), mk(box(0.1, 0.09, 0.08), dk, { p: [0, -0.01, 0.7] }),
-    mk(cone(0.1, 0.32, 4), grey, { p: [0.15, 0.3, -0.02], r: [-0.2, 0, -0.2] }), mk(cone(0.1, 0.32, 4), grey, { p: [-0.15, 0.3, -0.02], r: [-0.2, 0, 0.2] }),
-    mk(box(0.09, 0.06, 0.04), 0xf2c35a, { p: [0.15, 0.1, 0.36] }), mk(box(0.09, 0.06, 0.04), 0xf2c35a, { p: [-0.15, 0.1, 0.36], }),
+    blob(0.42, 0.4, 0.55, 0, 0, 0.06),                        // skull
+    taper(0.15, 0.06, 0.62, 0, -0.07, 0.5, Math.PI / 2 - 0.02), // long snout
+    blob(0.1, 0.08, 0.12, 0, -0.03, 0.82),                    // nose
+    new THREE.ConeGeometry(0.11, 0.42, 8).translate(0, 0.21, 0).rotateZ(-0.18).translate(0.14, 0.15, -0.04),
+    new THREE.ConeGeometry(0.11, 0.42, 8).translate(0, 0.21, 0).rotateZ(0.18).translate(-0.14, 0.15, -0.04),
   ]));
+  const eyeMat = new THREE.MeshBasicMaterial({ color: 0xe9c46a, fog: false });
+  [-1, 1].forEach(sx => { const e = new THREE.Mesh(new THREE.SphereGeometry(0.035, 8, 6).scale(1.3, 0.8, 1), eyeMat); e.position.set(sx * 0.15, 0.06, 0.36); W.head.add(e); });
   W.legs = [];
-  [[-1, 0.62], [1, 0.62], [-1, -0.62], [1, -0.62]].forEach(([sx, z]) => {
-    const g = new THREE.Group(); g.position.set(sx * 0.26, 0.72, z); W.body.add(g);
-    add(g, mergeGeometries([mk(new THREE.CylinderGeometry(0.1, 0.07, 0.62, 7), 0x1a1310, { p: [0, -0.3, 0] }), mk(box(0.2, 0.08, 0.28), dk, { p: [0, -0.62, 0.05] })]));
+  [[-1, 0.62], [1, 0.62], [-1, -0.55], [1, -0.55]].forEach(([sx, z]) => {
+    const g = new THREE.Group(); g.position.set(sx * 0.2, 0.72, z); W.body.add(g);
+    add(g, mergeGeometries([taper(0.1, 0.055, 0.7, 0, -0.34, 0), blob(0.13, 0.08, 0.26, 0, -0.69, 0.07)]));
     W.legs.push(g);
   });
-  W.tail = new THREE.Group(); W.tail.position.set(0, 0.8, -0.95); W.body.add(W.tail);
-  add(W.tail, mk(cone(0.14, 0.7, 5), grey, { p: [0, -0.12, -0.28], r: [-1.9, 0, 0] }));
+  W.tail = new THREE.Group(); W.tail.position.set(0, 0.85, -0.95); W.body.add(W.tail);
+  add(W.tail, blob(0.22, 0.24, 0.95, 0, -0.28, -0.3, -0.55));
   scene.add(W.root);
 }
 // the rock the wolf watches from
@@ -286,7 +293,7 @@ const pineGeo = mergeGeometries([
   mk(cone(0.2, 0.9, 7), 0x3a2a20, { p: [0, 0.45, 0], soft: true }),
   mk(cone(1.15, 2.0, 11), 0x34503f, { p: [0, 1.7, 0], jit: 0.0, soft: true }), mk(cone(0.9, 1.8, 11), 0x3a5a45, { p: [0, 2.8, 0], soft: true }), mk(cone(0.6, 1.6, 11), 0x41644a, { p: [0, 3.8, 0], soft: true }),
 ]);
-const pinesMesh = scatterInst(pineGeo, 130, () => { const [x, z] = polar(36, 130); if (z > 4) return null; const h = gh(x, z); const s = rnd(1.1, 2.4) * (Math.hypot(x, z) > 70 ? 1.6 : 1); return { x, z, s, sy: s * rnd(1.0, 1.5), y: h - 0.2 }; }, { name: 'pines' });
+const pinesMesh = scatterInst(pineGeo, 64, () => { const [x, z] = polar(52, 130); if (z > 4) return null; const h = gh(x, z); const s = rnd(1.1, 2.4) * (Math.hypot(x, z) > 70 ? 1.6 : 1); return { x, z, s, sy: s * rnd(1.0, 1.5), y: h - 0.2 }; }, { name: 'pines' });
 const roundTreeGeo = mergeGeometries([
   mk(cone(0.24, 2.0, 7), 0x4a3324, { p: [0, 1.0, 0], soft: true }),
   mk(ico(1.2, 2), 0x6f7d44, { p: [0, 2.9, 0], s: [1, 1.2, 1], soft: true }), mk(ico(0.85, 2), 0x84914f, { p: [0.7, 2.4, 0.25], soft: true }), mk(ico(0.75, 2), 0x5f6e3b, { p: [-0.65, 2.45, -0.2], soft: true }), mk(ico(0.6, 2), 0x93a05a, { p: [0.15, 3.7, 0.1], soft: true }),
@@ -908,13 +915,17 @@ function loop(now) {
   step(rdt);
   post.uniforms.time.value = clock;
   renderer.setRenderTarget(rt); renderer.render(scene, camera); renderer.setRenderTarget(null); renderer.render(postScene, postCam);
+  // let inspection tools see the main scene as the last render: a draw-nothing pass (empty layer, no clear, no shadow update)
+  { const ac = renderer.autoClear, sa = renderer.shadowMap.autoUpdate, ml = camera.layers.mask; renderer.autoClear = false; renderer.shadowMap.autoUpdate = false; camera.layers.set(31); renderer.render(scene, camera); camera.layers.mask = ml; renderer.autoClear = ac; renderer.shadowMap.autoUpdate = sa; }
 }
 requestAnimationFrame(loop);
 
 // ───────────────────────── window.__game ─────────────────────────
 const r2 = v => +v.toFixed(2);
+window.scene = scene; window.camera = camera; window.renderer = renderer;
 window.__game = {
-  subject: 'player',
+  scene, camera,
+  subject: 'wolf',
   describe: () => ({
     name: 'Hide in the Flock', units: 'world units, y up, x right, z toward camera',
     keys: { KeyW: 'walk up', KeyA: 'walk left', KeyS: 'walk down', KeyD: 'walk right', ArrowKeys: 'solo: walk; local: move the wolf', ShiftLeft: 'run (suspicious)', KeyE: 'graze (hold on clover)', Space: 'graze (solo)', Enter: 'local: wolf pounce', KeyM: 'toggle Solo/Local', KeyR: 'restart' },
