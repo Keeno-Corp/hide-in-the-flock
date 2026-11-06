@@ -1,65 +1,61 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-### Judge 27
-
-Session 27 verdict. I looked at one 4-cell sheet (start, 6 s, human bite, AI bite) and ran `perf`. I did not run `interact` or `feel`, and I did not check sound or other viewports. There were no `Lighting:` or `Surfaces:` lines.
-
-1. **Looks as LOOK.md says: 8.**
-   - The `sky` and sun disc, the `ridge*` hills, the inked `oaks*` and pines, the paper grain and the cream `sheep*` read as a storybook.
-   - The wolf is the darkest shape on screen, but it is only 2% near black.
-   - The `ground` still has hard yellow-to-green edges.
-   - The tree faces are still faceted.
-2. **Compared with BOARD, LOOK.png and the turnarounds: 7.**
-   - The wolf at scale 3.8 is still 6.1–6.4% of the frame. The start frame is dominated by a fat, boxy `wolf-body` with stiff block `wolf-leg`s, standing next to `wolf-rock`.
-   - It is taller than the oaks, with a lumpy back and ragged `wolf-rim` edges. It is not the lean WOLF turnaround.
-   - It is also the biggest style gap, and it does not look hidden or menacing.
-   - The sheep flock is still a dense cream clump, though a few faces are readable now.
-3. **Clip moment: 8.5.**
-   - The human bite shows ink splash, red leaf splatters, a "PLAYER 1" stamp, a woodcut duotone and a storybook caption.
-   - The AI bite shows a "baa?" bubble and the caption "He bit, he chewed on his pride, he sulked."
-   - In the AI bite cell the "SHEEP" stamp isn't visible at frame 90. The cell is nearly all black.
-   - The human cell has no visible "HUMAN" or "GOTCHA" text in the cell at frame 90.
-   - I only sampled one frame of each, so the card may land later.
-4. **Core loop and controls: 7.5.**
-   - I carried this over without playing.
-   - The HUD shows the timer, bite pips, clover counters and suspicion bar.
-   - The `clover` patches are still not storybook-drawn.
-   - The HUD key hints are very small.
-5. **Local 2-player: 7.**
-   - I carried this over without playing. The wolf's silhouette is clear.
-6. **UI typography: 8.5.**
-   - The IM Fell panels and Alfa Slab stamps on cream have ink borders, and the caption is a storybook line.
-   - The HUD text is tiny.
-7. **Convention and performance: 7.5.**
-   - 159,258 triangles (down from 195,618), 74 draw calls, 0.63 MB of assets.
-   - `window.__game` is present.
-   - The 259 ms frame is SwiftShader (host load 5.0), so it is not a signal.
-8. **Juice: 7.5.**
-   - The pounce and bite visuals and the stamps work.
-   - I did not hear the sound.
-
-**Faults: 7.5.**
-- There were no console errors.
-- The wolf rim loops and lumpy back are untouched.
-- The clover patches are unfinished.
-- The triangle count is still above the ~120k asked for.
-
-**Next:**
-1. **Replace the wolf with a lean, hand-shaped silhouette (asked again).**
-   - Set the root scale to about 2.5 so it is clearly smaller than the oaks.
-   - Rebuild `wolf-body` as one extruded profile polygon (long snout, sharp ears, slim legs, a thin tail) in place of the blocky parts. Drop the per-part `wolf-rim`, and draw a single inverted-hull outline around the whole shape.
-   - The one call that shows it done is `look` with `zoom` [100, 130, 450, 330]. It should show a slim pointed profile with its outline hugging the shape, and `subject wolf` should be about 3% or less.
-2. **Make the clover patches findable and storybook-drawn (asked again).**
-   - Draw each `clover` as an inked patch with a three-leaf motif larger than a sheep's foot, with a soft glow when the player is near.
-   - The one call that shows it done is `look` with `zoom` on a clover position, such as the two green rings near the lower-left flock. It should show inked leaf shapes.
-3. **Cut the triangles to about 120k (asked again).**
-   - Drop `round-trees-ink` and `sheep-heads-ink` (10k each), and lower the `bushes`, `walls` and `rocks` detail.
-   - The one call that shows it done is `perf` with `costs`. It should read about 120k or less, with the flock silhouette unchanged in a `look`.
-
-SCORE: 7.6
-
 ## Iteration 28
 **Did**: game.js: wolf watch scale 3.8 -> 2.8 (pounce/local 4.4 -> 3.4) in `drawWolf`; per-part `wolf-rim` shells replaced by one `wolf-outline` on `wolf-body` only; removed `sheep-heads-ink` and the `round-trees` ink pass (~20k triangles).
 **Saw**: `look` sheet frame 60: subject wolf 5% (was 6.1%), no console errors, outline reads as a thin brown rim, body is still a blobby barrel on stiff legs. `perf costs` not re-run (estimate ~140k).
 **Next**: (1) rebuild `wolf-body` as a lean extruded profile (snout, ears, slim legs, thin tail), the real fix for the silhouette; (2) clover three-leaf inked motif + glow near player; (3) lower `bushes`/`walls`/`rocks` detail to reach ~120k and re-run `perf costs`.
 **Open**: clover not started; wolf silhouette still not the lean WOLF turnaround; no interact replay this session.
+
+### Judge 28
+
+**Session 28 verdict.** I looked at one 3-cell sheet (start at frame 60, human bite and AI bite at frame 200) and ran `perf` with `costs`. I did not run `interact`, `feel` or `viewports`, and I did not check sound. There were no `Lighting:` or `Surfaces:` lines.
+
+1. **Looks as LOOK.md says: 8.**
+   - The `sky` and sun disc, the layered `ridge*` hills, the inked `oaks*` and pines, the paper grain and the cream `sheep*` read as a storybook.
+   - The wolf is the darkest shape on screen (2% near black), and its outline is thinner now.
+   - The `ground` still has hard yellow-to-green patch edges.
+   - The tree faces are still faceted.
+2. **Compared with BOARD, LOOK.png and the turnarounds: 7.**
+   - The wolf is down to 5% of the frame at scale 2.8, but `wolf-body` is still a lumpy barrel with a ragged back and stiff `wolf-leg`s. It is not the lean WOLF turnaround, and that is still the biggest style gap.
+   - The flock is a dense cream clump, though better than before.
+3. **Clip moment: 9.**
+   - At frame 200 the human bite shows the tilted "GOTCHA / HUMAN" stamp in red, the "PLAYER 1" stamp, red splatter, a woodcut duotone and the caption "And so the hidden one was found."
+   - The AI bite shows "BAA? / SHEEP", "Just a sheep. Bite lost.", the "baa?" bubble and the caption "Mistaken identity. The meadow keeps its secret."
+   - I did not time how fast the card lands, or whether it is within the first minute of solo play.
+4. **Core loop and controls: 7.5.**
+   - I carried this over without playing this session.
+   - The HUD shows the timer, bite pips, clover counters and suspicion bar.
+   - The `clover` patches are still not drawn in the storybook style.
+   - The HUD key hints are tiny.
+5. **Local 2-player: 7.**
+   - I carried this over without playing. The wolf's silhouette is readable, but I did not check pounce targeting.
+6. **UI typography: 8.5.**
+   - The IM Fell panels and Alfa Slab stamps on cream have ink borders, and the captions are storybook lines.
+   - The HUD text is small.
+7. **Convention and performance: 7.5.**
+   - 135k triangles in the scene (138k as drawn), 61 draw calls, 0.63 MB of assets. The triangle count is still above the ~120k target.
+   - `window.__game` is present.
+   - The 258 ms frame is SwiftShader on a busy host (load 7.1), so it is not a signal.
+8. **Juice: 7.5.**
+   - The pounce, splash and stamps work.
+   - I did not hear the sound.
+
+**Faults: 7.5.**
+- There were no console errors.
+- The wolf body is still blobby.
+- The `clover` patches are unfinished.
+- Triangles are still above 120k.
+
+**Next:**
+1. **Rebuild `wolf-body` as a lean profile silhouette (asked again).**
+   - Make it one extruded side-profile polygon with a long snout, two sharp ears, a lowered head, four slim legs and a thin tail. The extruded polygon replaces the barrel and the block `wolf-leg`s.
+   - Keep the single `wolf-outline` hull around the whole shape.
+   - The one call that shows it done is `look` with `zoom` [100, 130, 450, 330]. It should show a pointed, slim profile with the outline hugging it, and `subject wolf` should be about 3–4%.
+2. **Draw the `clover` patches in the storybook style (asked again, not started).**
+   - Make each patch an inked ring with a three-leaf motif larger than a sheep's foot, in a bright green that stands out from the `ground`, and give it a soft glow when the player is near.
+   - The one call that shows it done is `look` with `zoom` on a clover position, for example the green rings near the lower-left flock. It should show inked leaf shapes.
+3. **Cut the triangles to about 120k or less (asked again).**
+   - Drop `bushes` detail (8k) and `walls` detail (7.7k) by about half. Halve `rocks` (6.4k), `sheep-heads-shadow` (8k) and `sheep-shadow` (10k), which could share a lower-poly shadow proxy.
+   - The one call that shows it done is `perf` with `costs`. It should read about 120k or less, with the flock silhouette unchanged in a `look`.
+
+SCORE: 7.8
