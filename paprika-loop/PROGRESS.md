@@ -162,3 +162,9 @@ SCORE: 6.0
    - Play the Local-mode Enter pounce with the `aim` indicator visible, and show it in a `sheet` moment.
 
 SCORE: 6.0
+
+## Iteration 4
+**Did**: `wolf` scale 3.6→5.2 and recoloured brown-grey (#8a7560, light #c9b393); added `cliff` (grey icosahedron at 34,5,-44) and `sand` ring (r46-62 at sea level) next to `sea`; pines at the back (z<-20) now 97% culled so the horizon is open; clover star markers are larger (scale 2, y 2.2) and always faintly visible (35%+ opacity, full when near); `act({action:'win'|'lose'})` added to end the round for checks.
+**Saw**: opening look: `wolf` ×6 1.6% (was 0.68%), `cliff` 1.4%, `sand` 0.05% (thin sliver, still tiny), clover ×3 0.12%, pines ×137 12%, no Never-visible, no errors. `{action:"win"}` shows the "THE FLOCK WINS / YOU BLENDED IN" band, readable. No `perf` run this session.
+**Next**: (1) sand is only a sliver: widen/raise it where the hill meets the sea (the `ground` mesh hides it); (2) play clover grazing on a real clover position (14,-5), (-3,15), (-19,8) with E held, and the `lose` screen and Local Enter pounce, still unverified; (3) round the leap legs (capsules instead of boxes), merge cloud puffs.
+**Open**: leap legs still boxy; clover collection, lose screen and Local pounce not played this session; no perf number.

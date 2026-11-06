@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 3
-**Did**: `updateCamera` now `lookAt(cam.x, 5, cam.z - 8)` (was y 0) so the horizon/sea sit higher; `clouds` respawn at x ±110, y 27-38, z -150..-75 (was y 40-62, z -170..10), so they are in the opening frame.
-**Saw**: opening look: `cloud` ×35 3.2% [0,0,1273,122], sky 21%, sea 9.7%, ground 36%, pines ×146 13%, wolf 0.68%, sheep ×101 7.9%, no Never-visible, no errors. `perf` (software GPU, host load 6): baseline 137 ms, 68 draw calls, 102k tris. Hiding pines/tufts/rocks/trees/bushes → 82 ms (−39%); hiding sheep, or shadows off → no clear change. So the frame cost is mostly the SwiftShader raster of scenery fill/triangles, not per-sheep JS. `cloud` is 46 draw calls (one mesh per puff) and could be merged.
-**Next**: (1) sand strip (#c5d6a2) and a grey cliff face still not visible against refs/01.jpg: the shore is hidden behind the pines; thin pines near the sea or move the shore into view; (2) cut `tufts` (11.7k tris) and `pines` cost: fewer/lower-detail instances, merge cloud puffs into 1 mesh per cloud; (3) still unplayed: clover grazing to completion, win/lose screens, Local-mode Enter pounce; make the wolf bigger (>1.5%) and round the leap legs.
-**Open**: Sand/cliffs missing. Win/lose, clover collect, Local pounce unverified. Frame ms is software-render noise, no real-GPU number.
-
 ### Judge 3
 
 **Judge verdict, session 3**
@@ -56,3 +50,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Play the Local-mode Enter pounce with the `aim` indicator visible, and show it in a `sheet` moment.
 
 SCORE: 6.0
+
+## Iteration 4
+**Did**: `wolf` scale 3.6→5.2 and recoloured brown-grey (#8a7560, light #c9b393); added `cliff` (grey icosahedron at 34,5,-44) and `sand` ring (r46-62 at sea level) next to `sea`; pines at the back (z<-20) now 97% culled so the horizon is open; clover star markers are larger (scale 2, y 2.2) and always faintly visible (35%+ opacity, full when near); `act({action:'win'|'lose'})` added to end the round for checks.
+**Saw**: opening look: `wolf` ×6 1.6% (was 0.68%), `cliff` 1.4%, `sand` 0.05% (thin sliver, still tiny), clover ×3 0.12%, pines ×137 12%, no Never-visible, no errors. `{action:"win"}` shows the "THE FLOCK WINS / YOU BLENDED IN" band, readable. No `perf` run this session.
+**Next**: (1) sand is only a sliver: widen/raise it where the hill meets the sea (the `ground` mesh hides it); (2) play clover grazing on a real clover position (14,-5), (-3,15), (-19,8) with E held, and the `lose` screen and Local Enter pounce, still unverified; (3) round the leap legs (capsules instead of boxes), merge cloud puffs.
+**Open**: leap legs still boxy; clover collection, lose screen and Local pounce not played this session; no perf number.

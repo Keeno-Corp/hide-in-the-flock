@@ -86,6 +86,10 @@ scene.add(new THREE.HemisphereLight(0xbfe8ff, 0x7fb83a, 1.35));
   m.name = 'ground'; m.receiveShadow = true; scene.add(m);
   const sea = new THREE.Mesh(new THREE.PlaneGeometry(900, 900).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: 0x2a98e0, roughness: 0.35, transparent: true, opacity: 0.86 }));
   sea.name = 'sea'; sea.position.y = SEA; scene.add(sea);
+  const sandRing = new THREE.Mesh(new THREE.RingGeometry(46, 62, 48, 1).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xd9c98a }));
+  sandRing.name = 'sand'; sandRing.position.y = SEA + 0.05; scene.add(sandRing);
+  const cliff = new THREE.Mesh(new THREE.IcosahedronGeometry(9, 1), new THREE.MeshStandardMaterial({ color: 0x8d8f94, flatShading: true, roughness: 1 }));
+  cliff.name = 'cliff'; cliff.scale.set(1.3, 1.5, 1); cliff.position.set(34, 5, -44); scene.add(cliff);
 }
 
 // ───────────────────────── geometry builder ─────────────────────────
@@ -133,8 +137,8 @@ const wolf = { x: -10, z: 3, y: 0, yaw: 0.6, state: 'watch', pose: 'crouch', t: 
 const ROCK = { x: -10, z: 3, top: 3.0 };
 const W = {};
 {
-  const grey = 0x6b6a70, light = 0xa8a498, dk = 0x222222;
-  W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(3.6);
+  const grey = 0x8a7560, light = 0xc9b393, dk = 0x222222;
+  W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(5.2);
   W.body = new THREE.Group(); W.root.add(W.body);
   const mat = flat();
   const add = (parent, g) => { const m = new THREE.Mesh(g, mat); m.castShadow = true; parent.add(m); return m; };
@@ -154,7 +158,7 @@ const W = {};
   W.legs = [];
   [[-1, 0.62], [1, 0.62], [-1, -0.62], [1, -0.62]].forEach(([sx, z]) => {
     const g = new THREE.Group(); g.position.set(sx * 0.26, 0.72, z); W.body.add(g);
-    add(g, mergeGeometries([mk(box(0.17, 0.62, 0.17), 0x6d6a62, { p: [0, -0.3, 0] }), mk(box(0.2, 0.08, 0.28), dk, { p: [0, -0.62, 0.05] })]));
+    add(g, mergeGeometries([mk(box(0.17, 0.62, 0.17), 0x7a6650, { p: [0, -0.3, 0] }), mk(box(0.2, 0.08, 0.28), dk, { p: [0, -0.62, 0.05] })]));
     W.legs.push(g);
   });
   W.tail = new THREE.Group(); W.tail.position.set(0, 0.8, -0.95); W.body.add(W.tail);
@@ -189,7 +193,7 @@ const pineGeo = mergeGeometries([
   mk(cone(0.22, 1, 5), 0x5a3d26, { p: [0, 0.5, 0] }).clone(),
   mk(cone(1.1, 1.8, 6), 0x2f6a3a, { p: [0, 1.5, 0], jit: 0.1 }), mk(cone(0.85, 1.6, 6), 0x38783f, { p: [0, 2.5, 0], jit: 0.1 }), mk(cone(0.55, 1.4, 6), 0x42874a, { p: [0, 3.4, 0], jit: 0.1 }),
 ]);
-scatterInst(pineGeo, 300, () => { const [x, z] = polar(29, 58); if (z < -20 && Math.abs(x) < 30 && Math.random() < 0.9) return null; const h = gh(x, z); if (h < 0.9 || h > 10 || (z > 8 && Math.random() < 0.85)) return null; const s = rnd(0.9, 1.9); return { x, z, s, sy: s * rnd(0.9, 1.4), y: h - 0.2 }; }, { name: 'pines' });
+scatterInst(pineGeo, 300, () => { const [x, z] = polar(29, 58); if (z < -20 && Math.random() < 0.97) return null; const h = gh(x, z); if (h < 0.9 || h > 10 || (z > 8 && Math.random() < 0.85)) return null; const s = rnd(0.9, 1.9); return { x, z, s, sy: s * rnd(0.9, 1.4), y: h - 0.2 }; }, { name: 'pines' });
 const roundTreeGeo = mergeGeometries([
   mk(cone(0.2, 1.6, 5), 0x6b4a2c, { p: [0, 0.8, 0] }),
   mk(ico(1.0, 0), 0x5d9a2a, { p: [0, 2.1, 0], jit: 0.12 }), mk(ico(0.7, 0), 0x6aa930, { p: [0.55, 1.6, 0.2], jit: 0.12 }), mk(ico(0.6, 0), 0x4f8a28, { p: [-0.5, 1.7, -0.2], jit: 0.12 }),
@@ -225,7 +229,7 @@ const clovers = [];
   [[14, -5], [-3, 15], [-19, 8]].forEach(([x, z]) => {
     const g = new THREE.Group(); g.position.set(x, gh(x, z), z); g.name = 'clover';
     const m = new THREE.Mesh(geo, cm); m.receiveShadow = true; g.add(m);
-    const sp = new THREE.Group(); sp.position.y = 1.0;
+    const sp = new THREE.Group(); sp.position.y = 2.2; sp.scale.setScalar(2);
     sp.add(new THREE.Mesh(box(0.08, 0.7, 0.02), star), new THREE.Mesh(box(0.7, 0.08, 0.02), star)); g.add(sp);
     scene.add(g); clovers.push({ x, z, g, mesh: m, star: sp, prog: 0, eaten: false });
   });
@@ -331,6 +335,8 @@ function place(el, wx, wy, wz) { vp.set(wx, wy, wz).project(camera); el.style.le
 // ───────────────────────── input ─────────────────────────
 const act = a => {
   if (a.action === 'pounce') { startPounce(a.target === 'human' ? P : sheep[1 + Math.floor(Math.random() * N_AI)]); return; }
+  if (a.action === 'win') { endGame('win', 'YOU BLENDED IN', 'Three clovers. Three minutes. Zero bites.', 'The flock wins', '#8ee04a'); return; }
+  if (a.action === 'lose') { endGame('lose', 'EATEN', 'The wolf got you', 'You were the human'); return; }
   if (a.action === 'startle') { startle(); return; }
   if (a.key === undefined) return;
   if (a.down === false) keys.delete(a.key);
@@ -589,8 +595,8 @@ function updateClovers(dt) {
     c.g.visible = true;
     const d = Math.hypot(P.x - c.x, P.z - c.z);
     const near = c.eaten ? 0 : sm(11, 3, d);
-    c.star.children.forEach(m => m.material.opacity = near * (0.4 + 0.5 * Math.sin(clock * 5 + c.x)));
-    c.star.rotation.y = clock * 0.8; c.star.scale.setScalar(0.7 + 0.4 * Math.sin(clock * 5 + c.x) ** 2); c.star.position.y = 1 + Math.sin(clock * 2) * 0.1;
+    c.star.children.forEach(m => m.material.opacity = (c.eaten ? 0 : 0.35 + 0.65 * near) * (0.4 + 0.5 * Math.sin(clock * 5 + c.x)));
+    c.star.rotation.y = clock * 0.8; c.star.scale.setScalar(0.7 + 0.4 * Math.sin(clock * 5 + c.x) ** 2); c.star.position.y = 2.2 + Math.sin(clock * 2) * 0.15;
     if (c.eaten) return;
     if (d < 1.9 && P.graze && !P.frozen && !result) {
       c.prog += dt / 2.4; c.mesh.scale.setScalar(1 - 0.5 * c.prog); munchT -= dt;
