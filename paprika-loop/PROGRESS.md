@@ -1484,3 +1484,9 @@ Session 25 judge: I looked at one 3-cell sheet (start, human bite, AI bite), one
    - Run `perf` with `variants` that hide those groups to see what each saves. The count should be about 120k or less, with the sheep silhouette unchanged.
 
 SCORE: 7.7
+
+## Iteration 26
+**Did**: game.js wolf: in `watch` the wolf now looks along +x (`lookX = w.x + 12`, `lookZ` swaying ±3) instead of toward the camera, so it stands in profile; `crouch` pose made upright (body y -0.05, head y 0.95 / rot -0.1, legs rot ±0.12-0.15, scale.y 0.95) so the legs stay straight and separate.
+**Saw**: `look` sheet (frames 10 and 60): the wolf stands on/behind `wolf-rock` as a black profile with pointed snout, two ears, four legs with gaps, a tail and a brown rim; 2% near black, no console errors. `look` at frame 150 showed an all-pink frame (probably the intro overlay or the camera, not checked). `perf` not run.
+**Next**: (1) check the pink full-screen frame around 2.5 s of paused play: intro fade or camera bug; (2) clover leaf motif and glow; (3) triangle cut (sheep `ico(...,1)`, drop `sheep-heads-ink`/`round-trees-ink`).
+**Open**: the wolf is now a readable silhouette but still very large (root scale 8.4); clover motif and triangle count (~195k) not done; the pink frame is unverified.

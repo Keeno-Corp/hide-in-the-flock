@@ -702,7 +702,7 @@ function updateWolf(dt) {
     }
     const t = topSusp;
     if (t) { w.lookX = lerp(w.lookX, t.x, Math.min(1, dt * 4)); w.lookZ = lerp(w.lookZ, t.z, Math.min(1, dt * 4)); }
-    else { w.lookX = w.x + Math.sin(w.t * 0.5) * 12; w.lookZ = w.z + 8 + Math.cos(w.t * 0.37) * 8; }
+    else { w.lookX = w.x + 12; w.lookZ = w.z + Math.sin(w.t * 0.4) * 3; }
     w.yaw += angDiff(w.yaw, Math.atan2(w.lookX - w.x, w.lookZ - w.z)) * Math.min(1, dt * 2.5);
     if (t && t.susp >= 1.5 && w.cd <= 0) { w.state = 'stalk'; w.target = t; w.abort = 0; w.stalkT = 0; w.onRock = false; w.y = gh(w.x, w.z) + (w.y > 1 ? 0 : 0); caption(pick(caps.stalk)); play('wind', 0.6); if (mode === 'solo') { play('boom', 0.7); play('stab1', 0.8); } if (t.player) toast('! The wolf has noticed you: blend in, graze!', 1.8); }
   } else if (w.state === 'stalk') {
@@ -858,9 +858,9 @@ function drawWolf(dt) {
   W.body.position.set(0, 0, 0); W.body.rotation.set(0, 0, 0); W.head.rotation.set(0, 0, 0); W.head.position.set(0, 0.88, 1.08);
   W.legs.forEach(l => l.rotation.set(0, 0, 0)); W.tail.rotation.set(0, 0, 0);
   if (pz === 'crouch') {
-    W.body.position.y = -0.2 + Math.sin(t * 2) * 0.02; W.body.rotation.x = 0.1;
-    W.head.rotation.x = 0.2; W.head.position.y = 0.7;
-    W.legs.forEach((l, i) => { l.rotation.x = i < 2 ? -0.5 : 0.6; l.scale.y = 0.7; });
+    W.body.position.y = -0.05 + Math.sin(t * 2) * 0.02; W.body.rotation.x = -0.05;
+    W.head.rotation.x = -0.1; W.head.position.y = 0.95;
+    W.legs.forEach((l, i) => { l.rotation.x = i < 2 ? -0.12 : 0.15; l.scale.y = 0.95; });
     W.tail.rotation.y = Math.sin(t * 1.5) * 0.2;
   } else if (pz === 'walk') {
     W.body.position.y = -0.15 + Math.abs(Math.sin(ph)) * 0.05; W.body.rotation.x = 0.12; W.head.rotation.x = 0.25; W.head.position.y = 0.72;
