@@ -1,67 +1,62 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-### Judge 28
-
-**Judge verdict, session 28**
-
-1. **Looks as LOOK.md says: 8.**
-   - The play camera shows the `sea`, `cliff`, `pines*` ×126, `sand`, `cloud` ×29, `wolf-rock`, `rocks*` and the `sheep*` flock, all bright and low-poly. The look reports no `Lighting:` or `Surfaces:` lines.
-   - The lose screen has a grey band across the top (`div.band`, 25% of the canvas) and a `div#vig` vignette over the whole canvas. Saturation is 40%.
-
-2. **Plays as DESIGN.md says: 8.**
-   - I played a real round with held keys (KeyD, KeyW) and no forced `act`. At t=25 the wolf pounced and ate the `player` (susp 1.23), with `wolf.state` "done" and pose "land". That gives `result: "lose"` and the EATEN screen.
-   - KeyR restarted a fresh round: bites back to 3, `player` reset to (0, 1.5), and the wolf back to "crouch" on its rock.
-   - I did not reach a win, so the win screen is still unseen.
-
-3. **Clip moment: 9.**
-   - A natural pounce landed in 25 s, well inside the first minute.
-   - The PLAYER 1 `tag` sits over the eaten sheep. The sound log shows `boom`, `stab1` to `stab3`, `thud` and `hit` in order.
-   - The "baa?" bubble clamp from session 28 was not re-checked at desktop size.
-
-4. **Looks like refs/01.jpg: 9.**
-   - The `sea`, `cliff`, `pines*`, `sand`, `cloud` and `wolf-rock` are all in the play-camera frame.
-   - The grey band and vignette make the lose frame duller than the ref.
-
-5. **Solo fun and fair: 8.**
-   - The SUSPICION bar, the `clover` ×4 rings and the clover counter are readable.
-   - The round ended with 0/3 clovers and susp 1.23 after only walking, so a player who doesn't graze loses quickly. That reads as fair.
-   - The wolf took 2 bites in 25 s with `bites` at 2 (the other bite was an AI sheep, as the "decoys" count suggests), so I could not tell whether it hunts too fast.
-
-6. **Local 2-player: 8.**
-   - Carried over from earlier sessions. I did not re-run it this session.
-
-7. **`window.__game`, no build, ~100 sheep: 8.**
-   - The page is plain, starts playing on load, and `observe` works.
-   - `perf` gave 121 ms per frame at host load 4.2. That is a software renderer, so it is no signal. It reports 76 draw calls, 102.7k triangles and 0 MB of assets.
-   - The reveal canvas CSS filter has still not been timed on a real GPU.
-
-8. **Juice: 8.**
-   - 43 sounds started in one round: `baa`, `baa2`, `wind`, `boom`, `stab*`, `thud`, `hit` and `womp`. The sheep also visibly bob.
-   - The lose screen reads "The wolf got you · 0/3 clovers · R to play again · M to switch mode".
-
-9. **Works at any window size, HUD readable: 8.**
-   - At 1280×800 the HUD has 0 overlap and nothing cut off.
-   - The phone sheet in iteration 28 showed no overflow.
-
-10. **Faults: 8.**
-    - There are no console errors and no `Never visible` object. `perf` is not a fault on a software renderer.
-    - The `player` is drawn by its own shader, so the ID image cannot find it. That is by design, not a fault.
-
-**Next:**
-1. **Play a full winning round.**
-   - **Do:** take the player to each `clover` and hold KeyE until all three clovers are collected, then reach the win state.
-   - **Check:** `interact` with `until: {result: "win"}`, then `look`. It should show a win screen with a restart prompt, matching the lose screen's quality.
-2. **Lighten the reveal and lose overlays.**
-   - **Do:** reduce `div.band` and `div#vig` so the end screen is not duller than refs/01.jpg. Keep the saturation drop short and let it recover.
-   - **Check:** `look` with `sample` at about (200, 600), where grass sits on the lose screen. It should be a vivid green.
-3. **Keep the second bite from landing quickly.**
-   - **Do:** give the wolf a longer cooldown after an AI-sheep bite, so a player who blends in survives well past the first minute.
-   - **Check:** `interact` that grazes for 90 s and checks `wolf.state` and `bites` with `expect`. It should show bites still at 3 or 2 and no `result` yet.
-
-SCORE: 8.2
-
 ## Iteration 29
 **Did**: `game.js` solo wolf: after an AI-sheep bite `w.cd` is 18 (was 5), so a blending player survives longer. `index.html`: `#reveal .band` alpha 40→22, `#vig` gradient starts at 70% and its opacity in the reveal is 0.25 (was 0.4), so the end screens are less dull.
 **Saw**: `node --check game.js` passes. No `look`, `perf` or play run this session, so the lighter overlays and the longer cooldown are unmeasured.
 **Next**: (1) play a full winning round (clovers, T>=180) and `look` at the win screen; (2) check the 90 s graze with `bites` and `wolf.state`; (3) sample grass green on the lose screen.
 **Open**: no win screen seen yet; the reveal canvas CSS filter is untested on a real GPU.
+
+### Judge 29
+
+**Judge verdict, session 29**
+
+1. **Looks as LOOK.md says: 8.**
+   - The play camera shows `sea`, `cliff`, `pines*` ×136, `sand`, `cloud` ×34, `wolf-rock`, `rocks*` and `sheep*` ×97, all bright and low-poly. The look reports no `Lighting:` or `Surfaces:` lines.
+   - Saturation is 45% on the play frame. On the reveal frame it drops to 26% and grey is 74% of the hues. The `div.band` still covers 25% of the canvas. The overlays are lighter than in session 28 but not measured with `sample`.
+
+2. **Plays as DESIGN.md says: 8.**
+   - I held Space for 3000 frames (about 50 s). `wolf.state` went from "watch" to "stalk" at frame 559. `bites` ended at 1, so two AI-sheep bites landed. `topSusp` was `player: false`, and no `result` was set.
+   - The run was a long continuous graze, and the player stayed at 0 suspicion.
+   - The win screen is still unseen, for the fourth session running.
+
+3. **Clip moment: 9.**
+   - A forced AI pounce reached `pounce.ph` "reveal" with the wolf pose "shrug". It shows a big "AI SHEEP" title, a "BITE WASTED" kicker, and the subline "Just a sheep. Bite wasted."
+   - The "baa?" `div#bubble` sits over the wolf at [601, 411, 746, 479] and is not clipped. The `div#cap` caption reads "Mistaken identity. Nature is humbling." and the bite pips drop to 2.
+   - The sound log runs `boom`, `stab1` to `stab3`, `thud`, `hit`, `womp` and `baa`. It reads clearly in a 5-second clip.
+
+4. **Looks like refs/01.jpg: 9.**
+   - All of `sea`, `cliff`, `sand`, `pines*`, `cloud` and the crouched `wolf` on `wolf-rock` are in the play frame, and the clovers show as glowing rings.
+
+5. **Solo fun and fair: 7.**
+   - The cooldown of 18 s after an AI bite did not stop two AI bites inside 50 s. I did not time the gap between them, so I can't say whether the 18 s change did anything.
+   - The player never lost suspicion while grazing, so a graze-only player is safe but cannot win without reaching the clovers.
+   - I did not see a win this session.
+
+6. **Local 2-player: 8.**
+   - Carried over from earlier sessions. I did not re-run it.
+
+7. **`window.__game`, no build, ~100 sheep: 8.**
+   - The page is plain, starts playing on load, and `observe` works.
+   - `perf` gave 118 ms per frame, which is no signal on a software renderer (76 draw calls, 102.7k triangles, 0 MB assets). The reveal canvas CSS filter is still untimed on a real GPU.
+
+8. **Juice: 8.**
+   - 53 sounds started in the graze run, including `baa`, `baa2`, `wind`, `boom`, `stab*`, `thud`, `hit` and `womp`. The caption voice is funny.
+
+9. **Works at any window size, HUD readable: 8.**
+   - At 1280×800 there are 0 overlaps and nothing is cut off. Not re-run at other sizes.
+
+10. **Faults: 8.**
+    - There are no console errors and no `Never visible` object.
+
+**Next:**
+1. **Play a full winning round (asked again, 4th time).**
+   - **Do:** use `interact` to step to each `clover` ring (`cloverProgress`) and hold KeyE until `clovers` reaches 3. If walking there is too slow, use `{state: {...}}` to place the player on each ring.
+   - **Check:** `interact` with `until: {result: "win"}` and `look: true`. It should show a win screen with a restart prompt that matches the lose screen's polish.
+2. **Check the AI-bite cooldown (asked again).**
+   - **Do:** log `t` at each AI bite. If two bites still land under 18 s apart, find which code path sets `w.cd` and fix it.
+   - **Check:** `interact` that grazes 90 s with `trace` on `bites`. The first change in `bites` and the next should be at least 18 s apart.
+3. **Make the reveal overlay lighter again (asked again).**
+   - **Do:** cut the grey desaturation on the reveal filter further, from the 26% saturation measured now, and keep the `div.band` strip to the title area only.
+   - **Check:** `look` after a forced pounce with `sample` at about (200, 600). It should read a vivid green, and saturation in the reply should be above 35%.
+
+SCORE: 8.1
