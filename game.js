@@ -87,7 +87,7 @@ scene.add(new THREE.HemisphereLight(0xbfe8ff, 0x7fb83a, 1.35));
   const sea = new THREE.Mesh(new THREE.PlaneGeometry(900, 900).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: 0x2a98e0, roughness: 0.35, transparent: true, opacity: 0.86 }));
   sea.name = 'sea'; sea.position.y = SEA; scene.add(sea);
   const sandRing = new THREE.Mesh(new THREE.RingGeometry(38, 72, 64, 1).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xc5d6a2 }));
-  sandRing.name = 'sand'; sandRing.position.y = SEA + 0.75; sandRing.material.color.set(0xe3dba6); scene.add(sandRing);
+  sandRing.name = 'sand'; sandRing.position.y = SEA + 1.1; sandRing.material.color.set(0xe3dba6); scene.add(sandRing);
   const cliff = new THREE.Mesh(new THREE.IcosahedronGeometry(9, 1), new THREE.MeshStandardMaterial({ color: 0x8d8f94, flatShading: true, roughness: 1 }));
   cliff.name = 'cliff'; cliff.scale.set(1.3, 1.5, 1); cliff.position.set(34, 5, -44); scene.add(cliff);
 }

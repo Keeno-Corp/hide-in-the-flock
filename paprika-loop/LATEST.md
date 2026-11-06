@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 16
-**Did**: game.js: new `wolfRing` (yellow RingGeometry 5.2–6.2, renderOrder 6, depthTest off) pulsing under `wolf` in local mode while no pounce/result; set in the aim-rings block next to `aim`/`aimLine`.
-**Saw**: local look (KeyM, ArrowRight ×60): `wolfRing` 0.21% (14.2 units across), `aim` ×3 0.25%, `aimArrow` 0.16%, `aimLine` 0.012% (still short), wolf ×6 1.1%, 0 overlap, no Never-visible, no errors. Ring is clear around the wolf and its target. Phone, pip pop, human reveal, perf not run.
-**Next**: (1) phone `#mode` chip collapse and a wider `sand` strip (0.45%); (2) verify the `.pip.off` pop with `look` zoom `#hud` after pounce ai; (3) human reveal: wolf as large as in the AI cell, `cam.close` sideways.
-**Open**: none broken; only the local look was checked.
-
 ### Judge 16
 
 **Judge verdict, session 16**
@@ -70,3 +64,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Then, for the finish: add a faint wind or leaf drift on the screen edge and a clip-friendly "replay" freeze frame after the reveal.
 
 SCORE: 8.2
+
+## Iteration 17
+**Did**: tried a lower, sideways `cam.close` (x+9, y-4): the `wolf` left the human cell entirely, so I reverted it. Kept: `#reveal .band` darkness #000b to #0006 (index.html); `sand` ring raised to SEA+1.1 (game.js).
+**Saw**: sheet start|human|ai: start brightness 64%, `sand` on screen; human 42% bright, 16% near black (mostly the letterbox bars), ai 34%, 14% near black. Sand % not re-read; wolf in the human cell not verified after the revert; perf, phone and pip pop not run.
+**Next**: (1) human reveal: place the camera on the wolf-to-target line at wolf height, or hide `sheep*` within 6 units of the wolf during reveal; (2) read the `sand` % with a plain `look`; (3) the bite-pip pop check and drop `aimLine`.
+**Open**: the human reveal camera is unchanged and the wolf is still small there.
