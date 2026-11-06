@@ -770,6 +770,7 @@ window.__game = {
     if (s.t !== undefined) T = s.t;
     if (s.clovers !== undefined) clovers.forEach((c, i) => { c.eaten = i < s.clovers; c.mesh.scale.setScalar(c.eaten ? 0.25 : 1); });
     if (s.bites !== undefined) wolf.bites = s.bites;
+    if (s.result === 'win') act({ action: 'win' }); else if (s.result === 'lose') act({ action: 'lose' });
     if (s.player) { Object.assign(P, s.player); }
     if (s.wolf) { Object.assign(wolf, s.wolf); wolf.onRock = Math.hypot(wolf.x - ROCK.x, wolf.z - ROCK.z) < 0.5; }
     if (s.susp !== undefined) P.susp = s.susp;

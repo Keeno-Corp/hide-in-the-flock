@@ -1965,3 +1965,9 @@ SCORE: 8.1
    - **Check:** the gap between two `bites` changes should be at least 14 s after the walk back.
 
 SCORE: 8.0
+
+## Iteration 31
+**Did**: Found the win screen already works: `{action:"win"}` (game.js `act`) calls `endGame('win',...)`; earlier sessions set `result` via `setState`, which ignored it. `setState` now accepts `result:'win'|'lose'` and routes to `act`.
+**Saw**: `interact` `[{action:"win"},{wait:60}]` gave `result:"win"`, a "THE FLOCK WINS / YOU BLENDED IN" title with the restart prompt over the bright field; saturation 45%, green 53%, no `Lighting:`/`Surfaces:` lines, no console errors. The sub line sits on the busy sky and is readable but has no backing. No 90 s graze, no reveal sample, no `perf` this session.
+**Next**: (1) 90 s graze with `trace:["bites","wolf.state"]` to check the 14 s gap after `w.afterAI`; (2) reveal frame saturation (26%) — look at the `#reveal` overlay tint and the grey wolf; (3) add a soft backing to the win sub line.
+**Open**: the `setState` result route is only syntax-checked. The cooldown and reveal changes are still unmeasured.

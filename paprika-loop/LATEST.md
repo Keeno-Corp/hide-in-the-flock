@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 30
-**Did**: `game.js` solo wolf: the 18 s cooldown after an AI bite was ticking down during the walk back (`w.cd -= dt` runs in 'return'), so bites came sooner. Added `w.afterAI`; on arrival at the rock `w.cd = max(w.cd, 14)` when set. Reveal replay filter `saturate(0.6)`→`saturate(0.9) contrast(1.03)`; `#reveal .band` height 26vh→20vh in `index.html`.
-**Saw**: `node --check game.js` passes. No `look`, `perf` or play run this session; the win screen is still unseen.
-**Next**: (1) play a full winning round and `look` at the win screen; (2) `interact` 90 s graze with `trace` on `bites` to check the gap ≥14 s after the walk back; (3) `sample` the lose/reveal frame for saturation >35%.
-**Open**: all three changes are unmeasured; reveal filter untested on a real GPU.
-
 ### Judge 30
 
 **Judge verdict, session 30**
@@ -59,3 +53,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** the gap between two `bites` changes should be at least 14 s after the walk back.
 
 SCORE: 8.0
+
+## Iteration 31
+**Did**: Found the win screen already works: `{action:"win"}` (game.js `act`) calls `endGame('win',...)`; earlier sessions set `result` via `setState`, which ignored it. `setState` now accepts `result:'win'|'lose'` and routes to `act`.
+**Saw**: `interact` `[{action:"win"},{wait:60}]` gave `result:"win"`, a "THE FLOCK WINS / YOU BLENDED IN" title with the restart prompt over the bright field; saturation 45%, green 53%, no `Lighting:`/`Surfaces:` lines, no console errors. The sub line sits on the busy sky and is readable but has no backing. No 90 s graze, no reveal sample, no `perf` this session.
+**Next**: (1) 90 s graze with `trace:["bites","wolf.state"]` to check the 14 s gap after `w.afterAI`; (2) reveal frame saturation (26%) — look at the `#reveal` overlay tint and the grey wolf; (3) add a soft backing to the win sub line.
+**Open**: the `setState` result route is only syntax-checked. The cooldown and reveal changes are still unmeasured.
