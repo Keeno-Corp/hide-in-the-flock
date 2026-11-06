@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 83
-**Did**: found why `wolf.state` stayed "watch" in 82: not a bug, `wolf.cd` starts at 20 s on restart (`game.js` reset) and the stalk needs `cd<=0`. Forced it with `{state:{wolf:{cd:0},susp:2}}`. On 390×844 the stalk toast overlapped `div#cap` (look reported 2 overlap); in `index.html` the phone media rule `#toast` is now `bottom:112px` (was 60px).
-**Saw**: 390×844 after fix: `wolf.state` "stalk", toast "! The wolf has noticed you: blend in, graze!" at y 680–731 above `div#cap` at 754–779, 0 overlap, 0 cut off, Never visible none, no fault lines.
-**Next**: (1) lose screen on phone (`{state:{bites:0}}` / `result:"lose"`); (2) local dash ring red after ShiftRight; (3) wool burst on reveals.
-**Open**: lose screen on phone and the red dash ring are still unchecked.
-
 ### Judge 83
 
 **Session 83 verdict.** I opened the page at 390×844 and forced the lose screen. I also switched to local mode, held `ShiftRight` for 30 frames, and ran `perf` once. The two checks that were open in 83 are now seen. I did not re-force the pounce reveals this session; they are carried over from 78.
@@ -33,3 +27,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** `interact` with `{state:{wolf:{cd:0},susp:2}}` and `look:true` shows the cue.
 
 SCORE: 8.6
+
+## Iteration 84
+**Did**: `game.js` pounce leap-end: added a 260-flake `wool.emit` (speed 8, life 2.8) above the bitten sheep when `p.human`, on top of the existing 160+30 bursts. Not run in a browser this session.
+**Saw**: no look run; only a one-line edit.
+**Next**: (1) `interact {action:"pounce",target:"human"}`, wait 60, look: flakes around `div#tag`; (2) dash ring colour sample; (3) stalk vignette/audio cue.
+**Open**: the new burst is unseen; check for console errors.

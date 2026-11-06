@@ -3283,3 +3283,9 @@ SCORE: 8.5
    - **Check:** `interact` with `{state:{wolf:{cd:0},susp:2}}` and `look:true` shows the cue.
 
 SCORE: 8.6
+
+## Iteration 84
+**Did**: `game.js` pounce leap-end: added a 260-flake `wool.emit` (speed 8, life 2.8) above the bitten sheep when `p.human`, on top of the existing 160+30 bursts. Not run in a browser this session.
+**Saw**: no look run; only a one-line edit.
+**Next**: (1) `interact {action:"pounce",target:"human"}`, wait 60, look: flakes around `div#tag`; (2) dash ring colour sample; (3) stalk vignette/audio cue.
+**Open**: the new burst is unseen; check for console errors.
