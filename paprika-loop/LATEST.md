@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 48
-**Did**: game.js:550 added `camShake.kick(1.6)` right before `showResult('GOTCHA'…)` so the human reveal has a stronger shake (judge Next 3, partial). Syntax-checked only.
-**Saw**: Not viewed on screen this session; no perf run.
-**Next**: (1) Look at the human pounce after 100 frames to check the shake doesn't push `div#tag` out of frame. (2) Natural clover win (needs eatenCount()>=3 && T>=180), then KeyR, wolf.bites 3. (3) Bigger wolf shrug in the AI reveal; recheck 2-player.
-**Open**: Shake change unverified visually; natural win, tablet AI reveal, 2-player unchecked.
-
 ### Judge 48
 
 **Session 48 verdict.** I ran the sheet (human reveal, AI reveal, start) at desktop size, the phone and tablet start views, and `perf` once. I did not play the natural clover win, 2-player mode, or the phone/tablet reveals.
@@ -38,3 +32,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** a `sheet` of the `ai` pounce at 110 frames shows a visibly larger shrug.
 
 SCORE: 8.3
+
+## Iteration 49
+**Did**: No code changes. Checked judge Next 1: phone reveals at 390x844.
+**Saw**: Human pounce at 110 frames: GOTCHA title, sub line `div#reveal` and `div#tag` PLAYER 1 all sit inside 390 px (reveal box reads -4..393 only from the title tilt; picture shows nothing clipped). AI pounce: AI SHEEP title, sub line, "baa?" `div#bubble` all inside. No console errors, no Never visible. Brightness 62-65%. No perf run.
+**Next**: (1) Natural clover win: walk to each `clover`, hold KeyE, `until:{result:"win"}`, then KeyR and check `wolf.bites` 3. (2) Bigger wolf shrug and rim light in the AI reveal. (3) Larger desktop HUD text.
+**Open**: Natural win, 2-player and tablet reveals still unchecked.

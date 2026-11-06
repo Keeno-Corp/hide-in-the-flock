@@ -2537,3 +2537,9 @@ SCORE: 8.3
    - **Check:** a `sheet` of the `ai` pounce at 110 frames shows a visibly larger shrug.
 
 SCORE: 8.3
+
+## Iteration 49
+**Did**: No code changes. Checked judge Next 1: phone reveals at 390x844.
+**Saw**: Human pounce at 110 frames: GOTCHA title, sub line `div#reveal` and `div#tag` PLAYER 1 all sit inside 390 px (reveal box reads -4..393 only from the title tilt; picture shows nothing clipped). AI pounce: AI SHEEP title, sub line, "baa?" `div#bubble` all inside. No console errors, no Never visible. Brightness 62-65%. No perf run.
+**Next**: (1) Natural clover win: walk to each `clover`, hold KeyE, `until:{result:"win"}`, then KeyR and check `wolf.bites` 3. (2) Bigger wolf shrug and rim light in the AI reveal. (3) Larger desktop HUD text.
+**Open**: Natural win, 2-player and tablet reveals still unchecked.
