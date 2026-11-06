@@ -521,7 +521,7 @@ function updateWolf(dt) {
     w.x += dx / (d + 0.01) * 5.5 * dt; w.z += dz / (d + 0.01) * 5.5 * dt; w.phase += dt * 8;
     if (d < 2.3) { w.onRock = true; }
     w.y = lerp(w.y, wolfGround(), Math.min(1, dt * 5));
-    if (d < 0.8) { w.state = 'watch'; w.cd = Math.max(w.cd, 3); w.x = ROCK.x; w.z = ROCK.z; $('cap').style.opacity = 0; }
+    if (d < 0.8) { w.state = 'watch'; w.cd = Math.max(w.cd, w.afterAI ? 14 : 3); w.afterAI = 0; w.x = ROCK.x; w.z = ROCK.z; $('cap').style.opacity = 0; }
   }
   if (w.state === 'watch') w.y = lerp(w.y, wolfGround(), Math.min(1, dt * 8));
 }
@@ -563,7 +563,7 @@ function updatePounce(rdt) {
   const pop = p.t < 0.35 ? 0.4 + 0.9 * ease(p.t / 0.35) : 1.0 + Math.sin(p.t * 3) * 0.02;
   $('reveal').style.transform = `scale(${pop * (p.human && innerWidth > 640 ? 1.05 : 1)})`;
   $('reveal').style.opacity = p.t < 0.1 ? p.t * 10 : p.t > 2.0 ? Math.max(0, 1 - (p.t - 2.0) * 4) : 1;
-  { let rp = document.getElementById('replayTag'); if (!rp) { rp = document.createElement('div'); rp.id = 'replayTag'; rp.textContent = '\u25B6 REPLAY'; rp.style.cssText = 'position:fixed;left:50%;top:14vh;transform:translateX(-50%);z-index:8;pointer-events:none;font:900 28px system-ui,sans-serif;letter-spacing:4px;color:#fff;background:#000a;padding:6px 16px;border-radius:6px;display:none'; document.body.appendChild(rp); } rp.style.display = p.t > 2.1 ? 'block' : 'none'; renderer.domElement.style.filter = p.t > 2.0 ? 'saturate(0.6) contrast(1.05)' : ''; if (p.t > 2.0) aimLine.visible = false; }
+  { let rp = document.getElementById('replayTag'); if (!rp) { rp = document.createElement('div'); rp.id = 'replayTag'; rp.textContent = '\u25B6 REPLAY'; rp.style.cssText = 'position:fixed;left:50%;top:14vh;transform:translateX(-50%);z-index:8;pointer-events:none;font:900 28px system-ui,sans-serif;letter-spacing:4px;color:#fff;background:#000a;padding:6px 16px;border-radius:6px;display:none'; document.body.appendChild(rp); } rp.style.display = p.t > 2.1 ? 'block' : 'none'; renderer.domElement.style.filter = p.t > 2.0 ? 'saturate(0.9) contrast(1.03)' : ''; if (p.t > 2.0) aimLine.visible = false; }
   if (t.hop !== undefined) { t.hopV -= 14 * rdt * (p.t < 1 ? 0.5 : 1); t.hop = Math.max(0, t.hop + t.hopV * rdt); if (t.hop === 0 && t.hopV < 0) { t.hopV = 0; t.spin *= 0.8; } }
   if (p.human) { const g = bodyMatrixOf(t); outline.position.set(t.x, t.y + t.hop, t.z); outline.rotation.y = t.yaw + t.spin * 0.0; outline.scale.setScalar(SS * 1.1); place($('tag'), t.x, t.y + 3.6, t.z); { const r = $('tag').getBoundingClientRect(); if (r.top < innerHeight * 0.5 && r.top > innerHeight * 0.12) $('tag').style.top = innerHeight * 0.62 + 'px'; }; }
   else { place($("bubble"), t.x, t.y + 4.2, t.z); { const bt = parseFloat($('bubble').style.top); if (bt < innerHeight * 0.6) $('bubble').style.top = innerHeight * 0.6 + 'px'; } }
@@ -580,7 +580,7 @@ function updatePounce(rdt) {
       t.immune = 6; t.susp = 0; t.zoom = 1.2; t.dir = rnd(0, 6.28);
       w.pose = 'crouch'; w.shrug = 0;
       if (mode === 'solo') {
-        w.state = 'return'; w.cd = 18;
+        w.state = 'return'; w.cd = 18; w.afterAI = 1;
         if (w.bites <= 0) { w.sulk = 18; w.state = 'watch'; w.cd = 5; toast('Out of bites! The wolf is sulking…', 2.4); w.x = w.x; }
       } else {
         w.state = 'ctrl';

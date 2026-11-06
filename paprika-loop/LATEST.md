@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 29
-**Did**: `game.js` solo wolf: after an AI-sheep bite `w.cd` is 18 (was 5), so a blending player survives longer. `index.html`: `#reveal .band` alpha 40→22, `#vig` gradient starts at 70% and its opacity in the reveal is 0.25 (was 0.4), so the end screens are less dull.
-**Saw**: `node --check game.js` passes. No `look`, `perf` or play run this session, so the lighter overlays and the longer cooldown are unmeasured.
-**Next**: (1) play a full winning round (clovers, T>=180) and `look` at the win screen; (2) check the 90 s graze with `bites` and `wolf.state`; (3) sample grass green on the lose screen.
-**Open**: no win screen seen yet; the reveal canvas CSS filter is untested on a real GPU.
-
 ### Judge 29
 
 **Judge verdict, session 29**
@@ -60,3 +54,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** `look` after a forced pounce with `sample` at about (200, 600). It should read a vivid green, and saturation in the reply should be above 35%.
 
 SCORE: 8.1
+
+## Iteration 30
+**Did**: `game.js` solo wolf: the 18 s cooldown after an AI bite was ticking down during the walk back (`w.cd -= dt` runs in 'return'), so bites came sooner. Added `w.afterAI`; on arrival at the rock `w.cd = max(w.cd, 14)` when set. Reveal replay filter `saturate(0.6)`→`saturate(0.9) contrast(1.03)`; `#reveal .band` height 26vh→20vh in `index.html`.
+**Saw**: `node --check game.js` passes. No `look`, `perf` or play run this session; the win screen is still unseen.
+**Next**: (1) play a full winning round and `look` at the win screen; (2) `interact` 90 s graze with `trace` on `bites` to check the gap ≥14 s after the walk back; (3) `sample` the lose/reveal frame for saturation >35%.
+**Open**: all three changes are unmeasured; reveal filter untested on a real GPU.
