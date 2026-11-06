@@ -343,6 +343,7 @@ function showResult(big, sub, kicker, color) {
 }
 function endGame(kind, big, sub, kicker, color) { result = kind; { const rp = document.getElementById('replayTag'); if (rp) rp.style.display = 'none'; } $('cap').style.opacity = 0; $('toast').style.opacity = 0; showResult(big, sub + '   ·   R to play again · M to switch mode', kicker, color); }
 const vp = new THREE.Vector3();
+function clampEl(el) { const r = el.getBoundingClientRect(), m = 8; let dx = 0; if (r.left < m) dx = m - r.left; else if (r.right > innerWidth - m) dx = innerWidth - m - r.right; if (dx) el.style.left = (parseFloat(el.style.left) + dx) + 'px'; }
 function place(el, wx, wy, wz) { vp.set(wx, wy, wz).project(camera); el.style.left = (vp.x * 0.5 + 0.5) * innerWidth + 'px'; el.style.top = (-vp.y * 0.5 + 0.5) * innerHeight + 'px'; }
 
 // ───────────────────────── input ─────────────────────────
@@ -512,7 +513,7 @@ function updateWolf(dt) {
     if (t) { w.lookX = lerp(w.lookX, t.x, Math.min(1, dt * 4)); w.lookZ = lerp(w.lookZ, t.z, Math.min(1, dt * 4)); }
     else { w.lookX = w.x + Math.sin(w.t * 0.5) * 12; w.lookZ = w.z + 8 + Math.cos(w.t * 0.37) * 8; }
     w.yaw += angDiff(w.yaw, Math.atan2(w.lookX - w.x, w.lookZ - w.z)) * Math.min(1, dt * 2.5);
-    if (t && t.susp >= 1.5 && w.cd <= 0) { w.state = 'stalk'; w.target = t; w.abort = 0; w.stalkT = 0; w.onRock = false; w.y = gh(w.x, w.z) + (w.y > 1 ? 0 : 0); caption(pick(caps.stalk)); play('wind', 0.6); if (t.player) toast('! The wolf has noticed you: blend in, graze!', 1.8); }
+    if (t && t.susp >= 1.5 && w.cd <= 0) { w.state = 'stalk'; w.target = t; w.abort = 0; w.stalkT = 0; w.onRock = false; w.y = gh(w.x, w.z) + (w.y > 1 ? 0 : 0); caption(pick(caps.stalk)); play('wind', 0.6); if (mode === 'solo') { play('boom', 0.7); play('stab1', 0.8); } if (t.player) toast('! The wolf has noticed you: blend in, graze!', 1.8); }
   } else if (w.state === 'stalk') {
     const t = w.target; w.pose = 'walk'; w.stalkT += dt;
     if (!t || t.frozen) { w.state = 'return'; return; }
@@ -576,8 +577,8 @@ function updatePounce(rdt) {
   $('reveal').style.opacity = p.t < 0.1 ? p.t * 10 : p.t > 2.0 ? Math.max(0, 1 - (p.t - 2.0) * 4) : 1;
   { let rp = document.getElementById('replayTag'); if (!rp) { rp = document.createElement('div'); rp.id = 'replayTag'; rp.textContent = '\u25B6 REPLAY'; rp.style.cssText = 'position:fixed;left:50%;top:14vh;transform:translateX(-50%);z-index:8;pointer-events:none;font:900 28px system-ui,sans-serif;letter-spacing:4px;color:#fff;background:#000a;padding:6px 16px;border-radius:6px;display:none'; document.body.appendChild(rp); } rp.style.display = p.t > 2.1 ? 'block' : 'none'; renderer.domElement.style.filter = p.t > 2.0 ? 'saturate(0.9) contrast(1.03)' : ''; if (p.t > 2.0) aimLine.visible = false; }
   if (t.hop !== undefined) { t.hopV -= 14 * rdt * (p.t < 1 ? 0.5 : 1); t.hop = Math.max(0, t.hop + t.hopV * rdt); if (t.hop === 0 && t.hopV < 0) { t.hopV = 0; t.spin *= 0.8; } }
-  if (p.human) { const g = bodyMatrixOf(t); outline.position.set(t.x, t.y + t.hop, t.z); outline.rotation.y = t.yaw + t.spin * 0.0; outline.scale.setScalar(SS * 1.1); place($('tag'), t.x, t.y + 3.6, t.z); { const r = $('tag').getBoundingClientRect(); if (r.top < innerHeight * 0.5 && r.top > innerHeight * 0.12) $('tag').style.top = innerHeight * 0.62 + 'px'; }; }
-  else { place($("bubble"), t.x, t.y + 4.2, t.z); { const bt = parseFloat($('bubble').style.top); if (bt < innerHeight * 0.6) $('bubble').style.top = innerHeight * 0.6 + 'px'; } }
+  if (p.human) { const g = bodyMatrixOf(t); outline.position.set(t.x, t.y + t.hop, t.z); outline.rotation.y = t.yaw + t.spin * 0.0; outline.scale.setScalar(SS * 1.1); place($('tag'), t.x, t.y + 3.6, t.z); { const r = $('tag').getBoundingClientRect(); if (r.top < innerHeight * 0.5 && r.top > innerHeight * 0.12) $('tag').style.top = innerHeight * 0.62 + 'px'; } clampEl($('tag')); }
+  else { place($("bubble"), t.x, t.y + 4.2, t.z); { const bt = parseFloat($('bubble').style.top); if (bt < innerHeight * 0.6) $('bubble').style.top = innerHeight * 0.6 + 'px'; } clampEl($('bubble')); }
   if (!p.human) { w.shrug = 1; }
   if (!p.human && p.t < 1.9) cam.punch = 1; else if (u > 0.72) cam.punch = Math.max(0, cam.punch - rdt * 1.6);
   $('bt').style.height = $('bb').style.height = 3 * cam.punch + 'vh';

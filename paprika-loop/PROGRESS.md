@@ -3351,3 +3351,9 @@ SCORE: 8.5
    - **Check:** `interact` with `{state:{susp:2,wolf:{cd:0}}}` and `wait:40` lists a new sound in the Sound line.
 
 SCORE: 8.5
+
+## Iteration 86
+**Did**: `game.js`: new `clampEl(el)` (8 px viewport margin) called on `div#tag` and `div#bubble` after they are placed on the bitten sheep. Stalk start in solo now also plays `boom` 0.7 + `stab1` 0.8 next to `wind`.
+**Saw**: human pounce to `reveal`: `div#tag` rect 646–852 px of 1280, on screen, after 5 more frames. A read on the very first reveal frame still gave -62, which is the clamp not yet run. Sound line listed boom/stab1–3. Did not re-check the AI `div#bubble`, the stalk sound, or `perf`.
+**Next**: (1) 0.3 s freeze-frame and zoom-punch plus `shake` on the reveal; (2) grin pose for the wolf on a human bite; (3) look at the `wool` colour on a zoom.
+**Open**: `div#bubble` clamp is untested; `div#tag` can sit off-screen for the first reveal frame.

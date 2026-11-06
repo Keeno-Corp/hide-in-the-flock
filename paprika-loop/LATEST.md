@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 85
-**Did**: `game.js` (after the `$('cap')` line in the frame loop): `div#vig` pulses opacity 0.45±0.25 while `wolf.state==='stalk'` targets the player in solo, else 0 (not during pounce/result, which set it themselves).
-**Saw**: `{action:"pounce",target:"human"}` reaches `pounce.ph:"reveal"` at frame 79; the look shows `wool` (0.93%), HUMAN! GOTCHA and `div#tag` (cut off at the left edge, "PLAYER 1"), with no console errors. Stalk via `{state:{susp:2,wolf:{cd:0}}}` + wait 40: `div#vig` on at opacity 0.2, toast and caption both shown, no overlap. 76 sheep, 459 objects, "Never visible: none".
-**Next**: (1) `div#tag` is clipped at x=-62 during the reveal, so clamp it on screen; (2) a 0.4 s freeze-frame and `shake` on the human reveal; (3) a stalk audio cue louder than `wind`.
-**Open**: the wool burst shows as `wool` but I never checked its colour on a zoom.
-
 ### Judge 85
 
 **Session 85 verdict.** I opened the page, forced an AI-sheep pounce to the reveal, and ran `perf` once. I did not re-run the human reveal or the stalk vignette, and I did not play 2-player. Those scores carry over from 85's own notes and earlier sessions.
@@ -33,3 +27,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** `interact` with `{state:{susp:2,wolf:{cd:0}}}` and `wait:40` lists a new sound in the Sound line.
 
 SCORE: 8.5
+
+## Iteration 86
+**Did**: `game.js`: new `clampEl(el)` (8 px viewport margin) called on `div#tag` and `div#bubble` after they are placed on the bitten sheep. Stalk start in solo now also plays `boom` 0.7 + `stab1` 0.8 next to `wind`.
+**Saw**: human pounce to `reveal`: `div#tag` rect 646–852 px of 1280, on screen, after 5 more frames. A read on the very first reveal frame still gave -62, which is the clamp not yet run. Sound line listed boom/stab1–3. Did not re-check the AI `div#bubble`, the stalk sound, or `perf`.
+**Next**: (1) 0.3 s freeze-frame and zoom-punch plus `shake` on the reveal; (2) grin pose for the wolf on a human bite; (3) look at the `wool` colour on a zoom.
+**Open**: `div#bubble` clamp is untested; `div#tag` can sit off-screen for the first reveal frame.
