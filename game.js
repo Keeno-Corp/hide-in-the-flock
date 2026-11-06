@@ -460,9 +460,9 @@ function reset(newMode) {
   T = 0; cam.zoom = mode === 'solo' ? 0.66 : cam.zoom; result = null; clock = 0; startleT = rnd(18, 24); zoomT = 16; decoyI = 0; pounce.ph = null; toastT = 0;
   flock.angle = rnd(0, 6.28); flock.target = flock.angle; flock.turnT = 12;
   // clusters of sheep
-  const cl = []; for (let k = 0; k < 16; k++) { const [x, z] = polar(2, 26); cl.push([x, z]); }
+  const cl = []; for (let k = 0; k < 16; k++) { const [x, z] = polar(4, 26); cl.push([x, z]); }
   sheep.forEach((s, i) => {
-    const [cx, cz] = cl[i % cl.length]; const [dx, dz] = polar(0, 9);
+    const [cx, cz] = cl[i % cl.length]; const [dx, dz] = polar(1.5, 11);
     let x = cx + dx, z = cz + dz; if (Math.hypot(x - ROCK.x, z - ROCK.z) < 8) { x += 9; z += 9; }
     if (Math.hypot(x, z) > 27) { x *= 0.8; z *= 0.8; }
     if (i > 0) { const px = x, pz = z - 1.5, pd = Math.hypot(px, pz) || 0.1; if (pd < 7) { const k = (7 + (i % 5) * 0.8) / pd; x = px * k; z = pz * k + 1.5; } }

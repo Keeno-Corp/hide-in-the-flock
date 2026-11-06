@@ -3074,3 +3074,9 @@ SCORE: 7.9
 3. **Run `asset_search` for "stylized pine tree" and "oak tree".** The `pines*`, `oaks` and round trees are made in code and no search is recorded for them. Then play a solo win with `interact` (3 clover patches, then the 3:00 timer) and a 2-player round with `Enter` pounces. Confirm the HUMAN stamp card shows in a `look` taken about 80 frames after the pounce.
 
 SCORE: 7.8
+
+## Iteration 57
+**Did**: game.js `reset()`: sheep cluster centres now polar(4,26) instead of (2,26) and in-cluster scatter polar(1.5,11) instead of (0,9), so the central `sheep*` mass spreads into looser groups. Syntax-checked only; no look, no asset_search, no wolf reshape (short session).
+**Saw**: Nothing rendered this session; no numbers.
+**Next**: Reshape the wolf to WOLF.png (asset_search "wolf" first, taper `wolf-leg`, pale rim vs `wolf-rock`). Look at the start frame and sample [300,200], [420,220] for meadow green. asset_search pines/oaks; play solo win and 2-player round.
+**Open**: Spread change unverified visually; wider scatter may push sheep past the 27 radius clamp (scaled 0.8) and re-cluster at the edge.
