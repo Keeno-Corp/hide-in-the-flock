@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 3
-**Did**: game.js only. (1) New `toon2` 2-band gradient and `treeMat()` (emissive 0x1c2a22): `pines` and `round-trees` (via `scatterInst` name test) and `oaks` now use it, so they look flatter. (2) `pines` count halved, 64 to 32. (3) Removed the pale translucent cylinder from each clover glint (`sp`); the clover keeps its patch disc and cross.
-**Saw**: `look` at frame 0: `pines*` ×19, `round-trees*` ×12, `oaks*` ×3. Trees read as flat two-tone masses with ink outlines. The clover columns are gone in the zoom. The wolf is still 0.77% of the frame and sits behind `wolf-rock` in a blob silhouette. No console errors and no Surfaces or Lighting lines. I did not run `perf`.
-**Next**: (1) Sheep ~1.4× larger with darker ears and legs, so they read at flock distance. (2) Move `wolf-rock` or the wolf so the full silhouette shows, give it a crouch, and make it bigger in frame. (3) Flatten the `ground` into painted bands and fade the post-pass hatching with distance. (4) Run `asset_search` for stylized sheep and wolf, as the Judge asked.
-**Open**: Sheep, wolf, ground and asset_search were not done this session. Local 2-player and the grazing flow are still unplayed.
-
 ### Judge 3
 
 Trees are flatter now; sheep and wolf are unchanged.
@@ -53,3 +47,9 @@ Trees are flatter now; sheep and wolf are unchanged.
    - The check is `look` with `sample` on neighbouring ground pixels, which should be near uniform, and `perf` triangles under 200k.
 
 SCORE: 6.9
+
+## Iteration 4
+**Did**: game.js only. `SS` 1.3 to 1.8 (sheep ~1.4× larger); `sheepMat` emissive 0x645440 to 0x4a3e30 and leg colour 0x1c1514 so dark legs and heads read against the wool; `wolf` root scale 4.4 to 6.2; `tufts` count 520 to 180.
+**Saw**: `look` frame 0: `wolf` 1.4% of the frame [348,516,593,671], silhouette now readable above `wolf-rock` (still "0 of its 0 named parts show"); `sheep*` ×98 are bigger with dark legs and heads; `tufts*` ×92; no console errors, no Lighting/Surfaces lines, Never visible none. I did not run `perf` or `asset_search`.
+**Next**: (1) Flatten `ground` into 2–3 painted bands and fade the post-pass hatching with distance. (2) Move the wolf a bit off the rock edge or raise it so it passes 1.5% and the named parts show. (3) Play grazing, win/lose and local 2-player; run `perf` for triangles (target under 200k).
+**Open**: Ground bands, `asset_search` for sheep/wolf, `perf`, and the grazing and 2-player flows were not done.

@@ -209,7 +209,7 @@ const sheepBodyGeo = mergeGeometries([
   mk(ico(0.46, 1), 0x4a5278, { p: [0, 0.36, 0], s: [0.95, 0.4, 1.25], soft: true }),
   mk(ico(0.3, 1), WOOL, { p: [0, 1.0, -0.3], jit: 0.04, soft: true }), mk(ico(0.26, 1), WOOL, { p: [0.3, 0.7, -0.62], jit: 0.04, soft: true }),
   mk(ico(0.26, 1), WOOL, { p: [-0.3, 0.7, -0.6], jit: 0.04, soft: true }),
-  ...[[-1, -1], [1, -1], [-1, 1], [1, 1]].map(([x, z]) => mk(box(0.09, 0.46, 0.09), 0x2a2220, { p: [x * 0.22, 0.21, z * 0.42] })),
+  ...[[-1, -1], [1, -1], [-1, 1], [1, 1]].map(([x, z]) => mk(box(0.09, 0.46, 0.09), 0x1c1514, { p: [x * 0.22, 0.21, z * 0.42] })),
 ]);
 const sheepHeadGeo = mergeGeometries([
   mk(box(0.36, 0.34, 0.44), DARK, { p: [0, 0, 0.2] }),
@@ -217,10 +217,10 @@ const sheepHeadGeo = mergeGeometries([
   mk(box(0.07, 0.07, 0.03), 0xf3e8cc, { p: [0.1, 0.07, 0.42] }), mk(box(0.07, 0.07, 0.03), 0xf3e8cc, { p: [-0.1, 0.07, 0.42] }),
   mk(ico(0.2, 1), WOOL, { p: [0, 0.22, 0.02], soft: true }),
 ]);
-const SS = 1.3;
+const SS = 1.8;
 const HEAD_P = new THREE.Vector3(0, 0.78, 0.6);
 const N_AI = 100, N = N_AI + 1;
-const sheepMat = flat({ emissive: 0x645440 }); const bodyIM = new THREE.InstancedMesh(sheepBodyGeo, sheepMat, N); bodyIM.name = 'sheep'; bodyIM.castShadow = true; bodyIM.frustumCulled = false;
+const sheepMat = flat({ emissive: 0x4a3e30 }); const bodyIM = new THREE.InstancedMesh(sheepBodyGeo, sheepMat, N); bodyIM.name = 'sheep'; bodyIM.castShadow = true; bodyIM.frustumCulled = false;
 const headIM = new THREE.InstancedMesh(sheepHeadGeo, sheepMat, N); headIM.name = 'sheep-heads'; headIM.castShadow = true; headIM.frustumCulled = false;
 { const tints = [0xffffff, 0xfaf0dc, 0xefe2c6, 0xffffff, 0xf2e6cf, 0xe0d4bb]; const c = new THREE.Color();
   for (let i = 0; i < N; i++) { const j = i === 0 ? 13 : i, t = tints[(j * 7 + (j >> 2)) % tints.length]; c.setHex(t).multiplyScalar(0.92 + ((j * 37) % 17) / 17 * 0.1); bodyIM.setColorAt(i, c); headIM.setColorAt(i, new THREE.Color(0xffffff)); } }
@@ -233,7 +233,7 @@ const ROCK = { x: -10, z: 3, top: 3.15 };
 const W = {};
 {
   const grey = PAL.wolf, light = 0x1d1511, dk = 0x0e0a08;
-  W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(4.4);
+  W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(6.2);
   W.body = new THREE.Group(); W.root.add(W.body);
   const mat = new THREE.MeshBasicMaterial({ color: PAL.wolf, fog: false });
   const add = (parent, g) => { const m = new THREE.Mesh(g, mat); m.castShadow = true; parent.add(m); return m; };
@@ -310,7 +310,7 @@ scatterInst(rockGeo, 40, () => { const [x, z] = polar(18, 56); const h = gh(x, z
 const bushGeo = mergeGeometries([mk(ico(0.6, 2), 0x74834a, { s: [1, 0.75, 1], soft: true }), mk(ico(0.45, 2), 0x86954f, { p: [0.45, -0.05, 0.1], soft: true }), mk(ico(0.4, 2), 0x66743f, { p: [-0.4, -0.05, -0.1], soft: true })]);
 scatterInst(bushGeo, 34, () => { const [x, z] = polar(8, 33); if (Math.hypot(x - ROCK.x, z - ROCK.z) < 4) return null; return { x, z, s: rnd(0.6, 1.1), y: gh(x, z) + 0.25 }; }, { name: 'bushes' });
 const tuftGeo = mergeGeometries([0, 1, 2].map(i => mk(cone(0.1, 0.55, 3), i === 1 ? 0xd2bd6c : 0x98a257, { p: [Math.cos(i * 2.1) * 0.12, 0.25, Math.sin(i * 2.1) * 0.12], r: [Math.sin(i * 2.1) * 0.35, 0, -Math.cos(i * 2.1) * 0.35], jit: 0.12 })));
-scatterInst(tuftGeo, 520, () => { const [x, z] = polar(0, 33); return { x, z, s: rnd(0.7, 1.6), y: gh(x, z) - 0.05 }; }, { shadow: false, name: 'tufts' });
+scatterInst(tuftGeo, 180, () => { const [x, z] = polar(0, 33); return { x, z, s: rnd(0.7, 1.6), y: gh(x, z) - 0.05 }; }, { shadow: false, name: 'tufts' });
 // dry-stone wall runs (merged, one mesh)
 {
   const runs = [

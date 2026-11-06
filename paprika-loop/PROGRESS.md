@@ -145,3 +145,9 @@ Trees are flatter now; sheep and wolf are unchanged.
    - The check is `look` with `sample` on neighbouring ground pixels, which should be near uniform, and `perf` triangles under 200k.
 
 SCORE: 6.9
+
+## Iteration 4
+**Did**: game.js only. `SS` 1.3 to 1.8 (sheep ~1.4× larger); `sheepMat` emissive 0x645440 to 0x4a3e30 and leg colour 0x1c1514 so dark legs and heads read against the wool; `wolf` root scale 4.4 to 6.2; `tufts` count 520 to 180.
+**Saw**: `look` frame 0: `wolf` 1.4% of the frame [348,516,593,671], silhouette now readable above `wolf-rock` (still "0 of its 0 named parts show"); `sheep*` ×98 are bigger with dark legs and heads; `tufts*` ×92; no console errors, no Lighting/Surfaces lines, Never visible none. I did not run `perf` or `asset_search`.
+**Next**: (1) Flatten `ground` into 2–3 painted bands and fade the post-pass hatching with distance. (2) Move the wolf a bit off the rock edge or raise it so it passes 1.5% and the named parts show. (3) Play grazing, win/lose and local 2-player; run `perf` for triangles (target under 200k).
+**Open**: Ground bands, `asset_search` for sheep/wolf, `perf`, and the grazing and 2-player flows were not done.
