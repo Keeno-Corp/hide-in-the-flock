@@ -1,40 +1,41 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-### Judge 48
-
-**Session 48 verdict.** I ran the sheet (human reveal, AI reveal, start) at desktop size, the phone and tablet start views, and `perf` once. I did not play the natural clover win, 2-player mode, or the phone/tablet reveals.
-
-1. **Looks as LOOK.md says: 8.** The start moment shows `sea`, `sand`, `cliff`, `wolf-rock`, `pines*` ×141, `round-trees*` and clover rings. No `Lighting:` or `Surfaces:` lines appeared. Brightness is 64% and 0% is blown out.
-2. **Plays as DESIGN.md says: 8.** Forced `pounce` on `human` and `ai` both reach their reveals. The `div#hud` shows TIME, CLOVERS, WOLF BITES and SUSPICION. The natural win has gone unplayed for many sessions.
-3. **Clip moment: 9.**
-   - **Human reveal:** the red GOTCHA title, "PLAYER 1 has been found." and the red PLAYER 1 `div#tag` over the red figure all sit inside the frame. The new `camShake.kick(1.6)` does not push `div#tag` out at frame 110.
-   - **AI reveal:** AI SHEEP, "Just a sheep. Bite wasted." and the "baa?" bubble over the grey `wolf` all sit inside the frame.
-4. **Looks like refs/01.jpg: 9.** The start view and the tablet view show sea, sand, cliffs, pines, puffy clouds and the `wolf` on its rock. The phone view crops the pines and cliff because it is a narrow portrait frame.
-5. **Solo fun and fair: 8.** The suspicion bar, clover rings and bite lights are present. The win screen is still unseen.
-6. **Local 2-player: 8.** Carried over from earlier sessions; I did not re-run it.
-7. **`window.__game`, no build, ~100 sheep: 8.** There are 82 draw calls and 103k triangles. The 137 ms frame time is a SwiftShader artefact, so it is no signal.
-8. **Juice: 9.** The captions and the "baa?" bubble are in place. I did not check sound this session.
-9. **Works at any window size, HUD readable: 7.**
-   - **Phone and tablet starts:** the HUD is readable and sits inside the frame on both. The phone mode-help is pushed to the bottom.
-   - **Still unchecked:** the reveal titles on phone and tablet.
-   - **Still small:** the desktop HUD text is tiny.
-10. **Faults: 9.** I saw no console errors and no "Never visible" object.
-
-**Next:**
-1. **Check the reveals on phone (asked again).**
-   - **Do:** run `interact` with `{resize:[390,844]}`, `{action:"pounce",target:"human"}` and `{wait:110}`, with `look:true`. Repeat with `target:"ai"`.
-   - **Check:** the GOTCHA and AI SHEEP titles, the sub line and `div#tag` sit inside 390 px. If a title overflows, size it with `min(vw,vh)`.
-2. **Verify the natural clover win and restart (asked again).**
-   - **Do:** walk the player to each `clover` and hold `KeyE`, then run `interact` with `until:{result:"win"}`.
-   - **Check:** the win screen shows a sensible timer. After `KeyR`, `wolf.bites` is 3.
-3. **Add beyond-brief polish to the AI reveal.**
-   - **Do:** give the `wolf` a bigger shrug and a rim light, with a stronger `wool` burst.
-   - **Check:** a `sheet` of the `ai` pounce at 110 frames shows a visibly larger shrug.
-
-SCORE: 8.3
-
 ## Iteration 50
 **Did**: Desktop HUD text bigger in index.html (`#hud .row` 19→22px, `.lab` 11→13px, width 84px). Bigger `wolf` shrug in game.js (`head.rotation.z` 0.7, body bounce 0.28, arm spread 0.6+0.6|k|). No rim light or extra `wool` burst yet.
 **Saw**: AI pounce at 110 frames, 1280x800: AI SHEEP title, sub line, "baa?" `div#bubble`, `div#hud` [14,12,259,152] all inside, 0 off-screen, 0 cut off. Brightness 62%, 1% blown out. No console errors. Never visible: sea/cliff/wolf-rock only because they are out of view at this camera. No perf run.
 **Next**: (1) Natural clover win with KeyE and KeyR check (`wolf.bites` 3). (2) Rim light and stronger `wool` burst in the AI reveal. (3) Check the larger HUD at 390 px and tablet starts.
 **Open**: Natural win, 2-player and tablet reveals still unchecked.
+
+### Judge 50
+
+**Session 50 verdict.** I opened the page, ran a `sheet` of start, AI reveal and human reveal at desktop size, ran the human reveal at 390×844, and ran `perf` once. I did not play the natural clover win, 2-player mode or the tablet reveals.
+
+1. **Looks as LOOK.md says: 8.** The start moment shows `sea`, `sand`, `cliff`, `wolf-rock`, `pines*` ×134, `round-trees*` and the clover rings. Brightness is 64% with 0% blown out. No `Lighting:` or `Surfaces:` lines appeared.
+2. **Plays as DESIGN.md says: 8.** Forced `pounce` on `human` and on `ai` both reach their reveals. The `div#hud` shows TIME, CLOVERS, WOLF BITES and SUSPICION. The natural win has still not been played.
+3. **Clip moment: 9.**
+   - **Human reveal:** the red GOTCHA title, "PLAYER 1 has been found." and the red `div#tag` over the red figure all sit inside the frame.
+   - **AI reveal:** the AI SHEEP title, "Just a sheep. Bite wasted." and the "baa?" `div#bubble` over the grey `wolf` all sit inside the frame.
+   - **Phone human reveal:** at 390 px the title and `div#tag` fit. `div#reveal` [-4,142,393,273] is cut off by the screen edge only through its padded box, and the text itself is fully visible.
+4. **Looks like refs/01.jpg: 9.** The start view shows sea, sand, cliffs, pines, puffy `cloud` shapes and the `wolf` on `wolf-rock`.
+5. **Solo fun and fair: 8.** The suspicion bar, clover rings and bite lights are present. The win screen is unseen.
+6. **Local 2-player: 8.** Carried over; I did not re-run it.
+7. **`window.__game`, no build, ~100 sheep: 8.** `perf` shows 82 draw calls and 103k triangles. The 134 ms frame is a SwiftShader artefact, so it is no signal.
+8. **Juice: 9.** The reveal pounce fired 10 sounds (boom, stab1–3, thud, hit). The captions and the "baa?" bubble are in place.
+9. **Works at any window size, HUD readable: 8.**
+   - **Phone:** the larger HUD at 390 px is readable and fits inside [6,6,231,133].
+   - **Cramped:** the HUD covers the top-left of the phone frame, and `div#mode` crowds the caption at the bottom.
+   - **Unchecked:** the tablet reveals.
+10. **Faults: 9.** I saw no console errors and no "Never visible" object.
+
+**Next:**
+1. **Verify the natural clover win and restart (asked again).**
+   - **Do:** run `interact` to walk the player onto each `clover`, hold `KeyE`, then use `until:{result:"win"}`.
+   - **Check:** the win screen shows a sensible timer. After `KeyR`, `wolf.bites` is 3 and the screen is back to play.
+2. **Add the rim light and a stronger `wool` burst to the AI reveal.**
+   - **Do:** give the `wolf` a rim light and enlarge the `wool` burst for `target:"ai"`.
+   - **Check:** the `sheet` `ai` cell at 110 frames shows a visible rim on the grey `wolf` and more wool.
+3. **Check 2-player and the tablet.**
+   - **Do:** run `interact` with `KeyM`, then wolf moves and `Enter`, and look at the 3 bites. Run a tablet-size (820×1180) human reveal in the same way.
+   - **Check:** the aim ring is clear, the bites drop 3→2, and the reveal titles fit inside 820 px.
+
+SCORE: 8.3
