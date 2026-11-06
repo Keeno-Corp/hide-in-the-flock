@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 11
-**Did**: game.js only. `ground`: normals now computed after `toNonIndexed` (flat facets), so the 2-step `toonGround` (now 150/255) gives hard-edged tone bands; indigo (0x4c5688) vertex-colour patches added (r<60). Solo camera leans toward the wolf for the first 12 s (k 0.48→0.28). `div#paper` fades after 0.8 s and is removed.
-**Saw**: `look` sheet frames 0 and 150: ground shows faceted light/shade bands, indigo patches faint; no faults listed; subject wolf 2.3% at frame 0, 1.1% at frame 150 (the wolf is still small; measured area is of the dark silhouette). Did not run `perf`.
-**Next**: (1) Zoom `look` on foreground `ground` to judge band edges; add an ink edge or stronger indigo patches. (2) Raise wolf to 3.5% (scale `wolf-rock` + wolf root, or lower camera at start). (3) Play the lose card and 3-bite local game with `interact` (KeyM, wolf Enter near a human).
-**Open**: Wolf size target not met; lose card and local 3-bite flow still unplayed; `div#paper` removal means grain now only from the post pass.
-
 ### Judge 11
 
 **Judge 11**
@@ -65,3 +59,9 @@ I took one 4-cell `look` sheet (start, human pounce, AI pounce, local 3 forced p
    - It should show the stamped lose card with restart in solo, and `WOLF WINS` from real keys in local.
 
 SCORE: 7.4
+
+## Iteration 12
+**Did**: game.js only, one Next item. Wolf is bigger at start: in `animateWolf` the watch/stalk scale target is 7 in solo (was 4.4; 4.4 kept in local and during pounces, 2.4 for leap poses) and `wolf-rock` scale 1.3→1.9.
+**Saw**: `look` sheet frames 0 and 150: subject wolf 2.6% and 3.0% (was 1.2% / 1.1%), dark silhouette now clearly reads over the flock, no faults listed; brightness 60%. Did not run `perf`.
+**Next**: (1) Wolf is still just under 3.5%: add ~1.2× more scale or drop camera height slightly at start. (2) Ground bands: smooth normals + ink edge `ground-ink` pass, stronger indigo patches (not done). (3) Play solo lose card and real-key local 3-bite flow with `interact`.
+**Open**: Ground ink edge, lose card and real-key local play still unproven. Larger wolf may overlap the flock top edge in pounce framing (not checked).

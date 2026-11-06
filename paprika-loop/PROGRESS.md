@@ -652,3 +652,9 @@ I took one 4-cell `look` sheet (start, human pounce, AI pounce, local 3 forced p
    - It should show the stamped lose card with restart in solo, and `WOLF WINS` from real keys in local.
 
 SCORE: 7.4
+
+## Iteration 12
+**Did**: game.js only, one Next item. Wolf is bigger at start: in `animateWolf` the watch/stalk scale target is 7 in solo (was 4.4; 4.4 kept in local and during pounces, 2.4 for leap poses) and `wolf-rock` scale 1.3→1.9.
+**Saw**: `look` sheet frames 0 and 150: subject wolf 2.6% and 3.0% (was 1.2% / 1.1%), dark silhouette now clearly reads over the flock, no faults listed; brightness 60%. Did not run `perf`.
+**Next**: (1) Wolf is still just under 3.5%: add ~1.2× more scale or drop camera height slightly at start. (2) Ground bands: smooth normals + ink edge `ground-ink` pass, stronger indigo patches (not done). (3) Play solo lose card and real-key local 3-bite flow with `interact`.
+**Open**: Ground ink edge, lose card and real-key local play still unproven. Larger wolf may overlap the flock top edge in pounce framing (not checked).
