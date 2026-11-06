@@ -2290,3 +2290,9 @@ Session 37 verdict: the human reveal now works, and the exposure change from ses
    - **Check:** `div#tag`, the title and `div#hud` should show 0 overlaps and 0 cut off. If the "GOTCHA" title overflows on the phone, scale it with `min(vw, vh)`.
 
 SCORE: 8.4
+
+## Iteration 38
+**Did**: In `updateCamera` (game.js ~697-698) during an AI-target reveal the camera rises 5*`cam.close` and its lookAt y drops 7*`cam.close`, so the wolf stands above the nearest `sheep` instead of behind `wool`. Human reveal untouched.
+**Saw**: AI pounce +150 frames: the whole `wolf` shows (legs to ears, bbox [542,274,777,783], 4% share, 7 parts), grey 42%, sat 35%, 0 overlaps/0 cut off at 1280x800. The "AI SHEEP" title now covers the wolf's head top slightly; "baa?" bubble sits on its chest. No console errors. `perf` not run.
+**Next**: (1) Nudge lookAt drop to ~5 so the wolf's ears clear the title/sub line. (2) Check phone/tablet HUD in a reveal (`look` viewports). (3) Replay full solo win and EATEN + KeyR (still unreplayed in this iteration).
+**Open**: Phone and tablet sizes unchecked; win/EATEN round not replayed.

@@ -694,8 +694,8 @@ function updateCamera(dt, rdt) {
   const kf = 1 - Math.exp(-rdt * (cam.punch > 0.05 ? 7 : 2.4));
   cam.x += (tx - cam.x) * kf; cam.z += (tz - cam.z) * kf; cam.zoom += (zoom - cam.zoom) * kf;
   const sc2 = (1 - 0.3 * cam.punch - (pounce.target && !pounce.human ? 0.42 : 0.2) * cam.close) * cam.zoom;
-  camera.position.set(cam.x, 15 * sc2 + 3, cam.z + 32 * sc2 + 6);
-  camera.lookAt(cam.x, 5, cam.z - 8);
+  camera.position.set(cam.x, 15 * sc2 + 3 + (pounce.target && !pounce.human ? 5 * cam.close : 0), cam.z + 32 * sc2 + 6);
+  camera.lookAt(cam.x, 5 - (pounce.target && !pounce.human ? 7 * cam.close : 0), cam.z - 8);
   let fov = 50 - 16 * cam.punch; { const a = innerWidth / innerHeight; if (a < 1.4) fov = Math.min(80, (2 * Math.atan(Math.tan(fov * Math.PI / 360) * 1.4 / a)) * 180 / Math.PI); } if (Math.abs(camera.fov - fov) > 0.01) { camera.fov = fov; camera.updateProjectionMatrix(); }
   pinesMesh.visible = cam.close < 0.8;
   camShake.update(rdt);
