@@ -323,11 +323,11 @@ scatterInst(tuftGeo, 520, () => { const [x, z] = polar(0, 33); return { x, z, s:
       for (let d = 0; d < L; d += 0.75) {
         const x = lerp(x0, x1, d / L), z = lerp(z0, z1, d / L), y = gh(x, z);
         for (let row = 0; row < 3; row++) {
-          const w = rnd(0.55, 0.8), hgt = 0.34 + rnd(0, 0.08), off = (row % 2) * 0.35;
+          const w = rnd(0.55, 0.8), hgt = 0.34 + rnd(0.002, 0.08), off = (row % 2) * 0.35;
           const px = x + Math.cos(a) * (off - 0.2) * 0, pz = z;
-          parts.push(mk(box(0.95, hgt, w), sh[(row + Math.floor(d * 3)) % 4], { p: [x, y + 0.12 + row * 0.4 + hgt / 2 - 0.12, pz], r: [0, a - Math.PI / 2 + rnd(-0.06, 0.06), 0], jit: 0.07 }));
+          parts.push(mk(box(0.95, hgt, w), sh[(row + Math.floor(d * 3)) % 4], { p: [x, y + 0.12 + row * 0.4 + hgt / 2 - 0.12 + rnd(0, 0.01), pz], r: [0, a - Math.PI / 2 + rnd(-0.06, 0.06), 0], jit: 0.07 }));
         }
-        if (Math.random() < 0.35) parts.push(mk(box(1.0, 0.22, 0.95), 0xbfb7a0, { p: [x, y + 1.35, z], r: [0, a - Math.PI / 2, 0], jit: 0.06 }));
+        if (Math.random() < 0.35) parts.push(mk(box(1.0, 0.22, 0.95), 0xbfb7a0, { p: [x, y + 1.35 + rnd(0.002, 0.03), z], r: [0, a - Math.PI / 2, 0], jit: 0.06 }));
       }
     }
   });
