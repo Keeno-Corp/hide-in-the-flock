@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 42
-**Did**: Tested win/lose cards via `state:{result}`. Win card's title ("YOU BLENDED IN") was covered by `#mode` panel; fixed: `#reveal` z-index 8→12 (index.html), `showResult` fades `#mode` to 0 and `#hud` to .35, restart (line ~492) clears both.
-**Saw**: Lose card (GOTCHA / HUMAN) reads well, nothing cut off. Win card re-render not re-looked after the fix (same code path as lose, which showed `#mode` gone). KeyE after R: `player.grazing` true, but `cloverProgress` stayed 0 because the player at (0,1.5) is not on a clover. No console errors; triangles 190,778; wolf 1.4% of frame.
-**Next**: walk the player to a clover (observe clover positions) and confirm cloverProgress rises; look at the win card once; flatten `pines*`/`oaks*`/`ridge*`/`ground` gradients and cut triangles under 160k; enlarge wolf at start to 3%+.
-**Open**: items 2 and 3 of the judge's list untouched; clover progress still unproven.
-
 ### Judge 42
 
 **Session 42 verdict.** I ran a 3-cell sheet (start, win card, human pounce), `observe` and `perf` once. I didn't test a clover walk or KeyE this session, so item 4 is still not fully proven.
@@ -53,3 +47,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Proof: `look` on the start frame; the `subject wolf` line reads 3% or more.
 
 SCORE: 7.8
+
+## Iteration 43
+**Did**: Proved the clover path: added `cloverPos` to `observe()` (game.js), then `state:{player:{x:14,z:-4}}` + KeyE 120 frames. `cloverProgress.0` went 0 → 0.83 (first change frame 1), munch sounds played. Raised `W.root` wolf scale 2 → 2.6 (game.js:263).
+**Saw**: No console errors, no Lighting/Surfaces lines. Wolf still 1.5% of the frame in the player-near-clover view (0.89% for `wolf-body`); the larger scale was not re-measured on the plain start frame. Clovers at (14,-5), (-3,15), (-19,8).
+**Next**: look at the start frame for the `subject wolf` %; flatten `ridge*`/`oaks*`/`ground` vertex gradients; cut triangles under 160k (ico detail, tree segments); confirm eaten=3 at T≥180 wins.
+**Open**: items 2 (flat gradients, triangles) not done; wolf size gain unmeasured; full 3-clover win not run.

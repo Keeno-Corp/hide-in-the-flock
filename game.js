@@ -260,7 +260,7 @@ const ROCK = { x: -10, z: 3, top: 4.1 };
 const W = {};
 {
   const grey = PAL.wolf, light = 0x1d1511, dk = 0x0e0a08;
-  W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(2);
+  W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(2.6);
   W.body = new THREE.Group(); W.root.add(W.body);
   const mat = new THREE.MeshBasicMaterial({ color: PAL.wolf, fog: false });
   const legMat = new THREE.MeshBasicMaterial({ color: 0x5a4636, fog: false });
@@ -999,7 +999,7 @@ window.__game = {
     pounce: pounce.ph ? { ph: pounce.ph, t: r2(pounce.t), human: pounce.human } : null,
     flock: { moving: r2(flock.moving), running: r2(flock.running), graze: r2(flock.graze) },
     topSusp: topSusp ? { i: topSusp.i, s: r2(topSusp.susp), player: topSusp.player } : null,
-    cloverProgress: clovers.map(c => r2(c.prog)),
+    cloverProgress: clovers.map(c => r2(c.prog)), cloverPos: clovers.map(c => [c.x, c.z]),
     decoys: decoyI,
   }),
   act,

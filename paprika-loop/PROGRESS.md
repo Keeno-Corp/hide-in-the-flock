@@ -2527,3 +2527,9 @@ SCORE: 7.8
    - Proof: `look` on the start frame; the `subject wolf` line reads 3% or more.
 
 SCORE: 7.8
+
+## Iteration 43
+**Did**: Proved the clover path: added `cloverPos` to `observe()` (game.js), then `state:{player:{x:14,z:-4}}` + KeyE 120 frames. `cloverProgress.0` went 0 → 0.83 (first change frame 1), munch sounds played. Raised `W.root` wolf scale 2 → 2.6 (game.js:263).
+**Saw**: No console errors, no Lighting/Surfaces lines. Wolf still 1.5% of the frame in the player-near-clover view (0.89% for `wolf-body`); the larger scale was not re-measured on the plain start frame. Clovers at (14,-5), (-3,15), (-19,8).
+**Next**: look at the start frame for the `subject wolf` %; flatten `ridge*`/`oaks*`/`ground` vertex gradients; cut triangles under 160k (ico detail, tree segments); confirm eaten=3 at T≥180 wins.
+**Open**: items 2 (flat gradients, triangles) not done; wolf size gain unmeasured; full 3-clover win not run.
