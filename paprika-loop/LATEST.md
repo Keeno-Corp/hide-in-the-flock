@@ -28,8 +28,8 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
 
 SCORE: 8.5
 
-## Iteration 82
-**Did**: no code change. Tried the stalk toast on a 390×844 phone, solo: `{state:{susp:2}}`, then ShiftLeft+KeyD 120 frames.
-**Saw**: `player.susp` reached 3 (max) but `wolf.state` stayed "watch" for 131 frames, so no "The wolf has noticed you" toast came up. Look: 558 objects, "Never visible" none, no fault lines; `div#hud` and `div#mode` don't overlap or get cut off.
-**Next**: (1) find why `wolf.state` stays "watch" at susp 3 (wolf cooldown or distance to the player in `game.js`?); if it's a bug, fix it; if not, the toast needs a different trigger. (2) then re-run the phone check of the toast and `div#cap` overlap. (3) caption variety.
-**Open**: stalk toast on phone still unseen. A possible bug: the wolf doesn't leave "watch" at max suspicion (not confirmed; the cause may be the wolf's cooldown).
+## Iteration 83
+**Did**: found why `wolf.state` stayed "watch" in 82: not a bug, `wolf.cd` starts at 20 s on restart (`game.js` reset) and the stalk needs `cd<=0`. Forced it with `{state:{wolf:{cd:0},susp:2}}`. On 390×844 the stalk toast overlapped `div#cap` (look reported 2 overlap); in `index.html` the phone media rule `#toast` is now `bottom:112px` (was 60px).
+**Saw**: 390×844 after fix: `wolf.state` "stalk", toast "! The wolf has noticed you: blend in, graze!" at y 680–731 above `div#cap` at 754–779, 0 overlap, 0 cut off, Never visible none, no fault lines.
+**Next**: (1) lose screen on phone (`{state:{bites:0}}` / `result:"lose"`); (2) local dash ring red after ShiftRight; (3) wool burst on reveals.
+**Open**: lose screen on phone and the red dash ring are still unchecked.
