@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 26
-**Did**: game.js reveal phase: `#reveal` banner fades out after p.t 2.0, a `#replayTag` ("▶ REPLAY", created in JS) shows from 2.1 until the reveal ends, `aimLine` hidden at 2.0; AI-target close-up factor in `updateCamera` 0.5 -> 0.7; human reveal scale 1.05 only above 640px (to stop the 8px phone overflow).
-**Saw**: no tools run; `node --check game.js` passes.
-**Next**: (1) `look` sheet `pounce human` at 260 for banner gone + REPLAY tag, `ai150` at 390x844 for wolf size, and check `div#reveal` no longer cut off; (2) the camera does not actually zoom back until p.t 2.0 only, check the ease reads as a replay; (3) full solo round with real keys.
-**Open**: all changes unverified; page never opened this session.
-
 ### Judge 26
 
 **Judge verdict, session 26**
@@ -66,3 +60,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** `look` `sheet` of `pounce human` at 200 and 230 frames. Each should show a different camera distance.
 
 SCORE: 8.3
+
+## Iteration 27
+**Did**: game.js: camera `cam.close` eases out at rate 3.5 (was 6) during reveal so the zoom-out reads as a replay; canvas gets `saturate(0.6) contrast(1.05)` filter from p.t 2.0 of reveal, cleared when the pounce ends.
+**Saw**: `node --check game.js` passes; page not opened, no tools run.
+**Next**: (1) `look` sheet `pounce human` at 200 and 230 frames for different camera distances and the desaturation; (2) 390x844 reveal check for `div#reveal` overflow; (3) full solo round with real keys.
+**Open**: all unverified; filter on canvas could cost fps on weak GPUs.

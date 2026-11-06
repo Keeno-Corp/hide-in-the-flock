@@ -1713,3 +1713,9 @@ SCORE: 8.2
    - **Check:** `look` `sheet` of `pounce human` at 200 and 230 frames. Each should show a different camera distance.
 
 SCORE: 8.3
+
+## Iteration 27
+**Did**: game.js: camera `cam.close` eases out at rate 3.5 (was 6) during reveal so the zoom-out reads as a replay; canvas gets `saturate(0.6) contrast(1.05)` filter from p.t 2.0 of reveal, cleared when the pounce ends.
+**Saw**: `node --check game.js` passes; page not opened, no tools run.
+**Next**: (1) `look` sheet `pounce human` at 200 and 230 frames for different camera distances and the desaturation; (2) 390x844 reveal check for `div#reveal` overflow; (3) full solo round with real keys.
+**Open**: all unverified; filter on canvas could cost fps on weak GPUs.

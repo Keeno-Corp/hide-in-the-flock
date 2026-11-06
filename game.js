@@ -563,7 +563,7 @@ function updatePounce(rdt) {
   const pop = p.t < 0.35 ? 0.4 + 0.9 * ease(p.t / 0.35) : 1.0 + Math.sin(p.t * 3) * 0.02;
   $('reveal').style.transform = `scale(${pop * (p.human && innerWidth > 640 ? 1.05 : 1)})`;
   $('reveal').style.opacity = p.t < 0.1 ? p.t * 10 : p.t > 2.0 ? Math.max(0, 1 - (p.t - 2.0) * 4) : 1;
-  { let rp = document.getElementById('replayTag'); if (!rp) { rp = document.createElement('div'); rp.id = 'replayTag'; rp.textContent = '\u25B6 REPLAY'; rp.style.cssText = 'position:fixed;left:50%;top:14vh;transform:translateX(-50%);z-index:8;pointer-events:none;font:900 28px system-ui,sans-serif;letter-spacing:4px;color:#fff;background:#000a;padding:6px 16px;border-radius:6px;display:none'; document.body.appendChild(rp); } rp.style.display = p.t > 2.1 ? 'block' : 'none'; if (p.t > 2.0) aimLine.visible = false; }
+  { let rp = document.getElementById('replayTag'); if (!rp) { rp = document.createElement('div'); rp.id = 'replayTag'; rp.textContent = '\u25B6 REPLAY'; rp.style.cssText = 'position:fixed;left:50%;top:14vh;transform:translateX(-50%);z-index:8;pointer-events:none;font:900 28px system-ui,sans-serif;letter-spacing:4px;color:#fff;background:#000a;padding:6px 16px;border-radius:6px;display:none'; document.body.appendChild(rp); } rp.style.display = p.t > 2.1 ? 'block' : 'none'; renderer.domElement.style.filter = p.t > 2.0 ? 'saturate(0.6) contrast(1.05)' : ''; if (p.t > 2.0) aimLine.visible = false; }
   if (t.hop !== undefined) { t.hopV -= 14 * rdt * (p.t < 1 ? 0.5 : 1); t.hop = Math.max(0, t.hop + t.hopV * rdt); if (t.hop === 0 && t.hopV < 0) { t.hopV = 0; t.spin *= 0.8; } }
   if (p.human) { const g = bodyMatrixOf(t); outline.position.set(t.x, t.y + t.hop, t.z); outline.rotation.y = t.yaw + t.spin * 0.0; outline.scale.setScalar(SS * 1.1); place($('tag'), t.x, t.y + 3.6, t.z); { const r = $('tag').getBoundingClientRect(); if (r.top < innerHeight * 0.5 && r.top > innerHeight * 0.12) $('tag').style.top = innerHeight * 0.62 + 'px'; }; }
   else place($("bubble"), t.x, t.y + 4.2, t.z);
@@ -571,7 +571,7 @@ function updatePounce(rdt) {
   if (!p.human && p.t < 1.9) cam.punch = 1; else if (u > 0.72) cam.punch = Math.max(0, cam.punch - rdt * 1.6);
   $('bt').style.height = $('bb').style.height = 3 * cam.punch + 'vh';
   if (u >= 1) {
-    p.ph = null; t.frozen = false; w.target = null; hideReveal(); { const rp = document.getElementById('replayTag'); if (rp) rp.style.display = 'none'; } cam.punch = 0;
+    p.ph = null; t.frozen = false; w.target = null; hideReveal(); renderer.domElement.style.filter = ''; { const rp = document.getElementById('replayTag'); if (rp) rp.style.display = 'none'; } cam.punch = 0;
     if (p.human) {
       wolf.state = 'done'; t.frozen = true;
       if (mode === 'solo') endGame('lose', 'EATEN', 'The wolf got you · ' + eatenCount() + '/3 clovers', 'You were the human'); else endGame('wolf', 'WOLF WINS', 'Player 2 found PLAYER 1', 'Gotcha');
@@ -687,7 +687,7 @@ function updateCamera(dt, rdt) {
   else { tx += (wolf.x - P.x) * 0.5; tz += (wolf.z - P.z) * 0.5; zoom = 1 + clamp((dW - 14) / 30, 0, 0.55); }
   if (pounce.ph && pounce.target) { const m = pounce.target; tx = lerp(tx, (wolf.x + m.x) / 2, cam.punch); tz = lerp(tz, (wolf.z + m.z) / 2, cam.punch); }
   if (pounce.ph === 'reveal' && pounce.t < 2.0) { tx = wolf.x; tz = wolf.z + 2.4; }
-  cam.close += ((pounce.ph === 'reveal' && pounce.t < 2.0 ? 1 : 0) - cam.close) * (1 - Math.exp(-rdt * 6));
+  cam.close += ((pounce.ph === 'reveal' && pounce.t < 2.0 ? 1 : 0) - cam.close) * (1 - Math.exp(-rdt * (pounce.ph === 'reveal' ? 3.5 : 6)));
   const kf = 1 - Math.exp(-rdt * (cam.punch > 0.05 ? 7 : 2.4));
   cam.x += (tx - cam.x) * kf; cam.z += (tz - cam.z) * kf; cam.zoom += (zoom - cam.zoom) * kf;
   const sc2 = (1 - 0.3 * cam.punch - (pounce.target && !pounce.human ? 0.7 : 0.32) * cam.close) * cam.zoom;
