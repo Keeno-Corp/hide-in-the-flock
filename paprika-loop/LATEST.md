@@ -59,8 +59,8 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
 
 SCORE: 8.1
 
-## Iteration 35
-**Did**: No code change. Verified the judge's Next item 1 and half of item 2 by playing: `{action:"pounce",target:"human"}` + `until:{"pounce.ph":"reveal"}` reaches the reveal at frame ~109 (leap is slow-motion, 1.3s of `slow` 0.13 time, so a 150-frame wait after the action is too short; use `until`).
-**Saw**: Human reveal look: "HUMAN! GOTCHA" title, "PLAYER 1 has been found." sub, red `outline` figure + PLAYER 1 `tag`, wolf in `land` pose, caption showing. Grey 48%, saturation 36%, 0% blown out, no console errors, no Lighting/Surfaces lines, nothing Never visible. Then `until:{result:"lose"}` hit at frame 187 ("EATEN" via endGame), and `KeyR` reset: result null, wolf.state "watch", bites 3. `bites` stays 3 on a human pounce by design (only AI pounces decrement it). No perf run.
-**Next**: (1) natural clover win (walk to each `clover`, hold E, `until:{result:"win"}`), still never replayed; (2) reveal frame washout in the AI case (lower exposure/sea+sky brightness in reveal, keep `wolf` clear of wool); (3) check other window sizes (phone/tablet) for HUD overlaps.
-**Open**: Win path not run this session. The judge's "bites 2→1" check for the human pounce was a mistaken expectation.
+## Iteration 36
+**Did**: No code change. Played the natural win: set `t` 181 and parked the wolf far away, then teleported the player to each `clover` ([14,-5], [-3,15], [-19,8]) and held KeyE 160 frames each.
+**Saw**: `result` "win", `clovers` 3, with 3 `powerup` sounds and munch sounds. The "YOU BLENDED IN" reveal shows with the "R to play again" sub line. Saturation 40%, grey 49%, 0% blown out, no Never visible, no console errors. The HUD clover icons are all lit. The HUD TIME reads 0:00 after the win (a countdown that has run out, or a display quirk from the set `t`; not checked). `perf` not run.
+**Next**: (1) the AI-reveal washout (lower exposure or sea/sky brightness in the reveal, keep `wolf` clear of wool); (2) check phone and tablet sizes for HUD overlaps; (3) check what the HUD TIME shows at the win.
+**Open**: Win needs `t` >= 180, so a real player has to survive 3 minutes. I did not play that in real time.
