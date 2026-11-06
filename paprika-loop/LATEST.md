@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 38
-**Did**: In `updateCamera` (game.js ~697-698) during an AI-target reveal the camera rises 5*`cam.close` and its lookAt y drops 7*`cam.close`, so the wolf stands above the nearest `sheep` instead of behind `wool`. Human reveal untouched.
-**Saw**: AI pounce +150 frames: the whole `wolf` shows (legs to ears, bbox [542,274,777,783], 4% share, 7 parts), grey 42%, sat 35%, 0 overlaps/0 cut off at 1280x800. The "AI SHEEP" title now covers the wolf's head top slightly; "baa?" bubble sits on its chest. No console errors. `perf` not run.
-**Next**: (1) Nudge lookAt drop to ~5 so the wolf's ears clear the title/sub line. (2) Check phone/tablet HUD in a reveal (`look` viewports). (3) Replay full solo win and EATEN + KeyR (still unreplayed in this iteration).
-**Open**: Phone and tablet sizes unchecked; win/EATEN round not replayed.
-
 ### Judge 38
 
 **Session 38 verdict.** The AI reveal and the EATEN screen both work. I did not replay the clover win, the 2-player mode or a phone reveal. The phone and tablet checks show only the opening, so the reveal HUD at those sizes is still unchecked.
@@ -65,3 +59,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** `look` after the AI pounce plus 60 frames. The `wolf` bbox top should sit below the title's bottom edge, and the `div#bubble` should not overlap the sub line.
 
 SCORE: 8.4
+
+## Iteration 39
+**Did**: No code change. Checked the reveal HUD on phone (390x844) with `look` sheet: human pounce +150 and AI pounce +150.
+**Saw**: "GOTCHA" and "AI SHEEP" titles fit the width, sub line, `div#hud`, tag ("PLAYER 1") and mode chip all readable, no overlap or cut-off seen. AI reveal: bubble "baa?" over the wolf, title above it, 2 of 3 bite lights lit. Grey/saturation 30-32%. No console errors. `perf` not run.
+**Next**: (1) Replay natural clover win + KeyR (`wolf.bites` back to 3; bite lights match `wolf.bites` on EATEN). (2) Nudge AI reveal lookAt drop so title clears wolf ears at desktop size. (3) Tablet reveal check.
+**Open**: Win/EATEN+restart still unreplayed; tablet reveal unchecked.

@@ -2356,3 +2356,9 @@ SCORE: 8.4
    - **Check:** `look` after the AI pounce plus 60 frames. The `wolf` bbox top should sit below the title's bottom edge, and the `div#bubble` should not overlap the sub line.
 
 SCORE: 8.4
+
+## Iteration 39
+**Did**: No code change. Checked the reveal HUD on phone (390x844) with `look` sheet: human pounce +150 and AI pounce +150.
+**Saw**: "GOTCHA" and "AI SHEEP" titles fit the width, sub line, `div#hud`, tag ("PLAYER 1") and mode chip all readable, no overlap or cut-off seen. AI reveal: bubble "baa?" over the wolf, title above it, 2 of 3 bite lights lit. Grey/saturation 30-32%. No console errors. `perf` not run.
+**Next**: (1) Replay natural clover win + KeyR (`wolf.bites` back to 3; bite lights match `wolf.bites` on EATEN). (2) Nudge AI reveal lookAt drop so title clears wolf ears at desktop size. (3) Tablet reveal check.
+**Open**: Win/EATEN+restart still unreplayed; tablet reveal unchecked.
