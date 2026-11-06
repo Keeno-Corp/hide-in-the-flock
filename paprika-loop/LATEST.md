@@ -1,58 +1,62 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-### Judge 23
-
-**Judge 23 scores**
-
-I took one 3-cell `look` sheet (start, AI bite, human bite), a zoom on the right hill, one `perf`, and one `interact` (walk right, then graze with `KeyE`). The `interact` showed `player.grazing` true and `topSusp` at 0.28. There were no console errors and no `Lighting:` or `Surfaces:` lines. I did not check local 2-player, the lose card or other viewports, and I did not hear the sound.
-
-1. **Looks as LOOK.md says: 8.5.**
-   - The `sky` with cloud bands and sun disc, the `ridge*` hills, the inked `pines*`, `oaks*` and `round-trees*`, the paper grain and the cream `sheep*` read as a storybook frame.
-   - `wolf-body` is the darkest shape, at 2% near black.
-   - The zoom on the right hill [640,100,1280,450] shows the diamond tone bands are gone, so the Iteration 23 fix worked.
-   - The `ground` is now smooth patches with a wobbly ink line. It still has a hard yellow-to-green edge and a faint diagonal hatch over the `pines*`.
-2. **Compared with BOARD, LOOK.png and the turnarounds: 8.**
-   - The remaining style gap is the wolf.
-   - In the interact frame `wolf-body`, `wolf-head ×4`, `wolf-leg ×8` and `wolf-tail` merge into one black lump with no ink rim, and it crowds the `sheep*`.
-   - The WOLF turnaround has a clear lean silhouette.
-3. **Clip moment: 8.5.**
-   - The AI bite shows an ink splash, a woodcut duotone freeze, a tilted "SHEEP" card with "BAA?", "Just a sheep. Bite lost." and a "baa?" bubble.
-   - The human bite shows a red "HUMAN" card with "GOTCHA", a red "PLAYER 1" stamp and a caption.
-   - Both read in 5 seconds.
-4. **Core loop and controls: 7.5.**
-   - Walk and graze work, and the `suspicion` HUD bar and `topSusp` respond.
-   - The wolf stops after 22 frames and sits on top of the flock.
-   - The `clover ×10` patches are only small green rings, so they are hard to find.
-   - I did not play through to the win or lose card.
-5. **Local 2-player: 7.** I did not run it this session, so this carries over from Judge 22. `wolfRing` and `aim` are hidden in solo as expected. The local wolf lying over `wolf-rock` was still a blob in the last check.
-6. **UI typography: 8.5.** The IM Fell panels in `#hud` and `#mode` have ink borders, with no overlap or cut-off text. The Alfa Slab stamps are in style.
-7. **Convention and performance: 7.**
-   - `perf` gives 191,354 triangles, 62 draw calls and 0.63 MB of assets.
-   - The 275 ms frame is on a software renderer, so it is not a signal.
-   - 191k triangles is high for a flat-painted look, and 234 ms of the frame is the main scene.
-   - `window.__game` is present.
-8. **Juice: 7.5.** The pounce and bite visuals work, and grazing registers. I did not run `feel` or hear the sound.
-
-**Faults: 8.** There were no console errors. The wolf is a blob and its `wolf-head ×4` and `wolf-leg ×8` parts overlap. The triangle count is high. The ground edge is hard.
-
-**Next:**
-1. **Give the wolf an ink silhouette with readable limbs (asked again).**
-   - Add a slightly lighter dark-brown ink rim pass on `wolf-body` and `wolf-head`, as `sheep-ink*` does, and separate the `wolf-leg` meshes from the body.
-   - Tuck the stray `wolf-head ×4` copies in or remove them.
-   - The one call that shows it done is `look` with `zoom` [250, 300, 650, 650] on the start page. It should show a rim, two ears, a snout and separate legs.
-2. **Make the clover patches findable and storybook-drawn.**
-   - The `clover ×10` are faint rings.
-   - Draw each as an inked patch with a small three-leaf motif, and add a gentle glow or sparkle when the player is near.
-   - The one call that shows it done is `look` with `zoom` on a clover position, such as around [480, 550]. It should show a leaf motif in an ink outline.
-3. **Make the local wolf read clearly and occlude behind `wolf-rock` (asked again).**
-   - Press `KeyM`, then `look` with `zoom` on the wolf.
-   - The wolf's pose should be upright and distinct from the `wolfRing`, and the rock should cover its hind legs.
-   - After that, cut the triangle count by lowering the sheep or tree detail. `perf` with `variants` hiding `pines*` and `round-trees*` shows what each costs.
-
-SCORE: 7.9
-
 ## Iteration 24
 **Did**: game.js wolf build: added `wolf-rim` meshes, which are cloned geometry pushed out 0.05 along the normals, BackSide, colour 0x6a5546, one per wolf mesh (body, head, ears, legs, paws, tail). This gives the wolf an ink rim like `sheep-ink*`.
 **Saw**: `look` zoom [250,300,650,650] shows the rim round the wolf lump on `wolf-rock`; there are no console errors. The wolf is still a mostly black mass because its limbs overlap on the rock. I did not run `perf`. The clover patches were not touched (3 `clover` groups, each with a patch, outline and ring already).
 **Next**: (1) separate the wolf's legs and ears from the body, for example by lightening the leg colour or posing it off the rock; (2) check the local wolf with `KeyM` against `wolf-rock`; (3) cut the triangle count (`perf` variants hiding `pines*` and `round-trees*`).
 **Open**: the rim adds triangles (about double the wolf's). The clover leaf motif was not done.
+
+### Judge 24
+
+**Judge 24 scores**
+
+I took one 3-cell `look` sheet (start, human bite, local mode via `KeyM`) and one `perf` with costs. I didn't run `interact` or `feel`, and I didn't hear the sound. I didn't play through to the win or lose card or check other viewports. There were no console errors and no `Lighting:` or `Surfaces:` lines.
+
+1. **Looks as LOOK.md says: 8.5.**
+   - The `sky` with the sun disc, the `ridge*` hills, the inked `pines*`, `oaks*` and `round-trees*`, the paper grain and the cream `sheep*` read as a storybook frame.
+   - `wolf-body` is the darkest shape, at 2% near black.
+   - The `ground` still has a hard yellow-to-green edge.
+2. **Compared with BOARD, LOOK.png and the turnarounds: 8.**
+   - The biggest remaining style gap is still the wolf.
+   - Even with the new `wolf-rim` (Iteration 24), the wolf in the start frame is a black lump on `wolf-rock`. The rim is too faint to separate `wolf-leg`, `wolf-head` and the ears. It looks nothing like the lean WOLF turnaround.
+3. **Clip moment: 8.5.**
+   - The human bite shows the "GOTCHA / HUMAN" card tilted, a red "PLAYER 1" stamp, ink splash and woodcut freeze, and a storybook caption. It reads in 5 seconds.
+4. **Core loop and controls: 7.5.**
+   - I carry this over from Judge 23, since I didn't play this session.
+   - The `suspicion` HUD is present.
+   - The `clover` patches are still faint rings, so they are hard to find.
+5. **Local 2-player: 7.**
+   - In local mode the wolf is a black mass with `wolf-head ×4` and `wolf-rim ×9` overlapping on `wolf-rock`.
+   - The `wolfRing` is a bright orange and green target that is readable and in style.
+   - The wolf's pose and its occlusion behind the rock are still unclear.
+6. **UI typography: 8.5.**
+   - The IM Fell panels in `#hud` and `#mode` have ink borders and nothing overlaps.
+   - The Alfa Slab stamps are in style.
+   - The narrator caption in the local frame is a storybook line.
+7. **Convention and performance: 7.**
+   - `perf` gives 195,618 triangles (up from 191k), 74 draw calls and 0.63 MB of assets.
+   - The 265 ms frame is on a software renderer, so it is not a signal.
+   - `sheep` is 61k triangles, `sheep-heads` 14k, `round-trees` plus `round-trees-ink` 20k, and the `sheep-shadow`, `sheep-ink` and `sheep-heads-*` meshes together 36k.
+   - The sheep detail is too heavy for a flat-painted look. `window.__game` is present.
+8. **Juice: 7.5.**
+   - The pounce and bite visuals and the stamps work. I didn't hear the sound or run `feel`.
+
+**Faults: 8.** There were no console errors. The wolf is still a blob. The triangle count is high and the ground edge is hard.
+
+**Next:**
+1. **Make the wolf read as a wolf (asked again).**
+   - The Iteration 24 rim exists, but it isn't enough because the rim colour 0x6a5546 is lost against the dark body and the `wolf-leg` meshes overlap.
+   - Thicken the rim to about 0.08 and lighten it toward 0x8a7058.
+   - Pose the wolf standing apart from `wolf-rock`, with a visible gap between the front and hind legs.
+   - Give it two upright ears and a pointed snout in profile.
+   - The one call that shows it done is `look` with `zoom` [250, 300, 650, 650] on the start page. It should show four separated legs, ears and a snout, each edged by the rim.
+2. **Make the clover patches findable and storybook-drawn (asked again).**
+   - Draw each `clover` as an inked patch with a three-leaf motif larger than the sheep's feet, with a soft glow when the player is near.
+   - The one call that shows it done is `look` with `zoom` on a clover position. It should show leaf shapes in an ink outline.
+3. **Cut the triangle count by about 40%.**
+   - Reduce the sheep body and head segment counts (`sheep` 61k, `sheep-heads` 14k).
+   - Drop `round-trees-ink` or `sheep-heads-ink` to a cheaper outline.
+   - Run `perf` with `variants` hiding `sheep-heads-shadow` and `round-trees-ink` to see what each saves. The triangle count should be about 115k or less, and the look should hold.
+   - Then fix the local wolf so it is upright and `wolf-rock` covers its hind legs. Press `KeyM` and `look` with `zoom` on the wolf.
+
+SCORE: 7.8
