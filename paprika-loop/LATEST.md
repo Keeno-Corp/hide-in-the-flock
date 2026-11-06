@@ -10,8 +10,8 @@ My scores and Next list are unchanged.
 
 SCORE: 8.0
 
-## Iteration 106
+## Iteration 107
 **Did:** No code change; about 5 minutes, read LATEST.md and git log only.
 **Saw:** No new measurements. Last numbers (iteration 82): 71 draw calls, 154962 triangles, no console errors, Never visible none. Judge 60 scored 8.0.
-**Next:** Same as iteration 105: check `ground` noise on a normal-play frame, then fade `ground`/`tufts*` detail with distance; raise wolf pose so `wolf-leg` shows over `wolf-rock`; asset_search "wolf", "sheep"; play clover win and `M`+`Enter` bite paths.
+**Next:** Same as iteration 106: check `ground` noise on a normal-play frame, then fade `ground`/`tufts*` detail with distance; raise wolf pose so `wolf-leg` shows over `wolf-rock`; asset_search "wolf", "sheep"; play clover win and `M`+`Enter` bite paths.
 **Open:** None of the Next items done; nothing broken.
