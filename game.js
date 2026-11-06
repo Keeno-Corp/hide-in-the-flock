@@ -261,7 +261,8 @@ const W = {};
   W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(8);
   W.body = new THREE.Group(); W.root.add(W.body);
   const mat = new THREE.MeshBasicMaterial({ color: PAL.wolf, fog: false });
-  const add = (parent, g) => { const m = new THREE.Mesh(g, mat); m.castShadow = true; parent.add(m); return m; };
+  const rimMat = new THREE.MeshBasicMaterial({ color: 0x3a2e26, fog: false });
+  const add = (parent, g, mm) => { const m = new THREE.Mesh(g, mm || mat); m.castShadow = true; parent.add(m); return m; };
   // smooth rounded masses only (WOLF.png: sleek long-snouted silhouette, tall ears, bush tail, slim legs)
   const blob = (sx, sy, sz, px, py, pz, rx = 0, ry = 0, rz = 0) => new THREE.SphereGeometry(0.5, 16, 12).scale(sx, sy, sz).rotateX(rx).rotateY(ry).rotateZ(rz).translate(px, py, pz);
   const taper = (r0, r1, len, px, py, pz, rx = 0, rz = 0) => new THREE.CylinderGeometry(r1, r0, len, 10).rotateX(rx).rotateZ(rz).translate(px, py, pz);
@@ -278,15 +279,18 @@ const W = {};
     blob(0.42, 0.4, 0.55, 0, 0, 0.06),                        // skull
     taper(0.15, 0.06, 0.62, 0, -0.07, 0.5, Math.PI / 2 - 0.02), // long snout
     blob(0.1, 0.08, 0.12, 0, -0.03, 0.82),                    // nose
-    new THREE.ConeGeometry(0.11, 0.42, 8).translate(0, 0.21, 0).rotateZ(-0.18).translate(0.14, 0.15, -0.04),
-    new THREE.ConeGeometry(0.11, 0.42, 8).translate(0, 0.21, 0).rotateZ(0.18).translate(-0.14, 0.15, -0.04),
   ]));
+  add(W.head, mergeGeometries([
+    new THREE.ConeGeometry(0.12, 0.46, 8).translate(0, 0.23, 0).rotateZ(-0.18).translate(0.14, 0.15, -0.04),
+    new THREE.ConeGeometry(0.12, 0.46, 8).translate(0, 0.23, 0).rotateZ(0.18).translate(-0.14, 0.15, -0.04),
+  ]), rimMat);
   const eyeMat = new THREE.MeshBasicMaterial({ color: 0xe9c46a, fog: false });
   [-1, 1].forEach(sx => { const e = new THREE.Mesh(new THREE.SphereGeometry(0.035, 8, 6).scale(1.3, 0.8, 1), eyeMat); e.position.set(sx * 0.15, 0.06, 0.36); W.head.add(e); });
   W.legs = [];
   [[-1, 0.62], [1, 0.62], [-1, -0.55], [1, -0.55]].forEach(([sx, z]) => {
     const g = new THREE.Group(); g.name = 'wolf-leg'; g.position.set(sx * 0.2, 0.72, z); W.body.add(g);
-    add(g, mergeGeometries([taper(0.1, 0.055, 0.7, 0, -0.34, 0), blob(0.13, 0.08, 0.26, 0, -0.69, 0.07)]));
+    add(g, taper(0.1, 0.055, 0.7, 0, -0.34, 0));
+    add(g, blob(0.14, 0.09, 0.28, 0, -0.69, 0.07), rimMat);
     W.legs.push(g);
   });
   W.tail = new THREE.Group(); W.tail.name = 'wolf-tail'; W.tail.position.set(0, 0.85, -0.95); W.body.add(W.tail);
@@ -879,7 +883,7 @@ function drawWolf(dt) {
   reach.visible = loc && !pounce.ph && !result; reach.scale.setScalar(1.55); reach.position.set(w.x, gh(w.x, w.z) + 0.15, w.z);
   aim.visible = false; aimLine.visible = false;
   wolfRing.visible = loc && !pounce.ph && !result; if (wolfRing.visible) { wolfRing.position.set(w.x, gh(w.x, w.z) + 0.3, w.z); wolfRing.scale.setScalar(1 + 0.15 * Math.sin(clock * 8)); const rdy = 1 - Math.min(1, (w.dashCd || 0) / 2.5); wolfRing.userData.fill.scale.setScalar(Math.max(0.02, rdy)); wolfRing.userData.fill.material.color.setHex(rdy >= 1 ? 0x8e9a58 : 0xb3261e); }
-  { const k = loc ? 9 : 8; W.root.scale.setScalar(k); W.root.traverse(o => { if (o.material) { o.material.depthTest = true; o.renderOrder = loc ? 8 : 0; } }); }
+  { const k = loc ? 8.5 : 8; W.root.scale.setScalar(k); W.root.traverse(o => { if (o.material) { o.material.depthTest = true; o.renderOrder = 0; } }); }
   wolfMark.visible = wolfRing.visible; if (wolfMark.visible) wolfMark.position.set(w.x, gh(w.x, w.z) + 7.5 + Math.sin(clock * 6) * 0.5, w.z);
   if (loc && !pounce.ph && !result) { let best = null, bd = 9; for (const s of sheep) { const d = Math.hypot(s.x - w.x, s.z - w.z); if (d < bd) { bd = d; best = s; } } if (best) { aim.visible = true; aim.position.set(best.x, best.y + 0.2, best.z); aim.scale.setScalar(1.5 + 0.2 * Math.sin(clock * 9)); aim.userData.arrow.position.y = 5 + Math.sin(clock * 7); { const dx = best.x - w.x, dz = best.z - w.z, L = Math.hypot(dx, dz) || 1; aimLine.visible = true; aimLine.position.set((w.x + best.x) / 2, best.y + 0.6, (w.z + best.z) / 2); aimLine.rotation.y = Math.atan2(-dz, dx); aimLine.scale.set(L, 1, 1); } const inR = bd < 7; aim.material.opacity = inR ? 0.7 + 0.25 * Math.sin(clock * 9) : 0.25; reach.material.color.setHex(inR ? 0xe0a03a : 0xb3261e); reach.scale.setScalar(inR ? 1.7 : 1.55); aim.userData.arrow.visible = inR; } }
 }

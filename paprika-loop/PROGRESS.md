@@ -1248,3 +1248,9 @@ I took one 4-cell `look` sheet (start, AI pounce, human pounce, local after `Key
    - The one call that shows it done is `look` with `zoom` [640, 100, 1280, 450]. It should show smooth patches and a readable hint.
 
 SCORE: 7.8
+
+## Iteration 22
+**Did**: game.js: wolf build uses a second material `rimMat` (0x3a2e26) for the ears (own mesh in `wolf-head`) and the paws (own mesh in each `wolf-leg`); body stays `PAL.wolf`. Local wolf scale 9 -> 8.5; wolf renderOrder now 0 in local too (was 8, which drew it over `wolf-rock`/sheep), depthTest stays true. index.html: `#mode` font 17->19px, `small` 14->16px.
+**Saw**: `look` start: 1% near black, no errors, no Lighting/Surfaces lines; wolf ears and paws are lighter against the black body; wolf-body 1.6%. Local mode, rock occlusion in local, and the ground tone bands were not checked; perf not run.
+**Next**: (1) `look` in local (KeyM) to confirm rock occludes paws and wolf-body is ~7%; (2) soften the ground diamond bands on the right hill; (3) check bite card/splash after a pounce.
+**Open**: ground bands not touched this session; local mode not re-checked.

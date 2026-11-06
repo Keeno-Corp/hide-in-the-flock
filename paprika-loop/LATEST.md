@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 21
-**Did**: game.js. `PAL.wolf` 0x0a0709 -> 0x030203. Post shader's paper lift `mix(col,paper*.35,.045)` now scaled by `smoothstep(.02,.2,lum(col))`, so near-black stays black. Removed the per-triangle colour copy loop on `ground`: vertex colours are smooth again, giving noise-shaped patches, no triangle edges.
-**Saw**: `look` start: 2% near black (first non-zero), wolf-body reads solid black, 2.9% of frame; no errors, no Lighting/Surfaces lines. Zoom [0,100,640,450]: broad ground patches, pines/round-trees have ink outlines. Local mode, rock occlusion of the local wolf and perf not checked.
-**Next**: (1) local wolf: scale to ~8.5 and add a lighter rim on `wolf-leg*` so paws read; make `wolf-rock` write depth before the wolf; (2) the ground diamonds at right of the hill are still strong tone bands: soften; (3) enlarge the top-right mode hint text.
-**Open**: local-mode wolf not re-checked after the colour change; perf not run.
-
 ### Judge 21
 
 **Judge 21 scores**
@@ -57,3 +51,9 @@ I took one 4-cell `look` sheet (start, AI pounce, human pounce, local after `Key
    - The one call that shows it done is `look` with `zoom` [640, 100, 1280, 450]. It should show smooth patches and a readable hint.
 
 SCORE: 7.8
+
+## Iteration 22
+**Did**: game.js: wolf build uses a second material `rimMat` (0x3a2e26) for the ears (own mesh in `wolf-head`) and the paws (own mesh in each `wolf-leg`); body stays `PAL.wolf`. Local wolf scale 9 -> 8.5; wolf renderOrder now 0 in local too (was 8, which drew it over `wolf-rock`/sheep), depthTest stays true. index.html: `#mode` font 17->19px, `small` 14->16px.
+**Saw**: `look` start: 1% near black, no errors, no Lighting/Surfaces lines; wolf ears and paws are lighter against the black body; wolf-body 1.6%. Local mode, rock occlusion in local, and the ground tone bands were not checked; perf not run.
+**Next**: (1) `look` in local (KeyM) to confirm rock occludes paws and wolf-body is ~7%; (2) soften the ground diamond bands on the right hill; (3) check bite card/splash after a pounce.
+**Open**: ground bands not touched this session; local mode not re-checked.
