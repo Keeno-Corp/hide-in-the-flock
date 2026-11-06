@@ -1,60 +1,64 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-### Judge 32
-
-**Judge verdict, session 32**
-
-1. **Looks as LOOK.md says: 8.**
-   - The win frame shows `sea` 8.8%, `cliff`, `sand`, `pines*` ×141, `cloud` ×35, `wolf-rock`, `sheep*` ×98 and `clover` ×4 glowing. Saturation is 45% and green 54%. There are no `Lighting:` or `Surfaces:` lines and no `Never visible` object.
-   - The reveal frame is still 21% saturated and 80% grey. The dark `wolf` fills the view and `sea`, `sand` and `wolf-rock` are not in it. I took no `sample`.
-
-2. **Plays as DESIGN.md says: 7.**
-   - `{action:"pounce",target:"ai"}` took `bites` from 3 to 2, set `pounce.ph` to "reveal" with `human` false, and set `wolf.pose` to "shrug".
-   - `setState({result:"win"})` shows "YOU BLENDED IN", with a legible sub line on its backing.
-   - I did not run the 90 s graze, so the AI-bite cooldown is still unverified.
-
-3. **Clip moment: 8.**
-   - The reveal shows the "AI SHEEP" title, the "BITE WASTED" kicker, the "Just a sheep. Bite wasted." sub line, `div#bubble` "baa?" and `div#cap` "A completely innocent sheep. Awkward."
-   - Nine sounds played: `boom`, `stab1` to `stab3`, `thud`, `hit`, `womp` ×2 and `baa`.
-   - The wolf's dark mass fills the frame and the picture is washed grey, so the shot reads gloomy for a funny moment.
-
-4. **Looks like refs/01.jpg: 9.**
-   - The play camera shows the sea, sand beach, grey `cliff`, pines, puffy `cloud` objects and the `wolf` on its `wolf-rock`, all bright and low-poly.
-
-5. **Solo fun and fair: 7.**
-   - The suspicion bar and clover glows read clearly, and win and lose screens both exist.
-   - The AI-bite cooldown is unmeasured and I did not play a full round.
-
-6. **Local 2-player: 8.**
-   - Carried over from earlier sessions. I did not re-run it.
-
-7. **`window.__game`, no build, ~100 sheep: 8.**
-   - `observe` works and the page starts playing on load. `perf` gave 118.6 ms per frame, 76 draw calls and 102.7k triangles. This is a software renderer, so the frame time is no signal.
-
-8. **Juice: 8.**
-   - Baas, `wind`, `womp`, `boom`, `stab*`, `thud` and `hit` all fire. The caption voice is funny.
-
-9. **Works at any window size, HUD readable: 8.**
-   - At 1280×800 there are 0 cut-off elements. On the win frame `div#hud` and `div#reveal` overlap slightly, which is benign. I did not re-run other sizes.
-
-10. **Faults: 8.**
-    - There are no console errors. `sea`, `sand` and `wolf-rock` are not visible in the reveal frame, because the camera is punched in.
-
-**Next:**
-1. **Make the reveal frame vivid (asked again).**
-   - **Do:** pull the reveal camera back or raise it, so the wolf takes less of the frame and the meadow, `sea` and sky show. Lighten the wolf's material during `pounce.ph` "reveal", or add a rim light. Check that no grey filter or tint is applied in the reveal phase.
-   - **Check:** `look` after `{action:"pounce",target:"ai"}` and `wait:150`. Saturation should be above 35% and grey below 50%.
-2. **Verify the AI-bite cooldown (asked again).**
-   - **Do:** run `interact` with `trace:["bites","wolf.state"]` over a 90 s graze, in chunks of `{wait:600}`.
-   - **Check:** two `bites` changes should be at least 14 s apart. If the trace window is too short, use `eval` to read the `w.afterAI` timestamps.
-3. **Run the full solo round once.**
-   - **Do:** hold graze and walk to the three `clover` objects, with the wolf active.
-   - **Check:** `result` reaches "win" naturally, and a "lose" via 3 forced pounces on the human gives the "EATEN" screen. This confirms the pacing is fair and the clip moment arrives within a minute.
-
-SCORE: 7.9
-
 ## Iteration 33
 **Did**: Pulled the reveal camera back in `updateCamera` (game.js): close-up scale 0.7→0.42 for the AI target and 0.32→0.2 for the human, reveal target `wolf.z - 2` instead of `+2.4`, `pinesMesh` hidden only when `cam.close >= 0.8`.
 **Saw**: `{action:"pounce",target:"ai"}` + 150 frames: saturation 32% (was 21%), green 36%, grey 59% (the dark wolf counts as grey). The meadow, sea strip, cliff and trees now show around the wolf. No `Lighting:`/`Surfaces:`; `sand` and `wolf-rock` are not in the reveal view. No perf, no 90 s graze, no full round this session.
 **Next**: (1) 90 s graze with `trace:["bites","wolf.state"]` for the AI-bite cooldown; (2) lighten the wolf's material or add a rim light during reveal to get grey under 50%; (3) play a full solo round to a natural win and a forced-pounce "EATEN".
 **Open**: The AI-bite cooldown and full-round pacing are still unmeasured.
+
+### Judge 33
+
+**Judge verdict, session 33**
+
+1. **Looks as LOOK.md says: 8.**
+   - The reveal frame now shows the `sky` (34%), `sea`, `cliff`, `round-trees*`, `cloud` ×11 and the `ground` meadow around the wolf. There are no `Lighting:` or `Surfaces:` lines.
+   - Saturation is 30% and grey is 64%, both counting the dark `wolf` as grey. That is under the 35% and 50% targets, but the frame reads bright.
+   - `sand` is a 0.0023% sliver. `wolf-rock` shows as "Never visible", hidden behind sheep.
+
+2. **Plays as DESIGN.md says: 8.**
+   - `{action:"pounce",target:"ai"}` took `bites` from 3 to 2, set `pounce.ph` to "reveal" with `human` false and set `wolf.pose` to "shrug".
+   - A 60 s hold of Space (graze) went `wolf.state` "watch" then "stalk" and `bites` 3 to 1. The AI bites came well apart rather than back-to-back, so the cooldown looks fine. That is a rough read, not a timestamped one.
+   - I did not run a clover win or a "lose" this session.
+
+3. **Clip moment: 9.**
+   - It shows the "AI SHEEP" title, the "BITE WASTED" kicker, the "Just a sheep. Bite wasted." sub line, `div#bubble` "baa?" and `div#cap` "The wolf reconsiders his life choices."
+   - 11 sounds played: `boom`, `stab1` to `stab3`, `thud`, `hit`, `womp` ×2, `baa` and `wind`.
+   - The wolf's dark mass is still big in the lower frame, but the title and the joke read at a glance.
+
+4. **Looks like refs/01.jpg: 8.**
+   - The play camera shows the `sea`, `cliff`, trees, `cloud` and the meadow, all bright and low-poly.
+   - The reveal frame hides `wolf-rock` and the beach.
+
+5. **Solo fun and fair: 8.**
+   - The suspicion bar sits in `div#hud`. With the player grazing, the wolf took 2 bites in about 56 s, so the first clip moment arrives within a minute.
+   - The full natural win and the "EATEN" screen were not replayed.
+
+6. **Local 2-player: 8.**
+   - Carried over from earlier sessions. I did not re-run it.
+
+7. **`window.__game`, no build, ~100 sheep: 8.**
+   - `observe` works, the page starts playing on load, and the game instances its sheep.
+   - `perf` gave 185.9 ms per frame, 77 draw calls and 102.8k triangles. This is a software renderer, so the frame time is no signal.
+
+8. **Juice: 9.**
+   - Baas, `wind`, `womp`, `boom`, `stab*`, `thud` and `hit` all fire. The caption voice is funny.
+
+9. **Works at any window size, HUD readable: 8.**
+   - At 1280×800 there are 0 overlaps, 0 off-screen and 0 cut-off elements. I did not re-check other sizes.
+
+10. **Faults: 8.**
+    - There are no console errors and no `Lighting:` or `Surfaces:` lines.
+    - `wolf-rock` is "Never visible" in the reveal frame, hidden behind sheep.
+
+**Next:**
+1. **Run the full solo round.**
+   - **Do:** walk to the three `clover` patches and hold E on each, with the wolf active.
+   - **Check:** `result` reaches "win" on its own. Then run `{action:"pounce",target:"human"}` three times and check that the "EATEN" screen shows with a restart.
+2. **Lighten the wolf in the reveal (asked again).**
+   - **Do:** give `wolf` a lighter fur colour or a rim light while `pounce.ph` is "reveal", so it separates from the grass.
+   - **Check:** `look` after the AI pounce and `wait:150`. Grey should be under 50%.
+3. **Show `wolf-rock` and the beach in the opening shot.**
+   - **Do:** keep sheep from standing in front of `wolf-rock` at the start, or move the opening camera slightly, so the "wolf crouched on its rock" reads.
+   - **Check:** `look` with no steps should list `wolf-rock` as on screen with a pixel share above 0.5%.
+
+SCORE: 8.2
