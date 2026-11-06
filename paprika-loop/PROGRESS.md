@@ -3419,3 +3419,10 @@ SCORE: 8.0
 **Saw:** Nothing new measured; last look (iter 61): no console errors, Never visible none, 508 objects. Judge 60 scored 8.0.
 **Next:** On a normal-play frame, fade `ground`/`tufts*` detail with distance; raise wolf pose so `wolf-leg` shows over `wolf-rock`; asset_search "wolf", "sheep"; play clover win and `M`+`Enter` bite paths; run perf.
 **Open:** asset_search and perf still not done; short sessions keep ending without a change.
+
+## Iteration 82
+**Did:** No code change; ran `open` and `perf` only.
+**Saw:** perf: 71 draw calls, 154962 triangles, 0.63 MB assets, 7.83 MB textures, 16 shaders; no console errors reported on open. Frame 396 ms is SwiftShader (no GPU), not a signal. Main scene pass 302 ms, halftone pass 55 ms.
+**Next:** On a normal-play frame, fade `ground`/`tufts*` detail with distance; raise wolf pose so `wolf-leg` shows over `wolf-rock`; asset_search "wolf", "sheep"; play clover win and `M`+`Enter` bite paths.
+**Open:** asset_search not done; perf found nothing to fix on a real GPU (154k triangles is modest).
+**Saw (look, normal play frame, added):** no console errors, Never visible none, 508 objects; wolf 2.4% of picture, `wolf-leg` only 0.016% (still hidden behind `wolf-rock`); `ground` grain looks mild on a normal frame, not the noise seen in the bite freeze. Mood: warm orange/yellow, HUD uncovered.
