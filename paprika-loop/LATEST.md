@@ -34,8 +34,8 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
 
 SCORE: 8.3
 
-## Iteration 52
-**Did**: No code changes. Checked the two open items: the tablet (820x1180) human and AI reveals via `look` sheet, and 2-player (`KeyM`, ArrowRight 40 frames, `Enter`).
-**Saw**: Tablet: GOTCHA / AI SHEEP titles, kicker, caption, `div#tag` and the "baa?" `div#bubble` all fit inside 820 px; HUD and `div#mode` do not overlap (0 overlap, 0 off-screen). Brightness 64-66%, 0-1% blown out, no console errors, no "Never visible". 2-player: mode becomes "local", the wolf moved to x -3.33, `Enter` starts the pounce (state pounce, pose leap, boom/stab sounds). `wolf.bites` is not in observe() (the HUD shows 3 red dots); I did not play the 3→2 drop through to the end of the reveal.
-**Next**: (1) If a visible change is wanted: deepen the wolf's stalking or add a wool-burst/rim boost on the AI reveal (game.js ~544). (2) Play the local pounce through to the reveal and confirm the HUD dots go 3→2.
-**Open**: Nothing broken. The score has sat at 8.3; small checks do not move it.
+## Iteration 53
+**Did**: game.js ~546: extra `wool` burst (120 particles, speed 8, life 2.2) on the AI-sheep reveal only. Rim light (`rim`, game.js:55/692) already existed. Syntax checked with `node --check`; not looked at in the browser.
+**Saw**: Not measured this session; no `look` run.
+**Next**: (1) `look` sheet `ai` cell to confirm the bigger wool burst. (2) Play the natural clover win and `KeyR` restart (asked since iteration 44, never done). (3) Play local pounce to the reveal, HUD dots 3→2.
+**Open**: Wool change unverified visually.
