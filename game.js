@@ -222,23 +222,23 @@ const flat = (mat = {}) => new THREE.MeshToonMaterial({ vertexColors: true, grad
 const WOOL = PAL.wool, DARK = PAL.face;
 const sheepBodyGeo = mergeGeometries([
   mk(ico(0.5, 2), WOOL, { p: [0, 0.62, 0], s: [1, 0.82, 1.3], jit: 0, soft: true }),
-  mk(ico(0.3, 2), WOOL, { p: [0.22, 0.98, 0.22], jit: 0, soft: true }), mk(ico(0.3, 2), WOOL, { p: [-0.22, 0.98, 0.1], jit: 0, soft: true }),
-  mk(ico(0.46, 2), 0x4a5278, { p: [0, 0.36, 0], s: [0.95, 0.4, 1.25], soft: true }),
-  mk(ico(0.3, 2), WOOL, { p: [0, 1.0, -0.3], jit: 0, soft: true }), mk(ico(0.26, 2), WOOL, { p: [0.3, 0.7, -0.62], jit: 0, soft: true }),
-  mk(ico(0.26, 2), WOOL, { p: [-0.3, 0.7, -0.6], jit: 0, soft: true }),
+  mk(ico(0.3, 1), WOOL, { p: [0.22, 0.98, 0.22], jit: 0, soft: true }), mk(ico(0.3, 1), WOOL, { p: [-0.22, 0.98, 0.1], jit: 0, soft: true }),
+  mk(ico(0.46, 1), 0x4a5278, { p: [0, 0.36, 0], s: [0.95, 0.4, 1.25], soft: true }),
+  mk(ico(0.3, 1), WOOL, { p: [0, 1.0, -0.3], jit: 0, soft: true }), mk(ico(0.26, 1), WOOL, { p: [0.3, 0.7, -0.62], jit: 0, soft: true }),
+  mk(ico(0.26, 1), WOOL, { p: [-0.3, 0.7, -0.6], jit: 0, soft: true }),
   ...[[-1, -1], [1, -1], [-1, 1], [1, 1]].map(([x, z]) => mk(box(0.09, 0.46, 0.09), 0x1c1514, { p: [x * 0.22, 0.21, z * 0.42] })),
 ]);
 const sheepHeadGeo = mergeGeometries([
   mk(box(0.36, 0.34, 0.44), DARK, { p: [0, 0, 0.2] }),
   mk(box(0.2, 0.07, 0.12), 0x3a2c26, { p: [0.26, 0.08, 0.06], r: [0, 0, -0.4] }), mk(box(0.2, 0.07, 0.12), 0x3a2c26, { p: [-0.26, 0.08, 0.06], r: [0, 0, 0.4] }),
   mk(box(0.07, 0.07, 0.03), 0xf3e8cc, { p: [0.1, 0.07, 0.42] }), mk(box(0.07, 0.07, 0.03), 0xf3e8cc, { p: [-0.1, 0.07, 0.42] }),
-  mk(ico(0.2, 2), WOOL, { p: [0, 0.22, 0.02], soft: true }),
+  mk(ico(0.2, 1), WOOL, { p: [0, 0.22, 0.02], soft: true }),
 ]);
 const SS = 1.8;
 const HEAD_P = new THREE.Vector3(0, 0.78, 0.6);
 const N_AI = 100, N = N_AI + 1;
-const toonSheep = (() => { const d = new Uint8Array([196,176,140,255, 255,255,255,255]); const t = new THREE.DataTexture(d, 2, 1, THREE.RGBAFormat); t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t; })();
-const sheepMat = flat({ emissive: 0x2e261c, gradientMap: toonSheep }); const bodyIM = new THREE.InstancedMesh(sheepBodyGeo, sheepMat, N); bodyIM.name = 'sheep'; bodyIM.castShadow = false; bodyIM.frustumCulled = false;
+const toonSheep = (() => { const d = new Uint8Array([232,224,204,255, 255,255,255,255]); const t = new THREE.DataTexture(d, 2, 1, THREE.RGBAFormat); t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t; })();
+const sheepMat = flat({ emissive: 0x3a352a, gradientMap: toonSheep }); const bodyIM = new THREE.InstancedMesh(sheepBodyGeo, sheepMat, N); bodyIM.name = 'sheep'; bodyIM.castShadow = false; bodyIM.frustumCulled = false;
 const headIM = new THREE.InstancedMesh(sheepHeadGeo, sheepMat, N); headIM.name = 'sheep-heads'; headIM.castShadow = false; headIM.frustumCulled = false;
 { const tints = [0xffffff, 0xfaf0dc, 0xefe2c6, 0xffffff, 0xf2e6cf, 0xe0d4bb]; const c = new THREE.Color();
   for (let i = 0; i < N; i++) { const j = i === 0 ? 13 : i, t = tints[(j * 7 + (j >> 2)) % tints.length]; c.setHex(t).multiplyScalar(0.92 + ((j * 37) % 17) / 17 * 0.1); bodyIM.setColorAt(i, c); headIM.setColorAt(i, new THREE.Color(0xffffff)); } }

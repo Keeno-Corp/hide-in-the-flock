@@ -2359,3 +2359,9 @@ SCORE: 7.5
    - Thin the `aim` ring.
 
 SCORE: 7.4
+
+## Iteration 40
+**Did**: game.js sheep geometry (`sheepBodyGeo`, `sheepHeadGeo`) `ico()` detail 2 → 1; `toonSheep` low band 196,176,140 → 232,224,204; `sheepMat` emissive 0x2e261c → 0x3a352a.
+**Saw**: `perf`: 190,778 triangles (was 261k), 81 draw calls, 0.63 MB. Zoom [450,560,920,720]: sheep fleece still reads peach-orange with soft lumps, so the warm tint is probably from the post-process grade or the scene lights, not from the gradient map. No console errors seen. 
+**Next**: find the warm cast (post shader / sun colour / `PAL`) and neutralise it on `sheep`; flatten `pines*`/`oaks*`/`ridge*` vertex gradients; clover zoom, KeyE solo pass and local Enter bite pass (skipped four sessions); thin the `aim` ring.
+**Open**: sheep still peach; triangles 191k, target <160k not met. Clover/solo/bite passes untested.
