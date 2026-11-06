@@ -663,8 +663,8 @@ function drawWolf(dt) {
     W.body.position.y = -0.3; W.body.rotation.x = 0.3; W.legs.forEach(l => l.scale.y = 0.6); W.head.rotation.x = 0.4;
   } else if (pz === 'shrug') {
     const k = Math.sin(clock * 7);
-    W.body.position.y = 0.1 + Math.abs(k) * 0.12; W.body.rotation.x = -0.15; W.head.rotation.z = Math.sin(clock * 3.5) * 0.45; W.head.rotation.x = 0.1;
-    W.legs.forEach((l, i) => { if (i < 2) { l.rotation.x = -0.5; l.rotation.z = (i ? 1 : -1) * (0.5 + Math.abs(k) * 0.4); l.scale.y = 0.7; } else l.rotation.x = 0.5; });
+    W.body.position.y = 0.1 + Math.abs(k) * 0.28; W.body.rotation.x = -0.15; W.head.rotation.z = Math.sin(clock * 3.5) * 0.7; W.head.rotation.x = 0.1;
+    W.legs.forEach((l, i) => { if (i < 2) { l.rotation.x = -0.5; l.rotation.z = (i ? 1 : -1) * (0.6 + Math.abs(k) * 0.6); l.scale.y = 0.7; } else l.rotation.x = 0.5; });
     W.tail.rotation.y = Math.sin(clock * 6) * 0.6;
   } else if (pz === 'sulk') {
     W.body.position.y = -0.4; W.head.rotation.x = 0.7; W.head.position.y = 0.5; W.legs.forEach(l => l.scale.y = 0.4); W.body.rotation.z = 0.02;

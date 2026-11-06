@@ -2543,3 +2543,9 @@ SCORE: 8.3
 **Saw**: Human pounce at 110 frames: GOTCHA title, sub line `div#reveal` and `div#tag` PLAYER 1 all sit inside 390 px (reveal box reads -4..393 only from the title tilt; picture shows nothing clipped). AI pounce: AI SHEEP title, sub line, "baa?" `div#bubble` all inside. No console errors, no Never visible. Brightness 62-65%. No perf run.
 **Next**: (1) Natural clover win: walk to each `clover`, hold KeyE, `until:{result:"win"}`, then KeyR and check `wolf.bites` 3. (2) Bigger wolf shrug and rim light in the AI reveal. (3) Larger desktop HUD text.
 **Open**: Natural win, 2-player and tablet reveals still unchecked.
+
+## Iteration 50
+**Did**: Desktop HUD text bigger in index.html (`#hud .row` 19→22px, `.lab` 11→13px, width 84px). Bigger `wolf` shrug in game.js (`head.rotation.z` 0.7, body bounce 0.28, arm spread 0.6+0.6|k|). No rim light or extra `wool` burst yet.
+**Saw**: AI pounce at 110 frames, 1280x800: AI SHEEP title, sub line, "baa?" `div#bubble`, `div#hud` [14,12,259,152] all inside, 0 off-screen, 0 cut off. Brightness 62%, 1% blown out. No console errors. Never visible: sea/cliff/wolf-rock only because they are out of view at this camera. No perf run.
+**Next**: (1) Natural clover win with KeyE and KeyR check (`wolf.bites` 3). (2) Rim light and stronger `wool` burst in the AI reveal. (3) Check the larger HUD at 390 px and tablet starts.
+**Open**: Natural win, 2-player and tablet reveals still unchecked.
