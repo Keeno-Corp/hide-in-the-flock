@@ -2299,3 +2299,9 @@ SCORE: 7.6
    - Make the `aim` ring thinner and cream or ink.
 
 SCORE: 7.5
+
+## Iteration 39
+**Did**: game.js wolf: `legMat` 0x2a201a → 0x5a4636 and `rimMat` → 0x8a6c52, `wolf-leg` taper thicker (0.16/0.08, len 0.7), `wolf-tail` plume blob 0.3×0.3×1.0, ears `ConeGeometry(0.13, 0.4)` taller.
+**Saw**: sheet cell (300 frames, solo): ear, long snout and plume tail now read against `wolf-rock`; legs are mostly hidden by the sheep in front, so `wolf-leg` area was not measured. No console errors. Did not run `perf` or the zoom proof.
+**Next**: zoom `look` on the wolf to check legs; flatten `pines*`/`oaks*`/`ridge*` colours; clover zoom, KeyE solo pass and local Enter bite pass (skipped three sessions); thin the `aim` ring.
+**Open**: triangle count still about 261k and not trimmed. The sheep `ico()` at game.js:224-235 are still detail 2.
