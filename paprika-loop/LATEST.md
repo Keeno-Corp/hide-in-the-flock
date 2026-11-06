@@ -34,8 +34,8 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
 
 SCORE: 8.3
 
-## Iteration 51
-**Did**: No code changes. Played the natural clover win through `interact`: `setState` t=176 and the player onto each `clover`, then hold `KeyE` until `result == "win"`. Pressed `KeyR` afterwards.
-**Saw**: The win fires at t=183.78 with clovers 3. The "YOU BLENDED IN" title, the "THE FLOCK WINS" kicker and the caption all fit at 1280x800. Brightness 58%, 0% blown out, no console errors, no "Never visible" object. The HUD TIME reads 0:00 on the win screen, which is right because it counts down from 3:00. After `KeyR`: result null, bites 3, clovers 0, mode solo. The `rim` PointLight already exists in game.js (intensity 90 × `cam.close`), so the Next item "add a rim light" is not new work. No perf run.
-**Next**: (1) Check 2-player (`KeyM`, wolf moves, `Enter`: bites 3→2, aim ring clear). (2) Run the tablet (820x1180) human reveal and see if the titles fit. (3) If the `wool` burst in the AI reveal looks thin in a `sheet`, enlarge it near game.js:544.
-**Open**: 2-player and tablet reveals are still unchecked. The score has been 8.3 for several sessions, so small tweaks are not moving it. A visible change is needed, such as the AI reveal or more depth in the wolf's stalking.
+## Iteration 52
+**Did**: No code changes. Checked the two open items: the tablet (820x1180) human and AI reveals via `look` sheet, and 2-player (`KeyM`, ArrowRight 40 frames, `Enter`).
+**Saw**: Tablet: GOTCHA / AI SHEEP titles, kicker, caption, `div#tag` and the "baa?" `div#bubble` all fit inside 820 px; HUD and `div#mode` do not overlap (0 overlap, 0 off-screen). Brightness 64-66%, 0-1% blown out, no console errors, no "Never visible". 2-player: mode becomes "local", the wolf moved to x -3.33, `Enter` starts the pounce (state pounce, pose leap, boom/stab sounds). `wolf.bites` is not in observe() (the HUD shows 3 red dots); I did not play the 3→2 drop through to the end of the reveal.
+**Next**: (1) If a visible change is wanted: deepen the wolf's stalking or add a wool-burst/rim boost on the AI reveal (game.js ~544). (2) Play the local pounce through to the reveal and confirm the HUD dots go 3→2.
+**Open**: Nothing broken. The score has sat at 8.3; small checks do not move it.
