@@ -394,7 +394,8 @@ const marker = new THREE.Mesh(new THREE.RingGeometry(0.85, 1.1, 28).rotateX(-Mat
 const reach = new THREE.Mesh(new THREE.RingGeometry(4.4, 4.6, 40).rotateX(-Math.PI / 2), ringMat(0xb3261e)); reach.name = 'reach'; reach.visible = false; scene.add(reach);
 const aim = new THREE.Mesh(new THREE.RingGeometry(2.4, 3.8, 32).rotateX(-Math.PI / 2), ringMat(0xe0a03a)); aim.material.opacity = 0.95; aim.material.depthTest = false; aim.renderOrder = 5; aim.name = 'aim'; { const am = new THREE.MeshBasicMaterial({ color: 0xb3261e, depthTest: false, fog: false }); const ar = new THREE.Mesh(new THREE.ConeGeometry(0.9, 1.8, 4).rotateX(Math.PI), am); ar.renderOrder = 6; ar.position.y = 5; ar.name = 'aimArrow'; aim.add(ar); const ar2 = new THREE.Mesh(new THREE.RingGeometry(1.5, 2.4, 32).rotateX(-Math.PI / 2), am); ar2.renderOrder = 5; aim.add(ar2); { const wm = new THREE.MeshBasicMaterial({ color: 0xffffff, depthTest: false, fog: false, transparent: true, opacity: 0.9 }); const ro = new THREE.Mesh(new THREE.RingGeometry(3.8, 4.2, 32).rotateX(-Math.PI / 2), wm); ro.renderOrder = 5; aim.add(ro); } aim.userData.arrow = ar; } aim.visible = false; scene.add(aim);
 const aimLine = new THREE.Mesh(new THREE.PlaneGeometry(1, 1.6).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xb3261e, depthTest: false, fog: false, transparent: true, opacity: 0.8 })); aimLine.renderOrder = 4; aimLine.name = 'aimLine'; aimLine.visible = false; scene.add(aimLine);
-const wolfRing = new THREE.Mesh(new THREE.RingGeometry(6.4, 7.8, 36).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xe0a03a, depthTest: false, fog: false, transparent: true, opacity: 0.9 })); wolfRing.renderOrder = 6; wolfRing.name = 'wolfRing'; { const f = new THREE.Mesh(new THREE.CircleGeometry(6.3, 28).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0x8e9a58, depthTest: false, fog: false, transparent: true, opacity: 0.45 })); f.renderOrder = 6; f.name = 'wolfRingFill'; wolfRing.add(f); wolfRing.userData.fill = f; } wolfRing.visible = false; scene.add(wolfRing);
+const wolfRing = new THREE.Mesh(new THREE.RingGeometry(6.4, 7.8, 36).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xe0a03a, depthTest: false, fog: false, transparent: true, opacity: 0.9 })); wolfRing.renderOrder = 6; wolfRing.name = 'wolfRing'; { const f = new THREE.Mesh(new THREE.CircleGeometry(6.3, 28).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0x8e9a58, depthTest: false, fog: false, transparent: true, opacity: 0.45 })); f.renderOrder = 6; f.name = 'wolfRingFill'; wolfRing.add(f); wolfRing.userData.fill = f; } wolfRing.visible = false; wolfRing.frustumCulled = false; scene.add(wolfRing);
+const wolfMark = new THREE.Mesh(new THREE.ConeGeometry(1.6, 3.4, 4).rotateX(Math.PI), new THREE.MeshBasicMaterial({ color: 0xb3261e, depthTest: false, depthWrite: false, fog: false, transparent: true, opacity: 0.95 })); wolfMark.renderOrder = 9; wolfMark.name = 'wolfMark'; wolfMark.frustumCulled = false; wolfMark.visible = false; scene.add(wolfMark);
 const outline = new THREE.Group(); outline.visible = false; outline.name = 'outline';
 {
   const om = new THREE.MeshBasicMaterial({ color: 0xb3261e, side: THREE.BackSide, depthTest: false }); om.fog = false;
@@ -878,6 +879,7 @@ function drawWolf(dt) {
   reach.visible = loc && !pounce.ph && !result; reach.scale.setScalar(1.55); reach.position.set(w.x, gh(w.x, w.z) + 0.15, w.z);
   aim.visible = false; aimLine.visible = false;
   wolfRing.visible = loc && !pounce.ph && !result; if (wolfRing.visible) { wolfRing.position.set(w.x, gh(w.x, w.z) + 0.3, w.z); wolfRing.scale.setScalar(1 + 0.15 * Math.sin(clock * 8)); const rdy = 1 - Math.min(1, (w.dashCd || 0) / 2.5); wolfRing.userData.fill.scale.setScalar(Math.max(0.02, rdy)); wolfRing.userData.fill.material.color.setHex(rdy >= 1 ? 0x8e9a58 : 0xb3261e); }
+  wolfMark.visible = wolfRing.visible; if (wolfMark.visible) wolfMark.position.set(w.x, gh(w.x, w.z) + 7.5 + Math.sin(clock * 6) * 0.5, w.z);
   if (loc && !pounce.ph && !result) { let best = null, bd = 9; for (const s of sheep) { const d = Math.hypot(s.x - w.x, s.z - w.z); if (d < bd) { bd = d; best = s; } } if (best) { aim.visible = true; aim.position.set(best.x, best.y + 0.2, best.z); aim.scale.setScalar(1.5 + 0.2 * Math.sin(clock * 9)); aim.userData.arrow.position.y = 5 + Math.sin(clock * 7); { const dx = best.x - w.x, dz = best.z - w.z, L = Math.hypot(dx, dz) || 1; aimLine.visible = true; aimLine.position.set((w.x + best.x) / 2, best.y + 0.6, (w.z + best.z) / 2); aimLine.rotation.y = Math.atan2(-dz, dx); aimLine.scale.set(L, 1, 1); } const inR = bd < 7; aim.material.opacity = inR ? 0.7 + 0.25 * Math.sin(clock * 9) : 0.25; reach.material.color.setHex(inR ? 0xe0a03a : 0xb3261e); reach.scale.setScalar(inR ? 1.7 : 1.55); aim.userData.arrow.visible = inR; } }
 }
 
@@ -886,14 +888,14 @@ function updateCamera(dt, rdt) {
   let tx = P.x, tz = P.z, zoom = 1;
   const dW = Math.hypot(wolf.x - P.x, wolf.z - P.z);
   if (mode === 'solo') { const k = dW < 32 ? (T < 12 ? 0.28 + 0.2 * (1 - T / 12) : 0.28) : 0; tx += (wolf.x - P.x) * k; tz += (wolf.z - P.z) * k; }
-  else { tx += (wolf.x - P.x) * 0.5; tz += (wolf.z - P.z) * 0.5; zoom = 1 + clamp((dW - 14) / 30, 0, 0.55); }
+  else { tx += (wolf.x - P.x) * 0.75; tz += (wolf.z - P.z) * 0.75; zoom = 0.6 + clamp((dW - 20) / 40, 0, 0.4); }
   if (pounce.ph && pounce.target) { const m = pounce.target; tx = lerp(tx, (wolf.x + m.x) / 2, cam.punch); tz = lerp(tz, (wolf.z + m.z) / 2, cam.punch); }
   if (pounce.ph === 'reveal' && pounce.t < 2.0) { tx = wolf.x; tz = wolf.z - 2; }
   cam.close += ((pounce.ph === 'reveal' && pounce.t < 2.0 ? 1 : 0) - cam.close) * (1 - Math.exp(-rdt * (pounce.ph === 'reveal' ? 3.5 : 6)));
   rim.position.set(wolf.x + 1.5, 4, wolf.z + 4); rim.intensity = 90 * cam.close;
     const kf = 1 - Math.exp(-rdt * (cam.punch > 0.05 ? 7 : 2.4));
   cam.x += (tx - cam.x) * kf; cam.z += (tz - cam.z) * kf; cam.zoom += (zoom - cam.zoom) * kf;
-  const sc2 = (1 - 0.52 * cam.punch - (pounce.target && !pounce.human ? 0.42 : 0.2) * cam.close) * cam.zoom;
+  const sc2 = (1 - (pounce.target && !pounce.human ? 0.7 : 0.52) * cam.punch - (pounce.target && !pounce.human ? 0.42 : 0.2) * cam.close) * cam.zoom;
   camera.position.set(cam.x, 16 * sc2 + 3 + (pounce.target && !pounce.human ? 5 * cam.close : 0), cam.z + 44 * sc2 + 8);
   camera.lookAt(cam.x, lerp(10.5, 3.0, Math.max(cam.close, cam.punch * 0.9)), cam.z - 8 * (1 - Math.max(cam.close, cam.punch * 0.9)) - 1 * cam.close);
   let fov = 42 - 16 * cam.punch - (pounce.ph === 'reveal' ? 9 * Math.max(0, 1 - pounce.t / 0.6) : 0); { const a = innerWidth / innerHeight; if (a < 1.4) fov = Math.min(80, (2 * Math.atan(Math.tan(fov * Math.PI / 360) * 1.4 / a)) * 180 / Math.PI); } if (Math.abs(camera.fov - fov) > 0.01) { camera.fov = fov; camera.updateProjectionMatrix(); }

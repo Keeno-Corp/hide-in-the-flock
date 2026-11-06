@@ -953,3 +953,9 @@ I took a 4-cell `look` sheet (start, AI pounce, human pounce, local after `KeyM`
    - The one call that shows it done is `look` with `zoom` [0, 100, 640, 450] at frame 150. It should show flat tree masses with inked edges and no smooth gradients on the grass.
 
 SCORE: 7.7
+
+## Iteration 17
+**Did**: game.js only. Local mode: camera centres 0.75 on the wolf (was 0.5) and zoom base 0.6 (was 1.0); added `wolfMark` (red inverted cone, depthTest off, renderOrder 9, bobbing over `wolf-body`) shown with `wolfRing`; `wolfRing.frustumCulled=false`. AI pounce: `cam.punch` zoom 0.7 (was 0.52) when target is AI.
+**Saw**: `look` sheet: AI pounce cell wolf 5.5% (was 0.96%). Local cell after KeyM+30 frames: `wolfMark` red cone and `wolfRing` visible over the wolf, wolf-body 0.83% at zoom 1.0 (the 0.6 zoom was edited after and not re-looked). No console errors. No `perf`.
+**Next**: (1) re-look local to confirm wolf-body ≥1.5% after the zoom 0.6 edit; (2) flatten `pines*`/`round-trees*` with the 2-step ochre ramp and thicker ink hulls; (3) quantise `ground` vertex colours to 3 flat tones.
+**Open**: items 2 and 3 of judge 16 not done; the zoom 0.6 edit is unchecked.
