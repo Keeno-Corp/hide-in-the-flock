@@ -183,7 +183,7 @@ const PLAY_R = 30;
   // ground-ink: marching-squares contour of the tone-band field, drawn as dark-brown ribbons
   {
     const F = (x, z) => Math.sin(x * 0.09 + Math.sin(z * 0.07) * 2) + Math.sin(z * 0.11 - x * 0.05) * 0.8 + 0.32 * Math.sin(x * 0.55 + z * 0.35) * Math.sin(z * 0.5 - x * 0.3) + 0.15 * Math.sin(x * 1.3 + z * 0.9);
-    const st = 0.7, R = 44, n = Math.round(R * 2 / st), V = [];
+    const st = 0.7, R = 30, n = Math.round(R * 2 / st), V = [];
     const seg = (a, b, c, d) => { const dx = d - b, dz = -(c - a), L = Math.hypot(dx, dz) || 1, ox = dx / L * 0.12, oz = dz / L * 0.12; const y1 = gh(a, b) + 0.06, y2 = gh(c, d) + 0.06; V.push(a - ox, y1, b - oz, a + ox, y1, b + oz, c + ox, y2, d + oz, a - ox, y1, b - oz, c + ox, y2, d + oz, c - ox, y2, d - oz); };
     for (const T of [-0.35, 1.1]) for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
       const x0 = -R + i * st, z0 = -R + j * st; if (Math.hypot(x0, z0) > R) continue;
@@ -192,7 +192,7 @@ const PLAY_R = 30;
       if (pts.length >= 2) seg(pts[0][0], pts[0][1], pts[1][0], pts[1][1]); if (pts.length === 4) seg(pts[2][0], pts[2][1], pts[3][0], pts[3][1]);
     }
     const gi = new THREE.BufferGeometry(); gi.setAttribute('position', new THREE.Float32BufferAttribute(V, 3));
-    const li = new THREE.Mesh(gi, new THREE.MeshBasicMaterial({ color: 0x33231a, side: THREE.DoubleSide, transparent: true, opacity: 0.5, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 }));
+    const li = new THREE.Mesh(gi, new THREE.MeshBasicMaterial({ color: 0x33231a, side: THREE.DoubleSide, transparent: true, opacity: 0.28, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 }));
     li.name = 'ground-ink'; scene.add(li);
   }
 }
@@ -851,6 +851,7 @@ function drawSheep(dt) {
     const roll = Math.sin(s.phase) * 0.06 * Math.min(1, sp);
     e3.set(s.hop > 0 ? s.spin * 0.1 : 0, s.yaw, roll, 'YXZ'); q.setFromEuler(e3);
     let k = 1; if (pounce.ph === 'reveal' && s !== pounce.target && Math.hypot(s.x - wolf.x, s.z - wolf.z) < (pounce.human ? 7 : 5.5)) k = Math.max(0.25, 1 - pounce.t * 4);
+    if (i > 0 && s !== pounce.target) { const fz = s.z - cam.z; if (fz > 5) k *= Math.max(0.55, 1 - (fz - 5) * 0.06); }
     if (k < 1) { scK.setScalar(SS * k * SZ[i]); mB.compose(v3.set(s.x, s.y + bob + s.hop, s.z), q, scK); } else
     mB.compose(v3.set(s.x, s.y + bob + s.hop, s.z), q, scZ.setScalar(SS * SZ[i]));
     bodyIM.setMatrixAt(i, mB);
