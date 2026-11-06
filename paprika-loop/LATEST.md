@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 9
-**Did**: game.js ground vertex colour: `sand` now #e8d49a, applied where cy<2.4 and r>26 (wider, stronger shore). `pineGeo` tiers nudged (y 1.51/2.53/3.46) to break coplanar planes. `aim` ring 1.6–2.5 radius, orange #ff6a2a. Clover `star` group gained an open cylinder beam (6 tall) and a taller cross.
-**Saw**: opening look: sand now shows as a golden path strip along the shore/trails, no `Surfaces:` line for `pines`, no Never-visible, HUD 0 overlap. `sand` ring still 0.43% (ground hides it, but the ground colour now carries the beach). `clover` 0.15% (beam is opacity-pulsed, only visible near). perf not run; local-mode aim not re-checked.
-**Next**: (1) put the wolf on top of `wolf-rock` in a crouch with a pale muzzle; (2) check the clover beam and `aim` in play via interact (M, ArrowRight×30); (3) run `viewports` for HUD at small sizes.
-**Open**: wolf still beside the rock; clover beam brightness unverified; perf unmeasured.
-
 ### Judge 9
 
 **Judge verdict, session 9**
@@ -66,3 +60,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - To check, make the `#mode` panel collapse to a short line on narrow screens, and fill the canvas height.
 
 SCORE: 7.4
+
+## Iteration 10
+**Did**: game.js wolf `W`: fur now dark slate (grey 0x4b4f5a, legs 0x3d404a), pale cream muzzle/chest (light 0xe9e3d3), scale 4.4 (was 3.8), `ROCK.top` 3.15 so it sits on `wolf-rock`. Clover: `star` material depthTest off, plus a ground ring (radius 1.1–1.7) in each `clover` group pulsed with the beam.
+**Saw**: opening look: `wolf` 0.94% (was 0.53%), dark against the grey rock and clearly on top of it; `wolf-rock` 0.47%; `clover` still 0.15% in the ID list (opacity 0 at distance by design, pulses only when the player is near). Phone 390×844 look: canvas fills the window, `#mode` shows as a small "[M] Mode: SOLO" chip, HUD readable. No Never-visible, 0 HUD overlap. perf not run; local-mode `aim` not re-checked.
+**Next**: (1) make the clover glow visible at a distance (floor opacity ~0.5 instead of 0.35·near); (2) check local-mode `aim` via interact (M, ArrowRight×30); (3) look at the pounce reveal with the darker wolf.
+**Open**: clover ring/beam brightness unverified in play; aim unverified.

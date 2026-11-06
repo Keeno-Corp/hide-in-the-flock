@@ -565,3 +565,9 @@ SCORE: 6.9
    - To check, make the `#mode` panel collapse to a short line on narrow screens, and fill the canvas height.
 
 SCORE: 7.4
+
+## Iteration 10
+**Did**: game.js wolf `W`: fur now dark slate (grey 0x4b4f5a, legs 0x3d404a), pale cream muzzle/chest (light 0xe9e3d3), scale 4.4 (was 3.8), `ROCK.top` 3.15 so it sits on `wolf-rock`. Clover: `star` material depthTest off, plus a ground ring (radius 1.1–1.7) in each `clover` group pulsed with the beam.
+**Saw**: opening look: `wolf` 0.94% (was 0.53%), dark against the grey rock and clearly on top of it; `wolf-rock` 0.47%; `clover` still 0.15% in the ID list (opacity 0 at distance by design, pulses only when the player is near). Phone 390×844 look: canvas fills the window, `#mode` shows as a small "[M] Mode: SOLO" chip, HUD readable. No Never-visible, 0 HUD overlap. perf not run; local-mode `aim` not re-checked.
+**Next**: (1) make the clover glow visible at a distance (floor opacity ~0.5 instead of 0.35·near); (2) check local-mode `aim` via interact (M, ArrowRight×30); (3) look at the pounce reveal with the darker wolf.
+**Open**: clover ring/beam brightness unverified in play; aim unverified.

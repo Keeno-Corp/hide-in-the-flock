@@ -90,12 +90,23 @@
       "score": 6.9,
       "judgeTurns": 9,
       "judgeTokens": 158569
+    },
+    {
+      "n": 9,
+      "turns": 9,
+      "tokens": 254793,
+      "costUsd": 0.2591652,
+      "minutes": 1.1,
+      "commit": "8132535",
+      "score": 7.4,
+      "judgeTurns": 9,
+      "judgeTokens": 155561
     }
   ],
   "best": {
-    "n": 8,
-    "commit": "7291fa7",
-    "score": 6.9,
+    "n": 9,
+    "commit": "8132535",
+    "score": 7.4,
     "brief": "7b889e156cef"
   },
   "brief": "# Hide in the Flock\n## What it is\nBrowser three.js game (plain page, no build step; index.html, game.js, fx.js, geo.js): a sheep hidden among ~100 AI sheep on an island meadow; a wolf has 3 bites. Solo (AI wolf hunts the player) and local 2-player on one keyboard (second player is the wolf). The page is improved in place, not rebuilt.\n## Must have\n1. Looks as LOOK.md says: its Checks hold.\n2. Plays as DESIGN.md's Core loop and Controls say.\n3. The clip moment is the whole point: the wolf's pounce (slow-mo leap, camera punch-in, sting, wool burst) and the REVEAL of whether it ate a real player (\"HUMAN! GOTCHA\", PLAYER 1 tag) or an AI sheep (\"AI SHEEP\", \"baa?\", wolf shrug, bite lost). It happens within the first minute of solo play and reads clearly in a 5-second clip: big, funny, readable.\n4. Looks like refs/01.jpg: an island meadow with the sea, sand beach, pine forest, grey cliffs and puffy low-poly clouds all visible from the play camera; bright, low-poly, readable; the wolf crouched on its rock.\n5. Solo is genuinely fun and fair: the wolf's suspicion is readable (the player learns what makes it suspicious), blending in (grazing, drifting with the flock) works, clover patches are findable, win and lose screens with restart.\n6. Local 2-player on one keyboard is playable and fun for the wolf player: pounce targeting is clear, 3 bites.\n7. Keeps the window.__game convention, starts playing on load, plain page with no build step, ~100 instanced sheep at 60fps on desktop.\n8. Juice: sounds (baas, munch, wind, sting), sheep animation (grazing head bob, hops), wolf animation, a funny nature-documentary caption voice.\n9. Works in a laptop browser window of any size; the HUD stays readable.\n## References\nrefs/01.jpg · style+mood · inspiration\n## Inspirations and notes\nNature-documentary narrator humour; clip-friendly moments.\n## Sheets\nLOOK.md · CHARACTERS.md · DESIGN.md · refs/sheets/LOOK.png\nWeb study: no · Picture sheets: no · Asset style: low-poly (all unasked)\n## Left to the builder\nCamera, wolf AI tuning, HUD layout.\n"

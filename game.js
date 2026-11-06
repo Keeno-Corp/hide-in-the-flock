@@ -134,11 +134,11 @@ scene.add(bodyIM, headIM);
 
 // ───────────────────────── wolf ─────────────────────────
 const wolf = { x: -10, z: 3, y: 0, yaw: 0.6, state: 'watch', pose: 'crouch', t: 0, bites: 3, cd: 5, sulk: 0, target: null, abort: 0, stalkT: 0, lookX: 0, lookZ: 0, phase: 0, onRock: true, shrug: 0, pitch: 0 };
-const ROCK = { x: -10, z: 3, top: 3.0 };
+const ROCK = { x: -10, z: 3, top: 3.15 };
 const W = {};
 {
-  const grey = 0x8a7560, light = 0xc9b393, dk = 0x222222;
-  W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(3.8);
+  const grey = 0x4b4f5a, light = 0xe9e3d3, dk = 0x15151a;
+  W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(4.4);
   W.body = new THREE.Group(); W.root.add(W.body);
   const mat = flat();
   const add = (parent, g) => { const m = new THREE.Mesh(g, mat); m.castShadow = true; parent.add(m); return m; };
@@ -158,7 +158,7 @@ const W = {};
   W.legs = [];
   [[-1, 0.62], [1, 0.62], [-1, -0.62], [1, -0.62]].forEach(([sx, z]) => {
     const g = new THREE.Group(); g.position.set(sx * 0.26, 0.72, z); W.body.add(g);
-    add(g, mergeGeometries([mk(new THREE.CylinderGeometry(0.1, 0.07, 0.62, 7), 0x7a6650, { p: [0, -0.3, 0] }), mk(box(0.2, 0.08, 0.28), dk, { p: [0, -0.62, 0.05] })]));
+    add(g, mergeGeometries([mk(new THREE.CylinderGeometry(0.1, 0.07, 0.62, 7), 0x3d404a, { p: [0, -0.3, 0] }), mk(box(0.2, 0.08, 0.28), dk, { p: [0, -0.62, 0.05] })]));
     W.legs.push(g);
   });
   W.tail = new THREE.Group(); W.tail.position.set(0, 0.8, -0.95); W.body.add(W.tail);
@@ -221,7 +221,7 @@ const clouds = [];
 // ───────────────────────── clover patches ─────────────────────────
 const clovers = [];
 {
-  const cm = flat(), star = new THREE.MeshBasicMaterial({ color: 0xfff7a0, transparent: true, opacity: 0, depthWrite: false, fog: false });
+  const cm = flat(), star = new THREE.MeshBasicMaterial({ color: 0xfff7a0, transparent: true, opacity: 0, depthWrite: false, depthTest: false, fog: false });
   const geo = mergeGeometries([
     ...[0, 1, 2, 3, 4, 5].map(i => mk(ico(0.3, 0), i % 2 ? 0x2f8a2a : 0x3fa534, { p: [Math.cos(i * 1.05) * 0.5, 0.1, Math.sin(i * 1.05) * 0.5], s: [1, 0.45, 1], jit: 0.1 })),
     mk(ico(0.12, 0), 0xffffff, { p: [0.2, 0.28, 0.1] }), mk(ico(0.12, 0), 0xffd1e6, { p: [-0.3, 0.26, -0.2] }), mk(ico(0.12, 0), 0xffffff, { p: [0.0, 0.3, -0.5] }),
@@ -231,6 +231,7 @@ const clovers = [];
     const m = new THREE.Mesh(geo, cm); m.receiveShadow = true; g.add(m);
     const sp = new THREE.Group(); sp.position.y = 2.2; sp.scale.setScalar(2);
     sp.add(new THREE.Mesh(box(0.1, 0.9, 0.02), star), new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.5, 6, 8, 1, true), star), new THREE.Mesh(box(0.7, 0.08, 0.02), star)); g.add(sp);
+    const cr = new THREE.Mesh(new THREE.RingGeometry(1.1, 1.7, 28).rotateX(-Math.PI / 2), star); cr.position.y = 0.25; cr.material = star; sp.userData.ring = cr; g.add(cr);
     scene.add(g); clovers.push({ x, z, g, mesh: m, star: sp, prog: 0, eaten: false });
   });
 }
@@ -595,7 +596,7 @@ function updateClovers(dt) {
     c.g.visible = true;
     const d = Math.hypot(P.x - c.x, P.z - c.z);
     const near = c.eaten ? 0 : sm(11, 3, d);
-    c.star.children.forEach(m => m.material.opacity = (c.eaten ? 0 : 0.35 + 0.65 * near) * (0.4 + 0.5 * Math.sin(clock * 5 + c.x)));
+    c.star.children.concat(c.g.children.filter(o => o.geometry && o.geometry.type === 'RingGeometry')).forEach(m => m.material.opacity = (c.eaten ? 0 : 0.35 + 0.65 * near) * (0.4 + 0.5 * Math.sin(clock * 5 + c.x)));
     c.star.rotation.y = clock * 0.8; c.star.scale.setScalar(0.7 + 0.4 * Math.sin(clock * 5 + c.x) ** 2); c.star.position.y = 2.2 + Math.sin(clock * 2) * 0.15;
     if (c.eaten) return;
     if (d < 1.9 && P.graze && !P.frozen && !result) {
@@ -633,7 +634,7 @@ function drawSheep(dt) {
 function drawWolf(dt) {
   const w = wolf, r = W.root, pz = w.pose;
   r.position.set(w.x, w.y, w.z); r.rotation.y = w.yaw;
-  { const want = (pz === 'leap' || pz === 'land' || pz === 'shrug') ? 2.4 : 3.8; r.scale.setScalar(r.scale.x + (want - r.scale.x) * Math.min(1, dt * 10 + 0.05)); }
+  { const want = (pz === 'leap' || pz === 'land' || pz === 'shrug') ? 2.4 : 4.4; r.scale.setScalar(r.scale.x + (want - r.scale.x) * Math.min(1, dt * 10 + 0.05)); }
   const ph = w.phase, t = clock;
   W.body.position.set(0, 0, 0); W.body.rotation.set(0, 0, 0); W.head.rotation.set(0, 0, 0); W.head.position.set(0, 0.88, 1.08);
   W.legs.forEach(l => l.rotation.set(0, 0, 0)); W.tail.rotation.set(0, 0, 0);
