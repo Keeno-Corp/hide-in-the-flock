@@ -255,7 +255,7 @@ const outline = new THREE.Group(); outline.visible = false; outline.name = 'outl
   const a = new THREE.Mesh(sheepBodyGeo, om), b = new THREE.Mesh(sheepHeadGeo, om); b.position.copy(HEAD_P); a.renderOrder = b.renderOrder = 20; outline.add(a, b); outline.userData = { a, b };
   scene.add(outline);
 }
-const wool = burst({ max: 500, seed: 7, size: 2.4, additive: false }); wool.name = 'wool'; scene.add(wool);
+const wool = burst({ max: 500, seed: 7, size: 2.7, additive: false }); wool.name = 'wool'; scene.add(wool);
 { const c = document.createElement('canvas'); c.width = c.height = 64; const x = c.getContext('2d'), g = x.createRadialGradient(32, 32, 0, 32, 32, 32);
   g.addColorStop(0, '#fff'); g.addColorStop(0.7, '#fff'); g.addColorStop(1, '#fff0'); x.fillStyle = g; x.fillRect(0, 0, 64, 64);
   const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; wool.material.map = tex; wool.material.alphaTest = 0.02; wool.material.fog = false; wool.material.toneMapped = false; wool.material.depthWrite = false; wool.material.needsUpdate = true; }
@@ -552,13 +552,15 @@ function updatePounce(rdt) {
       for (const o of sheep) { if (o === t || o.player) continue; const dx = o.x - t.x, dz = o.z - t.z, d = Math.hypot(dx, dz); if (d < 6) { o.st = 'run'; o.runT = 1.4; o.dir = Math.atan2(dx, dz) + rnd(-0.3, 0.3); } }
       wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 1.6, t.z), { count: 160, speed: 6, spread: Math.PI * 0.7, life: 1.6, gravity: 5, color: 0xfff6dc });
       wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 1.6, t.z), { count: 30, speed: 3, spread: Math.PI, life: 2, gravity: 2, color: 0xffffff });
-      if (p.human) wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 2.2, t.z), { count: 260, speed: 8, spread: Math.PI, life: 2.8, gravity: 3, color: 0xfff0d0 });
+      wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 1.8, t.z), { count: 50, speed: 7, spread: Math.PI, life: 2.2, gravity: 3, color: 0xffb8cc });
+      wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 1.8, t.z), { count: 40, speed: 5, spread: Math.PI, life: 2.2, gravity: 3, color: 0xffd9a0 });
+      if (p.human) wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 2.2, t.z), { count: 150, speed: 8, spread: Math.PI, life: 2.8, gravity: 3, color: 0xfff0d0 });
       if (!p.human) wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 1.2, t.z), { count: 240, speed: 6, spread: Math.PI * 0.9, life: 3.2, gravity: 4, color: 0xfff0d0 });
       camShake.kick(1.0); play('thud', 1); play('hit', 0.6); t.hopV = 6; t.spin = rnd(-6, 6);
       $('flash').style.opacity = 0.3;
       if (p.human) {
-        outline.visible = true; wolf.pose = 'land'; sting();
-        camShake.kick(1.6); showResult('GOTCHA', 'HUMAN!  That was PLAYER 1.', 'HUMAN!', '#ff3a2a'); $('rk').textContent = 'HUMAN!'; $('rsub').textContent = 'PLAYER 1 has been found.'; $("vig").style.opacity = 0.25;
+        outline.visible = true; wolf.pose = 'grin'; sting();
+        camShake.kick(2.4); showResult('GOTCHA', 'HUMAN!  That was PLAYER 1.', 'HUMAN!', '#ff3a2a'); $('rk').textContent = 'HUMAN!'; $('rsub').textContent = 'PLAYER 1 has been found.'; $("vig").style.opacity = 0.25;
         $('tag').style.display = 'block'; caption(pick(caps.human));
       } else {
         showResult('AI SHEEP', 'Just a sheep.', 'Bite wasted', '#fdfdec'); $('rsub').textContent = 'Just a sheep. Bite wasted.';
@@ -601,7 +603,7 @@ function updatePounce(rdt) {
     }
     return 1;
   }
-  return p.t < 0.9 ? 0.2 : lerp(0.2, 1, sm(0.9, 1.6, p.t));
+  return p.t < 0.3 ? 0.03 : p.t < 0.9 ? 0.2 : lerp(0.2, 1, sm(0.9, 1.6, p.t));
 }
 function bodyMatrixOf() { return null; }
 
@@ -654,7 +656,7 @@ function drawSheep(dt) {
 function drawWolf(dt) {
   const w = wolf, r = W.root, pz = w.pose;
   r.position.set(w.x, w.y, w.z); r.rotation.y = w.yaw;
-  { const want = (pz === 'leap' || pz === 'land' || pz === 'shrug') ? 2.4 : 4.4; r.scale.setScalar(r.scale.x + (want - r.scale.x) * Math.min(1, dt * 10 + 0.05)); }
+  { const want = (pz === 'leap' || pz === 'land' || pz === 'shrug' || pz === 'grin') ? 2.4 : 4.4; r.scale.setScalar(r.scale.x + (want - r.scale.x) * Math.min(1, dt * 10 + 0.05)); }
   const ph = w.phase, t = clock;
   W.body.position.set(0, 0, 0); W.body.rotation.set(0, 0, 0); W.head.rotation.set(0, 0, 0); W.head.position.set(0, 0.88, 1.08);
   W.legs.forEach(l => l.rotation.set(0, 0, 0)); W.tail.rotation.set(0, 0, 0);
@@ -672,9 +674,14 @@ function drawWolf(dt) {
     W.legs.forEach((l, i) => { l.rotation.x = i < 2 ? -1.1 : 1.2; l.scale.y = 0.6; });
   } else if (pz === 'land') {
     W.body.position.y = -0.3; W.body.rotation.x = 0.3; W.legs.forEach(l => l.scale.y = 0.6); W.head.rotation.x = 0.4;
+  } else if (pz === 'grin') {
+    const k = Math.sin(clock * 9);
+    W.body.position.y = 0.2 + Math.abs(k) * 0.08; W.body.rotation.x = -0.3; W.head.rotation.x = -0.35; W.head.position.y = 1.0; W.head.rotation.z = Math.sin(clock * 5) * 0.12;
+    W.legs.forEach((l, i) => { if (i < 2) { l.rotation.x = -0.9; l.rotation.z = (i ? 1 : -1) * 0.5; l.scale.y = 0.8; } else l.rotation.x = 0.3; });
+    W.tail.rotation.y = Math.sin(clock * 14) * 0.9;
   } else if (pz === 'shrug') {
     const k = Math.sin(clock * 7);
-    W.body.position.y = 0.1 + Math.abs(k) * 0.28; W.body.rotation.x = -0.15; W.head.rotation.z = Math.sin(clock * 3.5) * 0.7; W.head.rotation.x = 0.1;
+    W.body.position.y = 0.15 + Math.abs(k) * 0.1; W.body.rotation.x = -0.05; W.head.rotation.z = Math.sin(clock * 3.5) * 0.7; W.head.rotation.x = 0.1;
     W.legs.forEach((l, i) => { if (i < 2) { l.rotation.x = -0.5; l.rotation.z = (i ? 1 : -1) * (0.6 + Math.abs(k) * 0.6); l.scale.y = 0.7; } else l.rotation.x = 0.5; });
     W.tail.rotation.y = Math.sin(clock * 6) * 0.6;
   } else if (pz === 'sulk') {
@@ -707,7 +714,7 @@ function updateCamera(dt, rdt) {
   const sc2 = (1 - 0.3 * cam.punch - (pounce.target && !pounce.human ? 0.42 : 0.2) * cam.close) * cam.zoom;
   camera.position.set(cam.x, 15 * sc2 + 3 + (pounce.target && !pounce.human ? 5 * cam.close : 0), cam.z + 32 * sc2 + 6);
   camera.lookAt(cam.x, 5 - (pounce.target && !pounce.human ? 6.2 * cam.close : 0), cam.z - 8);
-  let fov = 50 - 16 * cam.punch; { const a = innerWidth / innerHeight; if (a < 1.4) fov = Math.min(80, (2 * Math.atan(Math.tan(fov * Math.PI / 360) * 1.4 / a)) * 180 / Math.PI); } if (Math.abs(camera.fov - fov) > 0.01) { camera.fov = fov; camera.updateProjectionMatrix(); }
+  let fov = 50 - 16 * cam.punch - (pounce.ph === 'reveal' ? 12 * Math.max(0, 1 - pounce.t / 0.6) : 0); { const a = innerWidth / innerHeight; if (a < 1.4) fov = Math.min(80, (2 * Math.atan(Math.tan(fov * Math.PI / 360) * 1.4 / a)) * 180 / Math.PI); } if (Math.abs(camera.fov - fov) > 0.01) { camera.fov = fov; camera.updateProjectionMatrix(); }
   pinesMesh.visible = cam.close < 0.8;
   camShake.update(rdt);
 }

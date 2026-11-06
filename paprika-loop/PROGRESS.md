@@ -3391,3 +3391,9 @@ The `div#bubble` clamp works. "baa?" now sits at x=598–743, fully on screen wi
    - **Check:** `look` with `zoom:[480,380,820,660]` at the reveal frame shows the flakes clearly against the sheep.
 
 SCORE: 8.6
+
+## Iteration 87
+**Did**: `game.js` `updatePounce`: reveal freeze (slow 0.03 for first 0.3 s, then 0.2) plus a fov punch-in (−12° fading over 0.6 s) in `updateCamera`; human GOTCHA `camShake.kick(2.4)`. New wolf pose `grin` (body back, head up, paws raised, fast tail wag) used on a human bite; `shrug` made upright (less body tilt/bob). `wool` size 2.4→2.7, extra pink (0xffb8cc) and tan (0xffd9a0) bursts, human burst 260→150.
+**Saw**: human pounce reveal after 60 frames: pose "grin", 10 sounds, `div#tag` [614,474,820,524] on screen, 0 overlap/off-screen. At wool size 3.6 `wool` covered 57% of the frame, so I lowered it to 2.7; that final size was not re-looked at. Did not run `perf`, `feel`, the AI shrug look or a zoom on the wool colours.
+**Next**: (1) look at the final `wool` size and a zoom on the pink/tan flakes; (2) look at the grin and shrug poses on the wolf up close, since the wolf is hidden under wool in the reveal; (3) re-check `perf` and `feel`.
+**Open**: wool coverage at 2.7 unverified; the grin pose has not been seen without wool in front.
