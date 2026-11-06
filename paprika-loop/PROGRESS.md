@@ -1423,3 +1423,9 @@ I took one 3-cell `look` sheet (start, human bite, local mode via `KeyM`) and on
    - Then fix the local wolf so it is upright and `wolf-rock` covers its hind legs. Press `KeyM` and `look` with `zoom` on the wolf.
 
 SCORE: 7.8
+
+## Iteration 25
+**Did**: game.js wolf build: `wolf-rim` pushed out 0.08 (was 0.05) and lightened to 0x8a7058; added `legMat` (0x2a201a) for the `wolf-leg` shafts so legs read lighter than the 0x030203 body; `rimMat` (ears, paws) lightened to 0x4a3a30.
+**Saw**: `look` zoom [250,300,650,650]: the rim now clearly outlines the head, ears and body masses on `wolf-rock`, and legs show as separate brown shapes. No console errors. Wolf is still a heap on the rock, not a lean wolf in profile. `perf` not run.
+**Next**: (1) pose the wolf off the rock or rotate the crouch so the snout and ears show in profile; (2) clover leaf motif and glow; (3) triangle cut: sheep use `ico(...,1)` per part, so lower the instance detail or drop `sheep-heads-ink`.
+**Open**: triangle count (about 195k) and clover motif not done.

@@ -261,7 +261,8 @@ const W = {};
   W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(8);
   W.body = new THREE.Group(); W.root.add(W.body);
   const mat = new THREE.MeshBasicMaterial({ color: PAL.wolf, fog: false });
-  const rimMat = new THREE.MeshBasicMaterial({ color: 0x3a2e26, fog: false });
+  const legMat = new THREE.MeshBasicMaterial({ color: 0x2a201a, fog: false });
+  const rimMat = new THREE.MeshBasicMaterial({ color: 0x4a3a30, fog: false });
   const add = (parent, g, mm) => { const m = new THREE.Mesh(g, mm || mat); m.castShadow = true; parent.add(m); return m; };
   // smooth rounded masses only (WOLF.png: sleek long-snouted silhouette, tall ears, bush tail, slim legs)
   const blob = (sx, sy, sz, px, py, pz, rx = 0, ry = 0, rz = 0) => new THREE.SphereGeometry(0.5, 16, 12).scale(sx, sy, sz).rotateX(rx).rotateY(ry).rotateZ(rz).translate(px, py, pz);
@@ -289,18 +290,18 @@ const W = {};
   W.legs = [];
   [[-1, 0.62], [1, 0.62], [-1, -0.55], [1, -0.55]].forEach(([sx, z]) => {
     const g = new THREE.Group(); g.name = 'wolf-leg'; g.position.set(sx * 0.2, 0.72, z); W.body.add(g);
-    add(g, taper(0.1, 0.055, 0.7, 0, -0.34, 0));
+    add(g, taper(0.1, 0.055, 0.7, 0, -0.34, 0), legMat);
     add(g, blob(0.14, 0.09, 0.28, 0, -0.69, 0.07), rimMat);
     W.legs.push(g);
   });
   W.tail = new THREE.Group(); W.tail.name = 'wolf-tail'; W.tail.position.set(0, 0.85, -0.95); W.body.add(W.tail);
   add(W.tail, blob(0.22, 0.24, 0.95, 0, -0.28, -0.3, -0.55));
   // ink rim: a lighter brown shell pushed out along the normals, drawn behind each wolf mesh
-  const rimInk = new THREE.MeshBasicMaterial({ color: 0x6a5546, side: THREE.BackSide, fog: false });
+  const rimInk = new THREE.MeshBasicMaterial({ color: 0x8a7058, side: THREE.BackSide, fog: false });
   const meshes = []; W.body.traverse(o => { if (o.isMesh && o.geometry && o.geometry.attributes.normal && o.material !== eyeMat) meshes.push(o); });
   meshes.forEach(o => {
     const g = o.geometry.clone(), p = g.attributes.position, n = g.attributes.normal;
-    for (let i = 0; i < p.count; i++) p.setXYZ(i, p.getX(i) + n.getX(i) * 0.05, p.getY(i) + n.getY(i) * 0.05, p.getZ(i) + n.getZ(i) * 0.05);
+    for (let i = 0; i < p.count; i++) p.setXYZ(i, p.getX(i) + n.getX(i) * 0.08, p.getY(i) + n.getY(i) * 0.08, p.getZ(i) + n.getZ(i) * 0.08);
     const h = new THREE.Mesh(g, rimInk); h.name = 'wolf-rim'; o.parent.add(h);
   });
   scene.add(W.root);
