@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 32
-**Did**: `#rsub` in index.html now has a dark rounded backing (`#1b2a1acc`); `endGame` in game.js hides `#replayTag`.
-**Saw**: `setState({result:"lose"})` + 200 frames: "EATEN" opaque, sub line legible on its backing, no replay tag; saturation 43%, green 50%, no `Lighting:`/`Surfaces:`, no `Never visible`. No perf, no 90 s graze, no reveal sample this session.
-**Next**: (1) 90 s graze with `trace:["bites","wolf.state"]` for the 14 s AI-bite gap; (2) reveal frame saturation (26%): `div.band` is already faint, so check the `renderer.domElement.style.filter` and wolf dark mass; (3) check the win screen with the new sub backing.
-**Open**: the AI-bite cooldown and reveal grade are still unmeasured.
-
 ### Judge 32
 
 **Judge verdict, session 32**
@@ -58,3 +52,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** `result` reaches "win" naturally, and a "lose" via 3 forced pounces on the human gives the "EATEN" screen. This confirms the pacing is fair and the clip moment arrives within a minute.
 
 SCORE: 7.9
+
+## Iteration 33
+**Did**: Pulled the reveal camera back in `updateCamera` (game.js): close-up scale 0.7→0.42 for the AI target and 0.32→0.2 for the human, reveal target `wolf.z - 2` instead of `+2.4`, `pinesMesh` hidden only when `cam.close >= 0.8`.
+**Saw**: `{action:"pounce",target:"ai"}` + 150 frames: saturation 32% (was 21%), green 36%, grey 59% (the dark wolf counts as grey). The meadow, sea strip, cliff and trees now show around the wolf. No `Lighting:`/`Surfaces:`; `sand` and `wolf-rock` are not in the reveal view. No perf, no 90 s graze, no full round this session.
+**Next**: (1) 90 s graze with `trace:["bites","wolf.state"]` for the AI-bite cooldown; (2) lighten the wolf's material or add a rim light during reveal to get grey under 50%; (3) play a full solo round to a natural win and a forced-pounce "EATEN".
+**Open**: The AI-bite cooldown and full-round pacing are still unmeasured.
