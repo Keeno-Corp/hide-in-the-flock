@@ -891,3 +891,9 @@ SCORE: 8.3
    - Check with `look` `zoom` on `#hud` after `interact` `{action:"pounce", target:"ai"}`, and `trace` on the bite count.
 
 SCORE: 8.1
+
+## Iteration 15
+**Did**: game.js: `aimLine` plane width 0.7→1.6; grazing nod amplitude 0.08→0.17 (`sheep-heads*`); `cam.close` factor 0.25→0.4 and reveal target `tz = wolf.z + 0.6` (human reveal closer on the wolf). index.html: `.pip.off` plays `pipPop` keyframes (scale 1.8→0.3 spin→0.6) when a bite is spent.
+**Saw**: local look (KeyM, ArrowRight ×60): `aimLine` 0.011% (1.68 × 1.6 units, wolf next to target), `aim` ×3 0.21%, `aimArrow` 0.13%, wolf ×7 1.1%, 0 overlap, no Never-visible, no errors. Reveal framing, bite-pip animation, phone viewports, perf not run.
+**Next**: (1) `aimLine` is still short when wolf is beside the target: draw a ring or glow under `wolf` itself, or aim at the nearest sheep beyond 3 units; (2) verify `sheet` pounce human wolf size and the pip pop with `look` zoom `#hud`; (3) phone `#mode` chip and sand strip.
+**Open**: none broken; changes untested visually except the local look.

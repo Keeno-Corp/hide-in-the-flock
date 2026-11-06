@@ -243,7 +243,7 @@ const ringMat = c => new THREE.MeshBasicMaterial({ color: c, transparent: true, 
 const marker = new THREE.Mesh(new THREE.RingGeometry(0.85, 1.1, 28).rotateX(-Math.PI / 2), ringMat(0xfff2a0)); marker.name = 'player'; scene.add(marker);
 const reach = new THREE.Mesh(new THREE.RingGeometry(3.4, 3.6, 40).rotateX(-Math.PI / 2), ringMat(0xe0302a)); reach.name = 'reach'; reach.visible = false; scene.add(reach);
 const aim = new THREE.Mesh(new THREE.RingGeometry(2.4, 3.8, 32).rotateX(-Math.PI / 2), ringMat(0xfff06a)); aim.material.opacity = 0.95; aim.material.depthTest = false; aim.renderOrder = 5; aim.name = 'aim'; { const am = new THREE.MeshBasicMaterial({ color: 0xff3a1a, depthTest: false, fog: false }); const ar = new THREE.Mesh(new THREE.ConeGeometry(0.9, 1.8, 4).rotateX(Math.PI), am); ar.renderOrder = 6; ar.position.y = 5; ar.name = 'aimArrow'; aim.add(ar); const ar2 = new THREE.Mesh(new THREE.RingGeometry(1.5, 2.4, 32).rotateX(-Math.PI / 2), am); ar2.renderOrder = 5; aim.add(ar2); { const wm = new THREE.MeshBasicMaterial({ color: 0xffffff, depthTest: false, fog: false, transparent: true, opacity: 0.9 }); const ro = new THREE.Mesh(new THREE.RingGeometry(3.8, 4.2, 32).rotateX(-Math.PI / 2), wm); ro.renderOrder = 5; aim.add(ro); } aim.userData.arrow = ar; } aim.visible = false; scene.add(aim);
-const aimLine = new THREE.Mesh(new THREE.PlaneGeometry(1, 0.7).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xff3a1a, depthTest: false, fog: false, transparent: true, opacity: 0.8 })); aimLine.renderOrder = 4; aimLine.name = 'aimLine'; aimLine.visible = false; scene.add(aimLine);
+const aimLine = new THREE.Mesh(new THREE.PlaneGeometry(1, 1.6).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xff3a1a, depthTest: false, fog: false, transparent: true, opacity: 0.8 })); aimLine.renderOrder = 4; aimLine.name = 'aimLine'; aimLine.visible = false; scene.add(aimLine);
 const outline = new THREE.Group(); outline.visible = false; outline.name = 'outline';
 {
   const om = new THREE.MeshBasicMaterial({ color: 0xff2a1a, side: THREE.BackSide, depthTest: false }); om.fog = false;
@@ -626,7 +626,7 @@ function drawSheep(dt) {
     e3.set(s.hop > 0 ? s.spin * 0.1 : 0, s.yaw, roll, 'YXZ'); q.setFromEuler(e3);
     mB.compose(v3.set(s.x, s.y + bob + s.hop, s.z), q, sc);
     bodyIM.setMatrixAt(i, mB);
-    const nodding = s.graze ? Math.sin(clock * 5 + i) * 0.08 : 0;
+    const nodding = s.graze ? Math.sin(clock * 5 + i) * 0.17 : 0;
     q2.setFromEuler(e3.set(s.pitch + nodding, 0, 0));
     mL.compose(v3.set(HEAD_P.x, HEAD_P.y - s.pitch * 0.25, HEAD_P.z + s.pitch * 0.1), q2, new THREE.Vector3(1, 1, 1));
     mH.multiplyMatrices(mB, mL); headIM.setMatrixAt(i, mH);
@@ -680,11 +680,11 @@ function updateCamera(dt, rdt) {
   if (mode === 'solo') { const k = dW < 32 ? 0.28 : 0; tx += (wolf.x - P.x) * k; tz += (wolf.z - P.z) * k; }
   else { tx += (wolf.x - P.x) * 0.5; tz += (wolf.z - P.z) * 0.5; zoom = 1 + clamp((dW - 14) / 30, 0, 0.55); }
   if (pounce.ph && pounce.target) { const m = pounce.target; tx = lerp(tx, (wolf.x + m.x) / 2, cam.punch); tz = lerp(tz, (wolf.z + m.z) / 2, cam.punch); }
-  if (pounce.ph === 'reveal' && pounce.t < 2.0) { tx = wolf.x; tz = wolf.z + 1; }
+  if (pounce.ph === 'reveal' && pounce.t < 2.0) { tx = wolf.x; tz = wolf.z + 0.6; }
   cam.close += ((pounce.ph === 'reveal' && pounce.t < 2.0 ? 1 : 0) - cam.close) * (1 - Math.exp(-rdt * 6));
   const kf = 1 - Math.exp(-rdt * (cam.punch > 0.05 ? 7 : 2.4));
   cam.x += (tx - cam.x) * kf; cam.z += (tz - cam.z) * kf; cam.zoom += (zoom - cam.zoom) * kf;
-  const sc2 = (1 - 0.3 * cam.punch - 0.25 * cam.close) * cam.zoom;
+  const sc2 = (1 - 0.3 * cam.punch - 0.4 * cam.close) * cam.zoom;
   camera.position.set(cam.x, 15 * sc2 + 3, cam.z + 32 * sc2 + 6);
   camera.lookAt(cam.x, 5, cam.z - 8);
   let fov = 50 - 16 * cam.punch; { const a = innerWidth / innerHeight; if (a < 1.4) fov = Math.min(80, (2 * Math.atan(Math.tan(fov * Math.PI / 360) * 1.4 / a)) * 180 / Math.PI); } if (Math.abs(camera.fov - fov) > 0.01) { camera.fov = fov; camera.updateProjectionMatrix(); }

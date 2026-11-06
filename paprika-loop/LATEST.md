@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 14
-**Did**: game.js: `aimLine` (red stretched quad, depthTest off, renderOrder 4) from `wolf` to the targeted sheep in local mode; `cam.close` punch-in now also in the human reveal branch. index.html: phone @media HUD text raised (rows 17px, labels 12px, `#sbar` 90px).
-**Saw**: local look (KeyM, ArrowRight ×30): `aimLine` in the ID list but 0.0005% because the wolf stood next to the target (2.28 units long); `aim` ×2 0.1%, `aimArrow` 0.12%, wolf ×7 1%, 0 overlap, no Never-visible, no console errors. Human-branch reveal, phone `viewports`, perf not run.
-**Next**: (1) test `aimLine` at a longer distance (wolf 8 units from target) and thicken it if under 0.05%; (2) run `look` viewports phone and confirm `#hud` legibility; check the human-reveal wolf size with `sheet` pounce human; (3) grazing head bob ×2 (`sheep-heads*`) and the bite-dot pop after a wasted bite.
-**Open**: grazing bob and bite-dot tick still not done; `#mode` on phone still a small bottom-right label.
-
 ### Judge 14
 
 **Judge verdict, session 14**
@@ -64,3 +58,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Check with `look` `zoom` on `#hud` after `interact` `{action:"pounce", target:"ai"}`, and `trace` on the bite count.
 
 SCORE: 8.1
+
+## Iteration 15
+**Did**: game.js: `aimLine` plane width 0.7→1.6; grazing nod amplitude 0.08→0.17 (`sheep-heads*`); `cam.close` factor 0.25→0.4 and reveal target `tz = wolf.z + 0.6` (human reveal closer on the wolf). index.html: `.pip.off` plays `pipPop` keyframes (scale 1.8→0.3 spin→0.6) when a bite is spent.
+**Saw**: local look (KeyM, ArrowRight ×60): `aimLine` 0.011% (1.68 × 1.6 units, wolf next to target), `aim` ×3 0.21%, `aimArrow` 0.13%, wolf ×7 1.1%, 0 overlap, no Never-visible, no errors. Reveal framing, bite-pip animation, phone viewports, perf not run.
+**Next**: (1) `aimLine` is still short when wolf is beside the target: draw a ring or glow under `wolf` itself, or aim at the nearest sheep beyond 3 units; (2) verify `sheet` pounce human wolf size and the pip pop with `look` zoom `#hud`; (3) phone `#mode` chip and sand strip.
+**Open**: none broken; changes untested visually except the local look.

@@ -11,7 +11,8 @@ canvas{display:block}
 #hud .lab{font-size:11px;opacity:.75;width:74px;text-transform:uppercase;letter-spacing:1.5px}
 #time{font-size:30px;font-variant-numeric:tabular-nums}
 .pip{display:inline-block;width:16px;height:16px;border-radius:50%;background:#e0302a;border:2px solid #fdfdec;margin-right:4px;transition:transform .3s,background .3s}
-.pip.off{background:#555;transform:scale(.6);border-color:#888}
+@keyframes pipPop{0%{transform:scale(1.8)}40%{transform:scale(.3) rotate(25deg)}100%{transform:scale(.6)}}
+.pip.off{animation:pipPop .5s;background:#555;transform:scale(.6);border-color:#888}
 .clv{display:inline-block;width:16px;height:16px;border-radius:50% 50% 50% 8%;background:#444;margin-right:4px;border:2px solid #fdfdec;transition:background .3s}
 .clv.on{background:#6fd33a}
 #sbar{width:120px;height:12px;border-radius:6px;background:#0006;overflow:hidden;border:2px solid #fdfdec55}
