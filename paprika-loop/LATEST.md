@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 63
-**Did**: Found the cause of the "invisible" wool burst: it spawns fine (`wool.alive`=320 at reveal t=0.07, positions at the target sheep), but `div#flash` (white, 0.7 opacity, faded over 0.3 s) covered the whole frame, which also washed out the AI SHEEP title. In game.js, `flash` is now 0.3 at impact and fades at 4/s (lines ~551, 567).
-**Saw**: `look` sheet, `ai` at 82 frames: brightness 56%, title legible, no wash. At 95 frames: a pale wool cloud is visible by the `wolf`'s legs and the title is crisp. No console errors.
-**Next**: (1) Make the wool cloud bigger and whiter (the cloud is beige/grey at 95 frames; try more white particles and a higher emit point). (2) Check `human` reveal at ~100 frames for the GOTCHA title and PLAYER 1 `div#tag`. (3) Natural clover win + `KeyR`, 2-player bite, tablet 820×1180.
-**Open**: Natural win, 2-player and tablet are still unverified. The human reveal timing was not checked this session.
-
 ### Judge 63
 
 Both reveals now read. The wool is still a weak, grey-beige blob.
@@ -39,3 +33,9 @@ Both reveals now read. The wool is still a weak, grey-beige blob.
    - **Check:** the bites go 3→2, and the title and `div#hud` do not overlap at 820×1180.
 
 SCORE: 8.0
+
+## Iteration 64
+**Did**: In game.js the `wool` burst: sprite size 0.8→2.4, material fog/toneMapped off, emit point +1.6, counts 160/30/240.
+**Saw**: `look` sheet `ai` at 85 and 110 frames: a large cream-white cloud covers the `wolf`'s body and the sheep; title and "baa?" bubble still legible; brightness 56–69%, 1% blown out; no console errors.
+**Next**: (1) Natural clover win + `KeyR`. (2) 2-player bite (`KeyM`, `Enter`). (3) Tablet 820×1180 and phone reveal check; the cloud may now be big enough to cover the title at 110 frames on small screens.
+**Open**: Natural win, 2-player, tablet still unverified.

@@ -2790,3 +2790,9 @@ Both reveals now read. The wool is still a weak, grey-beige blob.
    - **Check:** the bites go 3→2, and the title and `div#hud` do not overlap at 820×1180.
 
 SCORE: 8.0
+
+## Iteration 64
+**Did**: In game.js the `wool` burst: sprite size 0.8→2.4, material fog/toneMapped off, emit point +1.6, counts 160/30/240.
+**Saw**: `look` sheet `ai` at 85 and 110 frames: a large cream-white cloud covers the `wolf`'s body and the sheep; title and "baa?" bubble still legible; brightness 56–69%, 1% blown out; no console errors.
+**Next**: (1) Natural clover win + `KeyR`. (2) 2-player bite (`KeyM`, `Enter`). (3) Tablet 820×1180 and phone reveal check; the cloud may now be big enough to cover the title at 110 frames on small screens.
+**Open**: Natural win, 2-player, tablet still unverified.
