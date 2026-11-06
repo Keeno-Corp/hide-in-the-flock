@@ -521,14 +521,14 @@ const splash = (() => {
   const blob = (cx, cy, r, k, rot) => { const pts = []; const n = 40, ph = [rnd(0, 6), rnd(0, 6), rnd(0, 6)]; for (let i = 0; i < n; i++) { const a = i / n * 6.283 + rot; const rr = r * (1 + 0.22 * Math.sin(a * 3 + ph[0]) + 0.14 * Math.sin(a * 5 + ph[1]) + 0.09 * Math.sin(a * 9 + ph[2]) + (Math.sin(a * 13 + ph[0]) > 0.82 ? 0.45 : 0)); pts.push([cx + Math.cos(a) * rr * k, cy + Math.sin(a) * rr * k]); } return pts; };
   const poly = (pts) => { ctx.beginPath(); pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.closePath(); ctx.fill(); };
   function fire(isHuman, sx, sy) {
-    human = isHuman; const w = cv.width = innerWidth, h = cv.height = innerHeight, m = Math.min(w, h) * (isHuman ? 1 : 0.72);
-    const cx = w * 0.5 * 0.5 + sx * 0.5, cy = Math.max(h * 0.3, Math.min(h * 0.58, sy - h * 0.2)); const K = isHuman ? 1 : 0.68;
+    human = isHuman; const w = cv.width = innerWidth, h = cv.height = innerHeight, m = Math.min(w, h) * (isHuman ? 0.55 : 0.3);
+    let cx = w * 0.5 * 0.5 + sx * 0.5, cy = Math.max(h * 0.3, Math.min(h * 0.58, sy - h * 0.2)); if (isHuman) { cx = w * 0.82; cy = h * 0.36; } else { cx = w * 0.86; cy = h * 0.4; } const K = isHuman ? 1 : 0.68;
     art = { cx, cy, m, w, h, blots: [], spat: [], drips: [], rays: [] };
     art.blots.push({ r: m * 0.17, ox: 0, oy: 0, rot: rnd(0, 6), col: 0 });
     for (let i = 0; i < 9; i++) { const a = rnd(0, 6.283), d = m * rnd(0.12, 0.3); art.blots.push({ r: m * rnd(0.04, 0.1), ox: Math.cos(a) * d, oy: Math.sin(a) * d * 0.8, rot: rnd(0, 6), col: 0 }); }
-    for (let i = 0; i < 90; i++) { const a = rnd(0, 6.283), d = m * (0.25 + Math.pow(Math.random(), 1.5) * 0.9); art.spat.push({ ox: Math.cos(a) * d * 1.3, oy: Math.sin(a) * d * 0.9, r: m * rnd(0.004, 0.022), col: Math.random() < 0.35 && isHuman ? 1 : 0 }); }
-    for (let i = 0; i < 7; i++) art.drips.push({ ox: rnd(-0.18, 0.18) * m, w: m * rnd(0.012, 0.03), len: m * rnd(0.12, 0.38), delay: rnd(0, 0.3) });
-    for (let i = 0; i < 16; i++) { const a = i / 16 * 6.283 + rnd(-0.1, 0.1); art.rays.push({ a, l0: m * 0.2, l1: m * rnd(0.45, 0.8), wd: rnd(0.025, 0.07) }); }
+    for (let i = 0; i < (isHuman ? 90 : 25); i++) { const a = rnd(0, 6.283), d = m * (0.25 + Math.pow(Math.random(), 1.5) * 0.9); art.spat.push({ ox: Math.cos(a) * d * 1.3, oy: Math.sin(a) * d * 0.9, r: m * rnd(0.004, 0.022), col: Math.random() < 0.35 && isHuman ? 1 : 0 }); }
+    for (let i = 0; i < (isHuman ? 7 : 2); i++) art.drips.push({ ox: rnd(-0.18, 0.18) * m, w: m * rnd(0.012, 0.03), len: m * rnd(0.12, 0.38), delay: rnd(0, 0.3) });
+    for (let i = 0; i < (isHuman ? 16 : 0); i++) { const a = i / 16 * 6.283 + rnd(-0.1, 0.1); art.rays.push({ a, l0: m * 0.2, l1: m * rnd(0.45, 0.8), wd: rnd(0.025, 0.07) }); }
     t0 = performance.now(); burstT = 0; cv.style.opacity = 1; draw(0);
   }
   function draw(t) {
@@ -781,15 +781,15 @@ function updatePounce(rdt) {
   const dur = p.human ? 3.6 : 3.0, u = p.t / dur;
   $('flash').style.opacity = Math.max(0, 0.55 - p.t * 3.2);
   // bite beat: ink splash bursts, the frame is held in ink + paper, the stamp slams in at 0.3 s, all fades after ~2.1 s
-  const hold = sm(0, 0.12, p.t) * (1 - sm(1.9, 2.3, p.t));
+  const hold = p.human ? 0.45 * sm(0, 0.12, p.t) * (1 - sm(1.9, 2.3, p.t)) : 0.3 * sm(0, 0.12, p.t) * (1 - sm(0.5, 1.0, p.t));
   post.uniforms.freeze.value = hold;
-  splash.update(p.t, p.t < 1.9 ? 1 : Math.max(0, 1 - (p.t - 1.9) * 3));
+  splash.update(p.t, p.human ? (p.t < 1.9 ? 1 : Math.max(0, 1 - (p.t - 1.9) * 3)) : Math.max(0, 1 - Math.max(0, p.t - 0.5) * 2));
   if (!p.stamped && p.t >= 0.3) { p.stamped = true; $('reveal').style.opacity = 1; $('reveal').classList.remove('slam'); void $('reveal').offsetWidth; $('reveal').classList.add('slam'); camShake.kick(p.human ? 1.6 : 0.8); play('thud', 1); play('hit', 0.8, 0.2); }
   if (p.stamped) $('reveal').style.opacity = p.t > 2.2 ? Math.max(0, 1 - (p.t - 2.2) * 4) : 1;
   if (p.t > 2.0) aimLine.visible = false;
   if (t.hop !== undefined) { t.hopV -= 14 * rdt * (p.t < 1 ? 0.5 : 1); t.hop = Math.max(0, t.hop + t.hopV * rdt); if (t.hop === 0 && t.hopV < 0) { t.hopV = 0; t.spin *= 0.8; } }
   if (p.human) { const g = bodyMatrixOf(t); outline.position.set(t.x, t.y + t.hop, t.z); outline.rotation.y = t.yaw + t.spin * 0.0; outline.scale.setScalar(SS * 1.1); place($('tag'), t.x, t.y + 3.6, t.z); { const r = $('tag').getBoundingClientRect(); if (r.top < innerHeight * 0.5 && r.top > innerHeight * 0.12) $('tag').style.top = innerHeight * 0.62 + 'px'; } clampEl($('tag')); }
-  else { place($("bubble"), t.x, t.y + 4.2, t.z); { const bt = parseFloat($('bubble').style.top); if (bt < innerHeight * 0.6) $('bubble').style.top = innerHeight * 0.6 + 'px'; } clampEl($('bubble')); }
+  else { place($("bubble"), t.x, t.y + 4.2, t.z); { const bt = parseFloat($('bubble').style.top); if (bt < innerHeight * 0.6) $('bubble').style.top = innerHeight * 0.6 + 'px'; $('bubble').style.left = (parseFloat($('bubble').style.left) + innerWidth * 0.2) + 'px'; } clampEl($('bubble')); }
   if (!p.human) { w.shrug = 1; }
   if (!p.human && p.t < 1.9) cam.punch = 1; else if (u > 0.72) cam.punch = Math.max(0, cam.punch - rdt * 1.6);
   $('bt').style.height = $('bb').style.height = 3 * cam.punch + 'vh';
@@ -922,9 +922,9 @@ function updateCamera(dt, rdt) {
   rim.position.set(wolf.x + 1.5, 4, wolf.z + 4); rim.intensity = 90 * cam.close;
     const kf = 1 - Math.exp(-rdt * (cam.punch > 0.05 ? 7 : 2.4));
   cam.x += (tx - cam.x) * kf; cam.z += (tz - cam.z) * kf; cam.zoom += (zoom - cam.zoom) * kf;
-  const sc2 = (1 - (pounce.target && !pounce.human ? 0.7 : 0.52) * cam.punch - (pounce.target && !pounce.human ? 0.42 : 0.2) * cam.close) * cam.zoom;
-  camera.position.set(cam.x, 16 * sc2 + 3 + (pounce.target && !pounce.human ? 5 * cam.close : 0), cam.z + 44 * sc2 + 8);
-  camera.lookAt(cam.x, lerp(10.5, 3.0, Math.max(cam.close, cam.punch * 0.9)), cam.z - 8 * (1 - Math.max(cam.close, cam.punch * 0.9)) - 1 * cam.close);
+  const sc2 = (1 - (pounce.target && !pounce.human ? 0.5 : 0.52) * cam.punch + (pounce.target && !pounce.human ? 0.65 : 0.6) * cam.close) * cam.zoom;
+  camera.position.set(cam.x, 16 * sc2 + 3 + (pounce.target && !pounce.human ? 1 * cam.close : 0), cam.z + 44 * sc2 + 8);
+  camera.lookAt(cam.x, lerp(10.5, 3.0, Math.max(cam.close, cam.punch * 0.9)) + (pounce.target && !pounce.human ? 2 * cam.close : 0), cam.z - 8 * (1 - Math.max(cam.close, cam.punch * 0.9)) - 1 * cam.close);
   let fov = 42 - 16 * cam.punch - (pounce.ph === 'reveal' ? 9 * Math.max(0, 1 - pounce.t / 0.6) : 0); { const a = innerWidth / innerHeight; if (a < 1.4) fov = Math.min(80, (2 * Math.atan(Math.tan(fov * Math.PI / 360) * 1.4 / a)) * 180 / Math.PI); } if (Math.abs(camera.fov - fov) > 0.01) { camera.fov = fov; camera.updateProjectionMatrix(); }
   pinesMesh.visible = cam.close < 0.8;
   { const ly = camera.position.y; }
