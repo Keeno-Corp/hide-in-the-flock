@@ -1541,3 +1541,9 @@ Session 26 judge: I looked at one 5-cell sheet (start, 2.5 s, 6 s, human bite, A
    - Run `perf` with `variants` that hide those groups to see what each saves. The count should be about 120k or less, with the sheep silhouette unchanged.
 
 SCORE: 7.7
+
+## Iteration 27
+**Did**: game.js: wolf watch scale 8.4 -> 3.8 (line ~856 `drawWolf`); small sheep parts (`ico(0.3/0.26/0.2,1)` in the sheep body geo) dropped to detail 0.
+**Saw**: `look` sheet at frames 10/60 with scale 5: wolf 6.1-6.4% of the frame, profile intact, no console errors; `perf costs`: 159,258 triangles (was 195,618), 74 draws; scale 3.8 not re-looked. sheep 31k, round-trees 10k + ink 10k, sheep-shadow/ink 10k each.
+**Next**: (1) re-look wolf at 3.8, replace per-part `wolf-rim` with one outline; (2) clover three-leaf inked motif + glow; (3) cut to ~120k: drop `round-trees-ink`/`sheep-heads-ink`, lower `bushes`/`walls`/`rocks` detail.
+**Open**: wolf rim loops and lumpy back not touched; clover not done; `node --check` only, no replay after the 3.8 change.

@@ -222,17 +222,17 @@ const flat = (mat = {}) => new THREE.MeshToonMaterial({ vertexColors: true, grad
 const WOOL = PAL.wool, DARK = PAL.face;
 const sheepBodyGeo = mergeGeometries([
   mk(ico(0.5, 1), WOOL, { p: [0, 0.62, 0], s: [1, 0.82, 1.3], jit: 0, soft: true }),
-  mk(ico(0.3, 1), WOOL, { p: [0.22, 0.98, 0.22], jit: 0, soft: true }), mk(ico(0.3, 1), WOOL, { p: [-0.22, 0.98, 0.1], jit: 0, soft: true }),
+  mk(ico(0.3, 0), WOOL, { p: [0.22, 0.98, 0.22], jit: 0, soft: true }), mk(ico(0.3, 0), WOOL, { p: [-0.22, 0.98, 0.1], jit: 0, soft: true }),
   mk(ico(0.46, 1), 0x4a5278, { p: [0, 0.36, 0], s: [0.95, 0.4, 1.25], soft: true }),
-  mk(ico(0.3, 1), WOOL, { p: [0, 1.0, -0.3], jit: 0, soft: true }), mk(ico(0.26, 1), WOOL, { p: [0.3, 0.7, -0.62], jit: 0, soft: true }),
-  mk(ico(0.26, 1), WOOL, { p: [-0.3, 0.7, -0.6], jit: 0, soft: true }),
+  mk(ico(0.3, 0), WOOL, { p: [0, 1.0, -0.3], jit: 0, soft: true }), mk(ico(0.26, 0), WOOL, { p: [0.3, 0.7, -0.62], jit: 0, soft: true }),
+  mk(ico(0.26, 0), WOOL, { p: [-0.3, 0.7, -0.6], jit: 0, soft: true }),
   ...[[-1, -1], [1, -1], [-1, 1], [1, 1]].map(([x, z]) => mk(box(0.09, 0.46, 0.09), 0x1c1514, { p: [x * 0.22, 0.21, z * 0.42] })),
 ]);
 const sheepHeadGeo = mergeGeometries([
   mk(box(0.36, 0.34, 0.44), DARK, { p: [0, 0, 0.2] }),
   mk(box(0.2, 0.07, 0.12), 0x3a2c26, { p: [0.26, 0.08, 0.06], r: [0, 0, -0.4] }), mk(box(0.2, 0.07, 0.12), 0x3a2c26, { p: [-0.26, 0.08, 0.06], r: [0, 0, 0.4] }),
   mk(box(0.07, 0.07, 0.03), 0xf3e8cc, { p: [0.1, 0.07, 0.42] }), mk(box(0.07, 0.07, 0.03), 0xf3e8cc, { p: [-0.1, 0.07, 0.42] }),
-  mk(ico(0.2, 1), WOOL, { p: [0, 0.22, 0.02], soft: true }),
+  mk(ico(0.2, 0), WOOL, { p: [0, 0.22, 0.02], soft: true }),
 ]);
 const SS = 1.8;
 const HEAD_P = new THREE.Vector3(0, 0.78, 0.6);
@@ -853,7 +853,7 @@ function drawSheep(dt) {
 function drawWolf(dt) {
   const w = wolf, r = W.root, pz = w.pose;
   r.position.set(w.x, w.y, w.z); r.rotation.y = w.yaw;
-  { const want = (pz === 'leap' || pz === 'land' || pz === 'shrug' || pz === 'grin') ? 2.4 : (pounce.ph || mode !== "solo" ? 4.4 : 8.4); r.scale.setScalar(r.scale.x + (want - r.scale.x) * Math.min(1, dt * 10 + 0.05)); }
+  { const want = (pz === 'leap' || pz === 'land' || pz === 'shrug' || pz === 'grin') ? 2.4 : (pounce.ph || mode !== "solo" ? 4.4 : 3.8); r.scale.setScalar(r.scale.x + (want - r.scale.x) * Math.min(1, dt * 10 + 0.05)); }
   const ph = w.phase, t = clock;
   W.body.position.set(0, 0, 0); W.body.rotation.set(0, 0, 0); W.head.rotation.set(0, 0, 0); W.head.position.set(0, 0.88, 1.08);
   W.legs.forEach(l => l.rotation.set(0, 0, 0)); W.tail.rotation.set(0, 0, 0);
