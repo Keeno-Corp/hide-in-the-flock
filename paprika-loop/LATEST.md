@@ -1,41 +1,41 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-### Judge 63
-
-Both reveals now read. The wool is still a weak, grey-beige blob.
-
-**Session 63 verdict.** I ran a five-cell `sheet` (start, `ai` at 55 and 95 frames, `human` at 100 and 130 frames) and ran `perf` once. I did not play the natural clover win, `KeyR` restart, 2-player mode or the tablet and phone sizes.
-
-1. **Looks as LOOK.md says: 8.** The start cell shows `sea`, `sand`, `cliff`, `wolf-rock`, `pines*` ×134 and `round-trees*` ×15. The `clover` rings glow. Brightness is 64% with 0% blown out, and there are no `Lighting:` or `Surfaces:` lines.
-2. **Plays as DESIGN.md says: 8.** Forced `pounce` on `ai` and on `human` both play through, and the `div#hud` is intact. The natural win, `KeyR` and local play are still unplayed.
-3. **Clip moment: 8.**
-   - **AI reveal:** the "AI SHEEP" title and "Bite wasted." subtitle are crisp. The "baa?" bubble sits by the `wolf`, and the frame brightness is 58%, so the wash is gone.
-   - **Human reveal:** a big red "GOTCHA" title, "PLAYER 1 has been found." and the red PLAYER 1 `div#tag` are all legible at 100 frames.
-   - **Wool burst:** the `wool` cloud is a small, grey-beige lump near the `wolf`'s legs. It does not read as a big white poof, so it is the weakest part of the clip.
-   - **Leap:** at 55 frames the `wolf` is mid-leap, but I can't see the slow-mo or camera punch-in in a still.
-4. **Looks like refs/01.jpg: 9.** The start view shows sea, sand, cliffs, pines, `cloud` shapes and the `wolf` on `wolf-rock`.
-5. **Solo fun and fair: 8.** The suspicion bar, the clover rings and the captions are in place. A natural win has not been verified.
-6. **Local 2-player: 7.** Not re-run, and a 2-player bite is unverified.
-7. **`window.__game`, no build, ~100 sheep: 8.** `perf` shows 82 draw calls, 103k triangles and 0 MB of assets. The 150 ms frame is SwiftShader on a busy host, so it is no signal.
-8. **Juice: 8.** The captions, the bubble, the `wolf` pose and the titles are in place. The wool burst is weak.
-9. **Works at any window size, HUD readable: 8.** The desktop HUD is readable. The tablet and phone sizes were not re-checked.
-10. **Faults: 8.** I saw no console errors and no "Never visible" object. The wool burst is underwhelming.
-
-**Next:**
-1. **Make the wool burst big and white (asked again).**
-   - **Do:** in game.js, spawn 80 or more `wool` sprites with a pure white tint, a scale of 2–3 world units and an initial upward velocity. Emit from about 0.8 above the sheep, and fade only after about 1 s.
-   - **Check:** `look` `sheet` with an `ai` cell at about 85 frames shows a white cloud covering a clear part of the `wolf`'s body. `sample` at the cloud shows RGB above about 230.
-2. **Play the natural clover win and `KeyR` restart (asked again).**
-   - **Do:** run `interact` to walk onto each `clover` and hold `KeyE` with `until:{result:"win"}`, then press `KeyR`.
-   - **Check:** `result` becomes "win". After `KeyR`, `observe` shows `bites` 3 and `result` null.
-3. **Verify local 2-player and the tablet size (asked again).**
-   - **Do:** press `KeyM`, then press `Enter` near a sheep, and run `viewports` with tablet and phone on a reveal.
-   - **Check:** the bites go 3→2, and the title and `div#hud` do not overlap at 820×1180.
-
-SCORE: 8.0
-
 ## Iteration 64
 **Did**: In game.js the `wool` burst: sprite size 0.8→2.4, material fog/toneMapped off, emit point +1.6, counts 160/30/240.
 **Saw**: `look` sheet `ai` at 85 and 110 frames: a large cream-white cloud covers the `wolf`'s body and the sheep; title and "baa?" bubble still legible; brightness 56–69%, 1% blown out; no console errors.
 **Next**: (1) Natural clover win + `KeyR`. (2) 2-player bite (`KeyM`, `Enter`). (3) Tablet 820×1180 and phone reveal check; the cloud may now be big enough to cover the title at 110 frames on small screens.
 **Open**: Natural win, 2-player, tablet still unverified.
+
+### Judge 64
+
+**Session 64 verdict.** I ran a three-cell `sheet` (start, `ai` at 85 frames, `human` at 100 frames). I also ran `viewports` for tablet and phone, `perf` once, and a local-mode `KeyM` then `Enter` step. I did not play the natural clover win or `KeyR` restart.
+
+1. **Looks as LOOK.md says: 8.** The start cell shows `sea`, `sand`, `cliff`, `wolf-rock`, `pines*` ×134 and `round-trees*` ×15. The `clover` rings glow, and there are no `Lighting:` or `Surfaces:` lines.
+2. **Plays as DESIGN.md says: 8.** Forced `pounce` on `ai` and on `human` both play through. Local mode toggles with `KeyM`, but the natural win and `KeyR` are still unplayed.
+3. **Clip moment: 9.**
+   - **AI reveal:** the "AI SHEEP" title, "Bite wasted." subtitle and "baa?" bubble are all legible. The `wool` is now a big cream-white cloud covering the sheep and part of the `wolf`.
+   - **Human reveal:** the red "GOTCHA" title, "PLAYER 1 has been found." and the PLAYER 1 `div#tag` are legible, and the `wool` poof sits under the tag.
+   - **Not seen:** I can't see the slow-mo or camera punch-in in a still.
+4. **Looks like refs/01.jpg: 9.** Sea, sand, cliffs, pines, `cloud` shapes and the `wolf` on `wolf-rock` all show.
+5. **Solo fun and fair: 8.** The suspicion bar, the clover rings and the captions are in place. A natural win is unverified.
+6. **Local 2-player: 6.** After `KeyM`, `wolf.state` is "ctrl" and the wolf sits at (-8, -6). `Enter` with no sheep in range did not change `bites`, and I got no pounce or feedback from it. I have not seen a 2-player bite.
+7. **`window.__game`, no build, ~100 sheep: 8.** `perf` shows 82 draw calls, 103k triangles and 0 MB of assets. The 288 ms frame is SwiftShader on a busy host (load 6.2), so it is no signal.
+8. **Juice: 8.** The wool burst now reads, and the captions, bubble and titles are in place. Sound shows wind and baa starting.
+9. **Works at any window size, HUD readable: 7.**
+   - **Tablet 820×1180:** `div#hud` is readable, but the bottom caption is not visible.
+   - **Phone 390×844:** the `div#hud` panel is readable. The canvas is letterboxed to about 270 px wide, so the picture is small, and the phone cell is cropped by the grid.
+   - **Not seen:** a reveal title at these sizes.
+10. **Faults: 8.** I saw no console errors and no "Never visible" object.
+
+**Next:**
+1. **Verify the local 2-player bite (asked again).**
+   - **Do:** `interact` with `KeyM`, then walk the wolf with the arrow keys to a sheep and press `Enter`. If no pounce fires, add feedback such as a "no target" nudge or a visible target ring on the nearest sheep.
+   - **Check:** `observe` shows `bites` going 3→2, and the reveal title plays.
+2. **Play the natural clover win and `KeyR` restart (asked again).**
+   - **Do:** walk onto each `clover` and hold `KeyE` with `until:{result:"win"}`, then press `KeyR`.
+   - **Check:** `result` becomes "win". After `KeyR`, `observe` shows `bites` 3 and `result` null.
+3. **Check a reveal on tablet and phone.**
+   - **Do:** `look` `sheet` with a `state.viewport` or `resize` step, then `pounce` `ai`, at 390×844 and 820×1180.
+   - **Check:** the title is not covered by the `wool` cloud, and it does not overlap `div#hud`. Also fix the phone canvas, which should fill the width instead of leaving black bars.
+
+SCORE: 7.9
