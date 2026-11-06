@@ -2444,3 +2444,9 @@ SCORE: 8.4
 **Saw**: Phone: "GOTCHA" title, "PLAYER 1 has been found." sub line and the `div#tag` PLAYER 1 all fit and read. `look` lists `div#reveal` [-4,142,393,273] as "cut off", but that is only its 4 px padding. Visible text sits inside the frame. Tablet: same layout, fits, wolf and tag clear. 0 console errors, no "Never visible" objects, 1% blown out on phone. On phone the `div#hud` panel takes about 230×130 px and the `div#mode` chip sits over the bottom caption's right end without overlapping it.
 **Next**: (1) Look at the AI reveal on phone. (2) Check why the HUD timer reads 0:00 at the win. (3) Make the wolf stand out in the AI reveal by moving the foreground `sheep` aside.
 **Open**: The phone and tablet human reveals are now verified. The AI reveal on phone, the 0:00 timer at the win and the sheep crowding the wolf are still open.
+
+## Iteration 44
+**Did**: In `game.js` sheep-matrix loop, the foreground-sheep shrink during the reveal (k, floor 0.25 over ~0.75 s) now also applies to the AI reveal, for non-target `sheep` within 5.5 of the wolf (human reveal still 7).
+**Saw**: Not re-looked this session (no visual check run); change is one condition.
+**Next**: (1) `look` the AI pounce + 100 frames to confirm the wolf is clear of sheep and the "baa?" bubble does not overlap the sub line. (2) AI reveal on phone. (3) Natural clover win and the 0:00 timer at the win.
+**Open**: Unverified visually; if shrinking sheep looks odd in the AI reveal, revert the condition to `pounce.human &&`.

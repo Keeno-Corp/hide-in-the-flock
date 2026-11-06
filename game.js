@@ -628,7 +628,7 @@ function drawSheep(dt) {
     const bob = Math.abs(Math.sin(s.phase * 2)) * 0.07 * Math.min(1, sp);
     const roll = Math.sin(s.phase) * 0.06 * Math.min(1, sp);
     e3.set(s.hop > 0 ? s.spin * 0.1 : 0, s.yaw, roll, 'YXZ'); q.setFromEuler(e3);
-    let k = 1; if (pounce.ph === 'reveal' && pounce.human && s !== pounce.target && Math.hypot(s.x - wolf.x, s.z - wolf.z) < 7) k = Math.max(0.25, 1 - pounce.t * 4);
+    let k = 1; if (pounce.ph === 'reveal' && s !== pounce.target && Math.hypot(s.x - wolf.x, s.z - wolf.z) < (pounce.human ? 7 : 5.5)) k = Math.max(0.25, 1 - pounce.t * 4);
     if (k < 1) { scK.setScalar(SS * k); mB.compose(v3.set(s.x, s.y + bob + s.hop, s.z), q, scK); } else
     mB.compose(v3.set(s.x, s.y + bob + s.hop, s.z), q, sc);
     bodyIM.setMatrixAt(i, mB);
