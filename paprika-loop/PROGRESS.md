@@ -2812,3 +2812,9 @@ The wolf is now one near-black silhouette, but it still sits against the front f
    - Proof: `look` with `sample` at two points on one `round-trees*` crown returns near-equal colour.
 
 SCORE: 7.9
+
+## Iteration 49
+**Did**: `round-trees*`/`oaks` crown colours (game.js:347) flattened to one 0x7a8848 (no light/dark blobs). `ROCK` and `wolf` start moved from (-10,3) to (-15,-2) (game.js:258-259), away from the front sheep. HUD clover row (renderClovers) now adds "win at 3:00".
+**Saw**: `look` at frame 0: no console errors, no Lighting/Surfaces lines; HUD shows "win at 3:00" without overlap; wolf-body sits on `wolf-rock` left of the flock with grass between, `Subject: wolf` 0.7% (small only because the camera shows it far; not 4%). Trees now read as flat green masses with ink. `perf`/win run not done.
+**Next**: Enlarge wolf in frame (camera or wolf scale at start); flatten `ridge*`; flat cream `sheep*` with thicker `sheep-ink*`; prove the win via eval T=179 with 3 clovers.
+**Open**: Win card still not shown by an `interact` run. Pale rim behind `wolf-body` not added. The wolf-start move may change AI stalk distances; not played.

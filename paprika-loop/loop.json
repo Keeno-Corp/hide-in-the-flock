@@ -519,6 +519,17 @@
       "score": 7.9,
       "judgeTurns": 9,
       "judgeTokens": 169094
+    },
+    {
+      "n": 48,
+      "turns": 4,
+      "tokens": 105405,
+      "costUsd": 0.1650664,
+      "minutes": 1.1,
+      "commit": "fdd9146",
+      "score": 7.9,
+      "judgeTurns": 8,
+      "judgeTokens": 134285
     }
   ],
   "best": {
