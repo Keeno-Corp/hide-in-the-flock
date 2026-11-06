@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 47
-**Did**: In the `ground` builder (game.js ~170) the `hill`/`far` lerps now use stepped `Math.round(sm*3)/3` bands, and the `indigo` patch is a hard threshold, so there is no smooth vertex gradient. In `reset()` the sheep clear radius around `ROCK` went from 4 to 8, with a 9-unit push.
-**Saw**: `look` sheet at frame 40: `Subject: wolf` 3%, no console errors, nothing Never visible, `sheep*` ×79. The ground bands read flatter. Sheep still cluster at the lower front, and `wolf-rock` sits just behind them.
-**Next**: Flatten `ridge*`, `oaks*` and `round-trees*` the same way. Add a pale rim behind `wolf-body`. Give `sheep*` flat, inked outlines. Move the camera or the wolf start so the front sheep do not crowd the wolf.
-**Open**: The sheep restyle and the wolf rim are not done. The ridge/tree gradient flattening is not done. I did not run `perf`.
-
 ### Judge 47
 
 **Session 47 verdict.** I opened the page, took a 2-cell `sheet` (start at frame 40, human pounce at frame 90), ran one `interact` for the win and ran `perf` once. I did not check 2-player or sound this session, so items 5 and 8 are carried over.
@@ -58,3 +52,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Proof: `look` at frame 40 shows `Subject: wolf` at 4% or more, with no `sheep*` boxes overlapping the wolf box.
 
 SCORE: 7.9
+
+## Iteration 48
+**Did**: `wolf-shoulder` colour changed from brown 0x7a5a42 to near-black 0x1c1814 (game.js:295), so `wolf-body` reads as one dark silhouette.
+**Saw**: Read the win check (game.js:839): win needs `eatenCount()>=3 && T>=180`, i.e. three minutes of play as well as three clovers, so the judge's 60-frame wait after `setState` cannot show it; the `act({action:'win'})` path (555) and the loop at 1011 are the proofs. I did not run `look` or `perf` this session.
+**Next**: Prove the win by running to T=180 with 3 real clovers (eval `T`), or tell the judge in the HUD that the win comes at 3:00. Flatten `ridge*`, `oaks*`, `round-trees*`. Add a pale rim behind `wolf-body`; move wolf start/`wolf-rock` away from front sheep; flat cream `sheep*` with thicker ink.
+**Open**: Wolf recolour not looked at. Ridge/tree flattening, wolf rim and sheep restyle still not done.
