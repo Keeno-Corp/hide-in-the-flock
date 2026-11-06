@@ -180,6 +180,21 @@ const PLAY_R = 30;
   g.setAttribute('color', new THREE.BufferAttribute(col, 3));
   const m = new THREE.Mesh(g, new THREE.MeshToonMaterial({ vertexColors: true, gradientMap: toonGround }));
   m.name = 'ground'; m.receiveShadow = true; scene.add(m);
+  // ground-ink: marching-squares contour of the tone-band field, drawn as dark-brown ribbons
+  {
+    const F = (x, z) => Math.sin(x * 0.09 + Math.sin(z * 0.07) * 2) + Math.sin(z * 0.11 - x * 0.05) * 0.8 + 0.32 * Math.sin(x * 0.55 + z * 0.35) * Math.sin(z * 0.5 - x * 0.3) + 0.15 * Math.sin(x * 1.3 + z * 0.9);
+    const st = 0.7, R = 44, n = Math.round(R * 2 / st), V = [];
+    const seg = (a, b, c, d) => { const dx = d - b, dz = -(c - a), L = Math.hypot(dx, dz) || 1, ox = dx / L * 0.07, oz = dz / L * 0.07; const y1 = gh(a, b) + 0.06, y2 = gh(c, d) + 0.06; V.push(a - ox, y1, b - oz, a + ox, y1, b + oz, c + ox, y2, d + oz, a - ox, y1, b - oz, c + ox, y2, d + oz, c - ox, y2, d - oz); };
+    for (const T of [-0.35, 1.1]) for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+      const x0 = -R + i * st, z0 = -R + j * st; if (Math.hypot(x0, z0) > R) continue;
+      const v = [F(x0, z0), F(x0 + st, z0), F(x0 + st, z0 + st), F(x0, z0 + st)], P = [[x0, z0], [x0 + st, z0], [x0 + st, z0 + st], [x0, z0 + st]], pts = [];
+      for (let k = 0; k < 4; k++) { const a = v[k], b = v[(k + 1) % 4]; if ((a > T) !== (b > T)) { const t = (T - a) / (b - a), A = P[k], B = P[(k + 1) % 4]; pts.push([A[0] + (B[0] - A[0]) * t, A[1] + (B[1] - A[1]) * t]); } }
+      if (pts.length >= 2) seg(pts[0][0], pts[0][1], pts[1][0], pts[1][1]); if (pts.length === 4) seg(pts[2][0], pts[2][1], pts[3][0], pts[3][1]);
+    }
+    const gi = new THREE.BufferGeometry(); gi.setAttribute('position', new THREE.Float32BufferAttribute(V, 3));
+    const li = new THREE.Mesh(gi, new THREE.MeshBasicMaterial({ color: 0x4a3524, side: THREE.DoubleSide, transparent: true, opacity: 0.8, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 }));
+    li.name = 'ground-ink'; scene.add(li);
+  }
 }
 
 // ───────────────────────── geometry builder ─────────────────────────
@@ -860,10 +875,10 @@ function drawWolf(dt) {
   r.visible = true;
   // aim rings (local mode)
   const loc = mode === 'local';
-  reach.visible = loc && !pounce.ph && !result; reach.position.set(w.x, gh(w.x, w.z) + 0.15, w.z);
+  reach.visible = loc && !pounce.ph && !result; reach.scale.setScalar(1.55); reach.position.set(w.x, gh(w.x, w.z) + 0.15, w.z);
   aim.visible = false; aimLine.visible = false;
   wolfRing.visible = loc && !pounce.ph && !result; if (wolfRing.visible) { wolfRing.position.set(w.x, gh(w.x, w.z) + 0.3, w.z); wolfRing.scale.setScalar(1 + 0.15 * Math.sin(clock * 8)); const rdy = 1 - Math.min(1, (w.dashCd || 0) / 2.5); wolfRing.userData.fill.scale.setScalar(Math.max(0.02, rdy)); wolfRing.userData.fill.material.color.setHex(rdy >= 1 ? 0x8e9a58 : 0xb3261e); }
-  if (loc && !pounce.ph && !result) { let best = null, bd = 9; for (const s of sheep) { const d = Math.hypot(s.x - w.x, s.z - w.z); if (d < bd) { bd = d; best = s; } } if (best) { aim.visible = true; aim.position.set(best.x, best.y + 0.2, best.z); aim.scale.setScalar(1.5 + 0.2 * Math.sin(clock * 9)); aim.userData.arrow.position.y = 5 + Math.sin(clock * 7); { const dx = best.x - w.x, dz = best.z - w.z, L = Math.hypot(dx, dz) || 1; aimLine.visible = true; aimLine.position.set((w.x + best.x) / 2, best.y + 0.6, (w.z + best.z) / 2); aimLine.rotation.y = Math.atan2(-dz, dx); aimLine.scale.set(L, 1, 1); } const inR = bd < 7; aim.material.opacity = inR ? 0.7 + 0.25 * Math.sin(clock * 9) : 0.25; reach.material.color.setHex(inR ? 0xe0a03a : 0xb3261e); reach.scale.setScalar(inR ? 1.35 : 1); aim.userData.arrow.visible = inR; } }
+  if (loc && !pounce.ph && !result) { let best = null, bd = 9; for (const s of sheep) { const d = Math.hypot(s.x - w.x, s.z - w.z); if (d < bd) { bd = d; best = s; } } if (best) { aim.visible = true; aim.position.set(best.x, best.y + 0.2, best.z); aim.scale.setScalar(1.5 + 0.2 * Math.sin(clock * 9)); aim.userData.arrow.position.y = 5 + Math.sin(clock * 7); { const dx = best.x - w.x, dz = best.z - w.z, L = Math.hypot(dx, dz) || 1; aimLine.visible = true; aimLine.position.set((w.x + best.x) / 2, best.y + 0.6, (w.z + best.z) / 2); aimLine.rotation.y = Math.atan2(-dz, dx); aimLine.scale.set(L, 1, 1); } const inR = bd < 7; aim.material.opacity = inR ? 0.7 + 0.25 * Math.sin(clock * 9) : 0.25; reach.material.color.setHex(inR ? 0xe0a03a : 0xb3261e); reach.scale.setScalar(inR ? 1.7 : 1.55); aim.userData.arrow.visible = inR; } }
 }
 
 // ───────────────────────── camera ─────────────────────────
