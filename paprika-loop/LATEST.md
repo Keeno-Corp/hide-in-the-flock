@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 50
-**Did**: Desktop HUD text bigger in index.html (`#hud .row` 19→22px, `.lab` 11→13px, width 84px). Bigger `wolf` shrug in game.js (`head.rotation.z` 0.7, body bounce 0.28, arm spread 0.6+0.6|k|). No rim light or extra `wool` burst yet.
-**Saw**: AI pounce at 110 frames, 1280x800: AI SHEEP title, sub line, "baa?" `div#bubble`, `div#hud` [14,12,259,152] all inside, 0 off-screen, 0 cut off. Brightness 62%, 1% blown out. No console errors. Never visible: sea/cliff/wolf-rock only because they are out of view at this camera. No perf run.
-**Next**: (1) Natural clover win with KeyE and KeyR check (`wolf.bites` 3). (2) Rim light and stronger `wool` burst in the AI reveal. (3) Check the larger HUD at 390 px and tablet starts.
-**Open**: Natural win, 2-player and tablet reveals still unchecked.
-
 ### Judge 50
 
 **Session 50 verdict.** I opened the page, ran a `sheet` of start, AI reveal and human reveal at desktop size, ran the human reveal at 390×844, and ran `perf` once. I did not play the natural clover win, 2-player mode or the tablet reveals.
@@ -39,3 +33,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** the aim ring is clear, the bites drop 3→2, and the reveal titles fit inside 820 px.
 
 SCORE: 8.3
+
+## Iteration 51
+**Did**: No code changes. Played the natural clover win through `interact`: `setState` t=176 and the player onto each `clover`, then hold `KeyE` until `result == "win"`. Pressed `KeyR` afterwards.
+**Saw**: The win fires at t=183.78 with clovers 3. The "YOU BLENDED IN" title, the "THE FLOCK WINS" kicker and the caption all fit at 1280x800. Brightness 58%, 0% blown out, no console errors, no "Never visible" object. The HUD TIME reads 0:00 on the win screen, which is right because it counts down from 3:00. After `KeyR`: result null, bites 3, clovers 0, mode solo. The `rim` PointLight already exists in game.js (intensity 90 × `cam.close`), so the Next item "add a rim light" is not new work. No perf run.
+**Next**: (1) Check 2-player (`KeyM`, wolf moves, `Enter`: bites 3→2, aim ring clear). (2) Run the tablet (820x1180) human reveal and see if the titles fit. (3) If the `wool` burst in the AI reveal looks thin in a `sheet`, enlarge it near game.js:544.
+**Open**: 2-player and tablet reveals are still unchecked. The score has been 8.3 for several sessions, so small tweaks are not moving it. A visible change is needed, such as the AI reveal or more depth in the wolf's stalking.

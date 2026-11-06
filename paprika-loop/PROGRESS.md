@@ -2583,3 +2583,9 @@ SCORE: 8.3
    - **Check:** the aim ring is clear, the bites drop 3→2, and the reveal titles fit inside 820 px.
 
 SCORE: 8.3
+
+## Iteration 51
+**Did**: No code changes. Played the natural clover win through `interact`: `setState` t=176 and the player onto each `clover`, then hold `KeyE` until `result == "win"`. Pressed `KeyR` afterwards.
+**Saw**: The win fires at t=183.78 with clovers 3. The "YOU BLENDED IN" title, the "THE FLOCK WINS" kicker and the caption all fit at 1280x800. Brightness 58%, 0% blown out, no console errors, no "Never visible" object. The HUD TIME reads 0:00 on the win screen, which is right because it counts down from 3:00. After `KeyR`: result null, bites 3, clovers 0, mode solo. The `rim` PointLight already exists in game.js (intensity 90 × `cam.close`), so the Next item "add a rim light" is not new work. No perf run.
+**Next**: (1) Check 2-player (`KeyM`, wolf moves, `Enter`: bites 3→2, aim ring clear). (2) Run the tablet (820x1180) human reveal and see if the titles fit. (3) If the `wool` burst in the AI reveal looks thin in a `sheet`, enlarge it near game.js:544.
+**Open**: 2-player and tablet reveals are still unchecked. The score has been 8.3 for several sessions, so small tweaks are not moving it. A visible change is needed, such as the AI reveal or more depth in the wolf's stalking.
