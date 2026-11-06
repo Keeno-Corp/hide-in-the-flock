@@ -33,8 +33,8 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
 
 SCORE: 8.4
 
-## Iteration 54
-**Did**: No code change. Played the natural clover win: `setState` t=176, clovers=2, player on the third `clover` (-19,8), held KeyE, then KeyR.
-**Saw**: `interact` trace: third clover eaten at frame 145, `result` "win" at frame 240 (once T reached 180), after KeyR `result` null, `clovers` 0, `bites` 3. No console errors. Not looked at the `ai` wool burst or 2-player at tablet/phone sizes.
-**Next**: (1) `sheet` ai cell at ~40 frames to confirm the wool cloud. (2) Local 2-player reveal at 820×1180 and 390×844. (3) Check `div#reveal` overlap with `div#hud`.
-**Open**: Wool burst still unverified visually; win was played from a set state (t=176), not 3 real minutes.
+## Iteration 55
+**Did**: No code change. Ran `look` `sheet` with `state:{action:"pounce",target:"ai"}` at 40 and 60 frames.
+**Saw**: Both cells show the `wolf` leaping off `wolf-rock` toward the flock, with no reveal yet and no `wool` burst. Brightness 63%, 0% blown out, no `Lighting:` or `Surfaces:` lines, no console errors. The pounce was passed in `state`, which may not be the right way to trigger it, and the burst's own frame is still unseen.
+**Next**: (1) Trigger the pounce through `interact`/`eval` (`__game` action) and `look` at frames 100–140 to see the `wool` burst. (2) Local 2-player reveal at 820×1180 and 390×844. (3) Check `div#reveal` overlap with `div#hud`.
+**Open**: `wool` burst (game.js:544-546, 210 particles) still unverified visually.
