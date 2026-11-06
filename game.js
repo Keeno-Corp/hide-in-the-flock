@@ -270,7 +270,7 @@ const W = {};
   // lean side-profile silhouette: one extruded polygon (z forward, y up), thin in x
   {
     const sh = new THREE.Shape();
-    const pts = [[-0.95, 0.95], [-0.7, 1.12], [-0.2, 1.1], [0.35, 1.18], [0.8, 1.32], [1.05, 1.42], [1.1, 1.2], [0.95, 0.88], [0.6, 0.62], [0.1, 0.62], [-0.4, 0.66], [-0.8, 0.72]];
+    const pts = [[-1.5, 0.45], [-1.25, 0.9], [-0.8, 1.08], [-0.3, 1.06], [0.15, 1.14], [0.5, 1.34], [0.85, 1.32], [1.08, 1.24], [1.1, 1.02], [0.88, 0.82], [0.5, 0.66], [0.1, 0.76], [-0.3, 0.78], [-0.6, 0.62], [-0.85, 0.78], [-1.2, 0.66]];
     sh.moveTo(pts[0][0], pts[0][1]); pts.slice(1).forEach(p => sh.lineTo(p[0], p[1])); sh.closePath();
     const eg = new THREE.ExtrudeGeometry(sh, { depth: 0.32, bevelEnabled: true, bevelThickness: 0.1, bevelSize: 0.08, bevelSegments: 2, curveSegments: 6 });
     eg.translate(0, 0, -0.16).rotateY(-Math.PI / 2);
@@ -290,13 +290,13 @@ const W = {};
   [-1, 1].forEach(sx => { const e = new THREE.Mesh(new THREE.SphereGeometry(0.035, 8, 6).scale(1.3, 0.8, 1), eyeMat); e.position.set(sx * 0.15, 0.06, 0.36); W.head.add(e); });
   W.legs = [];
   [[-1, 0.72], [1, 0.72], [-1, -0.6], [1, -0.6]].forEach(([sx, z]) => {
-    const g = new THREE.Group(); g.name = 'wolf-leg'; g.position.set(sx * 0.13, 0.7, z); W.body.add(g);
-    add(g, taper(0.065, 0.035, 0.72, 0, -0.36, 0), legMat);
-    add(g, blob(0.1, 0.06, 0.2, 0, -0.72, 0.05), rimMat);
+    const g = new THREE.Group(); g.name = 'wolf-leg'; g.position.set(sx * 0.13, 0.72, z); W.body.add(g);
+    add(g, taper(0.075, 0.03, 0.55, 0, -0.27, 0), legMat);
+    add(g, blob(0.1, 0.06, 0.22, 0, -0.55, 0.06), rimMat);
     W.legs.push(g);
   });
-  W.tail = new THREE.Group(); W.tail.name = 'wolf-tail'; W.tail.position.set(0, 1.0, -0.95); W.body.add(W.tail);
-  add(W.tail, blob(0.12, 0.14, 0.85, 0, -0.2, -0.3, -0.55));
+  W.tail = new THREE.Group(); W.tail.name = 'wolf-tail'; W.tail.position.set(0, 0.8, -1.3); W.body.add(W.tail);
+  add(W.tail, blob(0.1, 0.1, 0.4, 0, -0.1, -0.1, -0.5));
   // ink rim: a lighter brown shell pushed out along the normals, drawn behind each wolf mesh
   const rimInk = new THREE.MeshBasicMaterial({ color: 0x8a7058, side: THREE.BackSide, fog: false });
   const meshes = []; W.body.traverse(o => { if (o.isMesh && o.geometry && o.geometry.attributes.normal && o.material !== eyeMat) meshes.push(o); });
@@ -397,6 +397,11 @@ const clovers = [];
     const dm = new THREE.MeshBasicMaterial({ color: 0xf2b47a, transparent: true, opacity: 0.55, depthWrite: false, depthTest: false, fog: false });
     const outl = new THREE.Mesh(new THREE.RingGeometry(2.6, 3.0, 40).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0x2a1c12, transparent: true, opacity: 0.8, depthWrite: false, fog: false })); outl.position.y = 0.28; g.add(outl);
     const patch = new THREE.Mesh(new THREE.CircleGeometry(2.6, 40).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0x4f6a2c, transparent: true, opacity: 0.9, depthWrite: false, fog: false })); patch.position.y = 0.27; g.add(patch);
+    { const lm = new THREE.MeshBasicMaterial({ color: 0x9be04a, transparent: true, opacity: 0.95, depthWrite: false, fog: false }), im = new THREE.MeshBasicMaterial({ color: 0x1f2a12, side: THREE.BackSide, fog: false, depthWrite: false });
+      for (let k = 0; k < 3; k++) { const a = k * 2.094 + 0.5, hs = new THREE.Shape(); hs.moveTo(0, 0); hs.bezierCurveTo(-0.9, 0.2, -0.8, 1.2, 0, 0.9); hs.bezierCurveTo(0.8, 1.2, 0.9, 0.2, 0, 0);
+        const gm = new THREE.ShapeGeometry(hs).rotateX(-Math.PI / 2).scale(1.1, 1, 1.1).rotateY(a);
+        const lf = new THREE.Mesh(gm, lm); lf.position.y = 0.36 + k * 0.012; lf.renderOrder = 3; g.add(lf);
+        const ol = new THREE.Mesh(gm.clone().scale(1.18, 1, 1.18), new THREE.MeshBasicMaterial({ color: 0x1f2a12, transparent: true, opacity: 0.9, depthWrite: false, fog: false })); ol.position.y = 0.34 + k * 0.012; ol.renderOrder = 2; g.add(ol); } }
     const disc = new THREE.Mesh(new THREE.RingGeometry(0, 1.9, 32).rotateX(-Math.PI / 2), dm); disc.position.y = 0.3; disc.renderOrder = 4; g.add(disc);
     scene.add(g); clovers.push({ x, z, g, mesh: m, star: sp, prog: 0, eaten: false });
   });

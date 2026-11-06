@@ -1727,3 +1727,9 @@ SCORE: 7.8
    - The one call that shows it done is `perf` with `costs`. It should read about 120k or less, with the flock silhouette unchanged in a `look`.
 
 SCORE: 7.5
+
+## Iteration 30
+**Did**: game.js wolf block: `wolf-body` profile now has a shoulder hump, tucked belly, thigh and a bushy tail polygon (16 points); `wolf-leg`s shorter (0.55) with paws; `wolf-tail` blob shrunk and moved to (0,0.8,-1.3). `clover` groups got three inked heart-shaped leaves each (bright green 0x9be04a, dark outline), staggered in y by 0.012 to avoid z-fighting.
+**Saw**: `look` target wolf: curved back with hump, tapered tail and shorter legs, still a dark silhouette with a brown rim. Clover close view showed the leaf layers z-fighting (look's Surfaces lines); I staggered their y after that and did not re-look. 0 console errors. Perf and triangle count not run.
+**Next**: (1) re-`look` at a clover with `zoom` to confirm the leaves read and no z-fight; (2) cut triangles to ~120k (`bushes`, `walls`, `rocks`, a shared low-poly `sheep-shadow` proxy) and re-run `perf costs`; (3) check wolf pounce/leap poses against the new profile.
+**Open**: triangle cut not started; no interact replay; clover leaf fix unverified.

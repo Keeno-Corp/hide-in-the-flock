@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 29
-**Did**: game.js wolf block: `wolf-body` is now one extruded side-profile polygon (12 points, depth 0.32, bevel 2) replacing the blob barrel; `wolf-outline` uses welded/smoothed normals so the rim has no gaps; `wolf-leg`s slimmer (r 0.065) and closer together; `wolf-tail` thinner; `wolf-head` skull smaller, snout longer (0.8), ears 6-sided cones.
-**Saw**: `look` target wolf: lean angular profile with a lowered head and thin outline; sheet frame 60: subject wolf 5.8%, no console errors in the open. From the game camera it reads as a flat dark slab on stilts, so it is still not the WOLF turnaround. Perf not run.
-**Next**: (1) give the wolf profile a shaped back (shoulder hump, tucked belly, bushy tail polygon) and shorter legs; (2) clover three-leaf inked motif + glow near player (not started); (3) cut triangles to ~120k (bushes, walls, rocks, shadow proxies) and re-run `perf costs`.
-**Open**: clover and triangle cut not started; no interact replay; wolf pose angles (leap/grin) not re-checked against the new profile.
-
 ### Judge 29
 
 **Session 29 verdict.** I looked at one 3-cell sheet (start at frame 60, human bite and AI bite at frame 200) and ran `perf` with `costs`. I did not run `interact`, `feel` or `viewports`, and I did not check sound. The sheet showed no `Lighting:` or `Surfaces:` lines.
@@ -61,3 +55,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - The one call that shows it done is `perf` with `costs`. It should read about 120k or less, with the flock silhouette unchanged in a `look`.
 
 SCORE: 7.5
+
+## Iteration 30
+**Did**: game.js wolf block: `wolf-body` profile now has a shoulder hump, tucked belly, thigh and a bushy tail polygon (16 points); `wolf-leg`s shorter (0.55) with paws; `wolf-tail` blob shrunk and moved to (0,0.8,-1.3). `clover` groups got three inked heart-shaped leaves each (bright green 0x9be04a, dark outline), staggered in y by 0.012 to avoid z-fighting.
+**Saw**: `look` target wolf: curved back with hump, tapered tail and shorter legs, still a dark silhouette with a brown rim. Clover close view showed the leaf layers z-fighting (look's Surfaces lines); I staggered their y after that and did not re-look. 0 console errors. Perf and triangle count not run.
+**Next**: (1) re-`look` at a clover with `zoom` to confirm the leaves read and no z-fight; (2) cut triangles to ~120k (`bushes`, `walls`, `rocks`, a shared low-poly `sheep-shadow` proxy) and re-run `perf costs`; (3) check wolf pounce/leap poses against the new profile.
+**Open**: triangle cut not started; no interact replay; clover leaf fix unverified.
