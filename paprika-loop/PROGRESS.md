@@ -1190,3 +1190,9 @@ I took one 4-cell `look` sheet (start, AI pounce, human pounce, local after `Key
    - The one call that shows it done is `look` with `zoom` [0, 100, 640, 450] at frame 150. It should show broad flat patches with no visible triangle edges.
 
 SCORE: 7.9
+
+## Iteration 21
+**Did**: game.js. `PAL.wolf` 0x0a0709 -> 0x030203. Post shader's paper lift `mix(col,paper*.35,.045)` now scaled by `smoothstep(.02,.2,lum(col))`, so near-black stays black. Removed the per-triangle colour copy loop on `ground`: vertex colours are smooth again, giving noise-shaped patches, no triangle edges.
+**Saw**: `look` start: 2% near black (first non-zero), wolf-body reads solid black, 2.9% of frame; no errors, no Lighting/Surfaces lines. Zoom [0,100,640,450]: broad ground patches, pines/round-trees have ink outlines. Local mode, rock occlusion of the local wolf and perf not checked.
+**Next**: (1) local wolf: scale to ~8.5 and add a lighter rim on `wolf-leg*` so paws read; make `wolf-rock` write depth before the wolf; (2) the ground diamonds at right of the hill are still strong tone bands: soften; (3) enlarge the top-right mode hint text.
+**Open**: local-mode wolf not re-checked after the colour change; perf not run.

@@ -16,7 +16,7 @@ const pick = a => a[Math.floor(Math.random() * a.length)];
 // Storybook pastoral: toon-banded flat fills -> render target -> one ink/paper post pass.
 const PAL = {
   ink: 0x2a1c12, paper: 0xefe3c8, wool: 0xf3e8cc, face: 0x2b211c, ochre: 0xb9a24f, sage: 0x8e9a58, olive: 0x6f7a45,
-  indigo: 0x3f4a6e, skyTop: 0x7d86a6, rose: 0xd9a49a, apricot: 0xf2b47a, sun: 0xffe2a8, mauve: 0x8a7f9a, wolf: 0x0a0709, red: 0xb3261e,
+  indigo: 0x3f4a6e, skyTop: 0x7d86a6, rose: 0xd9a49a, apricot: 0xf2b47a, sun: 0xffe2a8, mauve: 0x8a7f9a, wolf: 0x030203, red: 0xb3261e,
 };
 const renderer = new THREE.WebGLRenderer({ antialias: false });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
@@ -60,7 +60,7 @@ const post = new THREE.ShaderMaterial({
     // gouache: lifted blacks, brush streaks, soft blotches
     float brush=vn(vec2(fc.x*.012,fc.y*.16)+vn(fc*.01)*2.)*.6+vn(fc*.03)*.4;
     col*=1.+(brush-.5)*.15;
-    col=mix(col,paper*.35,.045);
+    col=mix(col,paper*.35,.045*smoothstep(.02,.2,lum(col)));
     float grain=h21(floor(fc)+.37)-.5; float fib=vn(vec2(fc.x*.7+fc.y*.1,fc.y*.045))-.5;
     col*=1.+grain*.11+fib*.07;
     float Ld=lum(col); float hatch0=step(.62,fract((fc.x-fc.y)*.14+vn(fc*.02)*.8))*smoothstep(.2,.07,Ld)*(1.-sky)*smoothstep(1./600.,1./90.,c); col=mix(col,ink,hatch0*.36);
@@ -177,7 +177,6 @@ const PLAY_R = 30;
     { const ip = Math.sin(cx * 0.14 + 1.7) * Math.sin(cz * 0.12 - 0.6) + 0.5 * Math.sin(cx * 0.3 + cz * 0.22); if (ip > 0.62 && r < 60) c.lerp(indigo, 0.55); }
     col[i * 3] = c.r; col[i * 3 + 1] = c.g; col[i * 3 + 2] = c.b;
   }
-  for (let i = 0; i + 2 < pos.count; i += 3) for (let k = 1; k < 3; k++) for (let j = 0; j < 3; j++) col[(i + k) * 3 + j] = col[i * 3 + j];
   g.setAttribute('color', new THREE.BufferAttribute(col, 3));
   const m = new THREE.Mesh(g, new THREE.MeshToonMaterial({ vertexColors: true, gradientMap: toonGround }));
   m.name = 'ground'; m.receiveShadow = true; scene.add(m);

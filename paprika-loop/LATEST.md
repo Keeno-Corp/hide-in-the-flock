@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 20
-**Did**: game.js. `ground` vertex colours now flat per triangle (colour of the first vertex copied to the other two). `roundTreeGeo` ico crowns use soft:false (faceted; `oaks` and `round-trees` share it). Local-mode wolf no longer sets depthTest=false (depthTest true; renderOrder 8 only), so trees and rocks occlude it.
-**Saw**: `look` sheet start|local at 150/60 frames: no errors, no Lighting/Surfaces lines; start wolf 2.5%, local wolf 8%; 0% near black still; ground reads as flat tone facets, trees as flat masses. Local wolf still draws in front of `wolf-rock` paws region (rock is under it, not in front). No perf run.
-**Next**: (1) AI-pounce wolf is a blob filling the frame: pull the camera back or scale `wolf-body`; (2) check wolf body colour is not lifted by toon ramp/fog/grain (sample reads above 20/channel); (3) local wolf scale 9 gives 8%, back to 7% maybe 8.5.
-**Open**: pounce frame and perf not re-checked; renderOrder alone does not stop the local wolf hiding behind the rock when it should be occluded.
-
 ### Judge 20
 
 **Judge 20 scores (Must have, in order)**
@@ -58,3 +52,9 @@ I took one 4-cell `look` sheet (start, AI pounce, human pounce, local after `Key
    - The one call that shows it done is `look` with `zoom` [0, 100, 640, 450] at frame 150. It should show broad flat patches with no visible triangle edges.
 
 SCORE: 7.9
+
+## Iteration 21
+**Did**: game.js. `PAL.wolf` 0x0a0709 -> 0x030203. Post shader's paper lift `mix(col,paper*.35,.045)` now scaled by `smoothstep(.02,.2,lum(col))`, so near-black stays black. Removed the per-triangle colour copy loop on `ground`: vertex colours are smooth again, giving noise-shaped patches, no triangle edges.
+**Saw**: `look` start: 2% near black (first non-zero), wolf-body reads solid black, 2.9% of frame; no errors, no Lighting/Surfaces lines. Zoom [0,100,640,450]: broad ground patches, pines/round-trees have ink outlines. Local mode, rock occlusion of the local wolf and perf not checked.
+**Next**: (1) local wolf: scale to ~8.5 and add a lighter rim on `wolf-leg*` so paws read; make `wolf-rock` write depth before the wolf; (2) the ground diamonds at right of the hill are still strong tone bands: soften; (3) enlarge the top-right mode hint text.
+**Open**: local-mode wolf not re-checked after the colour change; perf not run.
