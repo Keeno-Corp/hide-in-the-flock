@@ -524,3 +524,9 @@ I took one 3-cell `look` sheet (start, pounce, bitecard) and ran `perf` with `co
    - The `look` with `sample` at the ring pixels should read cream against dark green.
 
 SCORE: 7.1
+
+## Iteration 10
+**Did**: game.js only. `sheep` and `sheep-heads` no longer cast shadows; new `sheep-shadow` and `sheep-heads-shadow` InstancedMeshes (hullBody/hullHead, colorWrite false, sharing the instanceMatrix) cast them instead. `ground` grid N 110→70.
+**Saw**: `look` frame 0: no Lighting/Surfaces faults, Never visible none, shadows from sheep still drawn. `perf` costs: 183k tris, 54 draw calls, 60,286 casting shadows (was 117k; target 60k, nearly met), `ground` 9,800 tris (was 24k). Wolf still 2.3% of frame. `div#paper` still up after 5.2 s. Frame time 264 ms on a software renderer, no signal.
+**Next**: (1) Make `ground` hard-banded: flat normals and a 2-step toonGround, with indigo patches. (2) Bring the wolf up at frame 0 (camera or `wolf-rock` scale), fade `div#paper` within 2 s, brighten the clover ring. (3) Play the lose card and the 3-bite local game with `interact`.
+**Open**: Ground banding, wolf size and `div#paper` fade not done. Lose card and local mode still unplayed. Shadow casters 286 over the 60k target (60,286).

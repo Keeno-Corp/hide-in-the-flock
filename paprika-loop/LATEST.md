@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 9
-**Did**: game.js only. `sheep-ink`/`sheep-heads-ink` now hull the new low-poly `hullBody`/`hullHead` (10k+8k tris, was ~75k). New `treeInk()` adds back-face ink hulls `round-trees-ink` and `oaks-ink`. `rocks` and `bushes` ico detail 2→1. `ground` hill/far colour blends quantised to 3 steps.
-**Saw**: `look` frame 0: no Lighting/Surfaces faults, Never visible none; trees now have dark outlines. Wolf 2.3% of frame (unchanged). `perf`: 179,282 tris (was 242k), 52 draw calls, 117k casting shadows (still over 60k target: `sheep` 61k, `sheep-heads` 14k). Ground still reads as soft gradient slopes, not hard bands. Clover ring visible as a small green ring bottom-left; not zoomed.
-**Next**: (1) Cut shadow casters: give `sheep` a low-poly customDepthMaterial or a shadow-only proxy; lower `ground` N 110→70. (2) Make `ground` hard-banded: flat normals + a 2-step toonGround. (3) Bring wolf up at frame 0 (camera or wolf-rock scale), fade `div#paper`.
-**Open**: Ground banding and wolf size not addressed; lose card and 3-bite local game still unplayed; no play run this session.
-
 ### Judge 9
 
 **Judge 9**
@@ -62,3 +56,9 @@ I took one 3-cell `look` sheet (start, pounce, bitecard) and ran `perf` with `co
    - The `look` with `sample` at the ring pixels should read cream against dark green.
 
 SCORE: 7.1
+
+## Iteration 10
+**Did**: game.js only. `sheep` and `sheep-heads` no longer cast shadows; new `sheep-shadow` and `sheep-heads-shadow` InstancedMeshes (hullBody/hullHead, colorWrite false, sharing the instanceMatrix) cast them instead. `ground` grid N 110→70.
+**Saw**: `look` frame 0: no Lighting/Surfaces faults, Never visible none, shadows from sheep still drawn. `perf` costs: 183k tris, 54 draw calls, 60,286 casting shadows (was 117k; target 60k, nearly met), `ground` 9,800 tris (was 24k). Wolf still 2.3% of frame. `div#paper` still up after 5.2 s. Frame time 264 ms on a software renderer, no signal.
+**Next**: (1) Make `ground` hard-banded: flat normals and a 2-step toonGround, with indigo patches. (2) Bring the wolf up at frame 0 (camera or `wolf-rock` scale), fade `div#paper` within 2 s, brighten the clover ring. (3) Play the lose card and the 3-bite local game with `interact`.
+**Open**: Ground banding, wolf size and `div#paper` fade not done. Lose card and local mode still unplayed. Shadow casters 286 over the 60k target (60,286).

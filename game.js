@@ -158,7 +158,7 @@ function gh(x, z) {
 }
 const PLAY_R = 30;
 {
-  const N = 110, S = 440;
+  const N = 70, S = 440;
   let g = new THREE.PlaneGeometry(S, S, N, N); g.rotateX(-Math.PI / 2);
   const p = g.attributes.position;
   for (let i = 0; i < p.count; i++) p.setY(i, gh(p.getX(i), p.getZ(i)));
@@ -222,8 +222,8 @@ const SS = 1.8;
 const HEAD_P = new THREE.Vector3(0, 0.78, 0.6);
 const N_AI = 100, N = N_AI + 1;
 const toonSheep = (() => { const d = new Uint8Array([176,170,160,255, 255,255,255,255]); const t = new THREE.DataTexture(d, 2, 1, THREE.RGBAFormat); t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t; })();
-const sheepMat = flat({ emissive: 0x4a3e30, gradientMap: toonSheep }); const bodyIM = new THREE.InstancedMesh(sheepBodyGeo, sheepMat, N); bodyIM.name = 'sheep'; bodyIM.castShadow = true; bodyIM.frustumCulled = false;
-const headIM = new THREE.InstancedMesh(sheepHeadGeo, sheepMat, N); headIM.name = 'sheep-heads'; headIM.castShadow = true; headIM.frustumCulled = false;
+const sheepMat = flat({ emissive: 0x4a3e30, gradientMap: toonSheep }); const bodyIM = new THREE.InstancedMesh(sheepBodyGeo, sheepMat, N); bodyIM.name = 'sheep'; bodyIM.castShadow = false; bodyIM.frustumCulled = false;
+const headIM = new THREE.InstancedMesh(sheepHeadGeo, sheepMat, N); headIM.name = 'sheep-heads'; headIM.castShadow = false; headIM.frustumCulled = false;
 { const tints = [0xffffff, 0xfaf0dc, 0xefe2c6, 0xffffff, 0xf2e6cf, 0xe0d4bb]; const c = new THREE.Color();
   for (let i = 0; i < N; i++) { const j = i === 0 ? 13 : i, t = tints[(j * 7 + (j >> 2)) % tints.length]; c.setHex(t).multiplyScalar(0.92 + ((j * 37) % 17) / 17 * 0.1); bodyIM.setColorAt(i, c); headIM.setColorAt(i, new THREE.Color(0xffffff)); } }
 const SZ = Array.from({ length: N }, (_, i) => 0.88 + (((i === 0 ? 13 : i) * 53) % 23) / 23 * 0.3);
@@ -233,7 +233,8 @@ const hullHead = mergeGeometries([mk(ico(0.28, 1), DARK, { p: [0, 0.02, 0.2], s:
 { const hull = (g, d) => { const h = g.clone(); h.deleteAttribute('color'); const p = h.attributes.position, n = h.attributes.normal; for (let i = 0; i < p.count; i++) p.setXYZ(i, p.getX(i) + n.getX(i) * d, p.getY(i) + n.getY(i) * d, p.getZ(i) + n.getZ(i) * d); return h; };
   const im = new THREE.MeshBasicMaterial({ color: 0x2b211c, side: THREE.BackSide, fog: false });
   const ob = new THREE.InstancedMesh(hull(hullBody, 0.05), im, N), oh = new THREE.InstancedMesh(hull(hullHead, 0.04), im, N);
-  ob.instanceMatrix = bodyIM.instanceMatrix; oh.instanceMatrix = headIM.instanceMatrix; ob.name = 'sheep-ink'; oh.name = 'sheep-heads-ink'; ob.frustumCulled = oh.frustumCulled = false; scene.add(ob, oh); }
+  ob.instanceMatrix = bodyIM.instanceMatrix; oh.instanceMatrix = headIM.instanceMatrix; { const pm = new THREE.MeshBasicMaterial({ colorWrite: false, depthWrite: false }); const pb = new THREE.InstancedMesh(hullBody, pm, N), ph = new THREE.InstancedMesh(hullHead, pm, N); pb.instanceMatrix = bodyIM.instanceMatrix; ph.instanceMatrix = headIM.instanceMatrix; pb.name = 'sheep-shadow'; ph.name = 'sheep-heads-shadow'; pb.castShadow = ph.castShadow = true; pb.frustumCulled = ph.frustumCulled = false; scene.add(pb, ph); }
+  ob.name = 'sheep-ink'; oh.name = 'sheep-heads-ink'; ob.frustumCulled = oh.frustumCulled = false; scene.add(ob, oh); }
 
 // ───────────────────────── wolf ─────────────────────────
 const wolf = { x: -10, z: 3, y: 0, yaw: 0.6, state: 'watch', pose: 'crouch', t: 0, bites: 3, cd: 5, sulk: 0, target: null, abort: 0, stalkT: 0, lookX: 0, lookZ: 0, phase: 0, onRock: true, shrug: 0, pitch: 0 };
