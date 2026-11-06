@@ -104,18 +104,18 @@ addEventListener('resize', () => { renderer.setSize(innerWidth, innerHeight); ca
       vec3 d=normalize(vP); float e=clamp(d.y,0.,1.);
       vec3 c=mix(hor,rose,smoothstep(0.,.1,e)); c=mix(c,mid,smoothstep(.07,.26,e)); c=mix(c,top,smoothstep(.2,.7,e));
       // glow around the low sun
-      float sd=dot(d,sunDir); c=mix(c,sun,smoothstep(.6,.995,sd)*.62); 
+      float sd=dot(d,sunDir); c=mix(c,sun,smoothstep(.45,.995,sd)*.8); 
       // painted cloud bands: horizontal streaks, quantised into flat shapes with a shaded underside
       vec2 p=d.xz/(d.y+.16); p*=vec2(.55,1.9);
       float n=fbm(p*vec2(1.4,3.2)+vec2(0.,2.)); float band=smoothstep(.02,.18,e)*smoothstep(.95,.35,e);
-      float m=smoothstep(.47,.5,n+(.5-e)*.12)*band;
+      float m=smoothstep(.44,.47,n+(.5-e)*.12)*band;
       float under=smoothstep(.47,.5,fbm(p*vec2(1.4,3.2)+vec2(0.,2.)+vec2(0.,.07)));
-      vec3 cl=mix(mix(rose,vec3(1.,.95,.86),.7),sun,smoothstep(.5,.99,sd)*.6);
+      vec3 cl=mix(mix(vec3(.93,.55,.5),vec3(1.,.8,.6),.5),sun,smoothstep(.5,.99,sd)*.6);
       vec3 sh=mix(indigo,rose,.35);
       c=mix(c,mix(sh,cl,under),m*.95);
       float m2=smoothstep(.6,.64,fbm(p*vec2(2.4,6.)+7.))*band*.55; c=mix(c,mix(cl,hor,.4),m2);
       // sun disc with ink ring
-      float disc=smoothstep(.9992,.9994,sd); c=mix(c,vec3(1.,.93,.7),disc);
+      float disc=smoothstep(.9962,.9964,sd); float ring=smoothstep(.9950,.9952,sd)*(1.-smoothstep(.9954,.9956,sd)); c=mix(c,vec3(.93,.62,.5),ring*.6); c=mix(c,vec3(1.,.93,.7),disc);
       gl_FragColor=vec4(c,1.); }`,
   }));
   sky.name = 'sky'; sky.renderOrder = -10; sky.onBeforeRender = (r, s, cam) => sky.position.copy(cam.position); scene.add(sky);
@@ -204,9 +204,10 @@ const WOOL = PAL.wool, DARK = PAL.face;
 const sheepBodyGeo = mergeGeometries([
   mk(ico(0.5, 1), WOOL, { p: [0, 0.62, 0], s: [1, 0.82, 1.3], jit: 0.04, soft: true }),
   mk(ico(0.3, 1), WOOL, { p: [0.22, 0.98, 0.22], jit: 0.04, soft: true }), mk(ico(0.3, 1), WOOL, { p: [-0.22, 0.98, 0.1], jit: 0.04, soft: true }),
+  mk(ico(0.46, 1), 0x4a5278, { p: [0, 0.36, 0], s: [0.95, 0.4, 1.25], soft: true }),
   mk(ico(0.3, 1), WOOL, { p: [0, 1.0, -0.3], jit: 0.04, soft: true }), mk(ico(0.26, 1), WOOL, { p: [0.3, 0.7, -0.62], jit: 0.04, soft: true }),
   mk(ico(0.26, 1), WOOL, { p: [-0.3, 0.7, -0.6], jit: 0.04, soft: true }),
-  ...[[-1, -1], [1, -1], [-1, 1], [1, 1]].map(([x, z]) => mk(box(0.13, 0.42, 0.13), DARK, { p: [x * 0.22, 0.21, z * 0.42] })),
+  ...[[-1, -1], [1, -1], [-1, 1], [1, 1]].map(([x, z]) => mk(box(0.09, 0.46, 0.09), 0x2a2220, { p: [x * 0.22, 0.21, z * 0.42] })),
 ]);
 const sheepHeadGeo = mergeGeometries([
   mk(box(0.36, 0.34, 0.44), DARK, { p: [0, 0, 0.2] }),
@@ -350,6 +351,8 @@ const clovers = [];
     sp.add(new THREE.Mesh(box(0.1, 0.9, 0.02), star), new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.6, 9, 8, 1, true), star), new THREE.Mesh(box(0.7, 0.08, 0.02), star)); g.add(sp);
     const cr = new THREE.Mesh(new THREE.RingGeometry(1.1, 1.7, 28).rotateX(-Math.PI / 2), star); cr.position.y = 0.25; cr.material = star; sp.userData.ring = cr; g.add(cr);
     const dm = new THREE.MeshBasicMaterial({ color: 0xf2b47a, transparent: true, opacity: 0.55, depthWrite: false, depthTest: false, fog: false });
+    const outl = new THREE.Mesh(new THREE.RingGeometry(2.6, 3.0, 40).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0x2a1c12, transparent: true, opacity: 0.8, depthWrite: false, fog: false })); outl.position.y = 0.28; g.add(outl);
+    const patch = new THREE.Mesh(new THREE.CircleGeometry(2.6, 40).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0x8fa04c, transparent: true, opacity: 0.85, depthWrite: false, fog: false })); patch.position.y = 0.27; g.add(patch);
     const disc = new THREE.Mesh(new THREE.RingGeometry(0, 1.9, 32).rotateX(-Math.PI / 2), dm); disc.position.y = 0.3; disc.renderOrder = 4; g.add(disc);
     scene.add(g); clovers.push({ x, z, g, mesh: m, star: sp, prog: 0, eaten: false });
   });

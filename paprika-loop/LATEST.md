@@ -34,3 +34,11 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Fade the hatching and the `ground` detail with distance in the post pass, so the `Surface:` line on `ground` clears in a `look` after `interact` steps. Check the plain gameplay frame too.
 
 SCORE: 6.3
+
+## The request changed
+
+paprika-loop/PROMPT.md changed before session 2; the Next lists above were written before it. Changed lines:
++ Browser three.js game (plain page, no build step; index.html, game.js, fx.js, geo.js, fonts/): a sheep hidden among ~100 AI sheep in a dusk meadow; a wolf has 3 bites. Solo (AI wolf hunts the player) and local 2-player on one keyboard (second player is the wolf). The page is improved in place, not rebuilt. The look is held to LOOK.md, CHARACTERS.md, the picture sheets refs/sheets/BOARD.png (look board: key art, palette, bite inset), refs/sheets/SHEEP.png and refs/sheets/WOLF.png (character turnarounds), refs/sheets/LOOK.png and the references in refs/ (01 Fink pastoral painting, 03 Vogel woodcut) and refs/study/ (layered-hill and flat-meadow frames). STYLE IS JUDGED AS HARD AS GAMEPLAY.
++ 2. `compare` against refs/sheets/BOARD.png (the target frame), refs/01.jpg and refs/sheets/LOOK.png; sheep and wolf match their turnarounds keeps improving or holding; the judge names the biggest remaining style gap each round.
+- Browser three.js game (plain page, no build step; index.html, game.js, fx.js, geo.js, fonts/): a sheep hidden among ~100 AI sheep in a dusk meadow; a wolf has 3 bites. Solo (AI wolf hunts the player) and local 2-player on one keyboard (second player is the wolf). The page is improved in place, not rebuilt. The look is held to LOOK.md, CHARACTERS.md, refs/sheets/LOOK.png and the references in refs/ (01 Fink pastoral painting, 03 Vogel woodcut) and refs/study/ (layered-hill and flat-meadow frames). STYLE IS JUDGED AS HARD AS GAMEPLAY.
+- 2. `compare` against refs/01.jpg and refs/sheets/LOOK.png keeps improving or holding; the judge names the biggest remaining style gap each round.

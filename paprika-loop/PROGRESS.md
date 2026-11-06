@@ -36,3 +36,17 @@ The request is in PROMPT.md. Each session of the loop appends one section here: 
    - Fade the hatching and the `ground` detail with distance in the post pass, so the `Surface:` line on `ground` clears in a `look` after `interact` steps. Check the plain gameplay frame too.
 
 SCORE: 6.3
+
+## The request changed
+
+paprika-loop/PROMPT.md changed before session 2; the Next lists above were written before it. Changed lines:
++ Browser three.js game (plain page, no build step; index.html, game.js, fx.js, geo.js, fonts/): a sheep hidden among ~100 AI sheep in a dusk meadow; a wolf has 3 bites. Solo (AI wolf hunts the player) and local 2-player on one keyboard (second player is the wolf). The page is improved in place, not rebuilt. The look is held to LOOK.md, CHARACTERS.md, the picture sheets refs/sheets/BOARD.png (look board: key art, palette, bite inset), refs/sheets/SHEEP.png and refs/sheets/WOLF.png (character turnarounds), refs/sheets/LOOK.png and the references in refs/ (01 Fink pastoral painting, 03 Vogel woodcut) and refs/study/ (layered-hill and flat-meadow frames). STYLE IS JUDGED AS HARD AS GAMEPLAY.
++ 2. `compare` against refs/sheets/BOARD.png (the target frame), refs/01.jpg and refs/sheets/LOOK.png; sheep and wolf match their turnarounds keeps improving or holding; the judge names the biggest remaining style gap each round.
+- Browser three.js game (plain page, no build step; index.html, game.js, fx.js, geo.js, fonts/): a sheep hidden among ~100 AI sheep in a dusk meadow; a wolf has 3 bites. Solo (AI wolf hunts the player) and local 2-player on one keyboard (second player is the wolf). The page is improved in place, not rebuilt. The look is held to LOOK.md, CHARACTERS.md, refs/sheets/LOOK.png and the references in refs/ (01 Fink pastoral painting, 03 Vogel woodcut) and refs/study/ (layered-hill and flat-meadow frames). STYLE IS JUDGED AS HARD AS GAMEPLAY.
+- 2. `compare` against refs/01.jpg and refs/sheets/LOOK.png keeps improving or holding; the judge names the biggest remaining style gap each round.
+
+## Iteration 2
+**Did**: game.js only, small edits. (1) Sky shader: sun disc about 4x wider, with a rose ring, stronger glow (.8), cloud bands start earlier, and the cloud colour is rose/apricot instead of cream. (2) Sheep: `sheepBodyGeo` gets an indigo belly ellipsoid (0x4a5278) and thinner near-black legs. (3) `clover` ×3 each get a painted green `patch` disc (r 2.6) with an ink `outl` ring.
+**Saw**: One `look` at frame 0. The sun disc is large and pale with a visible halo. The clover patches show as green discs, 1.2% of the frame. The sheep belly is hard to see at this camera distance, so I did not zoom. The `walls` z-fighting warning is back in `look`: a 9.2×0.51 plane, probably the cap stones from `Math.random` offsets. No console errors. I did not run `perf`.
+**Next**: (1) Trees are untouched: flatten `pines*` and `round-trees*` (still shaded like 3D assets), and run `asset_search` for stylized trees and sheep. (2) Zoom-check the sheep belly, ears and graze pose. (3) Fade the post-pass hatching with distance, to clear the `ground` Surface line. (4) Fix the `walls` z-fight for good: use polygonOffset or a fixed seeded offset. (5) Wolf and rock size, the crouch pose, and the seeded rng.
+**Open**: The sky and sheep changes are not compared against BOARD.png. Local 2-player and the clover grazing flow are still unplayed.
