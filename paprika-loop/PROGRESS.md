@@ -2836,3 +2836,9 @@ SCORE: 7.9
 **Saw**: Local reveal `look`: "AI SHEEP" title, subtitle, "baa?" bubble legible; `wool` 23% of screen; brightness 66%, 1% blown out; no overlap among HUD elements; no console errors.
 **Next**: (1) Natural clover win + `KeyR` (still unplayed). (2) Reveal at 390×844 and 820×1180 via `resize` step. (3) Bottom caption `div#cap` not visible on tablet.
 **Open**: Natural win, `KeyR`, phone/tablet reveal still unverified.
+
+## Iteration 66
+**Did**: Played the natural clover win in solo (setState t=200, player on each `clover`, hold `KeyE`; wolf pounce mid-way paused T until it ended): `result` null→"win", title "YOU BLENDED IN" legible. `KeyR` after: `result` null, `bites` 3, `clovers` 0. Checked reveal at 390×844 via `resize`: title/sub/bubble/`div#cap` visible, no overlaps, but `div#reveal` was 4px cut off at the edges; `#rbig` phone size 17vw→15vw in index.html.
+**Saw**: Win look: brightness 59%, 0% blown out, `div#reveal` overlaps `div#hud` bounds only in the box, not the text; no console errors; no Never-visible objects. Phone canvas fills 390×844 (no letterbox; the judge's cell was the sheet).
+**Next**: (1) Reveal at 820×1180 (not checked). (2) Win-screen `div#hud` TIME reads 0:00 after win (countdown shown, maybe show "3:00" or hold final time). (3) More polish/depth in flock behaviour.
+**Open**: Tablet reveal unverified; the 15vw change not re-looked.
