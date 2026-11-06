@@ -76,7 +76,7 @@ scene.add(new THREE.HemisphereLight(0xbfe8ff, 0x7fb83a, 1.35));
     const j = (Math.sin(cx * 12.9898 + cz * 78.233) * 43758.5453) % 1;
     c.copy(grassA).lerp(grassB, Math.abs(j) * 0.9 + 0.1 * Math.sin(cx * 0.3));
     if (r > 30 || cy > 3.5) c.lerp(forest, sm(30, 38, r) * 0.8);
-    if (cy < 1.1 && r > 30) c.lerp(sand, sm(1.1, 0.5, cy));
+    if (cy < 1.5 && r > 30) c.lerp(sand, sm(1.5, 0.6, cy));
     if (ny < 0.76 && cy > 0.4) c.copy(Math.abs(j) > 0.5 ? rock : rock2);
     if (cy > 9) c.lerp(rock2, 0.7);
     for (let k = 0; k < 3; k++) { col[(i + k) * 3] = c.r; col[(i + k) * 3 + 1] = c.g; col[(i + k) * 3 + 2] = c.b; }
@@ -87,7 +87,7 @@ scene.add(new THREE.HemisphereLight(0xbfe8ff, 0x7fb83a, 1.35));
   const sea = new THREE.Mesh(new THREE.PlaneGeometry(900, 900).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: 0x2a98e0, roughness: 0.35, transparent: true, opacity: 0.86 }));
   sea.name = 'sea'; sea.position.y = SEA; scene.add(sea);
   const sandRing = new THREE.Mesh(new THREE.RingGeometry(44, 72, 64, 1).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xc5d6a2 }));
-  sandRing.name = 'sand'; sandRing.position.y = SEA + 0.12; scene.add(sandRing);
+  sandRing.name = 'sand'; sandRing.position.y = SEA + 0.75; sandRing.material.color.set(0xe3dba6); scene.add(sandRing);
   const cliff = new THREE.Mesh(new THREE.IcosahedronGeometry(9, 1), new THREE.MeshStandardMaterial({ color: 0x8d8f94, flatShading: true, roughness: 1 }));
   cliff.name = 'cliff'; cliff.scale.set(1.3, 1.5, 1); cliff.position.set(34, 5, -44); scene.add(cliff);
 }
@@ -239,7 +239,7 @@ const clovers = [];
 const ringMat = c => new THREE.MeshBasicMaterial({ color: c, transparent: true, opacity: 0.4, depthWrite: false, fog: false });
 const marker = new THREE.Mesh(new THREE.RingGeometry(0.85, 1.1, 28).rotateX(-Math.PI / 2), ringMat(0xfff2a0)); marker.name = 'player'; scene.add(marker);
 const reach = new THREE.Mesh(new THREE.RingGeometry(3.4, 3.6, 40).rotateX(-Math.PI / 2), ringMat(0xe0302a)); reach.name = 'reach'; reach.visible = false; scene.add(reach);
-const aim = new THREE.Mesh(new THREE.RingGeometry(0.8, 1.05, 20).rotateX(-Math.PI / 2), ringMat(0xe0302a)); aim.material.opacity = 0.9; aim.name = 'aim'; aim.visible = false; scene.add(aim);
+const aim = new THREE.Mesh(new THREE.RingGeometry(1.5, 2.1, 28).rotateX(-Math.PI / 2), ringMat(0xff3a2a)); aim.material.opacity = 0.95; aim.name = 'aim'; aim.visible = false; scene.add(aim);
 const outline = new THREE.Group(); outline.visible = false; outline.name = 'outline';
 {
   const om = new THREE.MeshBasicMaterial({ color: 0xff2a1a, side: THREE.BackSide, depthTest: false }); om.fog = false;
@@ -299,7 +299,7 @@ const eatenCount = () => clovers.filter(c => c.eaten).length;
 function updateModeUI() {
   $('mname').textContent = mode === 'solo' ? 'SOLO' : 'LOCAL 2-PLAYER';
   $('ctl').innerHTML = mode === 'solo'
-    ? 'WASD / Arrows walk · Shift run (suspicious!)<br>E / Space graze · hold E on clover<br>R restart'
+    ? 'WASD / Arrows walk · Shift run (suspicious!)<br>E / Space graze · find the 3 clovers, hold E<br>R restart'
     : 'P1 sheep: WASD · Shift run · E graze<br>P2 wolf: Arrows move · Enter POUNCE<br>R restart';
 }
 function toast(t, d = 2.2) { const e = $('toast'); e.textContent = t; e.style.opacity = 1; toastT = d; }
@@ -665,7 +665,7 @@ function drawWolf(dt) {
   const loc = mode === 'local';
   reach.visible = loc && !pounce.ph && !result; reach.position.set(w.x, gh(w.x, w.z) + 0.15, w.z);
   aim.visible = false;
-  if (loc && !pounce.ph && !result) { let best = null, bd = 3.6; for (const s of sheep) { const d = Math.hypot(s.x - w.x, s.z - w.z); if (d < bd) { bd = d; best = s; } } if (best) { aim.visible = true; aim.position.set(best.x, best.y + 0.2, best.z); aim.scale.setScalar(1 + 0.15 * Math.sin(clock * 9)); } }
+  if (loc && !pounce.ph && !result) { let best = null, bd = 3.6; for (const s of sheep) { const d = Math.hypot(s.x - w.x, s.z - w.z); if (d < bd) { bd = d; best = s; } } if (best) { aim.visible = true; aim.position.set(best.x, best.y + 0.2, best.z); aim.scale.setScalar(1 + 0.2 * Math.sin(clock * 9)); aim.material.opacity = 0.7 + 0.25 * Math.sin(clock * 9); } }
 }
 
 // ───────────────────────── camera ─────────────────────────

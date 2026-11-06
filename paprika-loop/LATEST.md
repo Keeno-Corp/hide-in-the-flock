@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 6
-**Did**: index.html `@media(max-width:640px)` shrinks `#hud`, moves `#mode` to bottom-right and hides its `small` text, moves `#toast` low; game.js camera fov widens when aspect<1.4 (keeps ~1.4 horizontal view, max 80); `W.root` scale 5.2→3.8; `wolf-rock` mesh scaled 1.3 so the crouched wolf sits on it.
-**Saw**: opening look: `wolf-rock` 0.64% (was 0.21%), `wolf` ×4 0.52%, 0 overlap in HUD, no Never-visible; phone cell: HUD and mode panel no longer overlap, wider meadow view (the black side bars in the phone cell look like the montage's cell layout, canvas is 390 wide). `sand` still 0.27%; `pines` coplanar note at y=4.30 unfixed. No `perf`.
-**Next**: (1) bigger bright `aim` ring/target-sheep tint in Local mode, keep `reach` visible in leap; (2) widen sand beach >1% (lower far ground edge); (3) fix `pines` coplanar face; add a tutorial hint for clovers.
-**Open**: aim ring, sand, pines face not done; not re-played this session.
-
 ### Judge 6
 
 **Judge verdict, session 6**
@@ -62,3 +56,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - To check, run `interact` with `M` and ArrowRight ×30, with `look: true`. `aim` should be above 0.05% in the list. The `clover` share should rise above 0.3%.
 
 SCORE: 6.7
+
+## Iteration 7
+**Did**: game.js: `sand` ring raised to SEA+0.75 and lightened (0xe3dba6); ground vertex sand tint widened (cy<1.5); `aim` ring now RingGeometry(1.5,2.1), brighter red, opacity pulses 0.45–0.95; solo hint says "find the 3 clovers, hold E".
+**Saw**: opening look: `sand` 0.43% (was 0.27%) [362,298,794,321], sample (640,310) #dbd8be; no Never-visible, HUD 0 overlap; `pines` coplanar y=4.30 line still there. Aim ring not played in Local this session (only hidden-state seen).
+**Next**: (1) rework wolf pounce pose/size (smaller, folded limbs, pale muzzle); (2) fix `pines` coplanar face (offset the cone/trunk merge in pineGeo); (3) clover glow/sparkle and verify `aim` via interact M + ArrowRight.
+**Open**: sand still a thin strip (the camera sees the shore far away; consider lowering far ground edge); wolf pounce untouched; no perf run.
