@@ -38,14 +38,14 @@ renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.05;
 document.body.prepend(renderer.domElement);
 const scene = new THREE.Scene();
-scene.fog = new THREE.Fog(0xcdeeff, 90, 270);
-const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.5, 700);
+scene.fog = new THREE.Fog(0xa6ecfb, 110, 300);
+const camera = new THREE.PerspectiveCamera(50, innerWidth / innerHeight, 0.5, 700);
 addEventListener('resize', () => { renderer.setSize(innerWidth, innerHeight); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); });
 
 // sky dome
 {
   const g = new THREE.SphereGeometry(420, 24, 16);
-  const c = [], top = new THREE.Color(0x4fb8f2), hor = new THREE.Color(0xcdeeff), tmp = new THREE.Color();
+  const c = [], top = new THREE.Color(0x6fd2f8), hor = new THREE.Color(0xa6ecfb), tmp = new THREE.Color();
   const p = g.attributes.position;
   for (let i = 0; i < p.count; i++) { const t = clamp(p.getY(i) / 300, 0, 1); tmp.copy(hor).lerp(top, Math.pow(t, 0.6)); c.push(tmp.r, tmp.g, tmp.b); }
   g.setAttribute('color', new THREE.Float32BufferAttribute(c, 3));
@@ -130,11 +130,11 @@ scene.add(bodyIM, headIM);
 
 // ───────────────────────── wolf ─────────────────────────
 const wolf = { x: -12, z: -9, y: 0, yaw: 0.6, state: 'watch', pose: 'crouch', t: 0, bites: 3, cd: 5, sulk: 0, target: null, abort: 0, stalkT: 0, lookX: 0, lookZ: 0, phase: 0, onRock: true, shrug: 0, pitch: 0 };
-const ROCK = { x: -12, z: -9, top: 1.9 };
+const ROCK = { x: -12, z: -9, top: 3.0 };
 const W = {};
 {
   const grey = 0x6b6a70, light = 0xa8a498, dk = 0x222222;
-  W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(1.9);
+  W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(2.8);
   W.body = new THREE.Group(); W.root.add(W.body);
   const mat = flat();
   const add = (parent, g) => { const m = new THREE.Mesh(g, mat); m.castShadow = true; parent.add(m); return m; };
@@ -553,7 +553,7 @@ function updatePounce(rdt) {
   $('reveal').style.transform = `scale(${pop * (p.human ? 1.05 : 1)})`;
   $('reveal').style.opacity = p.t < 0.1 ? p.t * 10 : 1;
   if (t.hop !== undefined) { t.hopV -= 14 * rdt * (p.t < 1 ? 0.5 : 1); t.hop = Math.max(0, t.hop + t.hopV * rdt); if (t.hop === 0 && t.hopV < 0) { t.hopV = 0; t.spin *= 0.8; } }
-  if (p.human) { const g = bodyMatrixOf(t); outline.position.set(t.x, t.y + t.hop, t.z); outline.rotation.y = t.yaw + t.spin * 0.0; outline.scale.setScalar(SS * 1.1); place($('tag'), t.x, t.y + 3.6, t.z); }
+  if (p.human) { const g = bodyMatrixOf(t); outline.position.set(t.x, t.y + t.hop, t.z); outline.rotation.y = t.yaw + t.spin * 0.0; outline.scale.setScalar(SS * 1.1); place($('tag'), t.x, t.y + 3.6, t.z); { const r = $('tag').getBoundingClientRect(); if (r.top < innerHeight * 0.5 && r.top > innerHeight * 0.12) $('tag').style.top = innerHeight * 0.62 + 'px'; }; }
   else place($('bubble'), t.x, t.y + 3.2, t.z);
   if (!p.human) { w.shrug = 1; }
   if (u > 0.72) cam.punch = Math.max(0, cam.punch - rdt * 1.6);
@@ -672,9 +672,9 @@ function updateCamera(dt, rdt) {
   const kf = 1 - Math.exp(-rdt * (cam.punch > 0.05 ? 7 : 2.4));
   cam.x += (tx - cam.x) * kf; cam.z += (tz - cam.z) * kf; cam.zoom += (zoom - cam.zoom) * kf;
   const sc2 = (1 - 0.55 * cam.punch) * cam.zoom;
-  camera.position.set(cam.x, 25 * sc2 + 2, cam.z + 30 * sc2 + 3);
-  camera.lookAt(cam.x, 0, cam.z - 3);
-  const fov = 45 - 14 * cam.punch; if (Math.abs(camera.fov - fov) > 0.01) { camera.fov = fov; camera.updateProjectionMatrix(); }
+  camera.position.set(cam.x, 15 * sc2 + 3, cam.z + 32 * sc2 + 6);
+  camera.lookAt(cam.x, 0, cam.z - 8);
+  const fov = 50 - 16 * cam.punch; if (Math.abs(camera.fov - fov) > 0.01) { camera.fov = fov; camera.updateProjectionMatrix(); }
   camShake.update(rdt);
 }
 

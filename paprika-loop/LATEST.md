@@ -1,0 +1,7 @@
+The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
+
+## Iteration 1
+**Did**: A page already existed (index.html, game.js, fx.js). Changed in place: camera in `updateCamera` now lower (15·zoom+3 up, 32·zoom+6 back, lookAt z-8) with FOV 50 so sea/sky horizon show; sky dome and `scene.fog` colours moved toward #97edfe/#a6ecfb; wolf scale 1.9→2.8 and `ROCK.top` 1.9→3.0 (it was sunk inside the rock, 0.008% of screen); `#reveal` top 9vh→17vh so "HUMAN!" clears the cinema band; `#tag` moved below the card when it would overlap the subtitle.
+**Saw**: opening look: ground 51%, sky 12%, sea 4.8%, pines ×191, sheep ×101, wolf listed (~0.07%, still small), no Never-visible, no errors. Sea is only a thin strip behind the pines; no sand beach/cliffs/cloud clearly visible; sheep start in a tight clump near centre, not spread like refs/01.jpg. Pounce (`act pounce human`) gives leap → GOTCHA card + PLAYER 1 tag + captions, reads well. Did not run perf (software GPU).
+**Next**: (1) make the island read like refs/01.jpg: lower forest ring so sea, sand beach and grey cliffs show at the back/sides, add visible clouds in frame; (2) spread the starting flock across the meadow and put the wolf rock closer to the camera/left foreground so the wolf is clearly visible at opening; (3) play solo for suspicion readability and test the AI SHEEP reveal and Local mode.
+**Open**: Wolf pose in leap has boxy legs at scale 2.8; AI SHEEP reveal and local mode not re-verified this session.
