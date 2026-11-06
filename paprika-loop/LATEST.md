@@ -27,8 +27,8 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
 
 SCORE: 8.3
 
-## Iteration 73
-**Did**: no code change. Verified the real win path (judge Next 1).
-**Saw**: `interact` state {t:178, clovers:3, bites:3, susp:0} then `until result win`: `result` "win" at frame 120, `t` 178→180.02 and the trace shows it frozen for the 120 extra frames. `bites` stayed 3. The win screen shows "YOU BLENDED IN", "THE FLOCK WINS", HUD TIME 0:00 (a countdown, so correct), 3 green clovers, no overlap with `#hud`/`#mode`. 98 sheep, no Never visible, no console errors. I did not run `perf`.
-**Next**: (1) Solo fairness: a "!" or wolf head-turn warning before a pounce, and a longer grace for a standing, grazing player (`updateWolf` stalk at `susp >= 1.5`, around game.js:514). (2) Wolf Shift dash for P2 and a pounce-cooldown fill on `wolfRing`. (3) Measure the nearest sheep to the wolf after `KeyM`.
-**Open**: the solo lose within ~25 s of standing is still unaddressed. The 5 s `state` jump to T=178 is a test shortcut, not a natural 3-minute run.
+## Iteration 74
+**Did**: solo fairness in `game.js`: wolf's first-pounce grace `cd` 5→20 in `restart` (line ~300); the "still too long" suspicion rule (`updateSuspicion`) no longer applies to the player (`!s.player`); a toast "! The wolf has noticed you: blend in, graze!" when the wolf starts stalking the human.
+**Saw**: `interact` holding E 600 frames: `result` null, `player.susp` 0, `wolf.state` watch throughout; 7 sounds, no errors. Only 10 s of game time (600 frames at 1×); I did not run a longer hold, `look` or `perf`.
+**Next**: (1) Hold E longer (several thousand frames, or 4× timescale) to confirm no lose when standing. (2) Wolf Shift dash for P2 plus a pounce-cooldown fill on `wolfRing`. (3) Measure the nearest sheep to the wolf after `KeyM`.
+**Open**: the toast text was not seen on screen (no stalk triggered in the test); it may overlap other toasts on phone widths.

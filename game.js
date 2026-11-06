@@ -297,7 +297,7 @@ function reset(newMode) {
     Object.assign(s, { x, z, vx: 0, vz: 0, yaw: rnd(0, 6.28), st: Math.random() < 0.5 ? 'graze' : 'walk', t: rnd(1, 6), runT: 0, zoom: 0, susp: 0, still: 0, yawRate: 0, speedMax: rnd(0.9, 1.4), pitch: 0, frozen: false, immune: 0, hop: 0, hopV: 0, spin: 0, graze: false, phase: rnd(0, 6) });
   });
   Object.assign(P, { x: 0, z: 1.5, yaw: Math.PI, st: 'walk' });
-  Object.assign(wolf, { x: ROCK.x, z: ROCK.z, state: mode === 'solo' ? 'watch' : 'ctrl', pose: 'crouch', bites: 3, cd: 5, sulk: 0, target: null, abort: 0, onRock: mode === 'solo', yaw: 0.8, shrug: 0 });
+  Object.assign(wolf, { x: ROCK.x, z: ROCK.z, state: mode === 'solo' ? 'watch' : 'ctrl', pose: 'crouch', bites: 3, cd: 20, sulk: 0, target: null, abort: 0, onRock: mode === 'solo', yaw: 0.8, shrug: 0 });
   if (mode === 'local') { wolf.x = -5; wolf.z = -4; wolf.onRock = false; wolf.cd = 0; }
   clovers.forEach(c => { c.prog = 0; c.eaten = false; c.mesh.scale.setScalar(1); c.mesh.visible = true; });
   cam.x = P.x; cam.z = P.z; cam.punch = 0;
@@ -459,7 +459,7 @@ function updateSuspicion(dt) {
       if (sp > 2.8 && flock.running < 0.35) rate += 1.15;
       if (sp > 0.6 && fm > 0.3) { const dot = (s.vx * flock.vx + s.vz * flock.vz) / (sp * fm); if (dot < -0.25) rate += 0.55 * -dot; }
       if (s.yawRate > 5.5 && sp > 0.6 && flock.running < 0.35) rate += 0.6;
-      if (s.still > 7 && flock.moving > 0.35) rate += 0.35;
+      if (s.still > 7 && flock.moving > 0.35 && !s.player) rate += 0.35;
       if (sp > 0.5 && sp < 2.8 && s.player && flock.graze > 0.6) rate += 0.18;   // strolling while everyone grazes
       if (s.player && sp > 1.5 && sp <= 2.8 && fm > 0.2 && flock.running < 0.3) rate += 0.1;   // too keen
     }
@@ -511,7 +511,7 @@ function updateWolf(dt) {
     if (t) { w.lookX = lerp(w.lookX, t.x, Math.min(1, dt * 4)); w.lookZ = lerp(w.lookZ, t.z, Math.min(1, dt * 4)); }
     else { w.lookX = w.x + Math.sin(w.t * 0.5) * 12; w.lookZ = w.z + 8 + Math.cos(w.t * 0.37) * 8; }
     w.yaw += angDiff(w.yaw, Math.atan2(w.lookX - w.x, w.lookZ - w.z)) * Math.min(1, dt * 2.5);
-    if (t && t.susp >= 1.5 && w.cd <= 0) { w.state = 'stalk'; w.target = t; w.abort = 0; w.stalkT = 0; w.onRock = false; w.y = gh(w.x, w.z) + (w.y > 1 ? 0 : 0); caption(pick(caps.stalk)); play('wind', 0.6); }
+    if (t && t.susp >= 1.5 && w.cd <= 0) { w.state = 'stalk'; w.target = t; w.abort = 0; w.stalkT = 0; w.onRock = false; w.y = gh(w.x, w.z) + (w.y > 1 ? 0 : 0); caption(pick(caps.stalk)); play('wind', 0.6); if (t.player) toast('! The wolf has noticed you: blend in, graze!', 1.8); }
   } else if (w.state === 'stalk') {
     const t = w.target; w.pose = 'walk'; w.stalkT += dt;
     if (!t || t.frozen) { w.state = 'return'; return; }
