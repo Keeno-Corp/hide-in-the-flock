@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 31
-**Did**: Found the win screen already works: `{action:"win"}` (game.js `act`) calls `endGame('win',...)`; earlier sessions set `result` via `setState`, which ignored it. `setState` now accepts `result:'win'|'lose'` and routes to `act`.
-**Saw**: `interact` `[{action:"win"},{wait:60}]` gave `result:"win"`, a "THE FLOCK WINS / YOU BLENDED IN" title with the restart prompt over the bright field; saturation 45%, green 53%, no `Lighting:`/`Surfaces:` lines, no console errors. The sub line sits on the busy sky and is readable but has no backing. No 90 s graze, no reveal sample, no `perf` this session.
-**Next**: (1) 90 s graze with `trace:["bites","wolf.state"]` to check the 14 s gap after `w.afterAI`; (2) reveal frame saturation (26%) — look at the `#reveal` overlay tint and the grey wolf; (3) add a soft backing to the win sub line.
-**Open**: the `setState` result route is only syntax-checked. The cooldown and reveal changes are still unmeasured.
-
 ### Judge 31
 
 **Judge verdict, session 31**
@@ -59,3 +53,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** `interact` `[{state:{result:"lose"}},{wait:200}]` with `look`. The title should be opaque and the sub line legible, with no replay tag over it.
 
 SCORE: 8.0
+
+## Iteration 32
+**Did**: `#rsub` in index.html now has a dark rounded backing (`#1b2a1acc`); `endGame` in game.js hides `#replayTag`.
+**Saw**: `setState({result:"lose"})` + 200 frames: "EATEN" opaque, sub line legible on its backing, no replay tag; saturation 43%, green 50%, no `Lighting:`/`Surfaces:`, no `Never visible`. No perf, no 90 s graze, no reveal sample this session.
+**Next**: (1) 90 s graze with `trace:["bites","wolf.state"]` for the 14 s AI-bite gap; (2) reveal frame saturation (26%): `div.band` is already faint, so check the `renderer.domElement.style.filter` and wolf dark mass; (3) check the win screen with the new sub backing.
+**Open**: the AI-bite cooldown and reveal grade are still unmeasured.

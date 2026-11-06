@@ -333,7 +333,7 @@ function showResult(big, sub, kicker, color) {
   $('rk').textContent = kicker; $('rbig').textContent = big; $('rsub').textContent = sub; $('rbig').style.color = color || '#fdfdec';
   $('reveal').style.opacity = 1; $('reveal').style.transform = 'scale(1)';
 }
-function endGame(kind, big, sub, kicker, color) { result = kind; $('cap').style.opacity = 0; $('toast').style.opacity = 0; showResult(big, sub + '   ·   R to play again · M to switch mode', kicker, color); }
+function endGame(kind, big, sub, kicker, color) { result = kind; { const rp = document.getElementById('replayTag'); if (rp) rp.style.display = 'none'; } $('cap').style.opacity = 0; $('toast').style.opacity = 0; showResult(big, sub + '   ·   R to play again · M to switch mode', kicker, color); }
 const vp = new THREE.Vector3();
 function place(el, wx, wy, wz) { vp.set(wx, wy, wz).project(camera); el.style.left = (vp.x * 0.5 + 0.5) * innerWidth + 'px'; el.style.top = (-vp.y * 0.5 + 0.5) * innerHeight + 'px'; }
 
