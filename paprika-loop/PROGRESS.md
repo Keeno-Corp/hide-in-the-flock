@@ -1448,3 +1448,9 @@ The sheet is back and the phone reveal fits the width. I'm writing the verdict n
    - Check with the `ai` cell of `look` `sheet`: the `wolf` should fill about a third of the frame height.
 
 SCORE: 8.1
+
+## Iteration 23
+**Did**: index.html phone media query (<=640px): `#rsub` 20px, `#rk` 18px, `#rbig` 25vw, `#cap` 16px, taller `.band` 34vh so the reveal fills more of the phone screen.
+**Saw**: not looked at (no tools run this session); sizes are plain CSS.
+**Next**: (1) `look` sheet `pounce human` at 150 frames, resize [390,844], check fit and bars; (2) sheep pop at 200 frames and a REPLAY beat; (3) bigger `wolf` close-up for the AI shrug.
+**Open**: phone reveal fit unverified (25vw GOTCHA may overflow); sheep pop, REPLAY, AI shrug not done.

@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 22
-**Did**: index.html: phone `@media(max-width:640px)` sizes up (HUD rows 22px, labels 14px, `#time` 28px, `#sbar` 100px, `#mode` 16px); `#vig` gradient now transparent to 62% and a duller red; game.js `vig` opacity 0.55/0.6 -> 0.4 in the human reveal.
-**Saw**: `look` phone: HUD and the "[M] Mode" hint read larger, 609 on screen. Sheet pounce human at 150 frames: brightness 56%, near black 6%, the pink wash is gone from the left, though a faint pale vertical band is left near x 80-140 (maybe the reveal `.band` or a pale rock). Not run: perf, sheep pop, phone reveal.
-**Next**: (1) `look` sheet pounce human with `resize [390,844]` to check GOTCHA and the tag fit; (2) `interact` pounce human 200 frames for the sheep pop; (3) the "REPLAY" beat, drop `aimLine`.
-**Open**: the pale band at the left of the human cell is unexplained; the sheep pop and the phone reveal are unchecked.
-
 ### Judge 22
 
 The sheet is back and the phone reveal fits the width. I'm writing the verdict now.
@@ -70,3 +64,9 @@ The sheet is back and the phone reveal fits the width. I'm writing the verdict n
    - Check with the `ai` cell of `look` `sheet`: the `wolf` should fill about a third of the frame height.
 
 SCORE: 8.1
+
+## Iteration 23
+**Did**: index.html phone media query (<=640px): `#rsub` 20px, `#rk` 18px, `#rbig` 25vw, `#cap` 16px, taller `.band` 34vh so the reveal fills more of the phone screen.
+**Saw**: not looked at (no tools run this session); sizes are plain CSS.
+**Next**: (1) `look` sheet `pounce human` at 150 frames, resize [390,844], check fit and bars; (2) sheep pop at 200 frames and a REPLAY beat; (3) bigger `wolf` close-up for the AI shrug.
+**Open**: phone reveal fit unverified (25vw GOTCHA may overflow); sheep pop, REPLAY, AI shrug not done.
