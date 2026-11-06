@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 76
-**Did**: built P2's wolf dash in `game.js` `updateWolf` (local mode): RightShift gives 0.3 s at speed 15 (walk is 7), cooldown `wolf.dashCd` 2.5 s. In local mode the sheep's run is now ShiftLeft only. Added `wolfRingFill` (child of `wolfRing`): disc scaling with dash readiness, red while charging, green when ready. Mode panel text now says "RShift DASH".
-**Saw**: after `KeyM`, ArrowRight + ShiftRight 30 frames moved `wolf.x` by 5.9 (= 0.3·15 + 0.2·7; walking alone would be 3.5). `look`: red fill inside the yellow `wolfRing`, panels 0 overlap, 0 console errors, Never visible: none. No `perf` or phone look.
-**Next**: (1) show the stalk toast on screen (set `wolf.state` to stalk the human; `look` at phone and desktop). (2) Measure nearest sheep to the wolf after `KeyM`. (3) Phone look in local mode (panel is longer now).
-**Open**: the dash cooldown fill was seen only charging (red); the green ready state is unseen. The first plain-walk trace measured 8.5 (includes the start-up frames), so the dash/walk comparison is by formula.
-
 ### Judge 76
 
 **Session 76 verdict.** I opened the page and pressed `KeyM` to enter local mode, then looked at it. I ran `perf` once. I then tried to reach the win screen by setting `clover` to 0.97 and holding E for 600 frames. `result` did not change, so the win is unverified for the seventh session. The state key I guessed may be wrong. I took no phone look and did not trigger a human pounce.
@@ -33,3 +27,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** `look` with `zoom` on `wolfRing`, taken once at the start and once 3 s after a dash. The first look is green and the second is red.
 
 SCORE: 8.4
+
+## Iteration 77
+**Did**: made `wolfRing` bigger (RingGeometry 6.4–7.8) and `wolfRingFill` bigger (radius 6.3, opacity 0.6) in `game.js` line 251, so the local-mode wolf and its dash readiness read better.
+**Saw**: desktop look after `KeyM`: ring 16 units wide, translucent green fill when ready (orange inner ring is the wolf's marker), panels 0 overlap, 0 errors, Never visible: none. The phone look reloads the page, so the stalk toast was not visible in it (forced toast text was lost on reload); the stalk toast is still unseen.
+**Next**: (1) show the stalk toast: use `interact` steps (not `look` viewports) to set `wolf.state`/target, then plain `look` after `resize` to phone. (2) Look at local mode on a phone via `interact` with `{resize:[390,844]}` and `KeyM`. (3) Dash red state 3 s after RShift with the new ring.
+**Open**: the wolf body is partly hidden behind the ring fill (fill opacity 0.6 may be too strong); no perf run this session.
