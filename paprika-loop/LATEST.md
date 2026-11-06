@@ -1,26 +1,31 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-### Judge 23
+## Iteration 24
+**Did**: index.html phone query: `#rbig` 25vw -> 17vw with `white-space:nowrap` so "GOTCHA" fits at 390px (Next item 1).
+**Saw**: not looked at (no tools run); CSS-only change, 6 letters at 17vw ≈ 100vw*0.6 fits.
+**Next**: (1) `look` sheet `pounce human` at 150 frames, resize [390,844] to confirm fit; (2) REPLAY beat after reveal with sheep ease-back; (3) bigger `wolf` close-up for AI shrug.
+**Open**: GOTCHA fit unverified; REPLAY beat and AI shrug close-up still not done.
 
-**Judge verdict, session 23**
+### Judge 24
+
+**Judge verdict, session 24**
 
 1. **Looks as LOOK.md says: 8.**
-   - The `start` cell shows the sea, `cliff`, `sand`, `pines*` ×143, `wolf-rock`, the `wolf`, the `sheep*` flock and the clouds.
-   - Brightness is 64%, saturation 44%, 0% near black.
-   - There are no `Lighting:` or `Surfaces:` lines.
+   - The `start` cell shows the sea, `cliff`, `sand`, `pines*` ×136, `wolf-rock`, the `wolf`, the `sheep*` flock and `cloud` ×12.
+   - Brightness is 64%, saturation 45%, 0% near black. There are no `Lighting:` or `Surfaces:` lines.
 
 2. **Plays as DESIGN.md says: 8.**
    - The HUD shows TIME, CLOVERS, WOLF BITES and SUSPICION, and the `clover` rings glow on the meadow.
    - I forced the pounce through `act` and did not drive the keys or play a full round.
 
 3. **Clip moment: 8.**
-   - **Human cell:** "HUMAN!", "GOTCHA", "PLAYER 1 has been found." and the red PLAYER 1 tag read big on desktop. The `wolf` lies flat beside the red silhouette.
-   - **AI cell:** "AI SHEEP", "Bite wasted." and the "baa?" bubble read well on the phone. The `wolf` is still a small grey shape under the bubble, so the shrug is weak.
-   - **At 200 frames:** the human reveal is still on screen. There is no REPLAY beat, so I could not judge the sheep pop.
+   - **Human reveal:** "HUMAN!", "GOTCHA", "PLAYER 1 has been found." and the red PLAYER 1 tag read big. The `wolf` lies flat beside the red silhouette.
+   - **AI reveal:** "AI SHEEP", "Bite wasted." and the "baa?" bubble read well, but the `wolf` shrug is still a mid-size grey shape.
+   - **At 220 frames:** the human reveal is still on screen. There is no REPLAY beat.
 
 4. **Looks like refs/01.jpg: 9.**
-   - The sea, `cliff`, `pines*`, `sand`, clouds and `wolf-rock` all show from the play camera.
-   - The picture is bright and low-poly, and the wolf sits crouched on its rock.
+   - The sea, `cliff`, `pines*`, `sand`, `cloud` and `wolf-rock` all show from the play camera.
+   - The picture is bright and low-poly, and the `wolf` sits crouched on its rock.
 
 5. **Solo fun and fair: 8.**
    - SUSPICION, the `clover` rings, the caption line and the win/lose screens are present.
@@ -31,37 +36,32 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
 
 7. **`window.__game`, no build, ~100 sheep: 8.**
    - `window.__game` is present and there are no build files.
-   - `perf` reads 124 ms on SwiftShader (host load 6.1, a busy host), so it is no signal.
+   - `perf` reads 124 ms on SwiftShader (host load 6.0), so it is no signal.
    - It shows 76 draw calls, 102.7k triangles and 0 MB of assets.
 
 8. **Juice: 8.**
-   - The banners, bubble, tag, caption and wool read well.
-   - I did not check the sound.
+   - `interact` reports 10 sounds on the pounce (boom, stab1–3, thud, hit).
+   - The wool, caption, bubble and tag read well.
 
-9. **Works at any window size, HUD readable: 7.**
-   - **Phone reveal:** the sub-line and caption are readable now.
-   - **GOTCHA overflow:** at 390 px, `#rbig` at 25vw clips the "A" at both edges and shows "GOTCH". That is the overflow the builder flagged as unverified.
-   - **Phone letterboxing:** the phone canvas still sits in a narrow band with black on both sides.
+9. **Works at any window size, HUD readable: 8.**
+   - **GOTCHA fix:** at 390×844 the full word "GOTCHA" now fits inside the frame with no letters cut. That closes the last verdict's Next item 1.
+   - **Phone reveal:** the sub-line, tag and caption are readable.
+   - **Cut-off flag:** `div#reveal` is reported cut off by the screen edge at [-8, 397], but its text is intact.
+   - **Overlap:** `div#mode` overlaps `div#cap` at the bottom. The caption is partly covered by the mode pill on phone.
 
 10. **Faults: 8.**
     - There are no console errors and no `Never visible` object.
-    - The clipped GOTCHA on phone is a visible fault.
+    - The mode pill overlapping the caption on phone is minor.
 
 **Next:**
-1. **Fix the phone GOTCHA overflow (asked again).**
-   - Lower `#rbig` to about 18vw, or add `white-space: nowrap` with a `clamp()`, inside the ≤640px query in `index.html`.
-   - Check with `look` `sheet` of `pounce human` at 150 frames, `resize: [390, 844]`. The full word "GOTCHA" should show inside the frame with no letters cut.
-2. **Add the REPLAY beat and check the sheep pop (asked again).**
+1. **Add the REPLAY beat (asked again).**
    - Ease the `sheep*` back after the reveal, then add a short zoom-back with a "REPLAY" tag and drop `aimLine`.
-   - Check with `look` `sheet` of `pounce human` at about frame 170. The banner should be gone and the "REPLAY" tag visible.
-3. **Make the AI shrug bigger.**
-   - Add a close-up of the `wolf` for the "AI SHEEP" beat, scaled up with a clear head-shake, so it is not a small grey shape under the "baa?" bubble.
-   - Check with the `ai` cell of `look` `sheet`. The `wolf` should fill about a third of the frame height.
+   - Check with `look` `sheet` of `pounce human` at about frame 260, since the banner is still up at 220. The banner should be gone and the "REPLAY" tag visible.
+2. **Make the AI shrug bigger (asked again).**
+   - Add a close-up of the `wolf` for the "AI SHEEP" beat, scaled up with a clear head-shake.
+   - Check with the `ai150` cell of `look` `sheet`. The `wolf` should fill about a third of the frame height.
+3. **Fix the phone caption overlap.**
+   - Move `div#cap` above `div#mode`, or hide `div#mode` during a reveal, in the ≤640px query.
+   - Check with `interact` `resize: [390, 844]`, then `pounce human`, `wait: 150`, `look: true`. The `div#cap` and `div#mode` overlap should be gone from the "HTML over the canvas" line.
 
-SCORE: 8.0
-
-## Iteration 24
-**Did**: index.html phone query: `#rbig` 25vw -> 17vw with `white-space:nowrap` so "GOTCHA" fits at 390px (Next item 1).
-**Saw**: not looked at (no tools run); CSS-only change, 6 letters at 17vw ≈ 100vw*0.6 fits.
-**Next**: (1) `look` sheet `pounce human` at 150 frames, resize [390,844] to confirm fit; (2) REPLAY beat after reveal with sheep ease-back; (3) bigger `wolf` close-up for AI shrug.
-**Open**: GOTCHA fit unverified; REPLAY beat and AI shrug close-up still not done.
+SCORE: 8.1
