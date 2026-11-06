@@ -105,3 +105,9 @@ SCORE: 5.6
 3. Play the parts nobody has verified. Use `interact` with `state` set so the player stands on a `clover`, hold E to completion and check the `CLOVERS` count. Then set the round near 0:00 for the win screen, and run Local mode with Enter to pounce. At the same time make the wolf bigger at the opening (above 1.5% of the frame) and round the leap and shrug legs so the pose reads as a wolf.
 
 SCORE: 6.0
+
+## Iteration 3
+**Did**: `updateCamera` now `lookAt(cam.x, 5, cam.z - 8)` (was y 0) so the horizon/sea sit higher; `clouds` respawn at x ±110, y 27-38, z -150..-75 (was y 40-62, z -170..10), so they are in the opening frame.
+**Saw**: opening look: `cloud` ×35 3.2% [0,0,1273,122], sky 21%, sea 9.7%, ground 36%, pines ×146 13%, wolf 0.68%, sheep ×101 7.9%, no Never-visible, no errors. `perf` (software GPU, host load 6): baseline 137 ms, 68 draw calls, 102k tris. Hiding pines/tufts/rocks/trees/bushes → 82 ms (−39%); hiding sheep, or shadows off → no clear change. So the frame cost is mostly the SwiftShader raster of scenery fill/triangles, not per-sheep JS. `cloud` is 46 draw calls (one mesh per puff) and could be merged.
+**Next**: (1) sand strip (#c5d6a2) and a grey cliff face still not visible against refs/01.jpg: the shore is hidden behind the pines; thin pines near the sea or move the shore into view; (2) cut `tufts` (11.7k tris) and `pines` cost: fewer/lower-detail instances, merge cloud puffs into 1 mesh per cloud; (3) still unplayed: clover grazing to completion, win/lose screens, Local-mode Enter pounce; make the wolf bigger (>1.5%) and round the leap legs.
+**Open**: Sand/cliffs missing. Win/lose, clover collect, Local pounce unverified. Frame ms is software-render noise, no real-GPU number.

@@ -210,7 +210,7 @@ const clouds = [];
     const g = new THREE.Group();
     const n = 4 + Math.floor(Math.random() * 3);
     for (let k = 0; k < n; k++) { const m = new THREE.Mesh(ico(rnd(3, 5.5), 1), mat); m.position.set(k * 4.2 - n * 2, rnd(-0.6, 1), rnd(-1.5, 1.5)); m.scale.y = 0.7; g.add(m); }
-    g.position.set(rnd(-130, 130), rnd(40, 62), rnd(-170, 10)); g.name = 'cloud'; scene.add(g); clouds.push(g);
+    g.position.set(rnd(-110, 110), rnd(27, 38), rnd(-150, -75)); g.name = 'cloud'; scene.add(g); clouds.push(g);
   }
 }
 
@@ -673,7 +673,7 @@ function updateCamera(dt, rdt) {
   cam.x += (tx - cam.x) * kf; cam.z += (tz - cam.z) * kf; cam.zoom += (zoom - cam.zoom) * kf;
   const sc2 = (1 - 0.55 * cam.punch) * cam.zoom;
   camera.position.set(cam.x, 15 * sc2 + 3, cam.z + 32 * sc2 + 6);
-  camera.lookAt(cam.x, 0, cam.z - 8);
+  camera.lookAt(cam.x, 5, cam.z - 8);
   const fov = 50 - 16 * cam.punch; if (Math.abs(camera.fov - fov) > 0.01) { camera.fov = fov; camera.updateProjectionMatrix(); }
   camShake.update(rdt);
 }
