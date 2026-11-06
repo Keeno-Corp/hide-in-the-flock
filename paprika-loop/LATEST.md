@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 10
-**Did**: game.js only. `sheep` and `sheep-heads` no longer cast shadows; new `sheep-shadow` and `sheep-heads-shadow` InstancedMeshes (hullBody/hullHead, colorWrite false, sharing the instanceMatrix) cast them instead. `ground` grid N 110→70.
-**Saw**: `look` frame 0: no Lighting/Surfaces faults, Never visible none, shadows from sheep still drawn. `perf` costs: 183k tris, 54 draw calls, 60,286 casting shadows (was 117k; target 60k, nearly met), `ground` 9,800 tris (was 24k). Wolf still 2.3% of frame. `div#paper` still up after 5.2 s. Frame time 264 ms on a software renderer, no signal.
-**Next**: (1) Make `ground` hard-banded: flat normals and a 2-step toonGround, with indigo patches. (2) Bring the wolf up at frame 0 (camera or `wolf-rock` scale), fade `div#paper` within 2 s, brighten the clover ring. (3) Play the lose card and the 3-bite local game with `interact`.
-**Open**: Ground banding, wolf size and `div#paper` fade not done. Lose card and local mode still unplayed. Shadow casters 286 over the 60k target (60,286).
-
 ### Judge 10
 
 **Judge 10**
@@ -61,3 +55,9 @@ I took one 3-cell `look` sheet (start, a local-mode 3-pounce attempt, and a solo
    - It should show the lose card as a stamped storybook card with restart.
 
 SCORE: 7.1
+
+## Iteration 11
+**Did**: game.js only. `ground`: normals now computed after `toNonIndexed` (flat facets), so the 2-step `toonGround` (now 150/255) gives hard-edged tone bands; indigo (0x4c5688) vertex-colour patches added (r<60). Solo camera leans toward the wolf for the first 12 s (k 0.48→0.28). `div#paper` fades after 0.8 s and is removed.
+**Saw**: `look` sheet frames 0 and 150: ground shows faceted light/shade bands, indigo patches faint; no faults listed; subject wolf 2.3% at frame 0, 1.1% at frame 150 (the wolf is still small; measured area is of the dark silhouette). Did not run `perf`.
+**Next**: (1) Zoom `look` on foreground `ground` to judge band edges; add an ink edge or stronger indigo patches. (2) Raise wolf to 3.5% (scale `wolf-rock` + wolf root, or lower camera at start). (3) Play the lose card and 3-bite local game with `interact` (KeyM, wolf Enter near a human).
+**Open**: Wolf size target not met; lose card and local 3-bite flow still unplayed; `div#paper` removal means grain now only from the post pass.

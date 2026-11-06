@@ -142,7 +142,7 @@ const hemi = new THREE.HemisphereLight(0xdcc8d0, 0x4c5688, 2.5); scene.add(hemi)
 
 // toon bands: shade / mid / lit
 const toonMap = (() => { const n = 24, d = new Uint8Array(n * 4); for (let i = 0; i < n; i++) { const nl = ((i + 0.5) / n) * 2 - 1, v = nl < 0.02 ? 0 : nl < 0.4 ? 0.82 : 1; d[i * 4] = d[i * 4 + 1] = d[i * 4 + 2] = Math.round(v * 255); d[i * 4 + 3] = 255; } const t = new THREE.DataTexture(d, n, 1, THREE.RGBAFormat); t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t; })();
-const toonGround = (() => { const d = new Uint8Array([205,200,190,255, 255,255,255,255]); const t = new THREE.DataTexture(d, 2, 1, THREE.RGBAFormat); t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t; })();
+const toonGround = (() => { const d = new Uint8Array([150,148,160,255, 255,255,255,255]); const t = new THREE.DataTexture(d, 2, 1, THREE.RGBAFormat); t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t; })();
 
 // ───────────────────────── terrain: a dusk meadow ringed by hills ─────────────────────────
 function gh(x, z) {
@@ -162,9 +162,9 @@ const PLAY_R = 30;
   let g = new THREE.PlaneGeometry(S, S, N, N); g.rotateX(-Math.PI / 2);
   const p = g.attributes.position;
   for (let i = 0; i < p.count; i++) p.setY(i, gh(p.getX(i), p.getZ(i)));
-  g.computeVertexNormals(); g = g.toNonIndexed();
+  g = g.toNonIndexed(); g.computeVertexNormals();
   const pos = g.attributes.position, nor = g.attributes.normal, col = new Float32Array(pos.count * 3);
-  const ochre = new THREE.Color(0xc2b062), sage = new THREE.Color(0x9aa86a), olive = new THREE.Color(0x6a7e46), warm = new THREE.Color(0xb1b274), hill = new THREE.Color(0x707a5c), far = new THREE.Color(0x8a8a78), rock = new THREE.Color(0x9a927f), c = new THREE.Color();
+  const ochre = new THREE.Color(0xc2b062), sage = new THREE.Color(0x9aa86a), olive = new THREE.Color(0x6a7e46), warm = new THREE.Color(0xb1b274), hill = new THREE.Color(0x707a5c), far = new THREE.Color(0x8a8a78), rock = new THREE.Color(0x9a927f), indigo = new THREE.Color(0x4c5688), c = new THREE.Color();
   for (let i = 0; i < pos.count; i++) {
     const cx = pos.getX(i), cz = pos.getZ(i), cy = pos.getY(i), ny = nor.getY(i), r = Math.hypot(cx, cz);
     const wob = 0.32 * Math.sin(cx * 0.55 + cz * 0.35) * Math.sin(cz * 0.5 - cx * 0.3) + 0.15 * Math.sin(cx * 1.3 + cz * 0.9);
@@ -174,6 +174,7 @@ const PLAY_R = 30;
     if (r > 34) c.lerp(hill, Math.round(sm(34, 70, r) * 3) / 3 * 0.75);
     if (r > 90) c.lerp(far, Math.round(sm(90, 190, r) * 3) / 3 * 0.7);
     if (ny < 0.8 && cy > 3) c.lerp(rock, 0.6);
+    { const ip = Math.sin(cx * 0.14 + 1.7) * Math.sin(cz * 0.12 - 0.6) + 0.5 * Math.sin(cx * 0.3 + cz * 0.22); if (ip > 0.62 && r < 60) c.lerp(indigo, 0.55); }
     col[i * 3] = c.r; col[i * 3 + 1] = c.g; col[i * 3 + 2] = c.b;
   }
   g.setAttribute('color', new THREE.BufferAttribute(col, 3));
@@ -869,7 +870,7 @@ function drawWolf(dt) {
 function updateCamera(dt, rdt) {
   let tx = P.x, tz = P.z, zoom = 1;
   const dW = Math.hypot(wolf.x - P.x, wolf.z - P.z);
-  if (mode === 'solo') { const k = dW < 32 ? 0.28 : 0; tx += (wolf.x - P.x) * k; tz += (wolf.z - P.z) * k; }
+  if (mode === 'solo') { const k = dW < 32 ? (T < 12 ? 0.28 + 0.2 * (1 - T / 12) : 0.28) : 0; tx += (wolf.x - P.x) * k; tz += (wolf.z - P.z) * k; }
   else { tx += (wolf.x - P.x) * 0.5; tz += (wolf.z - P.z) * 0.5; zoom = 1 + clamp((dW - 14) / 30, 0, 0.55); }
   if (pounce.ph && pounce.target) { const m = pounce.target; tx = lerp(tx, (wolf.x + m.x) / 2, cam.punch); tz = lerp(tz, (wolf.z + m.z) / 2, cam.punch); }
   if (pounce.ph === 'reveal' && pounce.t < 2.0) { tx = wolf.x; tz = wolf.z - 2; }
@@ -971,3 +972,5 @@ window.__game = {
     if (s.pounce) startPounce(s.pounce === 'human' ? P : sheep[1 + Math.floor(Math.random() * N_AI)]);
   },
 };
+
+setTimeout(() => { const p = document.getElementById('paper'); if (p) { p.style.transition = 'opacity 1s'; p.style.opacity = 0; setTimeout(() => p.remove(), 1100); } }, 800);
