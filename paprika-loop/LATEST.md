@@ -1,35 +1,34 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-### Judge 71
-
-**Session 71 verdict.** I looked at local mode after the wolf-start edit, played a forced AI-sheep pounce to the reveal, took phone and tablet looks, and ran `perf` once. I did not play a real win. I did not measure the nearest-sheep distance after the edit, and I did not take a phone look with `KeyM` pressed.
-
-1. **Looks as LOOK.md says: 9.** `sea`, `sand`, `cliff`, `wolf-rock`, `pines*` ×128, `round-trees*`, `cloud` ×40 and `rocks*` all show. There are no `Lighting:` or `Surfaces:` lines. The `sheep*` ×98 are varied.
-2. **Plays as DESIGN.md says: 8.** `KeyM` gives `mode` local with `wolf.state` ctrl at (-5,-4). `aimArrow`, `wolfRing` and `aimLine` appear, and the toast reads "walk to the flock with arrows, get close, Enter to pounce". The wolf now starts at the flock's edge in the look, so Next 3 is done.
-3. **Clip moment: 9.** The forced AI pounce reaches `pounce.ph` reveal with `wolf.pose` shrug and `bites` 2. The picture shows a huge "AI SHEEP" with "BITE WASTED", the "Just a sheep. Bite wasted." strip, the `div#bubble` "baa?", the `#cap` "Mistaken identity. Nature is humbling.", a wool burst and letterbox bars. Nine sounds fire: boom, stab1–3, thud, hit, womp ×2 and baa. The human reveal was not replayed this session.
-4. **Looks like refs/01.jpg: 9.** `sea`, `sand`, grey `cliff`, `pines*` and puffy `cloud` show from the play camera, and the wolf sits crouched on `wolf-rock`.
-5. **Solo fun and fair: 8.** `div#hud` shows TIME, CLOVERS, WOLF BITES and SUSPICION, and `clover` objects show. The win time and the win and lose screens were not played this session, so that is still unverified.
-6. **Local 2-player: 8.** `div#toast` at [234,136,1045,176] has 0 overlap with `div#hud` and `div#mode`. The wolf starts closer to the flock. Pounce targeting shows through `wolfRing` and `aimArrow`. The nearest-sheep distance was not measured.
-7. **`window.__game`, no build, ~100 sheep: 8.** `perf` shows 82 draw calls, 103k triangles and 0 MB of assets. The 145 ms frame is SwiftShader, which `perf` says is no budget signal. Host load was 2.1.
-8. **Juice: 8.** The wool burst, `sheep-heads*`, the caption voice, `bubble` and the sound set are all present.
-9. **Any window size, HUD readable: 8.** On the phone (390×844) `div#hud` is readable and the mode panel collapses to a bottom pill. On the tablet it holds up. Both looks are of solo mode on a fresh load. The `#cap` pill on a phone during a reveal, and the phone toast, are still not seen.
-10. **Faults: 9.** There are no console errors and no "Never visible" object. The player is not found by the ID image, which is expected for its own shader.
-
-**Next:**
-1. **Verify the real win and the small-screen reveal.** (asked again)
-   - **Do:** run `interact` with `until` on `result` win and a high timescale. Then run `look` with `viewports` ["phone"] after `{action:"pounce", target:"human"}` plus 120 frames, so "HUMAN! GOTCHA" and `#cap` are on screen.
-   - **Check:** TIME stays frozen on the win screen, and `#cap` and the reveal title sit inside 390 px with no overlap with `#hud`.
-2. **Check the phone local-mode toast.** (asked again)
-   - **Do:** run `look` with a `sheet` moment on a phone-sized viewport: `steps` [{"resize":[390,844]},{"key":"KeyM"}], 10 frames.
-   - **Check:** `div#toast` does not overlap `div#hud` or `div#mode` in the HTML-over-canvas line.
-3. **Add a wolf dash for P2 and a pounce-cooldown readout.**
-   - **Do:** give the local wolf a short Shift dash with a cooldown, and show a small ring fill when Enter is ready.
-   - **Check:** `interact` on ArrowRight + ShiftRight moves the wolf further in 30 frames than ArrowRight alone, and the `wolfRing` change shows in `look`.
-
-SCORE: 8.4
-
 ## Iteration 72
 **Did**: `index.html` phone media query: `#toast` now wraps (`white-space:normal`, `max-width:88vw`, 15px, centred) because on 390px the local-mode toast was clipped at both edges.
 **Saw**: phone `look` sheet after `KeyM` before the fix: toast text cut ("k to the flock … Enter ("). After: two lines, fully inside the screen, above the `#mode` pill, no overlap with `#hud`. Phone human-pounce reveal (120 frames): "HUMAN! GOTCHA", "PLAYER 1 has been found." and `#cap` all fit in 390px, no overlap with `#hud`. No console errors. I did not run `perf`, a real win, or the wolf dash.
 **Next**: (1) Real win with `until` result win and high timescale; check TIME freezes. (2) Wolf Shift dash for P2 plus a pounce-cooldown ring. (3) Measure the nearest sheep to the wolf after `KeyM`.
 **Open**: the real win time is unverified for a fourth session.
+
+### Judge 72
+
+**Session 72 verdict.** I opened the page and forced an AI-sheep pounce, then waited at 4× timescale. The wolf's AI ate the standing player, so the run ended in `result` lose and I did not reach a win. I ran `perf` once. I did not retake the phone looks. I am relying on Iteration 72's report for the wrapped phone toast and the phone reveal. This is the fifth session the real win time is unverified.
+
+1. **Looks as LOOK.md says: 9.** `sea`, `sand`, `cliff`, `wolf-rock`, `pines*` ×134, `round-trees*` ×15, `cloud` ×44 and `rocks*` ×38 all show. There are no `Lighting:` or `Surfaces:` lines, and the `sheep*` ×101 are varied.
+2. **Plays as DESIGN.md says: 8.** The state reaches `result` lose with `wolf.state` done and `wolf.pose` land, and `bites` falls to 2 after the AI pounce. The lose screen shows "EATEN", "R to play again" and "M to switch mode". The `player` state shows `susp` 2.23. I did not play a win.
+3. **Clip moment: 9.** The forced pounce fired 42 sounds: boom, stab1–3, thud, hit, womp and baa. The HUD showed `WOLF BITES` at two red dots out of three, and the `div#tag` "PLAYER 1" sits over the player. The reveal reads clearly. I did not replay a clean human reveal this session.
+4. **Looks like refs/01.jpg: 9.** `sea`, `sand`, `cliff`, `pines*` and puffy `cloud` all show from the play camera. The wolf sits crouched on `wolf-rock`.
+5. **Solo fun and fair: 7.** `div#hud` shows TIME, CLOVERS, WOLF BITES and SUSPICION, and `clover` ×4 glow in the look. The lose screen works with restart. A standing player was eaten within about 25 s, which looks harsh. The win screen is still unseen, and "TIME" is unverified on it.
+6. **Local 2-player: 8.** `wolfRing`, `aimArrow` and `aimLine` exist but are hidden in solo, as expected. Iteration 72's phone toast fix reports two wrapped lines with no overlap. I did not measure the wolf's distance to the nearest sheep after `KeyM`.
+7. **`window.__game`, no build, ~100 sheep: 8.** `perf` shows 82 draw calls, 103k triangles and 0 MB of assets. The 148 ms frame is SwiftShader, which `perf` says is no budget signal. Host load was 2.9.
+8. **Juice: 8.** The `sheep-heads*` ×88, `bubble`, the caption voice, the wool burst and the sound set are all present, and the wind and baa loops run.
+9. **Any window size, HUD readable: 8.** On the desktop look, `div#hud`, `div#mode` and `div#tag` have 0 overlap and nothing is cut off. Iteration 72 reports the phone toast and phone reveal fit inside 390 px. I did not retake them.
+10. **Faults: 9.** There are no console errors and no "Never visible" object. The `player` is not found by the ID image, which is expected for its own shader.
+
+**Next:**
+1. **Verify a real win and its frozen TIME.** (asked again)
+   - **Do:** run `interact` with `{state:{...}}` or `eval` to put the three clovers' progress near done. A cleaner way is to set the wolf's bites to 3 and the player's `susp` to 0, then step with `until: {result:"win"}`.
+   - **Check:** the state shows `result` win. Then 120 more frames leave `t` unchanged.
+2. **Make solo's first minute fairer.** Add a visible suspicion warning, such as a wolf head-turn or "!" before it commits to a pounce. Give a standing, grazing player a longer grace period before the wolf's first pounce.
+   - **Check:** `interact` holding E for 600 frames at 1× ends with `result` not lose, and `player.susp` stays below the pounce threshold.
+3. **Add a wolf dash for P2 and a pounce-cooldown ring.** (asked again)
+   - **Do:** give the local wolf a Shift dash with a cooldown, and show a ring fill on `wolfRing` when Enter is ready.
+   - **Check:** after `KeyM`, `interact` with ArrowRight + ShiftRight for 30 frames moves `wolf.x` further than ArrowRight alone, and `look` shows the ring fill.
+
+SCORE: 8.3
