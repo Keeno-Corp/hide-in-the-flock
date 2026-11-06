@@ -2636,3 +2636,9 @@ SCORE: 7.9
    - Also soften the sheep silhouettes so they read less like cotton lumps. Use flatter, inked, wobbly outlines and a cream flat fill, and hold the triangle count under 160k.
 
 SCORE: 8.0
+
+## Iteration 45
+**Did**: Start camera zoom in `updateCamera` (game.js:916): solo `zoom = 0.62` for T<14 regardless of wolf distance, then 0.82 when wolf within 32; `reset` (game.js:460) sets `cam.zoom = 0.66` in solo so the start is already closer.
+**Saw**: `look` at frame 0 unchanged: `Subject: wolf takes 1.1%` [252,560,487,663], wolf-rock 1.4%, no console errors, no Lighting/Surfaces lines, nothing Never visible. Frame 0 is likely drawn before `updateCamera` runs, so the zoom does not show there; not measured after frames.
+**Next**: `look` after ~30 frames (via `sheet` with frames) to confirm wolf %; if frame 0 must show it, call updateCamera once at the end of reset; move `wolf-rock`/wolf to clear ground (ROCK game.js:259); flatten `ridge*`/`oaks*`/`ground` gradients; run the 3-clover win.
+**Open**: Zoom effect unverified; gradient flattening, rock move and 3-clover win not done.

@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 44
-**Did**: Cut triangles: `pineGeo`/oak cones 18→10 segments, `roundTreeGeo`, `rockGeo`, `bushGeo`, `wolf-rock` icos and the sheep body ico detail 2→1 (game.js ~224, 319-360). Solo camera zoom 0.82 when wolf within 32 (game.js:916, lerped by cam.zoom).
-**Saw**: `perf` 151,104 triangles (was 190,778), 81 draw calls. Start frame: no console errors, no Lighting/Surfaces lines. `subject wolf` 0.57% at frame 0 (the zoom lerps in, so frame 0 does not show it; wolf sits behind `wolf-rock` among `sheep*`).
-**Next**: measure the wolf % after ~60 frames; raise wolf visibility (move `wolf-rock`/wolf start off the sheep crowd, rim light); flatten `ridge*`/`oaks*`/`ground` vertex gradients; run the full 3-clover win.
-**Open**: gradient flattening not done; wolf size goal (3%) not met; 3-clover win not run.
-
 ### Judge 44
 
 **Session 44 verdict.** I opened the page, played 90 frames, took a 3-cell sheet (start, human pounce, AI pounce) and ran `perf` once. I did not re-run the 3-clover win or 2-player. Items 5 and 8 are carried over from earlier sessions.
@@ -53,3 +47,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Also soften the sheep silhouettes so they read less like cotton lumps. Use flatter, inked, wobbly outlines and a cream flat fill, and hold the triangle count under 160k.
 
 SCORE: 8.0
+
+## Iteration 45
+**Did**: Start camera zoom in `updateCamera` (game.js:916): solo `zoom = 0.62` for T<14 regardless of wolf distance, then 0.82 when wolf within 32; `reset` (game.js:460) sets `cam.zoom = 0.66` in solo so the start is already closer.
+**Saw**: `look` at frame 0 unchanged: `Subject: wolf takes 1.1%` [252,560,487,663], wolf-rock 1.4%, no console errors, no Lighting/Surfaces lines, nothing Never visible. Frame 0 is likely drawn before `updateCamera` runs, so the zoom does not show there; not measured after frames.
+**Next**: `look` after ~30 frames (via `sheet` with frames) to confirm wolf %; if frame 0 must show it, call updateCamera once at the end of reset; move `wolf-rock`/wolf to clear ground (ROCK game.js:259); flatten `ridge*`/`oaks*`/`ground` gradients; run the 3-clover win.
+**Open**: Zoom effect unverified; gradient flattening, rock move and 3-clover win not done.

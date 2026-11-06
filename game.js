@@ -457,7 +457,7 @@ const cam = { x: 0, z: 0, punch: 0, close: 0, fov: 45, zoom: 1 };
 
 function reset(newMode) {
   if (newMode) mode = newMode;
-  T = 0; result = null; clock = 0; startleT = rnd(18, 24); zoomT = 16; decoyI = 0; pounce.ph = null; toastT = 0;
+  T = 0; cam.zoom = mode === 'solo' ? 0.66 : cam.zoom; result = null; clock = 0; startleT = rnd(18, 24); zoomT = 16; decoyI = 0; pounce.ph = null; toastT = 0;
   flock.angle = rnd(0, 6.28); flock.target = flock.angle; flock.turnT = 12;
   // clusters of sheep
   const cl = []; for (let k = 0; k < 16; k++) { const [x, z] = polar(2, 26); cl.push([x, z]); }
@@ -913,7 +913,7 @@ function drawWolf(dt) {
 function updateCamera(dt, rdt) {
   let tx = P.x, tz = P.z, zoom = 1;
   const dW = Math.hypot(wolf.x - P.x, wolf.z - P.z);
-  if (mode === 'solo') { if (dW < 32) zoom = 0.82; const k = dW < 32 ? (T < 12 ? 0.28 + 0.2 * (1 - T / 12) : 0.28) : 0; tx += (wolf.x - P.x) * k; tz += (wolf.z - P.z) * k; }
+  if (mode === 'solo') { if (T < 14) zoom = 0.62; else if (dW < 32) zoom = 0.82; const k = dW < 32 ? (T < 12 ? 0.28 + 0.2 * (1 - T / 12) : 0.28) : 0; tx += (wolf.x - P.x) * k; tz += (wolf.z - P.z) * k; }
   else { tx += (wolf.x - P.x) * 0.75; tz += (wolf.z - P.z) * 0.75; zoom = 0.6 + clamp((dW - 20) / 40, 0, 0.4); }
   if (pounce.ph && pounce.target) { const m = pounce.target; tx = lerp(tx, (wolf.x + m.x) / 2, cam.punch); tz = lerp(tz, (wolf.z + m.z) / 2, cam.punch); }
   if (pounce.ph === 'reveal' && pounce.t < 2.0) { tx = wolf.x; tz = wolf.z - 2; }
