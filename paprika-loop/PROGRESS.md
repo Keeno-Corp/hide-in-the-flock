@@ -3210,3 +3210,9 @@ SCORE: 7.9
    - Play a 2-player round: press `M`, then `Enter` pounces three times. Confirm the aim line shows and the third bite ends the round.
 
 SCORE: 7.9
+
+## Iteration 59
+**Did:** Scaled `W.root` (wolf) from 3.6 to 4.5 so it reads bigger; nudged the four `wolf-leg` group y positions apart (0.006/0.012) to break the coplanar face at y=1.59. `node --check game.js` passes.
+**Saw:** Not run through `look` (short session, ~16 min); no numbers measured. Wolf share of frame should rise from 2.4% but is unverified.
+**Next:** `look` zoom [100,360,460,700] to check the wolf is above 3.5% and the legs show (move `wolf-rock` aside if not); `asset_search` "wolf", "stylized pine tree", "oak tree" (still not recorded); play the clover win, sheep-bite card and 2-player paths.
+**Open:** 4.5 scale could clip into `wolf-rock` or the camera; unverified. No asset_search done.

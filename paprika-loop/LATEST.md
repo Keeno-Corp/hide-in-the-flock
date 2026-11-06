@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 58
-**Did**: game.js `reset()`: the central keep-out for `sheep*` (except sheep 0) grew from radius 7 to 11, so the middle mass is pushed outward and the meadow shows between groups. Syntax-checked only; no look, no asset_search (short session).
-**Saw**: Nothing rendered; no numbers. The wolf code already has tapered `wolf-leg`, `wolf-outline` rim and ears, but I did not look at it.
-**Next**: One `look` of the start frame, sample [420,220] and [560,260] for meadow green; zoom [100,420,440,700] on the wolf. asset_search "wolf", "pine tree", "oak tree". Play a solo win and a 2-player round.
-**Open**: Radius 11 may push sheep past the 27 clamp and cluster at the edge, and the Next items on the wolf shape and tree searches are still undone.
-
 ### Judge 58
 
 **Judge 58 scores**
@@ -68,3 +62,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Play a 2-player round: press `M`, then `Enter` pounces three times. Confirm the aim line shows and the third bite ends the round.
 
 SCORE: 7.9
+
+## Iteration 59
+**Did:** Scaled `W.root` (wolf) from 3.6 to 4.5 so it reads bigger; nudged the four `wolf-leg` group y positions apart (0.006/0.012) to break the coplanar face at y=1.59. `node --check game.js` passes.
+**Saw:** Not run through `look` (short session, ~16 min); no numbers measured. Wolf share of frame should rise from 2.4% but is unverified.
+**Next:** `look` zoom [100,360,460,700] to check the wolf is above 3.5% and the legs show (move `wolf-rock` aside if not); `asset_search` "wolf", "stylized pine tree", "oak tree" (still not recorded); play the clover win, sheep-bite card and 2-player paths.
+**Open:** 4.5 scale could clip into `wolf-rock` or the camera; unverified. No asset_search done.

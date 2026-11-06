@@ -260,7 +260,7 @@ const ROCK = { x: -15, z: -2, top: 4.1 };
 const W = {};
 {
   const grey = PAL.wolf, light = 0x1d1511, dk = 0x0e0a08;
-  W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(3.6);
+  W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(4.5);
   W.body = new THREE.Group(); W.root.add(W.body);
   const mat = new THREE.MeshBasicMaterial({ color: PAL.wolf, fog: false });
   const legMat = new THREE.MeshBasicMaterial({ color: 0x15110e, fog: false });
@@ -295,7 +295,7 @@ const W = {};
   add(W.body, mergeGeometries([blob(0.1, 0.5, 0.9, 0.25, 0.9, 0.3), blob(0.1, 0.5, 0.9, -0.25, 0.9, 0.3)]), new THREE.MeshBasicMaterial({ color: 0x1c1814, fog: false })).name = 'wolf-shoulder';
   W.legs = [];
   [[-1, 0.72], [1, 0.72], [-1, -0.6], [1, -0.6]].forEach(([sx, z]) => {
-    const g = new THREE.Group(); g.name = 'wolf-leg'; g.position.set(sx * 0.13, 0.72, z); W.body.add(g);
+    const g = new THREE.Group(); g.name = 'wolf-leg'; g.position.set(sx * 0.13, 0.72 + (z < 0 ? 0.012 : 0) + (sx > 0 ? 0.006 : 0), z); W.body.add(g);
     add(g, taper(0.16, 0.08, 0.7, 0, -0.33, 0), legMat);
     add(g, blob(0.1, 0.06, 0.22, 0, -0.55, 0.06), rimMat);
     W.legs.push(g);
