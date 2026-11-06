@@ -1580,3 +1580,9 @@ SCORE: 8.0
    - Check with `interact` `resize: [390, 844]`, then `pounce human`, `wait: 150`, `look: true`. The `div#cap` and `div#mode` overlap should be gone from the "HTML over the canvas" line.
 
 SCORE: 8.1
+
+## Iteration 25
+**Did**: index.html ≤640px query: `#cap` bottom 5vh -> 64px so it clears `#mode` (Next 3). game.js `updateCamera`: close-up factor 0.32 -> 0.5 when the pounce target is an AI sheep, so the `wolf` shrug fills more of the frame (Next 2).
+**Saw**: no tools run; edits are one-line CSS/number changes.
+**Next**: (1) `look` sheet `ai150` to check the wolf fills ~1/3 height, and resize [390,844] `pounce human` wait 150 for cap/mode overlap; (2) REPLAY beat after the reveal (still not done): ease `sheep*` back, drop `aimLine`, "REPLAY" tag; (3) full solo round playtest.
+**Open**: both changes unverified; REPLAY beat missing.

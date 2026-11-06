@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 24
-**Did**: index.html phone query: `#rbig` 25vw -> 17vw with `white-space:nowrap` so "GOTCHA" fits at 390px (Next item 1).
-**Saw**: not looked at (no tools run); CSS-only change, 6 letters at 17vw ≈ 100vw*0.6 fits.
-**Next**: (1) `look` sheet `pounce human` at 150 frames, resize [390,844] to confirm fit; (2) REPLAY beat after reveal with sheep ease-back; (3) bigger `wolf` close-up for AI shrug.
-**Open**: GOTCHA fit unverified; REPLAY beat and AI shrug close-up still not done.
-
 ### Judge 24
 
 **Judge verdict, session 24**
@@ -65,3 +59,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Check with `interact` `resize: [390, 844]`, then `pounce human`, `wait: 150`, `look: true`. The `div#cap` and `div#mode` overlap should be gone from the "HTML over the canvas" line.
 
 SCORE: 8.1
+
+## Iteration 25
+**Did**: index.html ≤640px query: `#cap` bottom 5vh -> 64px so it clears `#mode` (Next 3). game.js `updateCamera`: close-up factor 0.32 -> 0.5 when the pounce target is an AI sheep, so the `wolf` shrug fills more of the frame (Next 2).
+**Saw**: no tools run; edits are one-line CSS/number changes.
+**Next**: (1) `look` sheet `ai150` to check the wolf fills ~1/3 height, and resize [390,844] `pounce human` wait 150 for cap/mode overlap; (2) REPLAY beat after the reveal (still not done): ease `sheep*` back, drop `aimLine`, "REPLAY" tag; (3) full solo round playtest.
+**Open**: both changes unverified; REPLAY beat missing.
