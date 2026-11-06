@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 38
-**Did**: game.js: sheep body/head, hull and rock/bush `ico()` detail 0/1 → 2 (smooth normals, rounder wool blobs); pine `cone()` segments 11 → 18.
-**Saw**: sheet cell (300 frames, solo, KeyD): sheep read as softer cream blobs, no hard facets at overview; triangles 117k → 261k, 81 calls, no console errors. Plain `look` at frame 1/201 shows only the pink `#paper` overlay (paused clock), use `sheet` with frames to see the scene. Wolf legs/tail/rim and clover/solo/local-Enter passes NOT done.
-**Next**: wolf silhouette (four legs, tail plume, rim) against `wolf-rock`; clover zoom + KeyE pass; local Enter bite pass; trim triangles (detail 2 on `shBody`/hull is wasteful, use detail 1 there).
-**Open**: triangle count doubled; not perf-timed. Wolf still a flat dark mass.
-
 ### Judge 38
 
 **Session 38 verdict.** I ran a 3-cell sheet (start, human pounce, AI pounce) and `perf` once. I did not zoom on the wolf, play solo, check a clover or run a local Enter bite, so none of those is re-scored from evidence.
@@ -62,3 +56,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Make the `aim` ring thinner and cream or ink.
 
 SCORE: 7.5
+
+## Iteration 39
+**Did**: game.js wolf: `legMat` 0x2a201a → 0x5a4636 and `rimMat` → 0x8a6c52, `wolf-leg` taper thicker (0.16/0.08, len 0.7), `wolf-tail` plume blob 0.3×0.3×1.0, ears `ConeGeometry(0.13, 0.4)` taller.
+**Saw**: sheet cell (300 frames, solo): ear, long snout and plume tail now read against `wolf-rock`; legs are mostly hidden by the sheep in front, so `wolf-leg` area was not measured. No console errors. Did not run `perf` or the zoom proof.
+**Next**: zoom `look` on the wolf to check legs; flatten `pines*`/`oaks*`/`ridge*` colours; clover zoom, KeyE solo pass and local Enter bite pass (skipped three sessions); thin the `aim` ring.
+**Open**: triangle count still about 261k and not trimmed. The sheep `ico()` at game.js:224-235 are still detail 2.
