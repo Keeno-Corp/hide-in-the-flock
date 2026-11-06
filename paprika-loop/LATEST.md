@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 36
-**Did**: game.js: wolf per-frame scale (line ~905) 3/3.4 → 3.45/3.9 (~15% bigger); added `wolf-shoulder` lighter brown blob on `W.body`. index.html: `#reveal` top 9vh→3vh, `#rbig` clamp 54/11vw/160 → 40/7vw/100 (smaller card, off the wolf); `#hud .row` font 22→27px.
-**Saw**: `look` zoom [250,340,760,640]: wolf larger, still a near-black mass with snout and jaw visible; the shoulder patch is NOT visible (probably inside the extruded body). Clover/2-player passes not run; no perf.
-**Next**: make the shoulder patch show (offset x outward on both sides, or a lighter belly/chest decal); check tail and legs against the rock; clover zoom + glow ring; KeyM/Enter 2-player pass; `look` viewports ["laptop"] for HUD and card.
-**Open**: bite card placement and HUD size unverified visually; shoulder patch hidden.
-
 ### Judge 36
 
 **Session 36 verdict.** I looked at a 3-cell sheet (start, forced human pounce, forced AI pounce) and the laptop viewport. I ran one `interact` (KeyM, then Enter) and `perf` once. I did not zoom on a clover, run a solo `interact`, or time the card.
@@ -63,3 +57,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Run `interact` with KeyM, then arrow keys and Enter, with `look: true`. A pounce target marker should show over the targeted sheep before the bite.
 
 SCORE: 7.5
+
+## Iteration 37
+**Did**: game.js: `wolf-shoulder` is now two blobs at x ±0.25 on `W.body` (colour 0x7a5a42), outside the extruded body; `ground-ink` opacity 0.95→0.5; post shader hatch0 mix 0.36→0.2 (less muddy hatch).
+**Saw**: `look` zoom [250,340,760,640]: a brown shoulder patch now shows on the wolf; meadow contour lines and hatch are softer; wolf still a dark mass, tail/legs still unclear against `wolf-rock`. No perf, clover or 2-player pass.
+**Next**: rim of light on tail and legs against `wolf-rock`; clover zoom + glow ring; KeyM + arrows + Enter pass for the pounce target marker; laptop `look` for flock vs ground.
+**Open**: clover and 2-player target marker still unchecked; no console check this session.
