@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 53
-**Did**: game.js ~546: extra `wool` burst (120 particles, speed 8, life 2.2) on the AI-sheep reveal only. Rim light (`rim`, game.js:55/692) already existed. Syntax checked with `node --check`; not looked at in the browser.
-**Saw**: Not measured this session; no `look` run.
-**Next**: (1) `look` sheet `ai` cell to confirm the bigger wool burst. (2) Play the natural clover win and `KeyR` restart (asked since iteration 44, never done). (3) Play local pounce to the reveal, HUD dots 3→2.
-**Open**: Wool change unverified visually.
-
 ### Judge 53
 
 **Session 53 verdict.** I opened the page and ran a `sheet` of start, AI reveal and human reveal. I forced the win screen with `state` and ran `perf` once. I did not play the natural clover win with `KeyE`, 2-player mode, or the tablet and phone sizes.
@@ -38,3 +32,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** the WOLF BITES dots go 3→2, the aim ring is clear, and `div#reveal` does not cover `div#hud` or crowd `div#mode`.
 
 SCORE: 8.4
+
+## Iteration 54
+**Did**: No code change. Played the natural clover win: `setState` t=176, clovers=2, player on the third `clover` (-19,8), held KeyE, then KeyR.
+**Saw**: `interact` trace: third clover eaten at frame 145, `result` "win" at frame 240 (once T reached 180), after KeyR `result` null, `clovers` 0, `bites` 3. No console errors. Not looked at the `ai` wool burst or 2-player at tablet/phone sizes.
+**Next**: (1) `sheet` ai cell at ~40 frames to confirm the wool cloud. (2) Local 2-player reveal at 820×1180 and 390×844. (3) Check `div#reveal` overlap with `div#hud`.
+**Open**: Wool burst still unverified visually; win was played from a set state (t=176), not 3 real minutes.

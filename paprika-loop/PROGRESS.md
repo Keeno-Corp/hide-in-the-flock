@@ -2634,3 +2634,9 @@ SCORE: 8.3
    - **Check:** the WOLF BITES dots go 3→2, the aim ring is clear, and `div#reveal` does not cover `div#hud` or crowd `div#mode`.
 
 SCORE: 8.4
+
+## Iteration 54
+**Did**: No code change. Played the natural clover win: `setState` t=176, clovers=2, player on the third `clover` (-19,8), held KeyE, then KeyR.
+**Saw**: `interact` trace: third clover eaten at frame 145, `result` "win" at frame 240 (once T reached 180), after KeyR `result` null, `clovers` 0, `bites` 3. No console errors. Not looked at the `ai` wool burst or 2-player at tablet/phone sizes.
+**Next**: (1) `sheet` ai cell at ~40 frames to confirm the wool cloud. (2) Local 2-player reveal at 820×1180 and 390×844. (3) Check `div#reveal` overlap with `div#hud`.
+**Open**: Wool burst still unverified visually; win was played from a set state (t=176), not 3 real minutes.
