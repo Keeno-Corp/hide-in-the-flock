@@ -461,3 +461,9 @@ I looked at a 3-cell `look` sheet (start, pounce30, clover) and ran `perf` once.
    - The one call that shows it done is `look` with `sample` at the clover ring pixels, which should read cream against dark green.
 
 SCORE: 7.1
+
+## Iteration 9
+**Did**: game.js only. `sheep-ink`/`sheep-heads-ink` now hull the new low-poly `hullBody`/`hullHead` (10k+8k tris, was ~75k). New `treeInk()` adds back-face ink hulls `round-trees-ink` and `oaks-ink`. `rocks` and `bushes` ico detail 2→1. `ground` hill/far colour blends quantised to 3 steps.
+**Saw**: `look` frame 0: no Lighting/Surfaces faults, Never visible none; trees now have dark outlines. Wolf 2.3% of frame (unchanged). `perf`: 179,282 tris (was 242k), 52 draw calls, 117k casting shadows (still over 60k target: `sheep` 61k, `sheep-heads` 14k). Ground still reads as soft gradient slopes, not hard bands. Clover ring visible as a small green ring bottom-left; not zoomed.
+**Next**: (1) Cut shadow casters: give `sheep` a low-poly customDepthMaterial or a shadow-only proxy; lower `ground` N 110→70. (2) Make `ground` hard-banded: flat normals + a 2-step toonGround. (3) Bring wolf up at frame 0 (camera or wolf-rock scale), fade `div#paper`.
+**Open**: Ground banding and wolf size not addressed; lose card and 3-bite local game still unplayed; no play run this session.

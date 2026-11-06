@@ -171,8 +171,8 @@ const PLAY_R = 30;
     const patch = Math.sin(cx * 0.09 + Math.sin(cz * 0.07) * 2) + Math.sin(cz * 0.11 - cx * 0.05) * 0.8 + wob;
     c.copy(sage).lerp(warm, patch > -0.35 ? 1 : 0).lerp(ochre, patch > 1.1 ? 1 : 0);
     c.lerp(olive, (Math.sin(cx * 0.21 - cz * 0.17) * Math.sin(cz * 0.13 + cx * 0.09) + wob * 0.8) > 0.58 ? 0.8 : 0);
-    if (r > 34) c.lerp(hill, sm(34, 70, r) * 0.75);
-    if (r > 90) c.lerp(far, sm(90, 190, r) * 0.7);
+    if (r > 34) c.lerp(hill, Math.round(sm(34, 70, r) * 3) / 3 * 0.75);
+    if (r > 90) c.lerp(far, Math.round(sm(90, 190, r) * 3) / 3 * 0.7);
     if (ny < 0.8 && cy > 3) c.lerp(rock, 0.6);
     col[i * 3] = c.r; col[i * 3 + 1] = c.g; col[i * 3 + 2] = c.b;
   }
@@ -228,9 +228,11 @@ const headIM = new THREE.InstancedMesh(sheepHeadGeo, sheepMat, N); headIM.name =
   for (let i = 0; i < N; i++) { const j = i === 0 ? 13 : i, t = tints[(j * 7 + (j >> 2)) % tints.length]; c.setHex(t).multiplyScalar(0.92 + ((j * 37) % 17) / 17 * 0.1); bodyIM.setColorAt(i, c); headIM.setColorAt(i, new THREE.Color(0xffffff)); } }
 const SZ = Array.from({ length: N }, (_, i) => 0.88 + (((i === 0 ? 13 : i) * 53) % 23) / 23 * 0.3);
 scene.add(bodyIM, headIM);
+const hullBody = mergeGeometries([mk(ico(0.5, 1), WOOL, { p: [0, 0.68, -0.02], s: [1.05, 0.95, 1.45], soft: true }), mk(ico(0.3, 0), WOOL, { p: [0, 0.4, 0], s: [1, 0.6, 1.6], soft: true })]);
+const hullHead = mergeGeometries([mk(ico(0.28, 1), DARK, { p: [0, 0.02, 0.2], s: [1, 0.95, 1.2], soft: true })]);
 { const hull = (g, d) => { const h = g.clone(); h.deleteAttribute('color'); const p = h.attributes.position, n = h.attributes.normal; for (let i = 0; i < p.count; i++) p.setXYZ(i, p.getX(i) + n.getX(i) * d, p.getY(i) + n.getY(i) * d, p.getZ(i) + n.getZ(i) * d); return h; };
   const im = new THREE.MeshBasicMaterial({ color: 0x2b211c, side: THREE.BackSide, fog: false });
-  const ob = new THREE.InstancedMesh(hull(sheepBodyGeo, 0.045), im, N), oh = new THREE.InstancedMesh(hull(sheepHeadGeo, 0.04), im, N);
+  const ob = new THREE.InstancedMesh(hull(hullBody, 0.05), im, N), oh = new THREE.InstancedMesh(hull(hullHead, 0.04), im, N);
   ob.instanceMatrix = bodyIM.instanceMatrix; oh.instanceMatrix = headIM.instanceMatrix; ob.name = 'sheep-ink'; oh.name = 'sheep-heads-ink'; ob.frustumCulled = oh.frustumCulled = false; scene.add(ob, oh); }
 
 // ───────────────────────── wolf ─────────────────────────
@@ -312,9 +314,11 @@ scatterInst(roundTreeGeo, 14, () => { const [x, z] = polar(33, 58); if (z > 2 ||
 // two big framing oaks at the meadow's edge
 { const im = new THREE.InstancedMesh(roundTreeGeo, treeMat(), 3); im.name = 'oaks'; im.castShadow = im.receiveShadow = true;
   [[-35, -8, 2.4], [37, -16, 2.2], [-14, -42, 2.8]].forEach(([x, z, s], i) => { dummy.position.set(x, gh(x, z) - 0.1, z); dummy.rotation.set(0, i * 2, 0); dummy.scale.setScalar(s); dummy.updateMatrix(); im.setMatrixAt(i, dummy.matrix); }); scene.add(im); }
-const rockGeo = mergeGeometries([mk(ico(0.8, 2), 0xa39a86, { s: [1, 0.7, 1], soft: true }), mk(ico(0.5, 2), 0xb3aa94, { p: [0.6, -0.1, 0.2], soft: true })]);
+const treeInk = im => { const h = im.geometry.clone(); h.deleteAttribute('color'); const p = h.attributes.position, n = h.attributes.normal; for (let i = 0; i < p.count; i++) p.setXYZ(i, p.getX(i) + n.getX(i) * 0.07, p.getY(i) + n.getY(i) * 0.07, p.getZ(i) + n.getZ(i) * 0.07); const o = new THREE.InstancedMesh(h, new THREE.MeshBasicMaterial({ color: 0x2b211c, side: THREE.BackSide, fog: false }), im.count); o.instanceMatrix = im.instanceMatrix; o.name = im.name + '-ink'; o.frustumCulled = false; scene.add(o); };
+treeInk(scene.getObjectByName('round-trees')); treeInk(scene.getObjectByName('oaks'));
+const rockGeo = mergeGeometries([mk(ico(0.8, 1), 0xa39a86, { s: [1, 0.7, 1], soft: true }), mk(ico(0.5, 1), 0xb3aa94, { p: [0.6, -0.1, 0.2], soft: true })]);
 scatterInst(rockGeo, 40, () => { const [x, z] = polar(18, 56); const h = gh(x, z); if (Math.hypot(x - ROCK.x, z - ROCK.z) < 5) return null; const s = rnd(0.5, 1.4) * (Math.hypot(x, z) > 32 ? 2.4 : 1); return { x, z, s, y: h + 0.2 * s }; }, { name: 'rocks' });
-const bushGeo = mergeGeometries([mk(ico(0.6, 2), 0x74834a, { s: [1, 0.75, 1], soft: true }), mk(ico(0.45, 2), 0x86954f, { p: [0.45, -0.05, 0.1], soft: true }), mk(ico(0.4, 2), 0x66743f, { p: [-0.4, -0.05, -0.1], soft: true })]);
+const bushGeo = mergeGeometries([mk(ico(0.6, 1), 0x74834a, { s: [1, 0.75, 1], soft: true }), mk(ico(0.45, 1), 0x86954f, { p: [0.45, -0.05, 0.1], soft: true }), mk(ico(0.4, 1), 0x66743f, { p: [-0.4, -0.05, -0.1], soft: true })]);
 scatterInst(bushGeo, 34, () => { const [x, z] = polar(8, 33); if (Math.hypot(x - ROCK.x, z - ROCK.z) < 4) return null; return { x, z, s: rnd(0.6, 1.1), y: gh(x, z) + 0.25 }; }, { name: 'bushes' });
 const tuftGeo = mergeGeometries([0, 1, 2].map(i => mk(cone(0.1, 0.55, 3), i === 1 ? 0xd2bd6c : 0x98a257, { p: [Math.cos(i * 2.1) * 0.12, 0.25, Math.sin(i * 2.1) * 0.12], r: [Math.sin(i * 2.1) * 0.35, 0, -Math.cos(i * 2.1) * 0.35], jit: 0.12 })));
 scatterInst(tuftGeo, 180, () => { const [x, z] = polar(0, 33); return { x, z, s: rnd(0.7, 1.6), y: gh(x, z) - 0.05 }; }, { shadow: false, name: 'tufts' });

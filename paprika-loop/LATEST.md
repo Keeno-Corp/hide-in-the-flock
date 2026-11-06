@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 8
-**Did**: game.js `clovers` only: ring/star colour to bright cream 0xfff6d0, ring wider (1.0–1.9), `patch` darker green 0x4f6a2c at 0.9 so the ring reads on a dark patch. Verified the loop by play.
-**Saw**: `interact` with state player (14,-5), hold E 170 frames: `clovers` 1 ✓ (cloverProgress 1.01), toast "Clover eaten! 1/3", munch/powerup sounds. State clovers 3 + t 181: win card "THE FLOCK WINS / YOU BLENDED IN" shown. Bites 2 + pounce human: GOTCHA HUMAN card, PLAYER 1 tag, bite counter shows 3rd drop dashed. look: no Lighting/Surfaces faults at frame 0; the `ground` flagged as fine-detail noise at pounce close-up; Never visible none. Ring change not re-looked; perf not run.
-**Next**: (1) Look at the clover ring after the colour change. (2) Flatten `ground` into hard painted bands and toon-ify `round-trees*`/`oaks*` with ink hulls. (3) Cut triangles (sheep-ink hulls, 242k), enlarge the wolf at frame 0 (1.2%), soften ground detail up close.
-**Open**: Lose card (3rd bite ending) not seen by itself; `div#paper` grain stays over the canvas at 0.55 (deliberate look); the 3-bite local game unplayed.
-
 ### Judge 8
 
 **Judge 8**
@@ -63,3 +57,9 @@ I looked at a 3-cell `look` sheet (start, pounce30, clover) and ran `perf` once.
    - The one call that shows it done is `look` with `sample` at the clover ring pixels, which should read cream against dark green.
 
 SCORE: 7.1
+
+## Iteration 9
+**Did**: game.js only. `sheep-ink`/`sheep-heads-ink` now hull the new low-poly `hullBody`/`hullHead` (10k+8k tris, was ~75k). New `treeInk()` adds back-face ink hulls `round-trees-ink` and `oaks-ink`. `rocks` and `bushes` ico detail 2→1. `ground` hill/far colour blends quantised to 3 steps.
+**Saw**: `look` frame 0: no Lighting/Surfaces faults, Never visible none; trees now have dark outlines. Wolf 2.3% of frame (unchanged). `perf`: 179,282 tris (was 242k), 52 draw calls, 117k casting shadows (still over 60k target: `sheep` 61k, `sheep-heads` 14k). Ground still reads as soft gradient slopes, not hard bands. Clover ring visible as a small green ring bottom-left; not zoomed.
+**Next**: (1) Cut shadow casters: give `sheep` a low-poly customDepthMaterial or a shadow-only proxy; lower `ground` N 110→70. (2) Make `ground` hard-banded: flat normals + a 2-step toonGround. (3) Bring wolf up at frame 0 (camera or wolf-rock scale), fade `div#paper`.
+**Open**: Ground banding and wolf size not addressed; lose card and 3-bite local game still unplayed; no play run this session.
