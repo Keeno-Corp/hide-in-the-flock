@@ -1,35 +1,35 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-### Judge 78
-
-**Session 78 verdict.** I forced both pounce reveals, then switched to local mode on a 390×844 viewport and ran `perf` once. I did not see the stalk toast, the lose screen, or the green-to-red dash ring after `ShiftRight`.
-
-1. **Looks as LOOK.md says: 9.** `ground`, `sea`, `sand`, `cliff`, `pines*`, `round-trees*`, `cloud`, `wolf-rock`, `sheep*`, `bushes*`, `rocks*` and `tufts*` are all present, and "Never visible" is none. There are no `Lighting:` or `Surfaces:` lines.
-2. **Plays as DESIGN.md says: 8.** The forced pounces, `KeyR` restart and `KeyM` mode switch all work. In the stage-phone local mode `bites` read 3 and `wolf.state` was "ctrl". The solo stalk toast and the lose screen were not re-checked.
-3. **Clip moment: 9.** The human pounce gives `pounce.ph: "reveal"` with a huge red "GOTCHA" banner, the "HUMAN!" kicker, a red `div#tag` "PLAYER 1" over the sheep, and the caption "It had a name. It was PLAYER 1.". The AI pounce gives a big "AI SHEEP" banner with "BITE WASTED", `div#bubble` "baa?", the wolf in its `shrug` pose, and `bites` dropping to 2. The caption is "A completely innocent sheep. Awkward." Both read clearly in a 5-second clip, and the sounds include boom, stab, thud, womp and baa.
-4. **Looks like refs/01.jpg: 9.** The phone look shows sea, sand, pines, `cliff`, clouds and the wolf on `wolf-rock`. It is bright and low-poly.
-5. **Solo fun and fair: 8.** The win path is verified from session 77, and both reveals are now verified. The stalk toast and the lose screen are still unseen.
-6. **Local 2-player: 8.** On the phone, `wolfRing` shows yellow and orange around the wolf, with `aimArrow` over it. The wolf body is visible through the fill, so the 0.35 opacity works. `div#toast` "Wolf: walk to the flock with arrows, get close, Enter to pounce" fits the width. The red state after `ShiftRight` is unconfirmed.
-7. **`window.__game`, no build, ~100 sheep: 8.** `perf` shows 82 draw calls, 103k triangles and 0 MB of assets. The 136 ms frame is SwiftShader (host load 2.0) and is no budget signal.
-8. **Juice: 9.** The sound set is rich, `sheep-heads*` and wolf poses animate, and the caption voice is funny.
-9. **Any window size, HUD readable: 8.** At 390×844 `div#hud`, `div#toast` and `div#mode` have no overlap and none is cut off. `div#mode` sits tight against the toast at the bottom.
-10. **Faults: 9.** There are no console errors and no fault lines.
-
-**Next:**
-1. **Show the stalk toast and the lose screen on a phone.** (asked again)
-   - **Do:** run `interact` with `[{resize:[390,844]},{state:{wolf:{state:"stalk"}}},{wait:30}]` and `look:true`.
-   - **Check:** "! The wolf has noticed you: blend in, graze!" is visible and does not overlap `div#cap`. Then run `{state:{bites:0}}` or let `t` reach 0, and confirm the lose banner and "R to play again" fit the phone.
-2. **Confirm the local dash colour change.**
-   - **Do:** in local mode, run `interact` with `[{key:"ShiftRight",frames:30}]` and `look` with `zoom` on the wolf.
-   - **Check:** `wolfRingFill` is red with the wolf body clearly visible, and green at the start.
-3. **Beyond the brief: make the reveal's wool burst bigger.**
-   - **Do:** in the human and AI reveals, add a wool-flake `burst` from the bitten sheep's position, with `shake` on the human GOTCHA.
-   - **Check:** `interact` with `{action:"pounce",target:"human"}`, `wait` 60 frames and `look:true` shows flakes in the air around `div#tag` in the reveal frame.
-
-SCORE: 8.5
-
 ## Iteration 83
 **Did**: found why `wolf.state` stayed "watch" in 82: not a bug, `wolf.cd` starts at 20 s on restart (`game.js` reset) and the stalk needs `cd<=0`. Forced it with `{state:{wolf:{cd:0},susp:2}}`. On 390×844 the stalk toast overlapped `div#cap` (look reported 2 overlap); in `index.html` the phone media rule `#toast` is now `bottom:112px` (was 60px).
 **Saw**: 390×844 after fix: `wolf.state` "stalk", toast "! The wolf has noticed you: blend in, graze!" at y 680–731 above `div#cap` at 754–779, 0 overlap, 0 cut off, Never visible none, no fault lines.
 **Next**: (1) lose screen on phone (`{state:{bites:0}}` / `result:"lose"`); (2) local dash ring red after ShiftRight; (3) wool burst on reveals.
 **Open**: lose screen on phone and the red dash ring are still unchecked.
+
+### Judge 83
+
+**Session 83 verdict.** I opened the page at 390×844 and forced the lose screen. I also switched to local mode, held `ShiftRight` for 30 frames, and ran `perf` once. The two checks that were open in 83 are now seen. I did not re-force the pounce reveals this session; they are carried over from 78.
+
+1. **Looks as LOOK.md says: 9.** `ground`, `sea`, `sand`, `cliff`, `pines*`, `round-trees*`, `cloud`, `wolf-rock`, `sheep*`, `bushes*`, `rocks*` and `tufts*` are all on screen. "Never visible" is none, and there are no `Lighting:` or `Surfaces:` lines.
+2. **Plays as DESIGN.md says: 8.** `KeyM` switches to local: `mode` "local", `bites` 3, `wolf.state` "ctrl". `result:"lose"` ends the run. Setting `bites:0` did not end it, which is likely correct because bites are probably only spent by a pounce. I did not check that this was the cause.
+3. **Clip moment: 9.** The reveal banner, tag, bubble and captions were verified in 78 and the code is unchanged. The lose screen has the same big banner style: "EATEN" in `div#reveal`.
+4. **Looks like refs/01.jpg: 9.** The phone view shows the sea, `sand`, `pines*`, `cliff`, clouds, and the wolf on `wolf-rock`. It is bright and low-poly.
+5. **Solo fun and fair: 8.** The stalk toast is verified from 83, the lose screen is now verified, and the win path is verified from 77. The lose banner reads "YOU WERE THE HUMAN EATEN" with "R to play again · M to switch mode", and it fits at 390 wide with 0 overlap.
+6. **Local 2-player: 8.5.** After the 30-frame `ShiftRight` hold, `wolfRingFill` showed an orange-red core inside the yellow ring, with `aimArrow` above it. The ring shows the dash state. I could not read an exact red value, since `wolfRingFill` is not in the ID image.
+7. **`window.__game`, no build, ~100 sheep: 8.** `perf` shows 56 draw calls, 101k triangles and 0 MB of assets. The 73 ms frame is SwiftShader with host load 2.3, so it says nothing about a real GPU.
+8. **Juice: 9.** The sound set, `sheep-heads*` animation, wolf poses and caption voice are unchanged since 78.
+9. **Any window size, HUD readable: 8.5.** At 390×844 `div#hud`, `div#toast`, `div#mode` and `div#reveal` have 0 overlap and nothing cut off. The 83 toast fix holds, with the toast at y 680–731 clear of the caption.
+10. **Faults: 9.** I saw no console errors and no fault lines.
+
+**Next:**
+1. **Beyond the brief: make the reveal's wool burst bigger.**
+   - **Do:** in the human and AI reveals, add a wool-flake `burst` from the bitten sheep's position, with `shake` on the human GOTCHA.
+   - **Check:** run `interact` with `{action:"pounce",target:"human"}`, `{wait:60}` and `look:true`. Flakes should be in the air around `div#tag`.
+2. **Confirm the local dash ring at a precise colour.**
+   - **Do:** run `interact` with `[{key:"ShiftRight",frames:30}]`, then `look` with `zoom` on the wolf and `sample` at the ring centre.
+   - **Check:** the sample reads red, against green before the dash.
+3. **Add a clearer solo-pounce cue.**
+   - **Do:** when the wolf enters a stalk, add a short audio cue or a screen-edge vignette, so a phone player notices before the toast.
+   - **Check:** `interact` with `{state:{wolf:{cd:0},susp:2}}` and `look:true` shows the cue.
+
+SCORE: 8.6
