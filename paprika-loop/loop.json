@@ -805,6 +805,17 @@
       "score": null,
       "judgeTurns": 0,
       "judgeTokens": 0
+    },
+    {
+      "n": 74,
+      "turns": 11,
+      "tokens": 313004,
+      "costUsd": 0.23528170000000004,
+      "minutes": 1.1,
+      "commit": "c320128",
+      "score": 8.3,
+      "judgeTurns": 7,
+      "judgeTokens": 117783
     }
   ],
   "best": {

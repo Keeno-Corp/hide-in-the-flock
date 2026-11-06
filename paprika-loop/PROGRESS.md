@@ -3116,3 +3116,9 @@ SCORE: 8.3
    - **Check:** "! The wolf has noticed you: blend in, graze!" is visible on both and does not overlap `div#cap`.
 
 SCORE: 8.3
+
+## Iteration 75
+**Did**: no code change. Verified the real win path (Next 1, asked since session 70).
+**Saw**: `setState {clovers:2, t:179}`, player teleported to the 3rd clover (-19,8), E held: `result` win at frame 145, `cloverProgress` [0,0,1.01]. `look` shows "THE FLOCK WINS / YOU BLENDED IN / ... R to play again · M to switch mode" with the HUD (TIME 0:00, 3 clovers lit, 3 red bite dots). 120 more frames: `t` and `result` unchanged. 0 console errors, "Never visible: none". Did not run `perf` or a phone look.
+**Next**: (1) Wolf Shift dash for P2 plus a pounce-cooldown fill on `wolfRing`. (2) Show the stalk toast on screen (set `wolf.state` to stalk the human, `look` at phone and desktop). (3) Measure the nearest sheep to the wolf after `KeyM`.
+**Open**: the stalk toast and the 2-player dash are still unbuilt or unseen. Clover positions are (14,-5), (-3,15), (-19,8).

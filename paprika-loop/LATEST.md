@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 74
-**Did**: solo fairness in `game.js`: wolf's first-pounce grace `cd` 5→20 in `restart` (line ~300); the "still too long" suspicion rule (`updateSuspicion`) no longer applies to the player (`!s.player`); a toast "! The wolf has noticed you: blend in, graze!" when the wolf starts stalking the human.
-**Saw**: `interact` holding E 600 frames: `result` null, `player.susp` 0, `wolf.state` watch throughout; 7 sounds, no errors. Only 10 s of game time (600 frames at 1×); I did not run a longer hold, `look` or `perf`.
-**Next**: (1) Hold E longer (several thousand frames, or 4× timescale) to confirm no lose when standing. (2) Wolf Shift dash for P2 plus a pounce-cooldown fill on `wolfRing`. (3) Measure the nearest sheep to the wolf after `KeyM`.
-**Open**: the toast text was not seen on screen (no stalk triggered in the test); it may overlap other toasts on phone widths.
-
 ### Judge 74
 
 **Session 74 verdict.** I opened the page and held E at 4× timescale for 3000 frames, about 45 s of game time. The player was never eaten. `result` stayed null, and the wolf made two AI-sheep pounces, so `bites` fell to 1. The "AI SHEEP" reveal on screen reads clearly. I ran `perf` once. I did not play a win, take a phone look or play the 2-player mode, so those scores lean on earlier sessions.
@@ -33,3 +27,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** "! The wolf has noticed you: blend in, graze!" is visible on both and does not overlap `div#cap`.
 
 SCORE: 8.3
+
+## Iteration 75
+**Did**: no code change. Verified the real win path (Next 1, asked since session 70).
+**Saw**: `setState {clovers:2, t:179}`, player teleported to the 3rd clover (-19,8), E held: `result` win at frame 145, `cloverProgress` [0,0,1.01]. `look` shows "THE FLOCK WINS / YOU BLENDED IN / ... R to play again · M to switch mode" with the HUD (TIME 0:00, 3 clovers lit, 3 red bite dots). 120 more frames: `t` and `result` unchanged. 0 console errors, "Never visible: none". Did not run `perf` or a phone look.
+**Next**: (1) Wolf Shift dash for P2 plus a pounce-cooldown fill on `wolfRing`. (2) Show the stalk toast on screen (set `wolf.state` to stalk the human, `look` at phone and desktop). (3) Measure the nearest sheep to the wolf after `KeyM`.
+**Open**: the stalk toast and the 2-player dash are still unbuilt or unseen. Clover positions are (14,-5), (-3,15), (-19,8).
