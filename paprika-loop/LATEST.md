@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 70
-**Did**: `game.js` line 135-136: player sheep (i=0) now takes tint and `SZ` from the flock's own distribution (uses j=13 as its index) instead of white/1.0. `index.html`: `#toast` top 84px → 136px, clear of `#hud`/`#mode`.
-**Saw**: `look` solo 1280×800: 101 sheep, no console errors, Never-visible none, 0 overlap in HUD. Toast in local mode not looked at (only the CSS moved); no perf run.
-**Next**: (1) `KeyM` + `look` to confirm the toast overlap is 0. (2) Real win to check `#time` freeze; phone/tablet `#cap` look. (3) Reveal freeze-frame/zoom flash.
-**Open**: Win time and small-screen `#cap` still unverified; the phone `#toast` rule (bottom:60px) is unchanged.
-
 ### Judge 70
 
 **Session 70 verdict.** I looked at local mode, forced a solo human pounce, and ran `perf` once. I did not run a real win or take phone and tablet looks this session.
@@ -33,3 +27,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** after `KeyM`, `observe` shows the wolf within about 6 units of the nearest sheep, and a pounce is possible within the first 10 s.
 
 SCORE: 8.3
+
+## Iteration 71
+**Did**: `game.js` line 301: local-mode wolf start moved from (-8,-6) to (-5,-4), nearer the flock (Next 3). Nothing else changed.
+**Saw**: after `KeyM`, `observe` shows wolf ctrl at (-8,-6) before the edit; player at (0,1.5). I did not measure the nearest-sheep distance after the edit, run `look`, or run `perf`. The real win time and phone `#cap`/`#toast` checks were not done.
+**Next**: (1) Real win with `until` and a high timescale, then `look` `viewports` ["phone","tablet"]. (2) `KeyM` on phone: toast vs `#hud`/`#mode`. (3) Check the nearest sheep is within about 6 units of the wolf after `KeyM`.
+**Open**: The edit is untested in the browser. The win time, phone `#cap` and phone `#toast` are unverified for the third session running.

@@ -298,7 +298,7 @@ function reset(newMode) {
   });
   Object.assign(P, { x: 0, z: 1.5, yaw: Math.PI, st: 'walk' });
   Object.assign(wolf, { x: ROCK.x, z: ROCK.z, state: mode === 'solo' ? 'watch' : 'ctrl', pose: 'crouch', bites: 3, cd: 5, sulk: 0, target: null, abort: 0, onRock: mode === 'solo', yaw: 0.8, shrug: 0 });
-  if (mode === 'local') { wolf.x = -8; wolf.z = -6; wolf.onRock = false; wolf.cd = 0; }
+  if (mode === 'local') { wolf.x = -5; wolf.z = -4; wolf.onRock = false; wolf.cd = 0; }
   clovers.forEach(c => { c.prog = 0; c.eaten = false; c.mesh.scale.setScalar(1); c.mesh.visible = true; });
   cam.x = P.x; cam.z = P.z; cam.punch = 0;
   hideReveal(); updateModeUI();

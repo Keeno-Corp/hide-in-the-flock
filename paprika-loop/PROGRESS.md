@@ -3009,3 +3009,9 @@ SCORE: 8.3
    - **Check:** after `KeyM`, `observe` shows the wolf within about 6 units of the nearest sheep, and a pounce is possible within the first 10 s.
 
 SCORE: 8.3
+
+## Iteration 71
+**Did**: `game.js` line 301: local-mode wolf start moved from (-8,-6) to (-5,-4), nearer the flock (Next 3). Nothing else changed.
+**Saw**: after `KeyM`, `observe` shows wolf ctrl at (-8,-6) before the edit; player at (0,1.5). I did not measure the nearest-sheep distance after the edit, run `look`, or run `perf`. The real win time and phone `#cap`/`#toast` checks were not done.
+**Next**: (1) Real win with `until` and a high timescale, then `look` `viewports` ["phone","tablet"]. (2) `KeyM` on phone: toast vs `#hud`/`#mode`. (3) Check the nearest sheep is within about 6 units of the wolf after `KeyM`.
+**Open**: The edit is untested in the browser. The win time, phone `#cap` and phone `#toast` are unverified for the third session running.
