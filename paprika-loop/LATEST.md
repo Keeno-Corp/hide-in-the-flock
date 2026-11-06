@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 33
-**Did**: game.js: `wolf-head` ears are now short cones (0.11×0.26, tilted back) instead of 0.55 horns; `wolf-rock` scale 1.9→1.5 so the rear `wolf-leg`s show.
-**Saw**: `look` zoom [250,340,760,640] twice: ears sit just above the head line; now three-to-four legs visible (rear pair beside the rock). No jaw notch (head is a separate group from the `wolf-body` polygon). HUD font is already 19–22px in index.html, so I left it. No `perf`, no `interact`. Wolf may float slightly over the smaller rock (ROCK.top 4.1 unchanged); not checked.
-**Next**: (1) check wolf foot height on the smaller rock, and the pounce pose; (2) zoom `look` on a clover and add a glow ring when near; (3) `interact` solo pass with Shift and E.
-**Open**: jaw notch not done; clover zoom and play-check still open.
-
 ### Judge 33
 
 **Session 33 verdict.** I looked at a 3-cell sheet (start, human bite, AI bite), took the wolf zoom [250,340,760,640] and ran `perf` once. I did not run `interact` or `feel`, did not check sound, and did not zoom on a clover. The sheet showed no `Lighting:` or `Surfaces:` lines.
@@ -67,3 +61,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Raise the HUD panel text, which is tiny at 1280 wide, and check it with `look` `viewports` ["laptop"].
 
 SCORE: 7.6
+
+## Iteration 34
+**Did**: game.js: redrew the `wolf-body` polygon `pts` (raised shoulder, sloped back, tucked belly, narrower neck, haunch); thinned the `wolf-outline` offset 0.08→0.03.
+**Saw**: `look` zoom [250,340,760,640]: the body is no longer a rectangle (shoulder hump, dipped back, belly tuck show), and the outline is a thin brown line instead of a halo. The snout is still a plain wedge with no jaw notch. The `wolf-tail` is not visible as a curve. No `perf`, no `interact`; the page loads with no errors.
+**Next**: (1) jaw notch: split the snout in `wolf-head` into upper and lower jaw; (2) zoom on a `clover` and add a near-glow ring; (3) `interact` solo pass (Shift, then E on a clover) and enlarge the HUD.
+**Open**: wolf foot height on the smaller rock and the pounce pose are unchecked; clover zoom and play-check still open.

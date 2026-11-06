@@ -272,7 +272,7 @@ const W = {};
   // lean side-profile silhouette: one extruded polygon (z forward, y up), thin in x
   {
     const sh = new THREE.Shape();
-    const pts = [[-1.62, 0.3], [-1.3, 0.95], [-0.9, 1.06], [-0.4, 1.0], [0.1, 1.1], [0.5, 1.16], [0.85, 1.05], [1.05, 0.88], [1.0, 0.7], [0.7, 0.5], [0.3, 0.62], [-0.2, 0.7], [-0.55, 0.58], [-0.95, 0.6], [-1.25, 0.62], [-1.45, 0.38]];
+    const pts = [[-1.62, 0.75], [-1.4, 1.02], [-1.05, 1.06], [-0.6, 0.97], [-0.15, 1.08], [0.3, 1.22], [0.65, 1.2], [0.95, 1.12], [1.08, 0.95], [1.0, 0.75], [0.8, 0.52], [0.5, 0.4], [0.15, 0.48], [-0.2, 0.62], [-0.55, 0.56], [-0.95, 0.5], [-1.3, 0.42], [-1.55, 0.5]];
     sh.moveTo(pts[0][0], pts[0][1]); pts.slice(1).forEach(p => sh.lineTo(p[0], p[1])); sh.closePath();
     const eg = new THREE.ExtrudeGeometry(sh, { depth: 0.32, bevelEnabled: true, bevelThickness: 0.1, bevelSize: 0.08, bevelSegments: 2, curveSegments: 6 });
     eg.translate(0, 0, -0.16).rotateY(-Math.PI / 2);
@@ -304,7 +304,7 @@ const W = {};
   const meshes = []; W.body.traverse(o => { if (o.isMesh && o.geometry && o.geometry.attributes.normal && o.material !== eyeMat) meshes.push(o); });
   meshes.forEach(o => {
     const g = o.geometry.clone(), p = g.attributes.position; const n = g.attributes.normal; { const acc = new Map(), key = i => p.getX(i).toFixed(3) + ',' + p.getY(i).toFixed(3) + ',' + p.getZ(i).toFixed(3); for (let i = 0; i < p.count; i++) { const k = key(i), a = acc.get(k) || [0, 0, 0]; a[0] += n.getX(i); a[1] += n.getY(i); a[2] += n.getZ(i); acc.set(k, a); } for (let i = 0; i < p.count; i++) { const a = acc.get(key(i)), l = Math.hypot(a[0], a[1], a[2]) || 1; n.setXYZ(i, a[0] / l, a[1] / l, a[2] / l); } }
-    for (let i = 0; i < p.count; i++) p.setXYZ(i, p.getX(i) + n.getX(i) * 0.08, p.getY(i) + n.getY(i) * 0.08, p.getZ(i) + n.getZ(i) * 0.08);
+    for (let i = 0; i < p.count; i++) p.setXYZ(i, p.getX(i) + n.getX(i) * 0.03, p.getY(i) + n.getY(i) * 0.03, p.getZ(i) + n.getZ(i) * 0.03);
     if (o.name === 'wolf-body') { const h = new THREE.Mesh(g, rimInk); h.name = 'wolf-outline'; o.parent.add(h); }
   });
   scene.add(W.root);

@@ -1980,3 +1980,9 @@ SCORE: 7.6
    - Raise the HUD panel text, which is tiny at 1280 wide, and check it with `look` `viewports` ["laptop"].
 
 SCORE: 7.6
+
+## Iteration 34
+**Did**: game.js: redrew the `wolf-body` polygon `pts` (raised shoulder, sloped back, tucked belly, narrower neck, haunch); thinned the `wolf-outline` offset 0.08→0.03.
+**Saw**: `look` zoom [250,340,760,640]: the body is no longer a rectangle (shoulder hump, dipped back, belly tuck show), and the outline is a thin brown line instead of a halo. The snout is still a plain wedge with no jaw notch. The `wolf-tail` is not visible as a curve. No `perf`, no `interact`; the page loads with no errors.
+**Next**: (1) jaw notch: split the snout in `wolf-head` into upper and lower jaw; (2) zoom on a `clover` and add a near-glow ring; (3) `interact` solo pass (Shift, then E on a clover) and enlarge the HUD.
+**Open**: wolf foot height on the smaller rock and the pounce pose are unchecked; clover zoom and play-check still open.
