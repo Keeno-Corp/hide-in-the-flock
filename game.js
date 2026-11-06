@@ -255,7 +255,7 @@ const outline = new THREE.Group(); outline.visible = false; outline.name = 'outl
   const a = new THREE.Mesh(sheepBodyGeo, om), b = new THREE.Mesh(sheepHeadGeo, om); b.position.copy(HEAD_P); a.renderOrder = b.renderOrder = 20; outline.add(a, b); outline.userData = { a, b };
   scene.add(outline);
 }
-const wool = burst({ max: 500, seed: 7, size: 2.7, additive: false }); wool.name = 'wool'; scene.add(wool);
+const wool = burst({ max: 500, seed: 7, size: 1.1, additive: false }); wool.name = 'wool'; scene.add(wool);
 { const c = document.createElement('canvas'); c.width = c.height = 64; const x = c.getContext('2d'), g = x.createRadialGradient(32, 32, 0, 32, 32, 32);
   g.addColorStop(0, '#fff'); g.addColorStop(0.7, '#fff'); g.addColorStop(1, '#fff0'); x.fillStyle = g; x.fillRect(0, 0, 64, 64);
   const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; wool.material.map = tex; wool.material.alphaTest = 0.02; wool.material.fog = false; wool.material.toneMapped = false; wool.material.depthWrite = false; wool.material.needsUpdate = true; }
@@ -550,12 +550,12 @@ function updatePounce(rdt) {
     if (u >= 1) {
       p.ph = 'reveal'; p.t = 0; w.pose = 'land'; w.pitch = 0;
       for (const o of sheep) { if (o === t || o.player) continue; const dx = o.x - t.x, dz = o.z - t.z, d = Math.hypot(dx, dz); if (d < 6) { o.st = 'run'; o.runT = 1.4; o.dir = Math.atan2(dx, dz) + rnd(-0.3, 0.3); } }
-      wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 1.6, t.z), { count: 160, speed: 6, spread: Math.PI * 0.7, life: 1.6, gravity: 5, color: 0xfff6dc });
-      wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 1.6, t.z), { count: 30, speed: 3, spread: Math.PI, life: 2, gravity: 2, color: 0xffffff });
-      wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 1.8, t.z), { count: 50, speed: 7, spread: Math.PI, life: 2.2, gravity: 3, color: 0xffb8cc });
-      wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 1.8, t.z), { count: 40, speed: 5, spread: Math.PI, life: 2.2, gravity: 3, color: 0xffd9a0 });
-      if (p.human) wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 2.2, t.z), { count: 150, speed: 8, spread: Math.PI, life: 2.8, gravity: 3, color: 0xfff0d0 });
-      if (!p.human) wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 1.2, t.z), { count: 240, speed: 6, spread: Math.PI * 0.9, life: 3.2, gravity: 4, color: 0xfff0d0 });
+      wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 1.6, t.z), { count: 60, speed: 6, spread: Math.PI * 0.7, life: 1.2, gravity: 9, color: 0xfff6dc });
+      wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 1.6, t.z), { count: 12, speed: 3, spread: Math.PI, life: 1.2, gravity: 9, color: 0xffffff });
+      wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 1.8, t.z), { count: 30, speed: 7, spread: Math.PI, life: 1.3, gravity: 9, color: 0xffb8cc });
+      wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 1.8, t.z), { count: 24, speed: 5, spread: Math.PI, life: 1.3, gravity: 9, color: 0xffd9a0 });
+      if (p.human) wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 2.2, t.z), { count: 40, speed: 8, spread: Math.PI, life: 1.5, gravity: 9, color: 0xfff0d0 });
+      if (!p.human) wool.emit(new THREE.Vector3(t.x, gh(t.x, t.z) + 1.2, t.z), { count: 50, speed: 6, spread: Math.PI * 0.9, life: 1.6, gravity: 9, color: 0xfff0d0 });
       camShake.kick(1.0); play('thud', 1); play('hit', 0.6); t.hopV = 6; t.spin = rnd(-6, 6);
       $('flash').style.opacity = 0.3;
       if (p.human) {

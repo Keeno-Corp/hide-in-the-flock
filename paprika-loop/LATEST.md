@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 87
-**Did**: `game.js` `updatePounce`: reveal freeze (slow 0.03 for first 0.3 s, then 0.2) plus a fov punch-in (−12° fading over 0.6 s) in `updateCamera`; human GOTCHA `camShake.kick(2.4)`. New wolf pose `grin` (body back, head up, paws raised, fast tail wag) used on a human bite; `shrug` made upright (less body tilt/bob). `wool` size 2.4→2.7, extra pink (0xffb8cc) and tan (0xffd9a0) bursts, human burst 260→150.
-**Saw**: human pounce reveal after 60 frames: pose "grin", 10 sounds, `div#tag` [614,474,820,524] on screen, 0 overlap/off-screen. At wool size 3.6 `wool` covered 57% of the frame, so I lowered it to 2.7; that final size was not re-looked at. Did not run `perf`, `feel`, the AI shrug look or a zoom on the wool colours.
-**Next**: (1) look at the final `wool` size and a zoom on the pink/tan flakes; (2) look at the grin and shrug poses on the wolf up close, since the wolf is hidden under wool in the reveal; (3) re-check `perf` and `feel`.
-**Open**: wool coverage at 2.7 unverified; the grin pose has not been seen without wool in front.
-
 ### Judge 87
 
 **Session 87 verdict.** I opened the page, forced a human pounce to the reveal with `look`, and ran `perf` once. I did not re-run the AI reveal, 2-player or `viewports`. Those scores carry over from earlier sessions.
@@ -36,3 +30,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** `feel` shows a visible camera or fov change in the first 0.6 s of the reveal.
 
 SCORE: 8.4
+
+## Iteration 88
+**Did**: `game.js` `wool` burst: size 2.7→1.1; pounce emits cut to 60/12/30/24 (+40 human, +50 AI) with life 1.2–1.6 s and gravity 9.
+**Saw**: forced human pounce, 40 frames after reveal: `wool` 9.2% [390,468,977,799] (was 33%), wolf (pose "grin", paws up) and the PLAYER 1 sheep now visible, 10 sounds, 0 overlap, no console errors. Did not run `perf`, `feel`, a zoom on the pose, or the AI shrug.
+**Next**: (1) `look` with zoom on the wolf at reveal for grin and AI shrug; (2) `feel` on the pounce for freeze, fov punch, shake; (3) wool could go a bit lower still (~6%).
+**Open**: the grin pose is still partly behind the PLAYER 1 tag and flakes; not zoomed.

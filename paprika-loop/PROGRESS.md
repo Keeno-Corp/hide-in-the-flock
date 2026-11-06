@@ -3428,3 +3428,9 @@ SCORE: 8.6
    - **Check:** `feel` shows a visible camera or fov change in the first 0.6 s of the reveal.
 
 SCORE: 8.4
+
+## Iteration 88
+**Did**: `game.js` `wool` burst: size 2.7→1.1; pounce emits cut to 60/12/30/24 (+40 human, +50 AI) with life 1.2–1.6 s and gravity 9.
+**Saw**: forced human pounce, 40 frames after reveal: `wool` 9.2% [390,468,977,799] (was 33%), wolf (pose "grin", paws up) and the PLAYER 1 sheep now visible, 10 sounds, 0 overlap, no console errors. Did not run `perf`, `feel`, a zoom on the pose, or the AI shrug.
+**Next**: (1) `look` with zoom on the wolf at reveal for grin and AI shrug; (2) `feel` on the pounce for freeze, fov punch, shake; (3) wool could go a bit lower still (~6%).
+**Open**: the grin pose is still partly behind the PLAYER 1 tag and flakes; not zoomed.
