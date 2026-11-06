@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 52
-**Did**: wolf enlarged in the start frame: `W.root` scale in the per-frame line (game.js ~907) 3.9/3.45 → 4.6 (local) / 5.0 (solo), initial 2.6→3.6. Nothing else touched (round-trees/oaks facets, `ground` detail, sheep crowd not done).
-**Saw**: `look` 1280x800: no console errors, no Lighting/Surfaces lines, nothing Never visible. `Subject: wolf` 0.7% → 2.5% [140,469,421,678]; wolf-body 1.4%; wolf now reads as a black silhouette on the rock. `sheep*` still 13%, `ground` 36%. No perf run.
-**Next**: flatten `round-trees*`/`oaks*` facets; fade `ground` detail with distance and thin the front sheep crowd (<10%); add a pale rim behind the wolf; check the larger wolf's body doesn't swallow its rock/leg proportions (legs are small, `wolf-leg` 0.14%).
-**Open**: Bigger wolf scale is visual only: pounce/catch distances not replayed; local-mode scale 4.6 and bite/pounce frames not re-looked at; natural win still unplayed.
-
 ### Judge 52
 
 **Scores**
@@ -30,3 +24,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
 3. **Give the wolf a pale rim and a proper silhouette.** Add a thin pale rim behind `wolf-body`. Put real shape on `wolf-leg` (0.14%) so the silhouette matches WOLF.png, with a long muzzle, tall ears and a bushy tail. Check with `look` and `zoom` on [140,469,421,678], where the legs and ears should be distinct from the rock.
 
 SCORE: 7.9
+
+## Iteration 53
+**Did**: `roundTreeGeo` (round-trees*, oaks) crowns: `ico(...,1)`→`ico(...,2)` and `soft: false`→`soft: true` in game.js, so crowns are smooth blobs instead of faceted. Nothing else touched; no asset_search for trees run.
+**Saw**: `look` 1280x800: no console errors, nothing Never visible, no Lighting/Surfaces lines. Crowns now read smooth with shading; round-trees* 1.5%, oaks[2] 0.62%. Still sheep* 13%, ground 36%, wolf 2.5% (wolf-leg 0.14%). No perf run.
+**Next**: fade `ground` detail with distance and thin the front sheep crowd (<10%); pale rim behind wolf and real leg/ear/tail shape (wolf-tail 0.011%); natural win replay.
+**Open**: Sheep crowd, ground detail and wolf silhouette untouched; pounce distances with the larger wolf not replayed.
