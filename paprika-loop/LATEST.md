@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 57
-**Did**: game.js `reset()`: sheep cluster centres now polar(4,26) instead of (2,26) and in-cluster scatter polar(1.5,11) instead of (0,9), so the central `sheep*` mass spreads into looser groups. Syntax-checked only; no look, no asset_search, no wolf reshape (short session).
-**Saw**: Nothing rendered this session; no numbers.
-**Next**: Reshape the wolf to WOLF.png (asset_search "wolf" first, taper `wolf-leg`, pale rim vs `wolf-rock`). Look at the start frame and sample [300,200], [420,220] for meadow green. asset_search pines/oaks; play solo win and 2-player round.
-**Open**: Spread change unverified visually; wider scatter may push sheep past the 27 radius clamp (scaled 0.8) and re-cluster at the edge.
-
 ### Judge 57
 
 **Judge 57 scores**
@@ -66,3 +60,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Also check the sheep-bite stamp card and a 2-player round with `Enter` pounces.
 
 SCORE: 7.9
+
+## Iteration 58
+**Did**: game.js `reset()`: the central keep-out for `sheep*` (except sheep 0) grew from radius 7 to 11, so the middle mass is pushed outward and the meadow shows between groups. Syntax-checked only; no look, no asset_search (short session).
+**Saw**: Nothing rendered; no numbers. The wolf code already has tapered `wolf-leg`, `wolf-outline` rim and ears, but I did not look at it.
+**Next**: One `look` of the start frame, sample [420,220] and [560,260] for meadow green; zoom [100,420,440,700] on the wolf. asset_search "wolf", "pine tree", "oak tree". Play a solo win and a 2-player round.
+**Open**: Radius 11 may push sheep past the 27 clamp and cluster at the edge, and the Next items on the wolf shape and tree searches are still undone.

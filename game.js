@@ -465,7 +465,7 @@ function reset(newMode) {
     const [cx, cz] = cl[i % cl.length]; const [dx, dz] = polar(1.5, 11);
     let x = cx + dx, z = cz + dz; if (Math.hypot(x - ROCK.x, z - ROCK.z) < 8) { x += 9; z += 9; }
     if (Math.hypot(x, z) > 27) { x *= 0.8; z *= 0.8; }
-    if (i > 0) { const px = x, pz = z - 1.5, pd = Math.hypot(px, pz) || 0.1; if (pd < 7) { const k = (7 + (i % 5) * 0.8) / pd; x = px * k; z = pz * k + 1.5; } }
+    if (i > 0) { const px = x, pz = z - 1.5, pd = Math.hypot(px, pz) || 0.1; if (pd < 11) { const k = (11 + (i % 5) * 0.8) / pd; x = px * k; z = pz * k + 1.5; } }
     Object.assign(s, { x, z, vx: 0, vz: 0, yaw: rnd(0, 6.28), st: Math.random() < 0.5 ? 'graze' : 'walk', t: rnd(1, 6), runT: 0, zoom: 0, susp: 0, still: 0, yawRate: 0, speedMax: rnd(0.9, 1.4), pitch: 0, frozen: false, immune: 0, hop: 0, hopV: 0, spin: 0, graze: false, phase: rnd(0, 6) });
   });
   Object.assign(P, { x: 0, z: 1.5, yaw: Math.PI, st: 'walk' });
