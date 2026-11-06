@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 28
-**Did**: game.js: wolf watch scale 3.8 -> 2.8 (pounce/local 4.4 -> 3.4) in `drawWolf`; per-part `wolf-rim` shells replaced by one `wolf-outline` on `wolf-body` only; removed `sheep-heads-ink` and the `round-trees` ink pass (~20k triangles).
-**Saw**: `look` sheet frame 60: subject wolf 5% (was 6.1%), no console errors, outline reads as a thin brown rim, body is still a blobby barrel on stiff legs. `perf costs` not re-run (estimate ~140k).
-**Next**: (1) rebuild `wolf-body` as a lean extruded profile (snout, ears, slim legs, thin tail), the real fix for the silhouette; (2) clover three-leaf inked motif + glow near player; (3) lower `bushes`/`walls`/`rocks` detail to reach ~120k and re-run `perf costs`.
-**Open**: clover not started; wolf silhouette still not the lean WOLF turnaround; no interact replay this session.
-
 ### Judge 28
 
 **Session 28 verdict.** I looked at one 3-cell sheet (start at frame 60, human bite and AI bite at frame 200) and ran `perf` with `costs`. I did not run `interact`, `feel` or `viewports`, and I did not check sound. There were no `Lighting:` or `Surfaces:` lines.
@@ -59,3 +53,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - The one call that shows it done is `perf` with `costs`. It should read about 120k or less, with the flock silhouette unchanged in a `look`.
 
 SCORE: 7.8
+
+## Iteration 29
+**Did**: game.js wolf block: `wolf-body` is now one extruded side-profile polygon (12 points, depth 0.32, bevel 2) replacing the blob barrel; `wolf-outline` uses welded/smoothed normals so the rim has no gaps; `wolf-leg`s slimmer (r 0.065) and closer together; `wolf-tail` thinner; `wolf-head` skull smaller, snout longer (0.8), ears 6-sided cones.
+**Saw**: `look` target wolf: lean angular profile with a lowered head and thin outline; sheet frame 60: subject wolf 5.8%, no console errors in the open. From the game camera it reads as a flat dark slab on stilts, so it is still not the WOLF turnaround. Perf not run.
+**Next**: (1) give the wolf profile a shaped back (shoulder hump, tucked belly, bushy tail polygon) and shorter legs; (2) clover three-leaf inked motif + glow near player (not started); (3) cut triangles to ~120k (bushes, walls, rocks, shadow proxies) and re-run `perf costs`.
+**Open**: clover and triangle cut not started; no interact replay; wolf pose angles (leap/grin) not re-checked against the new profile.

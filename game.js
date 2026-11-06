@@ -267,40 +267,41 @@ const W = {};
   // smooth rounded masses only (WOLF.png: sleek long-snouted silhouette, tall ears, bush tail, slim legs)
   const blob = (sx, sy, sz, px, py, pz, rx = 0, ry = 0, rz = 0) => new THREE.SphereGeometry(0.5, 16, 12).scale(sx, sy, sz).rotateX(rx).rotateY(ry).rotateZ(rz).translate(px, py, pz);
   const taper = (r0, r1, len, px, py, pz, rx = 0, rz = 0) => new THREE.CylinderGeometry(r1, r0, len, 10).rotateX(rx).rotateZ(rz).translate(px, py, pz);
-  add(W.body, mergeGeometries([
-    blob(0.62, 0.62, 0.95, 0, 0.82, 0.5),      // deep chest
-    blob(0.5, 0.52, 0.85, 0, 0.78, -0.35),     // rump
-    blob(0.4, 0.4, 1.0, 0, 0.8, 0.1),          // waist link
-    blob(0.4, 0.55, 0.55, 0, 0.98, 0.7, -0.5), // shoulder ruff
-    taper(0.17, 0.11, 0.6, 0, 1.0, 0.98, 1.0), // neck
-  ]));
-  W.body.children[0].name = 'wolf-body';
-  W.head = new THREE.Group(); W.head.name = 'wolf-head'; W.head.position.set(0, 1.12, 1.1); W.body.add(W.head);
+  // lean side-profile silhouette: one extruded polygon (z forward, y up), thin in x
+  {
+    const sh = new THREE.Shape();
+    const pts = [[-0.95, 0.95], [-0.7, 1.12], [-0.2, 1.1], [0.35, 1.18], [0.8, 1.32], [1.05, 1.42], [1.1, 1.2], [0.95, 0.88], [0.6, 0.62], [0.1, 0.62], [-0.4, 0.66], [-0.8, 0.72]];
+    sh.moveTo(pts[0][0], pts[0][1]); pts.slice(1).forEach(p => sh.lineTo(p[0], p[1])); sh.closePath();
+    const eg = new THREE.ExtrudeGeometry(sh, { depth: 0.32, bevelEnabled: true, bevelThickness: 0.1, bevelSize: 0.08, bevelSegments: 2, curveSegments: 6 });
+    eg.translate(0, 0, -0.16).rotateY(-Math.PI / 2);
+    eg.deleteAttribute('uv');
+    const m = add(W.body, eg); m.name = 'wolf-body';
+  }  W.head = new THREE.Group(); W.head.name = 'wolf-head'; W.head.position.set(0, 1.0, 1.1); W.body.add(W.head);
   add(W.head, mergeGeometries([
-    blob(0.42, 0.4, 0.55, 0, 0, 0.06),                        // skull
-    taper(0.15, 0.06, 0.62, 0, -0.07, 0.5, Math.PI / 2 - 0.02), // long snout
-    blob(0.1, 0.08, 0.12, 0, -0.03, 0.82),                    // nose
+    blob(0.3, 0.3, 0.5, 0, 0, 0.06),                        // skull
+    taper(0.1, 0.04, 0.8, 0, -0.07, 0.6, Math.PI / 2 - 0.02), // long snout
+    blob(0.08, 0.06, 0.1, 0, -0.03, 1.0),                    // nose
   ]));
   add(W.head, mergeGeometries([
-    new THREE.ConeGeometry(0.12, 0.46, 8).translate(0, 0.23, 0).rotateZ(-0.18).translate(0.14, 0.15, -0.04),
-    new THREE.ConeGeometry(0.12, 0.46, 8).translate(0, 0.23, 0).rotateZ(0.18).translate(-0.14, 0.15, -0.04),
+    new THREE.ConeGeometry(0.09, 0.5, 6).translate(0, 0.23, 0).rotateZ(-0.18).translate(0.14, 0.15, -0.04),
+    new THREE.ConeGeometry(0.09, 0.5, 6).translate(0, 0.23, 0).rotateZ(0.18).translate(-0.14, 0.15, -0.04),
   ]), rimMat);
   const eyeMat = new THREE.MeshBasicMaterial({ color: 0xe9c46a, fog: false });
   [-1, 1].forEach(sx => { const e = new THREE.Mesh(new THREE.SphereGeometry(0.035, 8, 6).scale(1.3, 0.8, 1), eyeMat); e.position.set(sx * 0.15, 0.06, 0.36); W.head.add(e); });
   W.legs = [];
-  [[-1, 0.62], [1, 0.62], [-1, -0.55], [1, -0.55]].forEach(([sx, z]) => {
-    const g = new THREE.Group(); g.name = 'wolf-leg'; g.position.set(sx * 0.2, 0.72, z); W.body.add(g);
-    add(g, taper(0.1, 0.055, 0.7, 0, -0.34, 0), legMat);
-    add(g, blob(0.14, 0.09, 0.28, 0, -0.69, 0.07), rimMat);
+  [[-1, 0.72], [1, 0.72], [-1, -0.6], [1, -0.6]].forEach(([sx, z]) => {
+    const g = new THREE.Group(); g.name = 'wolf-leg'; g.position.set(sx * 0.13, 0.7, z); W.body.add(g);
+    add(g, taper(0.065, 0.035, 0.72, 0, -0.36, 0), legMat);
+    add(g, blob(0.1, 0.06, 0.2, 0, -0.72, 0.05), rimMat);
     W.legs.push(g);
   });
-  W.tail = new THREE.Group(); W.tail.name = 'wolf-tail'; W.tail.position.set(0, 0.85, -0.95); W.body.add(W.tail);
-  add(W.tail, blob(0.22, 0.24, 0.95, 0, -0.28, -0.3, -0.55));
+  W.tail = new THREE.Group(); W.tail.name = 'wolf-tail'; W.tail.position.set(0, 1.0, -0.95); W.body.add(W.tail);
+  add(W.tail, blob(0.12, 0.14, 0.85, 0, -0.2, -0.3, -0.55));
   // ink rim: a lighter brown shell pushed out along the normals, drawn behind each wolf mesh
   const rimInk = new THREE.MeshBasicMaterial({ color: 0x8a7058, side: THREE.BackSide, fog: false });
   const meshes = []; W.body.traverse(o => { if (o.isMesh && o.geometry && o.geometry.attributes.normal && o.material !== eyeMat) meshes.push(o); });
   meshes.forEach(o => {
-    const g = o.geometry.clone(), p = g.attributes.position, n = g.attributes.normal;
+    const g = o.geometry.clone(), p = g.attributes.position; const n = g.attributes.normal; { const acc = new Map(), key = i => p.getX(i).toFixed(3) + ',' + p.getY(i).toFixed(3) + ',' + p.getZ(i).toFixed(3); for (let i = 0; i < p.count; i++) { const k = key(i), a = acc.get(k) || [0, 0, 0]; a[0] += n.getX(i); a[1] += n.getY(i); a[2] += n.getZ(i); acc.set(k, a); } for (let i = 0; i < p.count; i++) { const a = acc.get(key(i)), l = Math.hypot(a[0], a[1], a[2]) || 1; n.setXYZ(i, a[0] / l, a[1] / l, a[2] / l); } }
     for (let i = 0; i < p.count; i++) p.setXYZ(i, p.getX(i) + n.getX(i) * 0.08, p.getY(i) + n.getY(i) * 0.08, p.getZ(i) + n.getZ(i) * 0.08);
     if (o.name === 'wolf-body') { const h = new THREE.Mesh(g, rimInk); h.name = 'wolf-outline'; o.parent.add(h); }
   });

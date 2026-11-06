@@ -1665,3 +1665,9 @@ SCORE: 7.6
    - The one call that shows it done is `perf` with `costs`. It should read about 120k or less, with the flock silhouette unchanged in a `look`.
 
 SCORE: 7.8
+
+## Iteration 29
+**Did**: game.js wolf block: `wolf-body` is now one extruded side-profile polygon (12 points, depth 0.32, bevel 2) replacing the blob barrel; `wolf-outline` uses welded/smoothed normals so the rim has no gaps; `wolf-leg`s slimmer (r 0.065) and closer together; `wolf-tail` thinner; `wolf-head` skull smaller, snout longer (0.8), ears 6-sided cones.
+**Saw**: `look` target wolf: lean angular profile with a lowered head and thin outline; sheet frame 60: subject wolf 5.8%, no console errors in the open. From the game camera it reads as a flat dark slab on stilts, so it is still not the WOLF turnaround. Perf not run.
+**Next**: (1) give the wolf profile a shaped back (shoulder hump, tucked belly, bushy tail polygon) and shorter legs; (2) clover three-leaf inked motif + glow near player (not started); (3) cut triangles to ~120k (bushes, walls, rocks, shadow proxies) and re-run `perf costs`.
+**Open**: clover and triangle cut not started; no interact replay; wolf pose angles (leap/grin) not re-checked against the new profile.
