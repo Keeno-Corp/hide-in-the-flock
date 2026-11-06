@@ -226,6 +226,10 @@ const headIM = new THREE.InstancedMesh(sheepHeadGeo, sheepMat, N); headIM.name =
   for (let i = 0; i < N; i++) { const j = i === 0 ? 13 : i, t = tints[(j * 7 + (j >> 2)) % tints.length]; c.setHex(t).multiplyScalar(0.92 + ((j * 37) % 17) / 17 * 0.1); bodyIM.setColorAt(i, c); headIM.setColorAt(i, new THREE.Color(0xffffff)); } }
 const SZ = Array.from({ length: N }, (_, i) => 0.88 + (((i === 0 ? 13 : i) * 53) % 23) / 23 * 0.3);
 scene.add(bodyIM, headIM);
+{ const hull = (g, d) => { const h = g.clone(); h.deleteAttribute('color'); const p = h.attributes.position, n = h.attributes.normal; for (let i = 0; i < p.count; i++) p.setXYZ(i, p.getX(i) + n.getX(i) * d, p.getY(i) + n.getY(i) * d, p.getZ(i) + n.getZ(i) * d); return h; };
+  const im = new THREE.MeshBasicMaterial({ color: 0x2b211c, side: THREE.BackSide, fog: false });
+  const ob = new THREE.InstancedMesh(hull(sheepBodyGeo, 0.045), im, N), oh = new THREE.InstancedMesh(hull(sheepHeadGeo, 0.04), im, N);
+  ob.instanceMatrix = bodyIM.instanceMatrix; oh.instanceMatrix = headIM.instanceMatrix; ob.name = 'sheep-ink'; oh.name = 'sheep-heads-ink'; ob.frustumCulled = oh.frustumCulled = false; scene.add(ob, oh); }
 
 // ───────────────────────── wolf ─────────────────────────
 const wolf = { x: -10, z: 3, y: 0, yaw: 0.6, state: 'watch', pose: 'crouch', t: 0, bites: 3, cd: 5, sulk: 0, target: null, abort: 0, stalkT: 0, lookX: 0, lookZ: 0, phase: 0, onRock: true, shrug: 0, pitch: 0 };
@@ -233,7 +237,7 @@ const ROCK = { x: -10, z: 3, top: 4.1 };
 const W = {};
 {
   const grey = PAL.wolf, light = 0x1d1511, dk = 0x0e0a08;
-  W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(6.2);
+  W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(8);
   W.body = new THREE.Group(); W.root.add(W.body);
   const mat = new THREE.MeshBasicMaterial({ color: PAL.wolf, fog: false });
   const add = (parent, g) => { const m = new THREE.Mesh(g, mat); m.castShadow = true; parent.add(m); return m; };
@@ -247,7 +251,8 @@ const W = {};
     blob(0.4, 0.55, 0.55, 0, 0.98, 0.7, -0.5), // shoulder ruff
     taper(0.17, 0.11, 0.6, 0, 1.0, 0.98, 1.0), // neck
   ]));
-  W.head = new THREE.Group(); W.head.position.set(0, 1.12, 1.1); W.body.add(W.head);
+  W.body.children[0].name = 'wolf-body';
+  W.head = new THREE.Group(); W.head.name = 'wolf-head'; W.head.position.set(0, 1.12, 1.1); W.body.add(W.head);
   add(W.head, mergeGeometries([
     blob(0.42, 0.4, 0.55, 0, 0, 0.06),                        // skull
     taper(0.15, 0.06, 0.62, 0, -0.07, 0.5, Math.PI / 2 - 0.02), // long snout
@@ -259,11 +264,11 @@ const W = {};
   [-1, 1].forEach(sx => { const e = new THREE.Mesh(new THREE.SphereGeometry(0.035, 8, 6).scale(1.3, 0.8, 1), eyeMat); e.position.set(sx * 0.15, 0.06, 0.36); W.head.add(e); });
   W.legs = [];
   [[-1, 0.62], [1, 0.62], [-1, -0.55], [1, -0.55]].forEach(([sx, z]) => {
-    const g = new THREE.Group(); g.position.set(sx * 0.2, 0.72, z); W.body.add(g);
+    const g = new THREE.Group(); g.name = 'wolf-leg'; g.position.set(sx * 0.2, 0.72, z); W.body.add(g);
     add(g, mergeGeometries([taper(0.1, 0.055, 0.7, 0, -0.34, 0), blob(0.13, 0.08, 0.26, 0, -0.69, 0.07)]));
     W.legs.push(g);
   });
-  W.tail = new THREE.Group(); W.tail.position.set(0, 0.85, -0.95); W.body.add(W.tail);
+  W.tail = new THREE.Group(); W.tail.name = 'wolf-tail'; W.tail.position.set(0, 0.85, -0.95); W.body.add(W.tail);
   add(W.tail, blob(0.22, 0.24, 0.95, 0, -0.28, -0.3, -0.55));
   scene.add(W.root);
 }

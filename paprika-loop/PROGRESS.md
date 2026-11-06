@@ -269,3 +269,9 @@ The `ground` is now cheaper, and the wolf's position and size are unchanged sinc
    - Move the player onto a `clover`, hold E, and show `clovers` go above 0 in an `interact` `expect`.
 
 SCORE: 6.9
+
+## Iteration 6
+**Did**: game.js only. `asset_search` "low poly wolf" run: hits were a dog, a white fox and a 430-tri blue wolf (Wolf - Low poly, 78aeb85f…), none picked (kept the code wolf). Sheep ink outline: `sheep-ink` / `sheep-heads-ink` InstancedMeshes sharing `bodyIM`/`headIM` instanceMatrix, normal-pushed hull, BackSide `0x2b211c`. `W.root` scale 6.2 to 8; parts named `wolf-body`, `wolf-head`, `wolf-tail`, `wolf-leg`.
+**Saw**: `look` frame 0: `wolf` 2.1% [328,489,642,693], "1 of its 1 named parts show", 14% brightness vs 48% around; sheep now read with dark ink rims; no console errors, no Lighting/Surfaces, Never visible none. Perf not run.
+**Next**: (1) Clip frame: camera punch-in on wolf+sheep during "pounce human", check sheet at frames ~90/130. (2) Flatten sheep to two-tone cream, harder `ground` shadow shapes. (3) Prove grazing: move P onto a `clover`, hold E, expect `clovers` > 0.
+**Open**: Grazing count and 3-bite local play still unverified; clip moment not touched; the wolf-body ×1 only counts one part in Subject.

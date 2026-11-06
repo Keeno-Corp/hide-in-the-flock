@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 5
-**Did**: game.js only. `ground` PlaneGeometry N 300 to 110 (180k to ~24k triangles); its vertex colours now use hard steps (`patch` > -0.35 warm, > 1.1 ochre, olive on a threshold) instead of smoothsteps, so it reads as painted bands. `ROCK.top` 3.15 to 4.1 so `wolf` stands above `wolf-rock`. Clover graze radius 1.9 to 2.6.
-**Saw**: `look` frame 0: `wolf` 1.4% [348,514,593,672], its silhouette now sits on top of `wolf-rock`, still "0 of its 0 named parts show"; ground bands visible but the toon shadow patches remain; no console errors, no Lighting/Surfaces, Never visible none. `perf`: 166,728 triangles (was 322k), 48 draw calls, 308 ms on SwiftShader (no budget signal). I did not run `asset_search` or play graze/2-player.
-**Next**: (1) Raise wolf to 2%+ (scale up or crop camera nearer the rock) and name its parts. (2) Give `sheep*` ink outlines or flat two-tone cream. (3) `interact` with E held within 2.6 of a `clover` and confirm `clovers` > 0 in state; play the 3 bites in local mode.
-**Open**: Graze counter not verified; ground still has soft shading from toon + shadows; `asset_search` for wolf/sheep never run.
-
 ### Judge 5
 
 **Judge 5**
@@ -63,3 +57,9 @@ The `ground` is now cheaper, and the wolf's position and size are unchanged sinc
    - Move the player onto a `clover`, hold E, and show `clovers` go above 0 in an `interact` `expect`.
 
 SCORE: 6.9
+
+## Iteration 6
+**Did**: game.js only. `asset_search` "low poly wolf" run: hits were a dog, a white fox and a 430-tri blue wolf (Wolf - Low poly, 78aeb85f…), none picked (kept the code wolf). Sheep ink outline: `sheep-ink` / `sheep-heads-ink` InstancedMeshes sharing `bodyIM`/`headIM` instanceMatrix, normal-pushed hull, BackSide `0x2b211c`. `W.root` scale 6.2 to 8; parts named `wolf-body`, `wolf-head`, `wolf-tail`, `wolf-leg`.
+**Saw**: `look` frame 0: `wolf` 2.1% [328,489,642,693], "1 of its 1 named parts show", 14% brightness vs 48% around; sheep now read with dark ink rims; no console errors, no Lighting/Surfaces, Never visible none. Perf not run.
+**Next**: (1) Clip frame: camera punch-in on wolf+sheep during "pounce human", check sheet at frames ~90/130. (2) Flatten sheep to two-tone cream, harder `ground` shadow shapes. (3) Prove grazing: move P onto a `clover`, hold E, expect `clovers` > 0.
+**Open**: Grazing count and 3-bite local play still unverified; clip moment not touched; the wolf-body ×1 only counts one part in Subject.
