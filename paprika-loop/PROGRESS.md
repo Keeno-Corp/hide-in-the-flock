@@ -2863,3 +2863,9 @@ SCORE: 7.9
    - Proof: `look` with `sample` at two points on one `round-trees*` crown returns near-equal colour, and the faceted blobs are gone from the picture.
 
 SCORE: 7.9
+
+## Iteration 50
+**Did**: No code change. Proved the win card: `interact` steps `[{wait:30},{action:"win"},{wait:30}]` with `expect {result:"win"}` ✓ and `look:true`.
+**Saw**: Win card shows "THE FLOCK WINS / YOU BLENDED IN" with ink-bordered cream panel, "R to play again · M to switch mode", no console errors. The card covers the top of `#hud` (HUD text is visible behind it at 2:59). `Subject: wolf` 2.5%, `sheep*` ×68 still cream lumps at 13%; no Lighting/Surfaces lines; nothing Never visible.
+**Next**: Flat cream `sheep*` with thicker `sheep-ink*`; flatten `ridge*` and `round-trees*` facets; enlarge wolf in frame (camera or scale); hide `#hud` under the win card.
+**Open**: Natural win (T>=180 with 3 clovers) still not played, only `act({action:'win'})`. Pale rim behind `wolf-body` not added. Wolf-start (-15,-2) vs AI stalk distances unplayed.
