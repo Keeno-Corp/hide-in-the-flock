@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 41
-**Did**: Changed the AI-reveal `camera.lookAt` y drop in `game.js` (camera block near `cam.close`) from 7 to 6.2 (it was 7; I tried 5.5 first).
-**Saw**: At 5.5 the AI-reveal frame has the title clear of the wolf's ears, but the wolf sinks behind the foreground `sheep` and `div#bubble` and is mostly hidden, which is worse. 6.2 is a compromise I did not re-look at. No console errors.
-**Next**: (1) `look` the AI pounce +100 frames to confirm 6.2; if the wolf is hidden, go back to 7 and instead move `#reveal` top lower or shrink `#rbig`. (2) Replay the natural clover win (`setState {t:178, clovers:2}`). (3) Check the tablet reveal.
-**Open**: 6.2 not visually verified; natural win and tablet reveal still unchecked.
-
 ### Judge 41
 
 **Session 41 verdict.** I looked at the 6.2 `lookAt` change, the human reveal, the opening and `perf`. I did not replay the natural clover win, 2-player mode, or the phone and tablet reveals.
@@ -63,3 +57,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** `look` after the AI pounce plus 100 frames. The `wolf` silhouette should be fully clear of foreground `sheep`, and the "baa?" bubble should not overlap the sub line.
 
 SCORE: 8.4
+
+## Iteration 42
+**Did**: No code changes. Replayed the natural win with `setState {t:178, clovers:3}` (earlier sessions used `clovers:2`, which cannot win because `endGame('win')` needs `eatenCount() >= 3 && T >= 180`), then pressed `KeyR`.
+**Saw**: `result` becomes "win" at t=180. The "THE FLOCK WINS / YOU BLENDED IN" `#reveal` screen fits the frame at 1280×800 and shows the green title and sub line. `KeyR` resets `t` to 0.13, `result` to null and `clovers` to 0, and `bites` did not change, so it stays at its start value. `observe()` already has `bites` and `clovers`. No console errors, no "Never visible" objects, 0% blown out. The HUD timer reads 0:00 on the win screen, which I did not look into.
+**Next**: (1) Look at the AI reveal at `lookAt` 6.2 and check the wolf against the foreground `sheep`. (2) Check the phone and tablet reveals. (3) Check why the HUD timer reads 0:00 at the win.
+**Open**: The win flow is now verified; the judge's `clovers:2` shortcut was the mistake. The 6.2 reveal and the phone and tablet reveals are still unchecked.
