@@ -237,8 +237,8 @@ const sheepHeadGeo = mergeGeometries([
 const SS = 1.8;
 const HEAD_P = new THREE.Vector3(0, 0.78, 0.6);
 const N_AI = 100, N = N_AI + 1;
-const toonSheep = (() => { const d = new Uint8Array([232,224,204,255, 255,255,255,255]); const t = new THREE.DataTexture(d, 2, 1, THREE.RGBAFormat); t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t; })();
-const sheepMat = flat({ emissive: 0x3a352a, gradientMap: toonSheep }); const bodyIM = new THREE.InstancedMesh(sheepBodyGeo, sheepMat, N); bodyIM.name = 'sheep'; bodyIM.castShadow = false; bodyIM.frustumCulled = false;
+const toonSheep = (() => { const d = new Uint8Array([246,240,224,255, 255,255,255,255]); const t = new THREE.DataTexture(d, 2, 1, THREE.RGBAFormat); t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t; })();
+const sheepMat = flat({ emissive: 0x4a443a, gradientMap: toonSheep }); const bodyIM = new THREE.InstancedMesh(sheepBodyGeo, sheepMat, N); bodyIM.name = 'sheep'; bodyIM.castShadow = false; bodyIM.frustumCulled = false;
 const headIM = new THREE.InstancedMesh(sheepHeadGeo, sheepMat, N); headIM.name = 'sheep-heads'; headIM.castShadow = false; headIM.frustumCulled = false;
 { const tints = [0xffffff, 0xfaf0dc, 0xefe2c6, 0xffffff, 0xf2e6cf, 0xe0d4bb]; const c = new THREE.Color();
   for (let i = 0; i < N; i++) { const j = i === 0 ? 13 : i, t = tints[(j * 7 + (j >> 2)) % tints.length]; c.setHex(t).multiplyScalar(0.92 + ((j * 37) % 17) / 17 * 0.1); bodyIM.setColorAt(i, c); headIM.setColorAt(i, new THREE.Color(0xffffff)); } }
@@ -249,8 +249,8 @@ const hullHead = mergeGeometries([mk(ico(0.28, 1), DARK, { p: [0, 0.02, 0.2], s:
 const shBody = mergeGeometries([mk(ico(0.5, 0), WOOL, { p: [0, 0.68, -0.02], s: [1.05, 0.95, 1.45], soft: true })]);
 const shHead = mergeGeometries([mk(ico(0.28, 0), DARK, { p: [0, 0.02, 0.2], s: [1, 0.95, 1.2], soft: true })]);
 { const hull = (g, d) => { const h = g.clone(); h.deleteAttribute('color'); const p = h.attributes.position, n = h.attributes.normal; for (let i = 0; i < p.count; i++) p.setXYZ(i, p.getX(i) + n.getX(i) * d, p.getY(i) + n.getY(i) * d, p.getZ(i) + n.getZ(i) * d); return h; };
-  const im = new THREE.MeshBasicMaterial({ color: 0x2b211c, side: THREE.BackSide, fog: false });
-  const ob = new THREE.InstancedMesh(hull(hullBody, 0.085), im, N), oh = new THREE.InstancedMesh(hull(hullHead, 0.06), im, N);
+  const im = new THREE.MeshBasicMaterial({ color: 0x1a1210, side: THREE.BackSide, fog: false });
+  const ob = new THREE.InstancedMesh(hull(hullBody, 0.125), im, N), oh = new THREE.InstancedMesh(hull(hullHead, 0.08), im, N);
   ob.instanceMatrix = bodyIM.instanceMatrix; oh.instanceMatrix = headIM.instanceMatrix; { const pm = new THREE.MeshBasicMaterial({ colorWrite: false, depthWrite: false }); const pb = new THREE.InstancedMesh(shBody, pm, N), ph = new THREE.InstancedMesh(shHead, pm, N); pb.instanceMatrix = bodyIM.instanceMatrix; ph.instanceMatrix = headIM.instanceMatrix; pb.name = 'sheep-shadow'; ph.name = 'sheep-heads-shadow'; pb.castShadow = ph.castShadow = true; pb.frustumCulled = ph.frustumCulled = false; scene.add(pb, ph); }
   ob.name = 'sheep-ink'; oh.name = 'sheep-heads-ink'; ob.frustumCulled = oh.frustumCulled = false; scene.add(ob); }
 
@@ -350,7 +350,7 @@ scatterInst(roundTreeGeo, 14, () => { const [x, z] = polar(33, 58); if (z > 2 ||
 // two big framing oaks at the meadow's edge
 { const im = new THREE.InstancedMesh(roundTreeGeo, treeMat(), 3); im.name = 'oaks'; im.castShadow = im.receiveShadow = true;
   [[-35, -8, 2.4], [37, -16, 2.2], [-14, -42, 2.8]].forEach(([x, z, s], i) => { dummy.position.set(x, gh(x, z) - 0.1, z); dummy.rotation.set(0, i * 2, 0); dummy.scale.setScalar(s); dummy.updateMatrix(); im.setMatrixAt(i, dummy.matrix); }); scene.add(im); }
-const treeInk = im => { const h = im.geometry.clone(); h.deleteAttribute('color'); const p = h.attributes.position, n = h.attributes.normal; for (let i = 0; i < p.count; i++) p.setXYZ(i, p.getX(i) + n.getX(i) * 0.14, p.getY(i) + n.getY(i) * 0.14, p.getZ(i) + n.getZ(i) * 0.14); const o = new THREE.InstancedMesh(h, new THREE.MeshBasicMaterial({ color: 0x2b211c, side: THREE.BackSide, fog: false }), im.count); o.instanceMatrix = im.instanceMatrix; o.name = im.name + '-ink'; o.frustumCulled = false; scene.add(o); };
+const treeInk = im => { const h = im.geometry.clone(); h.deleteAttribute('color'); const p = h.attributes.position, n = h.attributes.normal; for (let i = 0; i < p.count; i++) p.setXYZ(i, p.getX(i) + n.getX(i) * 0.14, p.getY(i) + n.getY(i) * 0.14, p.getZ(i) + n.getZ(i) * 0.14); const o = new THREE.InstancedMesh(h, new THREE.MeshBasicMaterial({ color: 0x1a1210, side: THREE.BackSide, fog: false }), im.count); o.instanceMatrix = im.instanceMatrix; o.name = im.name + '-ink'; o.frustumCulled = false; scene.add(o); };
 treeInk(scene.getObjectByName('oaks')); treeInk(pinesMesh);
 const rockGeo = mergeGeometries([mk(ico(0.8, 1), 0xa39a86, { s: [1, 0.7, 1], soft: true }), mk(ico(0.5, 1), 0xb3aa94, { p: [0.6, -0.1, 0.2], soft: true })]);
 scatterInst(rockGeo, 40, () => { const [x, z] = polar(18, 56); const h = gh(x, z); if (Math.hypot(x - ROCK.x, z - ROCK.z) < 5) return null; const s = rnd(0.5, 1.4) * (Math.hypot(x, z) > 32 ? 2.4 : 1); return { x, z, s, y: h + 0.2 * s }; }, { name: 'rocks' });
@@ -508,7 +508,7 @@ function renderClovers() {
   const e = $('clv'); if (e.dataset.v !== h) { e.innerHTML = h; e.dataset.v = h; }
 }
 function showResult(big, sub, kicker, color) {
-  $('mode').style.opacity = 0; $('hud').style.opacity = 0.35;
+  $('mode').style.opacity = 0; $('hud').style.opacity = 0;
   const stamp = color === '#ff3a2a' ? '#b3261e' : color === '#8e9a58' || color === '#8ee04a' ? '#4a5a24' : '#2a1c12';
   $('rbig').style.fontSize = big.length > 8 ? 'clamp(40px,7vw,110px)' : '';
   $('rk').textContent = kicker; $('rbig').textContent = big; $('rsub').textContent = sub; $('reveal').style.setProperty('--stampc', stamp);

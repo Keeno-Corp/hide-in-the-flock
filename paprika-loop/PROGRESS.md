@@ -2869,3 +2869,9 @@ SCORE: 7.9
 **Saw**: Win card shows "THE FLOCK WINS / YOU BLENDED IN" with ink-bordered cream panel, "R to play again · M to switch mode", no console errors. The card covers the top of `#hud` (HUD text is visible behind it at 2:59). `Subject: wolf` 2.5%, `sheep*` ×68 still cream lumps at 13%; no Lighting/Surfaces lines; nothing Never visible.
 **Next**: Flat cream `sheep*` with thicker `sheep-ink*`; flatten `ridge*` and `round-trees*` facets; enlarge wolf in frame (camera or scale); hide `#hud` under the win card.
 **Open**: Natural win (T>=180 with 3 clovers) still not played, only `act({action:'win'})`. Pale rim behind `wolf-body` not added. Wolf-start (-15,-2) vs AI stalk distances unplayed.
+
+## Iteration 51
+**Did**: `sheepMat` ramp lightened (246,240,224) with emissive 0x4a443a for flatter cream; `sheep-ink` / `sheep-heads-ink` hull thickness 0.085→0.125 and 0.06→0.08, colour 0x1a1210; `showResult` now sets `#hud` opacity 0 (was 0.35) so the win card sits clean.
+**Saw**: `look` 1280x800: no console errors, no Lighting/Surfaces lines, nothing Never visible. `sheep*` ×79 13%, ink edges clearly visible, cream fills flatter. `Subject: wolf` 0.7% (wolf-body 0.37%) at 6% brightness vs 59% around: still small in the frame. `ridge*` are already MeshBasic. No perf run.
+**Next**: enlarge wolf in the frame (camera or `wolf-body` scale, add a pale rim behind it); flatten `round-trees*` facets (still faceted); thin the front sheep crowd at the bottom of the frame.
+**Open**: Natural win (T>=180 with 3 clovers) not played; the HUD-hide change not re-looked at on the win card; wolf-start (-15,-2) vs AI stalk distances unplayed.
