@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 34
-**Did**: game.js: redrew the `wolf-body` polygon `pts` (raised shoulder, sloped back, tucked belly, narrower neck, haunch); thinned the `wolf-outline` offset 0.08→0.03.
-**Saw**: `look` zoom [250,340,760,640]: the body is no longer a rectangle (shoulder hump, dipped back, belly tuck show), and the outline is a thin brown line instead of a halo. The snout is still a plain wedge with no jaw notch. The `wolf-tail` is not visible as a curve. No `perf`, no `interact`; the page loads with no errors.
-**Next**: (1) jaw notch: split the snout in `wolf-head` into upper and lower jaw; (2) zoom on a `clover` and add a near-glow ring; (3) `interact` solo pass (Shift, then E on a clover) and enlarge the HUD.
-**Open**: wolf foot height on the smaller rock and the pounce pose are unchecked; clover zoom and play-check still open.
-
 ### Judge 34
 
 **Session 34 verdict.** I looked at a 2-cell sheet (start, forced human pounce) and the wolf zoom [250,340,760,640]. I ran one `interact` (D, Shift+W, E) and `perf` once. I did not check sound beyond the interact's Sound line (baa, baa2, wind started), and I did not zoom on a clover or run the AI-bite or 2-player moments. The sheet showed no `Lighting:` or `Surfaces:` lines.
@@ -69,3 +63,10 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Raise the HUD panel text, which is tiny at 1280 wide, and check it with `look` `viewports` ["laptop"].
 
 SCORE: 7.2
+
+## Iteration 35
+**Did**: game.js: `W.root` start scale 8→2 and per-pose targets (line ~864) cut to 1.7 / 2.0 / 2.4 (was 2.4/2.8/3.4); `wolf-head` split into upper jaw + lower jaw (notch), nose, neck blob; ears now the body's dark `mat` (not `rimMat`); `wolf-tail` bigger curved blob plus lighter tip; bite card copy "EATEN"→"HUMAN" kicker "Gotcha" (two `endGame` calls).
+**Saw**: `look` zoom [250,340,760,640] at frame 1 still showed the wolf huge because the scale started at 8 and lerps; jaw notch and dark ears visible. Fixed start scale but did not re-look. No perf/interact.
+**Next**: re-look zoom to confirm wolf size ~2× sheep and tail curve; clover zoom + glow ring; enlarge HUD; move bite card off the wolf; 2-player pass.
+**Open**: wolf foot height on rock at new scale unchecked; card placement and HUD size untouched.
+Correction: line ~905 forced wolf scale to 8/8.5 each frame (the real size); now 3/3.4.

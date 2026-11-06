@@ -2050,3 +2050,10 @@ SCORE: 7.6
    - Raise the HUD panel text, which is tiny at 1280 wide, and check it with `look` `viewports` ["laptop"].
 
 SCORE: 7.2
+
+## Iteration 35
+**Did**: game.js: `W.root` start scale 8→2 and per-pose targets (line ~864) cut to 1.7 / 2.0 / 2.4 (was 2.4/2.8/3.4); `wolf-head` split into upper jaw + lower jaw (notch), nose, neck blob; ears now the body's dark `mat` (not `rimMat`); `wolf-tail` bigger curved blob plus lighter tip; bite card copy "EATEN"→"HUMAN" kicker "Gotcha" (two `endGame` calls).
+**Saw**: `look` zoom [250,340,760,640] at frame 1 still showed the wolf huge because the scale started at 8 and lerps; jaw notch and dark ears visible. Fixed start scale but did not re-look. No perf/interact.
+**Next**: re-look zoom to confirm wolf size ~2× sheep and tail curve; clover zoom + glow ring; enlarge HUD; move bite card off the wolf; 2-player pass.
+**Open**: wolf foot height on rock at new scale unchecked; card placement and HUD size untouched.
+Correction: line ~905 forced wolf scale to 8/8.5 each frame (the real size); now 3/3.4.

@@ -260,7 +260,7 @@ const ROCK = { x: -10, z: 3, top: 4.1 };
 const W = {};
 {
   const grey = PAL.wolf, light = 0x1d1511, dk = 0x0e0a08;
-  W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(8);
+  W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(2);
   W.body = new THREE.Group(); W.root.add(W.body);
   const mat = new THREE.MeshBasicMaterial({ color: PAL.wolf, fog: false });
   const legMat = new THREE.MeshBasicMaterial({ color: 0x2a201a, fog: false });
@@ -281,13 +281,15 @@ const W = {};
   }  W.head = new THREE.Group(); W.head.name = 'wolf-head'; W.head.position.set(0, 1.0, 1.1); W.body.add(W.head);
   add(W.head, mergeGeometries([
     blob(0.3, 0.3, 0.5, 0, 0, 0.06),                        // skull
-    taper(0.1, 0.04, 0.8, 0, -0.07, 0.6, Math.PI / 2 - 0.02), // long snout
-    blob(0.08, 0.06, 0.1, 0, -0.03, 1.0),                    // nose
+    taper(0.09, 0.04, 0.75, 0, 0.0, 0.6, Math.PI / 2 + 0.05),  // upper jaw
+    taper(0.06, 0.025, 0.6, 0, -0.14, 0.55, Math.PI / 2 - 0.12), // lower jaw (notch between)
+    blob(0.08, 0.06, 0.1, 0, 0.03, 0.98),                    // nose
+    blob(0.2, 0.3, 0.3, 0, -0.2, -0.3, 0.6),                  // neck
   ]));
   add(W.head, mergeGeometries([
     new THREE.ConeGeometry(0.11, 0.26, 6).translate(0, 0.13, 0).rotateX(-0.25).translate(0.12, 0.24, -0.05),
     new THREE.ConeGeometry(0.11, 0.26, 6).translate(0, 0.13, 0).rotateX(-0.25).translate(-0.12, 0.24, -0.05),
-  ]), rimMat);
+  ]));
   const eyeMat = new THREE.MeshBasicMaterial({ color: 0xe9c46a, fog: false });
   [-1, 1].forEach(sx => { const e = new THREE.Mesh(new THREE.SphereGeometry(0.035, 8, 6).scale(1.3, 0.8, 1), eyeMat); e.position.set(sx * 0.15, 0.06, 0.36); W.head.add(e); });
   W.legs = [];
@@ -298,7 +300,7 @@ const W = {};
     W.legs.push(g);
   });
   W.tail = new THREE.Group(); W.tail.name = 'wolf-tail'; W.tail.position.set(0, 0.8, -1.3); W.body.add(W.tail);
-  add(W.tail, blob(0.1, 0.1, 0.4, 0, -0.1, -0.1, -0.5));
+  add(W.tail, blob(0.16, 0.16, 0.7, 0, -0.25, -0.3, -0.9)); add(W.tail, blob(0.12, 0.12, 0.4, 0, -0.05, -0.65, -0.3), rimMat);
   // ink rim: a lighter brown shell pushed out along the normals, drawn behind each wolf mesh
   const rimInk = new THREE.MeshBasicMaterial({ color: 0x8a7058, side: THREE.BackSide, fog: false });
   const meshes = []; W.body.traverse(o => { if (o.isMesh && o.geometry && o.geometry.attributes.normal && o.material !== eyeMat) meshes.push(o); });
@@ -549,7 +551,7 @@ function place(el, wx, wy, wz) { vp.set(wx, wy, wz).project(camera); el.style.le
 const act = a => {
   if (a.action === 'pounce') { startPounce(a.target === 'human' ? P : sheep[1 + Math.floor(Math.random() * N_AI)]); return; }
   if (a.action === 'win') { endGame('win', 'YOU BLENDED IN', 'Three clovers. Three minutes. Zero bites.', 'The flock wins', '#8ee04a'); return; }
-  if (a.action === 'lose') { endGame('lose', 'EATEN', 'The wolf got you', 'You were the human'); return; }
+  if (a.action === 'lose') { endGame('lose', 'HUMAN', 'The wolf got you', 'Gotcha'); return; }
   if (a.action === 'startle') { startle(); return; }
   if (a.key === undefined) return;
   if (a.down === false) keys.delete(a.key);
@@ -793,7 +795,7 @@ function updatePounce(rdt) {
     p.ph = null; t.frozen = false; w.target = null; hideReveal(); cam.punch = 0;
     if (p.human) {
       wolf.state = 'done'; t.frozen = true;
-      if (mode === 'solo') endGame('lose', 'EATEN', 'The wolf got you · ' + eatenCount() + '/3 clovers', 'You were the human'); else endGame('wolf', 'WOLF WINS', 'Player 2 found PLAYER 1', 'Gotcha');
+      if (mode === 'solo') endGame('lose', 'HUMAN', 'The wolf got you · ' + eatenCount() + '/3 clovers', 'Gotcha'); else endGame('wolf', 'WOLF WINS', 'Player 2 found PLAYER 1', 'Gotcha');
       outline.visible = true; $('tag').style.display = 'block'; $("vig").style.opacity = 0.25; $('bb').style.height = '0';
     } else {
       t.immune = 6; t.susp = 0; t.zoom = 1.2; t.dir = rnd(0, 6.28);
@@ -861,7 +863,7 @@ function drawSheep(dt) {
 function drawWolf(dt) {
   const w = wolf, r = W.root, pz = w.pose;
   r.position.set(w.x, w.y, w.z); r.rotation.y = w.yaw;
-  { const want = (pz === 'leap' || pz === 'land' || pz === 'shrug' || pz === 'grin') ? 2.4 : (pounce.ph || mode !== "solo" ? 3.4 : 2.8); r.scale.setScalar(r.scale.x + (want - r.scale.x) * Math.min(1, dt * 10 + 0.05)); }
+  { const want = (pz === 'leap' || pz === 'land' || pz === 'shrug' || pz === 'grin') ? 1.7 : (pounce.ph || mode !== "solo" ? 2.4 : 2.0); r.scale.setScalar(r.scale.x + (want - r.scale.x) * Math.min(1, dt * 10 + 0.05)); }
   const ph = w.phase, t = clock;
   W.body.position.set(0, 0, 0); W.body.rotation.set(0, 0, 0); W.head.rotation.set(0, 0, 0); W.head.position.set(0, 0.88, 1.08);
   W.legs.forEach(l => l.rotation.set(0, 0, 0)); W.tail.rotation.set(0, 0, 0);
@@ -900,7 +902,7 @@ function drawWolf(dt) {
   reach.visible = loc && !pounce.ph && !result; reach.scale.setScalar(1.55); reach.position.set(w.x, gh(w.x, w.z) + 0.15, w.z);
   aim.visible = false; aimLine.visible = false;
   wolfRing.visible = loc && !pounce.ph && !result; if (wolfRing.visible) { wolfRing.position.set(w.x, gh(w.x, w.z) + 0.3, w.z); wolfRing.scale.setScalar(1 + 0.15 * Math.sin(clock * 8)); const rdy = 1 - Math.min(1, (w.dashCd || 0) / 2.5); wolfRing.userData.fill.scale.setScalar(Math.max(0.02, rdy)); wolfRing.userData.fill.material.color.setHex(rdy >= 1 ? 0x8e9a58 : 0xb3261e); }
-  { const k = loc ? 8.5 : 8; W.root.scale.setScalar(k); W.root.traverse(o => { if (o.material) { o.material.depthTest = true; o.renderOrder = 0; } }); }
+  { const k = loc ? 3.4 : 3; W.root.scale.setScalar(k); W.root.traverse(o => { if (o.material) { o.material.depthTest = true; o.renderOrder = 0; } }); }
   wolfMark.visible = wolfRing.visible; if (wolfMark.visible) wolfMark.position.set(w.x, gh(w.x, w.z) + 7.5 + Math.sin(clock * 6) * 0.5, w.z);
   if (loc && !pounce.ph && !result) { let best = null, bd = 9; for (const s of sheep) { const d = Math.hypot(s.x - w.x, s.z - w.z); if (d < bd) { bd = d; best = s; } } if (best) { aim.visible = true; aim.position.set(best.x, best.y + 0.2, best.z); aim.scale.setScalar(1.5 + 0.2 * Math.sin(clock * 9)); aim.userData.arrow.position.y = 5 + Math.sin(clock * 7); { const dx = best.x - w.x, dz = best.z - w.z, L = Math.hypot(dx, dz) || 1; aimLine.visible = true; aimLine.position.set((w.x + best.x) / 2, best.y + 0.6, (w.z + best.z) / 2); aimLine.rotation.y = Math.atan2(-dz, dx); aimLine.scale.set(L, 1, 1); } const inR = bd < 7; aim.material.opacity = inR ? 0.7 + 0.25 * Math.sin(clock * 9) : 0.25; reach.material.color.setHex(inR ? 0xe0a03a : 0xb3261e); reach.scale.setScalar(inR ? 1.7 : 1.55); aim.userData.arrow.visible = inR; } }
 }
