@@ -1009,3 +1009,9 @@ I took a 4-cell `look` sheet (start, AI pounce, human pounce, local after `KeyM`
    - The one call that shows it done is the start `look`, which should report "near black" above 1%, with `sample` on the wolf pixels reading below 20 in each channel.
 
 SCORE: 7.9
+
+## Iteration 18
+**Did**: game.js only. `treeInk` hull offset 0.07→0.14 and now also on `pines`. Local mode: `W.root` scale 10.4 (8 in solo), wolf materials `depthTest:false`, renderOrder 8, set each frame in the loop before `wolfMark`.
+**Saw**: `look` sheet (start frame 150, local after KeyM+40): start wolf 2.5%, local wolf 11% (was 1.2%), wolf drawn over the wool, ground-ink and red `wolfMark` visible; trees have thicker ink outlines. 0% near black still reported (the wolf's 0x17110e is above the tool's cut-off). No console errors. No `perf`.
+**Next**: (1) local wolf at 11% may be too large, try scale 9 and check the sheep still read; (2) 2-step ochre ramp for `pines*`/`round-trees*` fills and 3-tone quantised `ground` vertex colours (not done); (3) make the wolf darker (~#0e0a0c).
+**Open**: depthTest off in local means the wolf draws over trees/rocks in front of it; not checked.
