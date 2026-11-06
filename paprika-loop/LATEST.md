@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 18
-**Did**: `drawSheep` (game.js): during a human reveal, `sheep*` within 7 units of `wolf` (not the target) shrink to 25% over 0.25s (`scK`), so the wolf is no longer hidden.
-**Saw**: sheet human|ai at 150 frames: the human cell now shows a clear grey `wolf` at lower centre beside the red target and PLAYER 1 tag; brightness 44% both, 15% near black (letterbox bars/band, unchanged). No console errors. Not run: perf, phone, sand %, pip pop.
-**Next**: (1) lighten reveal cells (thinner letterbox, lighter band; target near black <8%); (2) plain `look` for the `sand` share; (3) pip pop check, drop `aimLine`, add replay freeze frame.
-**Open**: the shrink pops the sheep back to full size when the reveal ends (not checked visually).
-
 ### Judge 18
 
 **Judge verdict, session 18**
@@ -68,3 +62,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Drop the invisible `aimLine`, then add a short "replay" freeze frame after the reveal.
 
 SCORE: 8.3
+
+## Iteration 19
+**Did**: Reveal cells lightened: letterbox bars `#bt`/`#bb` 9vh→5vh (game.js, 3 places), `#reveal .band` now green-tint `#2a4a2a40` (index.html), `cam.close` pull-in 0.4→0.32 and reveal camera target `tz = wolf.z + 2.4` so the `wolf` sits higher in frame.
+**Saw**: sheet human|ai at 150 frames: brightness 52%/51% (was 44%), near black 9% both (was 15%); whole `wolf` visible above the caption in both cells; GOTCHA/AI SHEEP text still reads. No console errors. Not run: perf, phone, sand %, end-of-reveal sheep pop.
+**Next**: (1) near black 9% is mostly the letterbox bars — make them 3vh or translucent to get under 8%; (2) `interact` pounce human, 200 frames, check sheep un-shrink pop; plain `look` for `sand` share; (3) drop `aimLine`, add replay freeze frame.
+**Open**: sheep-shrink pop at reveal end still unchecked.

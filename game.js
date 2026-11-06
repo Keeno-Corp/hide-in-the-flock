@@ -536,7 +536,7 @@ function updatePounce(rdt) {
     const gy = Math.max(gh(w.x, w.z), 0.2); w.y = lerp(p.fy, gy, e) + Math.sin(u * Math.PI) * 3.4;
     w.pitch = lerp(-0.7, 0.9, u); w.onRock = false;
     cam.punch = Math.min(1, cam.punch + rdt * 2.2);
-    $('bt').style.height = $('bb').style.height = 9 * cam.punch + 'vh';
+    $('bt').style.height = $('bb').style.height = 5 * cam.punch + 'vh';
     if (u >= 1) {
       p.ph = 'reveal'; p.t = 0; w.pose = 'land'; w.pitch = 0;
       for (const o of sheep) { if (o === t || o.player) continue; const dx = o.x - t.x, dz = o.z - t.z, d = Math.hypot(dx, dz); if (d < 6) { o.st = 'run'; o.runT = 1.4; o.dir = Math.atan2(dx, dz) + rnd(-0.3, 0.3); } }
@@ -568,7 +568,7 @@ function updatePounce(rdt) {
   else place($('bubble'), t.x, t.y + 3.2, t.z);
   if (!p.human) { w.shrug = 1; }
   if (!p.human && p.t < 1.9) cam.punch = 1; else if (u > 0.72) cam.punch = Math.max(0, cam.punch - rdt * 1.6);
-  $('bt').style.height = $('bb').style.height = 9 * cam.punch + 'vh';
+  $('bt').style.height = $('bb').style.height = 5 * cam.punch + 'vh';
   if (u >= 1) {
     p.ph = null; t.frozen = false; w.target = null; hideReveal(); cam.punch = 0;
     if (p.human) {
@@ -685,11 +685,11 @@ function updateCamera(dt, rdt) {
   if (mode === 'solo') { const k = dW < 32 ? 0.28 : 0; tx += (wolf.x - P.x) * k; tz += (wolf.z - P.z) * k; }
   else { tx += (wolf.x - P.x) * 0.5; tz += (wolf.z - P.z) * 0.5; zoom = 1 + clamp((dW - 14) / 30, 0, 0.55); }
   if (pounce.ph && pounce.target) { const m = pounce.target; tx = lerp(tx, (wolf.x + m.x) / 2, cam.punch); tz = lerp(tz, (wolf.z + m.z) / 2, cam.punch); }
-  if (pounce.ph === 'reveal' && pounce.t < 2.0) { tx = wolf.x; tz = wolf.z + 0.6; }
+  if (pounce.ph === 'reveal' && pounce.t < 2.0) { tx = wolf.x; tz = wolf.z + 2.4; }
   cam.close += ((pounce.ph === 'reveal' && pounce.t < 2.0 ? 1 : 0) - cam.close) * (1 - Math.exp(-rdt * 6));
   const kf = 1 - Math.exp(-rdt * (cam.punch > 0.05 ? 7 : 2.4));
   cam.x += (tx - cam.x) * kf; cam.z += (tz - cam.z) * kf; cam.zoom += (zoom - cam.zoom) * kf;
-  const sc2 = (1 - 0.3 * cam.punch - 0.4 * cam.close) * cam.zoom;
+  const sc2 = (1 - 0.3 * cam.punch - 0.32 * cam.close) * cam.zoom;
   camera.position.set(cam.x, 15 * sc2 + 3, cam.z + 32 * sc2 + 6);
   camera.lookAt(cam.x, 5, cam.z - 8);
   let fov = 50 - 16 * cam.punch; { const a = innerWidth / innerHeight; if (a < 1.4) fov = Math.min(80, (2 * Math.atan(Math.tan(fov * Math.PI / 360) * 1.4 / a)) * 180 / Math.PI); } if (Math.abs(camera.fov - fov) > 0.01) { camera.fov = fov; camera.updateProjectionMatrix(); }
@@ -726,7 +726,7 @@ function step(rdt) {
   if (mode === 'solo' && T > 175 && eatenCount() < 3 && !result) { $('time').style.color = '#ff6a5a'; } else $('time').style.color = '';
   if (!pounce.ph && wolf.state !== 'stalk' && !result) $('cap').style.opacity = 0;
   if (result && pounce.ph === null) { /* result overlay stays */ }
-  if (!pounce.ph && !result) { $('bt').style.height = $('bb').style.height = 9 * cam.punch + 'vh'; }
+  if (!pounce.ph && !result) { $('bt').style.height = $('bb').style.height = 5 * cam.punch + 'vh'; }
   // clouds
   clouds.forEach((c, i) => { c.position.x += rdt * (0.8 + i * 0.1); if (c.position.x > 160) c.position.x = -160; });
   drawSheep(dt); drawWolf(dt); updateCamera(dt, rdt);
