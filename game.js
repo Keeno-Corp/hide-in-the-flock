@@ -489,7 +489,7 @@ function updateModeUI() {
 function toast(t, d = 2.2) { const e = $('toast'); e.textContent = t; e.style.opacity = 1; toastT = d; }
 function hideReveal() {
   $('toast').style.opacity = 0; toastT = 0; $('rbig').style.fontSize = ''; splash.clear(); post.uniforms.freeze.value = 0; $('reveal').classList.remove('slam');
-  $('reveal').style.opacity = 0; $('bubble').style.display = 'none'; $('tag').style.display = 'none'; $('cap').style.opacity = 0;
+  $('mode').style.opacity = ''; $('hud').style.opacity = ''; $('reveal').style.opacity = 0; $('bubble').style.display = 'none'; $('tag').style.display = 'none'; $('cap').style.opacity = 0;
   $('bt').style.height = $('bb').style.height = '0'; $('vig').style.opacity = 0; outline.visible = false;
 }
 const caps = {
@@ -508,6 +508,7 @@ function renderClovers() {
   const e = $('clv'); if (e.dataset.v !== h) { e.innerHTML = h; e.dataset.v = h; }
 }
 function showResult(big, sub, kicker, color) {
+  $('mode').style.opacity = 0; $('hud').style.opacity = 0.35;
   const stamp = color === '#ff3a2a' ? '#b3261e' : color === '#8e9a58' || color === '#8ee04a' ? '#4a5a24' : '#2a1c12';
   $('rbig').style.fontSize = big.length > 8 ? 'clamp(40px,7vw,110px)' : '';
   $('rk').textContent = kicker; $('rbig').textContent = big; $('rsub').textContent = sub; $('reveal').style.setProperty('--stampc', stamp);

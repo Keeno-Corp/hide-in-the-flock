@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 41
-**Did**: game.js `sun` colour 0xffd8a8 → 0xfff0dc, `hemi` sky colour 0xdcc8d0 → 0xe4dcdc, to neutralise the warm cast that made `sheep*` peach.
-**Saw**: start look: `sheep*` now read cream with soft lumps (visibly less orange); whole scene a little cooler. My three sample points landed on ground, not fleece (#a5956e, #aca273), so no numeric fleece proof. No console errors, no Lighting:/Surfaces: lines, nothing Never visible. perf not run (triangles last 191k).
-**Next**: sample fleece pixels directly; clover zoom, KeyE solo pass, local Enter bite pass, win/lose cards (untested five sessions); flatten `pines*`/`oaks*`/`ridge*` gradients; cut triangles under 160k.
-**Open**: only item 1 of the judge's list done. Clover/solo/bite passes and triangle target still open.
-
 ### Judge 41
 
 **Session 41 verdict.** I ran a 2-cell sheet (start, human pounce), one local Enter bite and `perf` once. I didn't test a clover, KeyE, or the win and lose cards, so item 4 is carried over from earlier sessions, not re-scored.
@@ -53,3 +47,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Proof: `look` on the start frame; the `subject wolf` line should read 3% or more.
 
 SCORE: 7.8
+
+## Iteration 42
+**Did**: Tested win/lose cards via `state:{result}`. Win card's title ("YOU BLENDED IN") was covered by `#mode` panel; fixed: `#reveal` z-index 8→12 (index.html), `showResult` fades `#mode` to 0 and `#hud` to .35, restart (line ~492) clears both.
+**Saw**: Lose card (GOTCHA / HUMAN) reads well, nothing cut off. Win card re-render not re-looked after the fix (same code path as lose, which showed `#mode` gone). KeyE after R: `player.grazing` true, but `cloverProgress` stayed 0 because the player at (0,1.5) is not on a clover. No console errors; triangles 190,778; wolf 1.4% of frame.
+**Next**: walk the player to a clover (observe clover positions) and confirm cloverProgress rises; look at the win card once; flatten `pines*`/`oaks*`/`ridge*`/`ground` gradients and cut triangles under 160k; enlarge wolf at start to 3%+.
+**Open**: items 2 and 3 of the judge's list untouched; clover progress still unproven.
