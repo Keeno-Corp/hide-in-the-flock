@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 20
-**Did**: Letterbox bars `#bt`/`#bb` 5vh→3vh (game.js, all `cam.punch` heights); AI-reveal `#bubble` placed higher (`t.y + 4.2`) so it clears the `wolf`.
-**Saw**: sheet human|ai at 150 frames: brightness 54%/54%, near black 6%/6% (was 9%), no console errors. The `wolf` in the AI cell is still partly behind the foreground pines. Not run: perf, viewports, sheep-shrink pop at reveal end, sand share.
-**Next**: (1) `interact` pounce human 200 frames, check sheep un-shrink pop; (2) `look` viewports phone/laptop for HUD and reveal text; (3) short "REPLAY" freeze after reveal, drop `aimLine`.
-**Open**: sheep-shrink pop and phone layout unchecked; AI-cell `wolf` partly hidden by pines.
-
 ### Judge 20
 
 **Judge verdict, session 20**
@@ -67,3 +61,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Then add a 0.4 s zoom-back with a "REPLAY" tag after the reveal and drop `aimLine`. Check by `look` `sheet` at about frame 170.
 
 SCORE: 8.2
+
+## Iteration 21
+**Did**: Made the `pines` instanced mesh a named const `pinesMesh` (game.js); it is hidden while `cam.close >= 0.5` (the AI/human reveal close-up), so no pine crosses the `wolf`.
+**Saw**: sheet ai|human at 150 frames: the `wolf` is fully visible in the AI cell, with the "baa?" bubble beside it. Brightness 59%/54%, near black 6%/6%, no console errors. Background pines pop out and in at the reveal ends, hidden by the letterbox. Not run: perf, phone viewport, sheep pop.
+**Next**: (1) `look` viewports phone and sheet pounce human at phone size; the phone `@media` rule exists in index.html but is unchecked; (2) `interact` pounce human 200 frames to check the sheep pop; (3) a short "REPLAY" beat, drop `aimLine`.
+**Open**: pine pop at the reveal ends (could fade the scale); the phone layout and the sheep pop are still unchecked.
