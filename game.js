@@ -197,6 +197,8 @@ function mk(geo, hex, { p = [0, 0, 0], r = [0, 0, 0], s = [1, 1, 1], jit = 0, so
 const ico = (r, d = 1) => new THREE.IcosahedronGeometry(r, d);
 const box = (x, y, z) => new THREE.BoxGeometry(x, y, z);
 const cone = (r, h, n = 6) => new THREE.ConeGeometry(r, h, n);
+const toon2 = (() => { const d = new Uint8Array([120,125,150,255, 255,255,255,255]); const t = new THREE.DataTexture(d, 2, 1, THREE.RGBAFormat); t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t; })();
+const treeMat = () => new THREE.MeshToonMaterial({ vertexColors: true, gradientMap: toon2, emissive: 0x1c2a22 });
 const flat = (mat = {}) => new THREE.MeshToonMaterial({ vertexColors: true, gradientMap: toonMap, ...mat });
 
 // ───────────────────────── sheep geometry (shared by all 101) ─────────────────────────
@@ -279,7 +281,7 @@ const rockMat = flat();
 // ───────────────────────── scenery (instanced) ─────────────────────────
 const dummy = new THREE.Object3D();
 function scatterInst(geo, count, gen, { shadow = true, name = '' } = {}) {
-  const im = new THREE.InstancedMesh(geo, flat(), count); im.name = name; im.castShadow = shadow; im.receiveShadow = true;
+  const im = new THREE.InstancedMesh(geo, /pine|tree/.test(name) ? treeMat() : flat(), count); im.name = name; im.castShadow = shadow; im.receiveShadow = true;
   let k = 0, tries = 0;
   while (k < count && tries++ < count * 60) {
     const o = gen(); if (!o) continue;
@@ -294,14 +296,14 @@ const pineGeo = mergeGeometries([
   mk(cone(0.2, 0.9, 7), 0x3a2a20, { p: [0, 0.45, 0], soft: true }),
   mk(cone(1.15, 2.0, 11), 0x34503f, { p: [0, 1.7, 0], jit: 0.0, soft: true }), mk(cone(0.9, 1.8, 11), 0x3a5a45, { p: [0, 2.8, 0], soft: true }), mk(cone(0.6, 1.6, 11), 0x41644a, { p: [0, 3.8, 0], soft: true }),
 ]);
-const pinesMesh = scatterInst(pineGeo, 64, () => { const [x, z] = polar(52, 130); if (z > 4) return null; const h = gh(x, z); const s = rnd(1.1, 2.4) * (Math.hypot(x, z) > 70 ? 1.6 : 1); return { x, z, s, sy: s * rnd(1.0, 1.5), y: h - 0.2 }; }, { name: 'pines' });
+const pinesMesh = scatterInst(pineGeo, 32, () => { const [x, z] = polar(52, 130); if (z > 4) return null; const h = gh(x, z); const s = rnd(1.1, 2.4) * (Math.hypot(x, z) > 70 ? 1.6 : 1); return { x, z, s, sy: s * rnd(1.0, 1.5), y: h - 0.2 }; }, { name: 'pines' });
 const roundTreeGeo = mergeGeometries([
   mk(cone(0.24, 2.0, 7), 0x4a3324, { p: [0, 1.0, 0], soft: true }),
   mk(ico(1.2, 2), 0x6f7d44, { p: [0, 2.9, 0], s: [1, 1.2, 1], soft: true }), mk(ico(0.85, 2), 0x84914f, { p: [0.7, 2.4, 0.25], soft: true }), mk(ico(0.75, 2), 0x5f6e3b, { p: [-0.65, 2.45, -0.2], soft: true }), mk(ico(0.6, 2), 0x93a05a, { p: [0.15, 3.7, 0.1], soft: true }),
 ]);
 scatterInst(roundTreeGeo, 14, () => { const [x, z] = polar(33, 58); if (z > 2 || Math.hypot(x, z) < 33) return null; const s = rnd(1.1, 1.7); return { x, z, s }; }, { name: 'round-trees' });
 // two big framing oaks at the meadow's edge
-{ const im = new THREE.InstancedMesh(roundTreeGeo, flat(), 3); im.name = 'oaks'; im.castShadow = im.receiveShadow = true;
+{ const im = new THREE.InstancedMesh(roundTreeGeo, treeMat(), 3); im.name = 'oaks'; im.castShadow = im.receiveShadow = true;
   [[-35, -8, 2.4], [37, -16, 2.2], [-14, -42, 2.8]].forEach(([x, z, s], i) => { dummy.position.set(x, gh(x, z) - 0.1, z); dummy.rotation.set(0, i * 2, 0); dummy.scale.setScalar(s); dummy.updateMatrix(); im.setMatrixAt(i, dummy.matrix); }); scene.add(im); }
 const rockGeo = mergeGeometries([mk(ico(0.8, 2), 0xa39a86, { s: [1, 0.7, 1], soft: true }), mk(ico(0.5, 2), 0xb3aa94, { p: [0.6, -0.1, 0.2], soft: true })]);
 scatterInst(rockGeo, 40, () => { const [x, z] = polar(18, 56); const h = gh(x, z); if (Math.hypot(x - ROCK.x, z - ROCK.z) < 5) return null; const s = rnd(0.5, 1.4) * (Math.hypot(x, z) > 32 ? 2.4 : 1); return { x, z, s, y: h + 0.2 * s }; }, { name: 'rocks' });
@@ -348,7 +350,7 @@ const clovers = [];
     const g = new THREE.Group(); g.position.set(x, gh(x, z), z); g.name = 'clover';
     const m = new THREE.Mesh(geo, cm); m.receiveShadow = true; g.add(m);
     const sp = new THREE.Group(); sp.position.y = 2.2; sp.scale.setScalar(2);
-    sp.add(new THREE.Mesh(box(0.1, 0.9, 0.02), star), new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.6, 9, 8, 1, true), star), new THREE.Mesh(box(0.7, 0.08, 0.02), star)); g.add(sp);
+    sp.add(new THREE.Mesh(box(0.1, 0.9, 0.02), star), new THREE.Mesh(box(0.7, 0.08, 0.02), star)); g.add(sp);
     const cr = new THREE.Mesh(new THREE.RingGeometry(1.1, 1.7, 28).rotateX(-Math.PI / 2), star); cr.position.y = 0.25; cr.material = star; sp.userData.ring = cr; g.add(cr);
     const dm = new THREE.MeshBasicMaterial({ color: 0xf2b47a, transparent: true, opacity: 0.55, depthWrite: false, depthTest: false, fog: false });
     const outl = new THREE.Mesh(new THREE.RingGeometry(2.6, 3.0, 40).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0x2a1c12, transparent: true, opacity: 0.8, depthWrite: false, fog: false })); outl.position.y = 0.28; g.add(outl);

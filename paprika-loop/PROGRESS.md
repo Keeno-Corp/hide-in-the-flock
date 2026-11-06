@@ -91,3 +91,9 @@ paprika-loop/PROMPT.md changed before session 2; the Next lists above were writt
    - The check is a `look` with `sample` on the ground, where neighbouring pixels should be near uniform. The `Surfaces:` line should stay clear after `interact` steps.
 
 SCORE: 6.8
+
+## Iteration 3
+**Did**: game.js only. (1) New `toon2` 2-band gradient and `treeMat()` (emissive 0x1c2a22): `pines` and `round-trees` (via `scatterInst` name test) and `oaks` now use it, so they look flatter. (2) `pines` count halved, 64 to 32. (3) Removed the pale translucent cylinder from each clover glint (`sp`); the clover keeps its patch disc and cross.
+**Saw**: `look` at frame 0: `pines*` ×19, `round-trees*` ×12, `oaks*` ×3. Trees read as flat two-tone masses with ink outlines. The clover columns are gone in the zoom. The wolf is still 0.77% of the frame and sits behind `wolf-rock` in a blob silhouette. No console errors and no Surfaces or Lighting lines. I did not run `perf`.
+**Next**: (1) Sheep ~1.4× larger with darker ears and legs, so they read at flock distance. (2) Move `wolf-rock` or the wolf so the full silhouette shows, give it a crouch, and make it bigger in frame. (3) Flatten the `ground` into painted bands and fade the post-pass hatching with distance. (4) Run `asset_search` for stylized sheep and wolf, as the Judge asked.
+**Open**: Sheep, wolf, ground and asset_search were not done this session. Local 2-player and the grazing flow are still unplayed.
