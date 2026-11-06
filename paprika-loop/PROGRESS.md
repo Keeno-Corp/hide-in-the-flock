@@ -1377,3 +1377,9 @@ SCORE: 8.2
    - Check by `look` `sheet` at about frame 170.
 
 SCORE: 8.0
+
+## Iteration 22
+**Did**: index.html: phone `@media(max-width:640px)` sizes up (HUD rows 22px, labels 14px, `#time` 28px, `#sbar` 100px, `#mode` 16px); `#vig` gradient now transparent to 62% and a duller red; game.js `vig` opacity 0.55/0.6 -> 0.4 in the human reveal.
+**Saw**: `look` phone: HUD and the "[M] Mode" hint read larger, 609 on screen. Sheet pounce human at 150 frames: brightness 56%, near black 6%, the pink wash is gone from the left, though a faint pale vertical band is left near x 80-140 (maybe the reveal `.band` or a pale rock). Not run: perf, sheep pop, phone reveal.
+**Next**: (1) `look` sheet pounce human with `resize [390,844]` to check GOTCHA and the tag fit; (2) `interact` pounce human 200 frames for the sheep pop; (3) the "REPLAY" beat, drop `aimLine`.
+**Open**: the pale band at the left of the human cell is unexplained; the sheep pop and the phone reveal are unchecked.

@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 21
-**Did**: Made the `pines` instanced mesh a named const `pinesMesh` (game.js); it is hidden while `cam.close >= 0.5` (the AI/human reveal close-up), so no pine crosses the `wolf`.
-**Saw**: sheet ai|human at 150 frames: the `wolf` is fully visible in the AI cell, with the "baa?" bubble beside it. Brightness 59%/54%, near black 6%/6%, no console errors. Background pines pop out and in at the reveal ends, hidden by the letterbox. Not run: perf, phone viewport, sheep pop.
-**Next**: (1) `look` viewports phone and sheet pounce human at phone size; the phone `@media` rule exists in index.html but is unchecked; (2) `interact` pounce human 200 frames to check the sheep pop; (3) a short "REPLAY" beat, drop `aimLine`.
-**Open**: pine pop at the reveal ends (could fade the scale); the phone layout and the sheep pop are still unchecked.
-
 ### Judge 21
 
 **Judge verdict, session 21**
@@ -71,3 +65,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Check by `look` `sheet` at about frame 170.
 
 SCORE: 8.0
+
+## Iteration 22
+**Did**: index.html: phone `@media(max-width:640px)` sizes up (HUD rows 22px, labels 14px, `#time` 28px, `#sbar` 100px, `#mode` 16px); `#vig` gradient now transparent to 62% and a duller red; game.js `vig` opacity 0.55/0.6 -> 0.4 in the human reveal.
+**Saw**: `look` phone: HUD and the "[M] Mode" hint read larger, 609 on screen. Sheet pounce human at 150 frames: brightness 56%, near black 6%, the pink wash is gone from the left, though a faint pale vertical band is left near x 80-140 (maybe the reveal `.band` or a pale rock). Not run: perf, sheep pop, phone reveal.
+**Next**: (1) `look` sheet pounce human with `resize [390,844]` to check GOTCHA and the tag fit; (2) `interact` pounce human 200 frames for the sheep pop; (3) the "REPLAY" beat, drop `aimLine`.
+**Open**: the pale band at the left of the human cell is unexplained; the sheep pop and the phone reveal are unchecked.
