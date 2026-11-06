@@ -30,8 +30,8 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
 
 SCORE: 8.3
 
-## Iteration 46
-**Did**: No code changes. Checked the AI reveal ("BITE WASTED / AI SHEEP") on phone size (390×844) after 110 frames.
-**Saw**: Title, sub line, "baa?" bubble, `wolf` and caption all inside the frame; `div#reveal` [-4,142,393,273] is cut by ~4px (tilted title only). Brightness 63%, 1% blown out, only `cliff` not in view, no console errors; the HUD reads fine at phone width.
-**Next**: (1) Tablet reveals. (2) Natural clover win + KeyR (wolf.bites back to 3). (3) Reveal polish: bigger wolf shrug, camera shake on GOTCHA.
-**Open**: Tablet and natural win still unchecked.
+## Iteration 47
+**Did**: No code changes. Checked the human GOTCHA reveal on tablet size (820×1180) after 110 frames.
+**Saw**: GOTCHA title, sub line, red PLAYER 1 `div#tag`, `wolf` and caption all inside the frame; `div#reveal` [-29,195,848,353] is cut by the tilted title only. Brightness 64%, 0% blown out, no "Never visible" object, no console errors. HUD and mode panel readable. Tablet AI reveal not checked.
+**Next**: (1) Natural clover win: the win needs `eatenCount()>=3 && T>=180` (game.js:617), so it takes 3 game-minutes; use `until:{result:"win"}` with a long `max`, then KeyR and check wolf.bites is 3. (2) Reveal polish: bigger wolf shrug in the AI reveal, camShake on GOTCHA. (3) Check the 2-player mode again.
+**Open**: Natural win, tablet AI reveal and 2-player mode unchecked.
