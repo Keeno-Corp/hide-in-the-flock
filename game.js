@@ -344,7 +344,7 @@ const pineGeo = mergeGeometries([
 const pinesMesh = scatterInst(pineGeo, 32, () => { const [x, z] = polar(52, 130); if (z > 4) return null; const h = gh(x, z); const s = rnd(1.1, 2.4) * (Math.hypot(x, z) > 70 ? 1.6 : 1); return { x, z, s, sy: s * rnd(1.0, 1.5), y: h - 0.2 }; }, { name: 'pines' });
 const roundTreeGeo = mergeGeometries([
   mk(cone(0.24, 2.0, 7), 0x4a3324, { p: [0, 1.0, 0], soft: true }),
-  mk(ico(1.2, 1), 0x7a8848, { p: [0, 2.9, 0], s: [1, 1.2, 1], soft: false }), mk(ico(0.85, 1), 0x7a8848, { p: [0.7, 2.4, 0.25], soft: false }), mk(ico(0.75, 1), 0x7a8848, { p: [-0.65, 2.45, -0.2], soft: false }), mk(ico(0.6, 1), 0x7a8848, { p: [0.15, 3.7, 0.1], soft: false }),
+  mk(ico(1.2, 2), 0x7a8848, { p: [0, 2.9, 0], s: [1, 1.2, 1], soft: true }), mk(ico(0.85, 2), 0x7a8848, { p: [0.7, 2.4, 0.25], soft: true }), mk(ico(0.75, 2), 0x7a8848, { p: [-0.65, 2.45, -0.2], soft: true }), mk(ico(0.6, 2), 0x7a8848, { p: [0.15, 3.7, 0.1], soft: true }),
 ]);
 scatterInst(roundTreeGeo, 14, () => { const [x, z] = polar(33, 58); if (z > 2 || Math.hypot(x, z) < 33) return null; const s = rnd(1.1, 1.7); return { x, z, s }; }, { name: 'round-trees' });
 // two big framing oaks at the meadow's edge

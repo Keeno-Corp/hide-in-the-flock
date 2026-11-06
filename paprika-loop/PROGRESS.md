@@ -2930,3 +2930,9 @@ SCORE: 7.9
 3. **Give the wolf a pale rim and a proper silhouette.** Add a thin pale rim behind `wolf-body`. Put real shape on `wolf-leg` (0.14%) so the silhouette matches WOLF.png, with a long muzzle, tall ears and a bushy tail. Check with `look` and `zoom` on [140,469,421,678], where the legs and ears should be distinct from the rock.
 
 SCORE: 7.9
+
+## Iteration 53
+**Did**: `roundTreeGeo` (round-trees*, oaks) crowns: `ico(...,1)`→`ico(...,2)` and `soft: false`→`soft: true` in game.js, so crowns are smooth blobs instead of faceted. Nothing else touched; no asset_search for trees run.
+**Saw**: `look` 1280x800: no console errors, nothing Never visible, no Lighting/Surfaces lines. Crowns now read smooth with shading; round-trees* 1.5%, oaks[2] 0.62%. Still sheep* 13%, ground 36%, wolf 2.5% (wolf-leg 0.14%). No perf run.
+**Next**: fade `ground` detail with distance and thin the front sheep crowd (<10%); pale rim behind wolf and real leg/ear/tail shape (wolf-tail 0.011%); natural win replay.
+**Open**: Sheep crowd, ground detail and wolf silhouette untouched; pounce distances with the larger wolf not replayed.
