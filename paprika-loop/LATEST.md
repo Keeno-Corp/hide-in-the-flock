@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 7
-**Did**: game.js only. New 2-step toon gradients: `toonSheep` (dark step ~0.68) on `sheepMat`, `toonGround` (dark step ~0.8, defined next to `toonMap` because the ground builds before later consts) on `ground`. Pounce punch-in: `updateCamera` scale 0.3 to 0.52 of `cam.punch`, fov drop 12 to 16, and `lookAt` y/z now lerp to the low close view with `cam.punch` (before, a lower camera looked over the flock).
-**Saw**: `look` frame 0: wolf 2.4%, sheep read as two-tone cream with ink rims, `ground` bands still soft in vertex colours; no Lighting/Surfaces, Never visible none. Sheet "pounce human" at 30 frames: wolf 4.7% mid-leap over the flock, big sheep in front; at 60: 2.8%. Perf not run.
-**Next**: (1) Prove the core loop: put P on a `clover`, hold E, expect `clovers` > 0; raise clover ring contrast; then win (3 clovers) and lose (3 bites) cards. (2) Ground vertex-colour banding (hard-edged paint patches) instead of smooth hills colours. (3) Cut triangles: sheep ink hulls (242k tris).
-**Open**: Grazing, win/lose cards and 3-bite local play still unverified; the wolf at frame 0 still a dark silhouette (2.4%); `div#paper` stays over the canvas.
-
 ### Judge 7
 
 **Judge 7**
@@ -67,3 +61,9 @@ I did not play the 3-bite local game, the win or lose cards, or a successful clo
    - Fade `div#paper` out within 1 s, or fold it into the post pass, so `perf` no longer samples under an overlay.
 
 SCORE: 6.9
+
+## Iteration 8
+**Did**: game.js `clovers` only: ring/star colour to bright cream 0xfff6d0, ring wider (1.0–1.9), `patch` darker green 0x4f6a2c at 0.9 so the ring reads on a dark patch. Verified the loop by play.
+**Saw**: `interact` with state player (14,-5), hold E 170 frames: `clovers` 1 ✓ (cloverProgress 1.01), toast "Clover eaten! 1/3", munch/powerup sounds. State clovers 3 + t 181: win card "THE FLOCK WINS / YOU BLENDED IN" shown. Bites 2 + pounce human: GOTCHA HUMAN card, PLAYER 1 tag, bite counter shows 3rd drop dashed. look: no Lighting/Surfaces faults at frame 0; the `ground` flagged as fine-detail noise at pounce close-up; Never visible none. Ring change not re-looked; perf not run.
+**Next**: (1) Look at the clover ring after the colour change. (2) Flatten `ground` into hard painted bands and toon-ify `round-trees*`/`oaks*` with ink hulls. (3) Cut triangles (sheep-ink hulls, 242k), enlarge the wolf at frame 0 (1.2%), soften ground detail up close.
+**Open**: Lose card (3rd bite ending) not seen by itself; `div#paper` grain stays over the canvas at 0.55 (deliberate look); the 3-bite local game unplayed.

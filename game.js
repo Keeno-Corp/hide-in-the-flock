@@ -348,7 +348,7 @@ const clouds = [];
 // ───────────────────────── clover patches ─────────────────────────
 const clovers = [];
 {
-  const cm = flat(), star = new THREE.MeshBasicMaterial({ color: 0xf6d98a, transparent: true, opacity: 0, depthWrite: false, depthTest: false, fog: false });
+  const cm = flat(), star = new THREE.MeshBasicMaterial({ color: 0xfff6d0, transparent: true, opacity: 0, depthWrite: false, depthTest: false, fog: false });
   const geo = mergeGeometries([
     ...[0, 1, 2, 3, 4, 5].map(i => mk(ico(0.3, 0), i % 2 ? 0x6b7f38 : 0x7f9348, { p: [Math.cos(i * 1.05) * 0.5, 0.1, Math.sin(i * 1.05) * 0.5], s: [1, 0.45, 1], jit: 0.1 })),
     mk(ico(0.12, 0), 0xf3e8cc, { p: [0.2, 0.28, 0.1] }), mk(ico(0.12, 0), 0xd9a49a, { p: [-0.3, 0.26, -0.2] }), mk(ico(0.12, 0), 0xf3e8cc, { p: [0.0, 0.3, -0.5] }),
@@ -358,10 +358,10 @@ const clovers = [];
     const m = new THREE.Mesh(geo, cm); m.receiveShadow = true; g.add(m);
     const sp = new THREE.Group(); sp.position.y = 2.2; sp.scale.setScalar(2);
     sp.add(new THREE.Mesh(box(0.1, 0.9, 0.02), star), new THREE.Mesh(box(0.7, 0.08, 0.02), star)); g.add(sp);
-    const cr = new THREE.Mesh(new THREE.RingGeometry(1.1, 1.7, 28).rotateX(-Math.PI / 2), star); cr.position.y = 0.25; cr.material = star; sp.userData.ring = cr; g.add(cr);
+    const cr = new THREE.Mesh(new THREE.RingGeometry(1.0, 1.9, 28).rotateX(-Math.PI / 2), star); cr.position.y = 0.25; cr.material = star; sp.userData.ring = cr; g.add(cr);
     const dm = new THREE.MeshBasicMaterial({ color: 0xf2b47a, transparent: true, opacity: 0.55, depthWrite: false, depthTest: false, fog: false });
     const outl = new THREE.Mesh(new THREE.RingGeometry(2.6, 3.0, 40).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0x2a1c12, transparent: true, opacity: 0.8, depthWrite: false, fog: false })); outl.position.y = 0.28; g.add(outl);
-    const patch = new THREE.Mesh(new THREE.CircleGeometry(2.6, 40).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0x8fa04c, transparent: true, opacity: 0.85, depthWrite: false, fog: false })); patch.position.y = 0.27; g.add(patch);
+    const patch = new THREE.Mesh(new THREE.CircleGeometry(2.6, 40).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0x4f6a2c, transparent: true, opacity: 0.9, depthWrite: false, fog: false })); patch.position.y = 0.27; g.add(patch);
     const disc = new THREE.Mesh(new THREE.RingGeometry(0, 1.9, 32).rotateX(-Math.PI / 2), dm); disc.position.y = 0.3; disc.renderOrder = 4; g.add(disc);
     scene.add(g); clovers.push({ x, z, g, mesh: m, star: sp, prog: 0, eaten: false });
   });

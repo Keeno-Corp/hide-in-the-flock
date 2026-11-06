@@ -397,3 +397,9 @@ I did not play the 3-bite local game, the win or lose cards, or a successful clo
    - Fade `div#paper` out within 1 s, or fold it into the post pass, so `perf` no longer samples under an overlay.
 
 SCORE: 6.9
+
+## Iteration 8
+**Did**: game.js `clovers` only: ring/star colour to bright cream 0xfff6d0, ring wider (1.0–1.9), `patch` darker green 0x4f6a2c at 0.9 so the ring reads on a dark patch. Verified the loop by play.
+**Saw**: `interact` with state player (14,-5), hold E 170 frames: `clovers` 1 ✓ (cloverProgress 1.01), toast "Clover eaten! 1/3", munch/powerup sounds. State clovers 3 + t 181: win card "THE FLOCK WINS / YOU BLENDED IN" shown. Bites 2 + pounce human: GOTCHA HUMAN card, PLAYER 1 tag, bite counter shows 3rd drop dashed. look: no Lighting/Surfaces faults at frame 0; the `ground` flagged as fine-detail noise at pounce close-up; Never visible none. Ring change not re-looked; perf not run.
+**Next**: (1) Look at the clover ring after the colour change. (2) Flatten `ground` into hard painted bands and toon-ify `round-trees*`/`oaks*` with ink hulls. (3) Cut triangles (sheep-ink hulls, 242k), enlarge the wolf at frame 0 (1.2%), soften ground detail up close.
+**Open**: Lose card (3rd bite ending) not seen by itself; `div#paper` grain stays over the canvas at 0.55 (deliberate look); the 3-bite local game unplayed.
