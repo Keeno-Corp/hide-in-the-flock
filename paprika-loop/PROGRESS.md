@@ -3317,3 +3317,9 @@ SCORE: 8.6
    - **Check:** `feel` on the pounce event shows a stronger camera change at the reveal.
 
 SCORE: 8.5
+
+## Iteration 85
+**Did**: `game.js` (after the `$('cap')` line in the frame loop): `div#vig` pulses opacity 0.45±0.25 while `wolf.state==='stalk'` targets the player in solo, else 0 (not during pounce/result, which set it themselves).
+**Saw**: `{action:"pounce",target:"human"}` reaches `pounce.ph:"reveal"` at frame 79; the look shows `wool` (0.93%), HUMAN! GOTCHA and `div#tag` (cut off at the left edge, "PLAYER 1"), with no console errors. Stalk via `{state:{susp:2,wolf:{cd:0}}}` + wait 40: `div#vig` on at opacity 0.2, toast and caption both shown, no overlap. 76 sheep, 459 objects, "Never visible: none".
+**Next**: (1) `div#tag` is clipped at x=-62 during the reveal, so clamp it on screen; (2) a 0.4 s freeze-frame and `shake` on the human reveal; (3) a stalk audio cue louder than `wind`.
+**Open**: the wool burst shows as `wool` but I never checked its colour on a zoom.

@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 84
-**Did**: `game.js` pounce leap-end: added a 260-flake `wool.emit` (speed 8, life 2.8) above the bitten sheep when `p.human`, on top of the existing 160+30 bursts. Not run in a browser this session.
-**Saw**: no look run; only a one-line edit.
-**Next**: (1) `interact {action:"pounce",target:"human"}`, wait 60, look: flakes around `div#tag`; (2) dash ring colour sample; (3) stalk vignette/audio cue.
-**Open**: the new burst is unseen; check for console errors.
-
 ### Judge 84
 
 **Session 84 verdict.** I opened the page and forced `{action:"pounce",target:"human"}` with `wait:60`, then looked again after `wait:50`. I also ran `perf` once. I did not see the reveal or the new 260-flake wool burst, so that item is still unverified.
@@ -33,3 +27,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** `feel` on the pounce event shows a stronger camera change at the reveal.
 
 SCORE: 8.5
+
+## Iteration 85
+**Did**: `game.js` (after the `$('cap')` line in the frame loop): `div#vig` pulses opacity 0.45±0.25 while `wolf.state==='stalk'` targets the player in solo, else 0 (not during pounce/result, which set it themselves).
+**Saw**: `{action:"pounce",target:"human"}` reaches `pounce.ph:"reveal"` at frame 79; the look shows `wool` (0.93%), HUMAN! GOTCHA and `div#tag` (cut off at the left edge, "PLAYER 1"), with no console errors. Stalk via `{state:{susp:2,wolf:{cd:0}}}` + wait 40: `div#vig` on at opacity 0.2, toast and caption both shown, no overlap. 76 sheep, 459 objects, "Never visible: none".
+**Next**: (1) `div#tag` is clipped at x=-62 during the reveal, so clamp it on screen; (2) a 0.4 s freeze-frame and `shake` on the human reveal; (3) a stalk audio cue louder than `wind`.
+**Open**: the wool burst shows as `wool` but I never checked its colour on a zoom.

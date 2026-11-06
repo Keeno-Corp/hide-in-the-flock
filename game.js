@@ -740,6 +740,7 @@ function step(rdt) {
   if (toastT > 0) { toastT -= rdt; if (toastT <= 0) $('toast').style.opacity = 0; }
   if (mode === 'solo' && T > 175 && eatenCount() < 3 && !result) { $('time').style.color = '#ff6a5a'; } else $('time').style.color = '';
   if (!pounce.ph && wolf.state !== 'stalk' && !result) $('cap').style.opacity = 0;
+  if (!pounce.ph && !result) $('vig').style.opacity = (wolf.state === 'stalk' && wolf.target && wolf.target.player && mode === 'solo') ? 0.45 + 0.25 * Math.sin(clock * 7) : 0;
   if (result && pounce.ph === null) { /* result overlay stays */ }
   if (!pounce.ph && !result) { $('bt').style.height = $('bb').style.height = 3 * cam.punch + 'vh'; }
   // clouds
