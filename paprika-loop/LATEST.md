@@ -1,66 +1,67 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-### Judge 27
-
-**Judge verdict, session 27**
-
-1. **Looks as LOOK.md says: 8.**
-   - The h230 cell shows the sea, `cliff`, `pines*`, `wolf-rock`, `rocks*` and the `sheep*` flock in bright low-poly colours. The sheet reports no `Lighting:` or `Surfaces:` lines.
-   - Saturation drops to 25–26% in h200, h230 and ai150. The new `saturate(0.6)` filter probably explains part of that. I did not sample a quiet play-camera moment, so I can't separate the filter from the scene.
-
-2. **Plays as DESIGN.md says: 8.**
-   - I carried this forward from session 26 and did not re-run `interact` this session.
-   - The pounce was forced with `act`. No full round has been played with real keys for several sessions.
-
-3. **Clip moment: 9.**
-   - **Human reveal:** h100 reads big. It shows the "HUMAN!" caption, the red "GOTCHA", "PLAYER 1 has been found.", the PLAYER 1 `tag` and the wool burst.
-   - **Replay beat:** the camera pulls back and desaturates, and "▶ REPLAY" appears by h230. h200 is still close with the banner up, so the zoom-out is staged and not a hard cut. This closes last session's replay item.
-   - **AI reveal:** ai150 shows the `wolf` filling the frame, with "AI SHEEP", "baa?" and "Bite wasted."
-   - **Remaining gap:** the "baa?" bubble sits on top of the "SHEEP" lettering in ai150 and covers the "E".
-
-4. **Looks like refs/01.jpg: 9.**
-   - The sea, `cliff`, `pines*`, sand, clouds and `wolf-rock` all show in h230 and h200.
-   - The reveal desaturation makes the picture duller than the ref until it clears.
-
-5. **Solo fun and fair: 8.**
-   - SUSPICION, the `clover` ×5 rings, the caption voice, and win/lose with restart are present.
-   - I did not play a full round.
-
-6. **Local 2-player: 8.**
-   - Carried over from earlier sessions. I did not re-run it.
-
-7. **`window.__game`, no build, ~100 sheep: 8.**
-   - `perf` gives 118 ms per frame on SwiftShader with host load 6.3, so it says nothing about a real GPU.
-   - It reports 76 draw calls, 102.7k triangles and 0 MB of assets.
-   - The canvas CSS filter is untested on real hardware.
-
-8. **Juice: 8.**
-   - Captions: "Even in nature, nobody blends in forever." and "A completely innocent sheep. Awkward."
-   - I did not test sound this session.
-
-9. **Works at any window size, HUD readable: 8.**
-   - The desktop HUD is readable and does not overlap the reveal.
-   - The phone reveal check (`div#reveal` overflow) is still unverified.
-
-10. **Faults: 8.**
-    - There are no console errors and no `Never visible` object. The `perf` figure is not a fault on a software renderer.
-    - The phone overflow check is still open.
-
-**Next:**
-1. **Play a full solo round with real keys (asked again).**
-   - **Do:** walk to a `clover` and graze. Let suspicion rise and a natural pounce happen within the first minute. Then reach the win or lose screen and press `KeyR`. Fix whatever feels unfair or unclear.
-   - **Check:** `interact` with `until` on the win/lose state, then `look`. It should show the end screen, and after `KeyR` a fresh round.
-2. **Verify the reveal on phone (asked again).**
-   - **Do:** run `look` with `sheet` of `pounce human` at 100 and 230 frames, opened at 390×844 (`open` with `size` [390, 844]).
-   - **Check:** `div#reveal` is no longer reported cut off, and the REPLAY tag and PLAYER 1 `tag` sit clear of the HUD.
-3. **Fix the "baa?" bubble covering the "SHEEP" lettering.**
-   - **Do:** move the bubble to the wolf's head area, below the banner caption.
-   - **Check:** `look` `sheet` of `pounce ai` at 150 frames. "SHEEP" should read in full and the bubble should sit over the `wolf`.
-
-SCORE: 8.2
-
 ## Iteration 28
 **Did**: game.js reveal: the "baa?" `#bubble` top is clamped to at least 60% of innerHeight, so it no longer covers the banner lettering ("AI SHEEP").
 **Saw**: `look` sheet at 390x844 (pounce human at 100 and 230 frames, pounce ai at 150 frames): no `Lighting:`/`Surfaces:` lines. "AI SHEEP" reads in full and the bubble sits over the `wolf`. In h100 and h230 the GOTCHA banner, REPLAY tag and PLAYER 1 `tag` all fit and clear the HUD. Saturation is 23-35% (the reveal filter lowers it). `perf` not run.
 **Next**: (1) full solo round with real keys through to the win/lose screen and `KeyR` (still not done); (2) check the bubble clamp at desktop size; (3) the reveal filter may cost fps on a weak GPU, so consider a lighter overlay instead.
 **Open**: no full round played with real keys again; the reveal canvas CSS filter is untested on a real GPU.
+
+### Judge 28
+
+**Judge verdict, session 28**
+
+1. **Looks as LOOK.md says: 8.**
+   - The play camera shows the `sea`, `cliff`, `pines*` ×126, `sand`, `cloud` ×29, `wolf-rock`, `rocks*` and the `sheep*` flock, all bright and low-poly. The look reports no `Lighting:` or `Surfaces:` lines.
+   - The lose screen has a grey band across the top (`div.band`, 25% of the canvas) and a `div#vig` vignette over the whole canvas. Saturation is 40%.
+
+2. **Plays as DESIGN.md says: 8.**
+   - I played a real round with held keys (KeyD, KeyW) and no forced `act`. At t=25 the wolf pounced and ate the `player` (susp 1.23), with `wolf.state` "done" and pose "land". That gives `result: "lose"` and the EATEN screen.
+   - KeyR restarted a fresh round: bites back to 3, `player` reset to (0, 1.5), and the wolf back to "crouch" on its rock.
+   - I did not reach a win, so the win screen is still unseen.
+
+3. **Clip moment: 9.**
+   - A natural pounce landed in 25 s, well inside the first minute.
+   - The PLAYER 1 `tag` sits over the eaten sheep. The sound log shows `boom`, `stab1` to `stab3`, `thud` and `hit` in order.
+   - The "baa?" bubble clamp from session 28 was not re-checked at desktop size.
+
+4. **Looks like refs/01.jpg: 9.**
+   - The `sea`, `cliff`, `pines*`, `sand`, `cloud` and `wolf-rock` are all in the play-camera frame.
+   - The grey band and vignette make the lose frame duller than the ref.
+
+5. **Solo fun and fair: 8.**
+   - The SUSPICION bar, the `clover` ×4 rings and the clover counter are readable.
+   - The round ended with 0/3 clovers and susp 1.23 after only walking, so a player who doesn't graze loses quickly. That reads as fair.
+   - The wolf took 2 bites in 25 s with `bites` at 2 (the other bite was an AI sheep, as the "decoys" count suggests), so I could not tell whether it hunts too fast.
+
+6. **Local 2-player: 8.**
+   - Carried over from earlier sessions. I did not re-run it this session.
+
+7. **`window.__game`, no build, ~100 sheep: 8.**
+   - The page is plain, starts playing on load, and `observe` works.
+   - `perf` gave 121 ms per frame at host load 4.2. That is a software renderer, so it is no signal. It reports 76 draw calls, 102.7k triangles and 0 MB of assets.
+   - The reveal canvas CSS filter has still not been timed on a real GPU.
+
+8. **Juice: 8.**
+   - 43 sounds started in one round: `baa`, `baa2`, `wind`, `boom`, `stab*`, `thud`, `hit` and `womp`. The sheep also visibly bob.
+   - The lose screen reads "The wolf got you · 0/3 clovers · R to play again · M to switch mode".
+
+9. **Works at any window size, HUD readable: 8.**
+   - At 1280×800 the HUD has 0 overlap and nothing cut off.
+   - The phone sheet in iteration 28 showed no overflow.
+
+10. **Faults: 8.**
+    - There are no console errors and no `Never visible` object. `perf` is not a fault on a software renderer.
+    - The `player` is drawn by its own shader, so the ID image cannot find it. That is by design, not a fault.
+
+**Next:**
+1. **Play a full winning round.**
+   - **Do:** take the player to each `clover` and hold KeyE until all three clovers are collected, then reach the win state.
+   - **Check:** `interact` with `until: {result: "win"}`, then `look`. It should show a win screen with a restart prompt, matching the lose screen's quality.
+2. **Lighten the reveal and lose overlays.**
+   - **Do:** reduce `div.band` and `div#vig` so the end screen is not duller than refs/01.jpg. Keep the saturation drop short and let it recover.
+   - **Check:** `look` with `sample` at about (200, 600), where grass sits on the lose screen. It should be a vivid green.
+3. **Keep the second bite from landing quickly.**
+   - **Do:** give the wolf a longer cooldown after an AI-sheep bite, so a player who blends in survives well past the first minute.
+   - **Check:** `interact` that grazes for 90 s and checks `wolf.state` and `bites` with `expect`. It should show bites still at 3 or 2 and no `result` yet.
+
+SCORE: 8.2
