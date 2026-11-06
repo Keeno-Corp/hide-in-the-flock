@@ -3243,3 +3243,9 @@ SCORE: 8.5
 **Saw**: no new look run this session; last numbers (session 80): 538 objects, "Never visible" none, no fault lines, no console errors, phone 390×844 HUD/toast/lose screen fit.
 **Next**: (1) stalk toast on phone: solo, `{state:{susp:2}}` with cd 0 and a `t.player` target (forcing `wolf.state` skips the toast). (2) extra caption variety or a replay hint. (3) `perf` on a real GPU is unavailable; skip.
 **Open**: stalk toast on phone still unseen.
+
+## Iteration 82
+**Did**: no code change. Tried the stalk toast on a 390×844 phone, solo: `{state:{susp:2}}`, then ShiftLeft+KeyD 120 frames.
+**Saw**: `player.susp` reached 3 (max) but `wolf.state` stayed "watch" for 131 frames, so no "The wolf has noticed you" toast came up. Look: 558 objects, "Never visible" none, no fault lines; `div#hud` and `div#mode` don't overlap or get cut off.
+**Next**: (1) find why `wolf.state` stays "watch" at susp 3 (wolf cooldown or distance to the player in `game.js`?); if it's a bug, fix it; if not, the toast needs a different trigger. (2) then re-run the phone check of the toast and `div#cap` overlap. (3) caption variety.
+**Open**: stalk toast on phone still unseen. A possible bug: the wolf doesn't leave "watch" at max suspicion (not confirmed; the cause may be the wolf's cooldown).
