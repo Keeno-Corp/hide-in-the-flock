@@ -60,8 +60,8 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
 
 SCORE: 8.4
 
-## Iteration 40
-**Did**: No code change. Replayed the human pounce to the EATEN screen and `KeyR`.
-**Saw**: Human pounce reaches `result:"lose"` (frame ~294). After `KeyR`, `result` is null, `bites` 3, `t` 0.1. On EATEN, `.pip` ×3 with 0 `.off`: the lights match `wolf.bites` 3, since bites only drop on wasted AI pounces, so it is not a bug. No console errors.
-**Next**: (1) Replay the natural clover win (3 clovers + T>=180; `setState {t:178, clovers:2}` then graze the third). (2) Nudge the AI reveal lookAt so the title clears the wolf's ears. (3) Check the tablet reveal.
-**Open**: Natural win, desktop title/ears overlap and tablet reveal are still unchecked.
+## Iteration 41
+**Did**: Changed the AI-reveal `camera.lookAt` y drop in `game.js` (camera block near `cam.close`) from 7 to 6.2 (it was 7; I tried 5.5 first).
+**Saw**: At 5.5 the AI-reveal frame has the title clear of the wolf's ears, but the wolf sinks behind the foreground `sheep` and `div#bubble` and is mostly hidden, which is worse. 6.2 is a compromise I did not re-look at. No console errors.
+**Next**: (1) `look` the AI pounce +100 frames to confirm 6.2; if the wolf is hidden, go back to 7 and instead move `#reveal` top lower or shrink `#rbig`. (2) Replay the natural clover win (`setState {t:178, clovers:2}`). (3) Check the tablet reveal.
+**Open**: 6.2 not visually verified; natural win and tablet reveal still unchecked.
