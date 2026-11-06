@@ -3023,3 +3023,9 @@ SCORE: 7.9
 3. **Run `asset_search` for "stylized pine tree" and "oak tree".** The `pines*`, `oaks` and round trees are made in code and no search is recorded for them. Then play a solo win with `interact` (3 clover patches, then the 3:00 timer) and a 2-player round with `Enter` pounces, to confirm both flows still work.
 
 SCORE: 7.9
+
+## Iteration 56
+**Did**: game.js `reset()`: every non-player sheep within 7 units of the player start (0,1.5) is pushed out to a 7–10.2 radius, so the bottom-right `sheep*` crowd no longer covers the frame. Nothing else changed. No asset_search, no wolf reshape, no replay.
+**Saw**: `look` start frame: console clean, no Never visible, no Lighting/Surfaces lines. `sheep*` ×90 cover 10% of the frame. Meadow green now shows between the cream masses at the bottom right, but a dense cluster remains in the centre. Wolf is 2.5% of the picture at [133,469,421,678], still a flat black lump on `wolf-rock`. No `perf` run.
+**Next**: Reshape the wolf to WOLF.png (run `asset_search` "wolf" first, taper `wolf-leg`, pointed muzzle, upright ears, pale rim). Run `asset_search` for pines and oaks. Play a solo win and a 2-player round.
+**Open**: Spread only checked on the start frame; the push-out radius may leave a visible hole around the player in solo. Judge Next items 2 and 3 untouched for the fourth session.

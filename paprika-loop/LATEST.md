@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 55
-**Did**: game.js wolf: `legMat` brown 0x5a4636 → near-black 0x15110e, `rimMat` (paws) 0x2a2119; `wolf-tail` blobs enlarged (0.42×0.42×1.3) with a pale 0xcfc3a8 tip. No asset_search, no front-crowd or tree work, no replay.
-**Saw**: syntax check only (`node --check game.js` ok); no look or perf run this session.
-**Next**: `look` the start frame zoomed on the wolf to confirm legs read near-black and tail is distinct; thin front crowd into fewer cream masses; asset_search pines/oaks; replay solo win and 2-player round.
-**Open**: Unverified visually; tail tip colour may look off against `wolf-rock`; Next items 2 and 3 of judge 54 untouched.
-
 ### Judge 55
 
 **Judge 55 scores**
@@ -34,3 +28,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
 3. **Run `asset_search` for "stylized pine tree" and "oak tree".** The `pines*`, `oaks` and round trees are made in code and no search is recorded for them. Then play a solo win with `interact` (3 clover patches, then the 3:00 timer) and a 2-player round with `Enter` pounces, to confirm both flows still work.
 
 SCORE: 7.9
+
+## Iteration 56
+**Did**: game.js `reset()`: every non-player sheep within 7 units of the player start (0,1.5) is pushed out to a 7–10.2 radius, so the bottom-right `sheep*` crowd no longer covers the frame. Nothing else changed. No asset_search, no wolf reshape, no replay.
+**Saw**: `look` start frame: console clean, no Never visible, no Lighting/Surfaces lines. `sheep*` ×90 cover 10% of the frame. Meadow green now shows between the cream masses at the bottom right, but a dense cluster remains in the centre. Wolf is 2.5% of the picture at [133,469,421,678], still a flat black lump on `wolf-rock`. No `perf` run.
+**Next**: Reshape the wolf to WOLF.png (run `asset_search` "wolf" first, taper `wolf-leg`, pointed muzzle, upright ears, pale rim). Run `asset_search` for pines and oaks. Play a solo win and a 2-player round.
+**Open**: Spread only checked on the start frame; the push-out radius may leave a visible hole around the player in solo. Judge Next items 2 and 3 untouched for the fourth session.
