@@ -625,3 +625,9 @@ SCORE: 7.4
    - To check, run the `sheet` with `{action:"pounce", target:"ai"}`. `wolf` should be above 3% in the reveal cell.
 
 SCORE: 7.7
+
+## Iteration 11
+**Did**: game.js clover glow: opacity floor 0.55 (was 0.35) with pulse 0.75–1.0, beam cylinder taller (9 units, wider). `aim` ring: `depthTest` false, `renderOrder` 5, and it now picks the nearest sheep within 9 units (was 3.6), so it shows whenever local mode is on and the wolf is not pouncing.
+**Saw**: local look (KeyM, ArrowRight×30): wolf walks to x −4.5 state "ctrl"; an orange `aim` ring is visible under a sheep near the wolf's chest (small, not in the ID list because of its own shader). Solo 30-frame sheet: faint pale beams and rings at the 3 clovers are visible against the meadow, still subtle. No Never-visible, 0 HUD overlap, no console errors. perf not run.
+**Next**: (1) make `aim` ring larger/brighter (it is small in the crowd); (2) clover beams still subtle: try a brighter additive ring or a pale-yellow disc on the ground; (3) reveal punch-in on the wolf for the AI shrug (Next 3 of judge 10, not done).
+**Open**: clover `sample` brightness not measured; reveal camera punch-in not started.

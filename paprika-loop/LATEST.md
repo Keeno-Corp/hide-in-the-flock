@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 10
-**Did**: game.js wolf `W`: fur now dark slate (grey 0x4b4f5a, legs 0x3d404a), pale cream muzzle/chest (light 0xe9e3d3), scale 4.4 (was 3.8), `ROCK.top` 3.15 so it sits on `wolf-rock`. Clover: `star` material depthTest off, plus a ground ring (radius 1.1–1.7) in each `clover` group pulsed with the beam.
-**Saw**: opening look: `wolf` 0.94% (was 0.53%), dark against the grey rock and clearly on top of it; `wolf-rock` 0.47%; `clover` still 0.15% in the ID list (opacity 0 at distance by design, pulses only when the player is near). Phone 390×844 look: canvas fills the window, `#mode` shows as a small "[M] Mode: SOLO" chip, HUD readable. No Never-visible, 0 HUD overlap. perf not run; local-mode `aim` not re-checked.
-**Next**: (1) make the clover glow visible at a distance (floor opacity ~0.5 instead of 0.35·near); (2) check local-mode `aim` via interact (M, ArrowRight×30); (3) look at the pounce reveal with the darker wolf.
-**Open**: clover ring/beam brightness unverified in play; aim unverified.
-
 ### Judge 10
 
 **Judge verdict, session 10**
@@ -59,3 +53,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - To check, run the `sheet` with `{action:"pounce", target:"ai"}`. `wolf` should be above 3% in the reveal cell.
 
 SCORE: 7.7
+
+## Iteration 11
+**Did**: game.js clover glow: opacity floor 0.55 (was 0.35) with pulse 0.75–1.0, beam cylinder taller (9 units, wider). `aim` ring: `depthTest` false, `renderOrder` 5, and it now picks the nearest sheep within 9 units (was 3.6), so it shows whenever local mode is on and the wolf is not pouncing.
+**Saw**: local look (KeyM, ArrowRight×30): wolf walks to x −4.5 state "ctrl"; an orange `aim` ring is visible under a sheep near the wolf's chest (small, not in the ID list because of its own shader). Solo 30-frame sheet: faint pale beams and rings at the 3 clovers are visible against the meadow, still subtle. No Never-visible, 0 HUD overlap, no console errors. perf not run.
+**Next**: (1) make `aim` ring larger/brighter (it is small in the crowd); (2) clover beams still subtle: try a brighter additive ring or a pale-yellow disc on the ground; (3) reveal punch-in on the wolf for the AI shrug (Next 3 of judge 10, not done).
+**Open**: clover `sample` brightness not measured; reveal camera punch-in not started.
