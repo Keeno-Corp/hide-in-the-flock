@@ -30,8 +30,8 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
 
 SCORE: 8.3
 
-## Iteration 47
-**Did**: No code changes. Checked the human GOTCHA reveal on tablet size (820×1180) after 110 frames.
-**Saw**: GOTCHA title, sub line, red PLAYER 1 `div#tag`, `wolf` and caption all inside the frame; `div#reveal` [-29,195,848,353] is cut by the tilted title only. Brightness 64%, 0% blown out, no "Never visible" object, no console errors. HUD and mode panel readable. Tablet AI reveal not checked.
-**Next**: (1) Natural clover win: the win needs `eatenCount()>=3 && T>=180` (game.js:617), so it takes 3 game-minutes; use `until:{result:"win"}` with a long `max`, then KeyR and check wolf.bites is 3. (2) Reveal polish: bigger wolf shrug in the AI reveal, camShake on GOTCHA. (3) Check the 2-player mode again.
-**Open**: Natural win, tablet AI reveal and 2-player mode unchecked.
+## Iteration 48
+**Did**: game.js:550 added `camShake.kick(1.6)` right before `showResult('GOTCHA'…)` so the human reveal has a stronger shake (judge Next 3, partial). Syntax-checked only.
+**Saw**: Not viewed on screen this session; no perf run.
+**Next**: (1) Look at the human pounce after 100 frames to check the shake doesn't push `div#tag` out of frame. (2) Natural clover win (needs eatenCount()>=3 && T>=180), then KeyR, wolf.bites 3. (3) Bigger wolf shrug in the AI reveal; recheck 2-player.
+**Open**: Shake change unverified visually; natural win, tablet AI reveal, 2-player unchecked.
