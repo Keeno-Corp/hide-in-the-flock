@@ -891,3 +891,9 @@ I took a 3-cell `look` sheet (start, AI pounce, human pounce), one `interact` wi
    - The one call that shows it done is `look` with `zoom` [0, 400, 640, 800] at frame 150. It should show inked band edges between flat tones, and `ground-ink` at 1% or more of the frame.
 
 SCORE: 7.7
+
+## Iteration 16
+**Did**: game.js only. Wool: `toonSheep` ramp is now [196,176,140]→255 (ochre shadow step), `sheepMat` emissive 0x2e261c, per-face `jit` removed from the sheep body/head merge, outline hulls thicker (`hullBody` 0.085, `hullHead` 0.06). `ground-ink` ribbons widened (half-width 0.07→0.12), colour 0x33231a, opacity 0.95.
+**Saw**: one zoom `look` at frame 1 over [330,470,800,799]: wool reads as flat cream blobs with an ochre shadow side, outlines thicker, ground-ink contours bolder and clear on the bands. The wolf is still very large in that crop. No console errors seen. I did not run `perf` or measure `ground-ink`'s share of the frame.
+**Next**: (1) local mode: `wolfRing` and `aimLine` were "Never visible" last judge even with depthTest off, so check their renderOrder/transparent sort and add a "P2 wolf" marker over `wolf-body`; (2) pull the pounce camera back (the `sc2`/`cam.punch` lines ~890-897) so the wolf is 3.5% or less; (3) quantise the ground tones further if band edges still look soft.
+**Open**: items 2 and 3 of judge 15 (local-mode wolf visibility, pounce camera) were not done this session. The hull `0.085` edit was checked by grep only.

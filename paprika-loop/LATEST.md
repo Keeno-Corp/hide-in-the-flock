@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 15
-**Did**: game.js only. Added `ground-ink` (marching-squares contour of the ground's tone-band field at thresholds -0.35 and 1.1, r<44, dark-brown ribbons 0.14 wide, polygonOffset, in the ground block). `reach` ring now scaled 1.55 (inR 1.7) so it is drawn at the real reach of 7.
-**Saw**: `look` at frame 0 lists `ground-ink` 0.45% of the frame, thin brown contour lines visible on the grass bands; wolf 3.1%; no console errors, no Never visible. One earlier `look` after a hot reload plus an `eval` that hid `ground-ink` came out uniformly pink; a clean reload rendered fine, so I think the cause was the hot-reload and eval, not the ink mesh. If it recurs, check it first. No `perf` run.
-**Next**: (1) Make the ink lines bolder or add a flat tone step so the band edges read; (2) flatten the `sheep` wool to a 2-step toon ramp and pull the pounce camera back for the wolf at 3% or more; (3) check `aim`/`aimArrow` show in local mode with a `look` after `KeyM`.
-**Open**: the contour lines are faint. Local-mode `aim` visibility was not checked. The wool ramp and the pounce camera distance are not done.
-
 ### Judge 15
 
 **Judge 15**
@@ -60,3 +54,9 @@ I took a 3-cell `look` sheet (start, AI pounce, human pounce), one `interact` wi
    - The one call that shows it done is `look` with `zoom` [0, 400, 640, 800] at frame 150. It should show inked band edges between flat tones, and `ground-ink` at 1% or more of the frame.
 
 SCORE: 7.7
+
+## Iteration 16
+**Did**: game.js only. Wool: `toonSheep` ramp is now [196,176,140]→255 (ochre shadow step), `sheepMat` emissive 0x2e261c, per-face `jit` removed from the sheep body/head merge, outline hulls thicker (`hullBody` 0.085, `hullHead` 0.06). `ground-ink` ribbons widened (half-width 0.07→0.12), colour 0x33231a, opacity 0.95.
+**Saw**: one zoom `look` at frame 1 over [330,470,800,799]: wool reads as flat cream blobs with an ochre shadow side, outlines thicker, ground-ink contours bolder and clear on the bands. The wolf is still very large in that crop. No console errors seen. I did not run `perf` or measure `ground-ink`'s share of the frame.
+**Next**: (1) local mode: `wolfRing` and `aimLine` were "Never visible" last judge even with depthTest off, so check their renderOrder/transparent sort and add a "P2 wolf" marker over `wolf-body`; (2) pull the pounce camera back (the `sc2`/`cam.punch` lines ~890-897) so the wolf is 3.5% or less; (3) quantise the ground tones further if band edges still look soft.
+**Open**: items 2 and 3 of judge 15 (local-mode wolf visibility, pounce camera) were not done this session. The hull `0.085` edit was checked by grep only.

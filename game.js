@@ -184,7 +184,7 @@ const PLAY_R = 30;
   {
     const F = (x, z) => Math.sin(x * 0.09 + Math.sin(z * 0.07) * 2) + Math.sin(z * 0.11 - x * 0.05) * 0.8 + 0.32 * Math.sin(x * 0.55 + z * 0.35) * Math.sin(z * 0.5 - x * 0.3) + 0.15 * Math.sin(x * 1.3 + z * 0.9);
     const st = 0.7, R = 44, n = Math.round(R * 2 / st), V = [];
-    const seg = (a, b, c, d) => { const dx = d - b, dz = -(c - a), L = Math.hypot(dx, dz) || 1, ox = dx / L * 0.07, oz = dz / L * 0.07; const y1 = gh(a, b) + 0.06, y2 = gh(c, d) + 0.06; V.push(a - ox, y1, b - oz, a + ox, y1, b + oz, c + ox, y2, d + oz, a - ox, y1, b - oz, c + ox, y2, d + oz, c - ox, y2, d - oz); };
+    const seg = (a, b, c, d) => { const dx = d - b, dz = -(c - a), L = Math.hypot(dx, dz) || 1, ox = dx / L * 0.12, oz = dz / L * 0.12; const y1 = gh(a, b) + 0.06, y2 = gh(c, d) + 0.06; V.push(a - ox, y1, b - oz, a + ox, y1, b + oz, c + ox, y2, d + oz, a - ox, y1, b - oz, c + ox, y2, d + oz, c - ox, y2, d - oz); };
     for (const T of [-0.35, 1.1]) for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
       const x0 = -R + i * st, z0 = -R + j * st; if (Math.hypot(x0, z0) > R) continue;
       const v = [F(x0, z0), F(x0 + st, z0), F(x0 + st, z0 + st), F(x0, z0 + st)], P = [[x0, z0], [x0 + st, z0], [x0 + st, z0 + st], [x0, z0 + st]], pts = [];
@@ -192,7 +192,7 @@ const PLAY_R = 30;
       if (pts.length >= 2) seg(pts[0][0], pts[0][1], pts[1][0], pts[1][1]); if (pts.length === 4) seg(pts[2][0], pts[2][1], pts[3][0], pts[3][1]);
     }
     const gi = new THREE.BufferGeometry(); gi.setAttribute('position', new THREE.Float32BufferAttribute(V, 3));
-    const li = new THREE.Mesh(gi, new THREE.MeshBasicMaterial({ color: 0x4a3524, side: THREE.DoubleSide, transparent: true, opacity: 0.8, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 }));
+    const li = new THREE.Mesh(gi, new THREE.MeshBasicMaterial({ color: 0x33231a, side: THREE.DoubleSide, transparent: true, opacity: 0.95, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 }));
     li.name = 'ground-ink'; scene.add(li);
   }
 }
@@ -221,11 +221,11 @@ const flat = (mat = {}) => new THREE.MeshToonMaterial({ vertexColors: true, grad
 // ───────────────────────── sheep geometry (shared by all 101) ─────────────────────────
 const WOOL = PAL.wool, DARK = PAL.face;
 const sheepBodyGeo = mergeGeometries([
-  mk(ico(0.5, 1), WOOL, { p: [0, 0.62, 0], s: [1, 0.82, 1.3], jit: 0.04, soft: true }),
-  mk(ico(0.3, 1), WOOL, { p: [0.22, 0.98, 0.22], jit: 0.04, soft: true }), mk(ico(0.3, 1), WOOL, { p: [-0.22, 0.98, 0.1], jit: 0.04, soft: true }),
+  mk(ico(0.5, 1), WOOL, { p: [0, 0.62, 0], s: [1, 0.82, 1.3], jit: 0, soft: true }),
+  mk(ico(0.3, 1), WOOL, { p: [0.22, 0.98, 0.22], jit: 0, soft: true }), mk(ico(0.3, 1), WOOL, { p: [-0.22, 0.98, 0.1], jit: 0, soft: true }),
   mk(ico(0.46, 1), 0x4a5278, { p: [0, 0.36, 0], s: [0.95, 0.4, 1.25], soft: true }),
-  mk(ico(0.3, 1), WOOL, { p: [0, 1.0, -0.3], jit: 0.04, soft: true }), mk(ico(0.26, 1), WOOL, { p: [0.3, 0.7, -0.62], jit: 0.04, soft: true }),
-  mk(ico(0.26, 1), WOOL, { p: [-0.3, 0.7, -0.6], jit: 0.04, soft: true }),
+  mk(ico(0.3, 1), WOOL, { p: [0, 1.0, -0.3], jit: 0, soft: true }), mk(ico(0.26, 1), WOOL, { p: [0.3, 0.7, -0.62], jit: 0, soft: true }),
+  mk(ico(0.26, 1), WOOL, { p: [-0.3, 0.7, -0.6], jit: 0, soft: true }),
   ...[[-1, -1], [1, -1], [-1, 1], [1, 1]].map(([x, z]) => mk(box(0.09, 0.46, 0.09), 0x1c1514, { p: [x * 0.22, 0.21, z * 0.42] })),
 ]);
 const sheepHeadGeo = mergeGeometries([
@@ -237,8 +237,8 @@ const sheepHeadGeo = mergeGeometries([
 const SS = 1.8;
 const HEAD_P = new THREE.Vector3(0, 0.78, 0.6);
 const N_AI = 100, N = N_AI + 1;
-const toonSheep = (() => { const d = new Uint8Array([176,170,160,255, 255,255,255,255]); const t = new THREE.DataTexture(d, 2, 1, THREE.RGBAFormat); t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t; })();
-const sheepMat = flat({ emissive: 0x4a3e30, gradientMap: toonSheep }); const bodyIM = new THREE.InstancedMesh(sheepBodyGeo, sheepMat, N); bodyIM.name = 'sheep'; bodyIM.castShadow = false; bodyIM.frustumCulled = false;
+const toonSheep = (() => { const d = new Uint8Array([196,176,140,255, 255,255,255,255]); const t = new THREE.DataTexture(d, 2, 1, THREE.RGBAFormat); t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t; })();
+const sheepMat = flat({ emissive: 0x2e261c, gradientMap: toonSheep }); const bodyIM = new THREE.InstancedMesh(sheepBodyGeo, sheepMat, N); bodyIM.name = 'sheep'; bodyIM.castShadow = false; bodyIM.frustumCulled = false;
 const headIM = new THREE.InstancedMesh(sheepHeadGeo, sheepMat, N); headIM.name = 'sheep-heads'; headIM.castShadow = false; headIM.frustumCulled = false;
 { const tints = [0xffffff, 0xfaf0dc, 0xefe2c6, 0xffffff, 0xf2e6cf, 0xe0d4bb]; const c = new THREE.Color();
   for (let i = 0; i < N; i++) { const j = i === 0 ? 13 : i, t = tints[(j * 7 + (j >> 2)) % tints.length]; c.setHex(t).multiplyScalar(0.92 + ((j * 37) % 17) / 17 * 0.1); bodyIM.setColorAt(i, c); headIM.setColorAt(i, new THREE.Color(0xffffff)); } }
@@ -248,7 +248,7 @@ const hullBody = mergeGeometries([mk(ico(0.5, 1), WOOL, { p: [0, 0.68, -0.02], s
 const hullHead = mergeGeometries([mk(ico(0.28, 1), DARK, { p: [0, 0.02, 0.2], s: [1, 0.95, 1.2], soft: true })]);
 { const hull = (g, d) => { const h = g.clone(); h.deleteAttribute('color'); const p = h.attributes.position, n = h.attributes.normal; for (let i = 0; i < p.count; i++) p.setXYZ(i, p.getX(i) + n.getX(i) * d, p.getY(i) + n.getY(i) * d, p.getZ(i) + n.getZ(i) * d); return h; };
   const im = new THREE.MeshBasicMaterial({ color: 0x2b211c, side: THREE.BackSide, fog: false });
-  const ob = new THREE.InstancedMesh(hull(hullBody, 0.05), im, N), oh = new THREE.InstancedMesh(hull(hullHead, 0.04), im, N);
+  const ob = new THREE.InstancedMesh(hull(hullBody, 0.085), im, N), oh = new THREE.InstancedMesh(hull(hullHead, 0.06), im, N);
   ob.instanceMatrix = bodyIM.instanceMatrix; oh.instanceMatrix = headIM.instanceMatrix; { const pm = new THREE.MeshBasicMaterial({ colorWrite: false, depthWrite: false }); const pb = new THREE.InstancedMesh(hullBody, pm, N), ph = new THREE.InstancedMesh(hullHead, pm, N); pb.instanceMatrix = bodyIM.instanceMatrix; ph.instanceMatrix = headIM.instanceMatrix; pb.name = 'sheep-shadow'; ph.name = 'sheep-heads-shadow'; pb.castShadow = ph.castShadow = true; pb.frustumCulled = ph.frustumCulled = false; scene.add(pb, ph); }
   ob.name = 'sheep-ink'; oh.name = 'sheep-heads-ink'; ob.frustumCulled = oh.frustumCulled = false; scene.add(ob, oh); }
 
