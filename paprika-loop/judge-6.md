@@ -1,54 +1,51 @@
-**Judge verdict, session 6**
+**Judge 6**
+
+I did not run `asset_search`, the 3-bite 2-player play-through, a clover-grazing `interact`, or a win or lose card. I judged from `look` sheet cells and one `perf`.
+
+**Scores (Must have, in order)**
 
 1. **Looks as LOOK.md says: 7.**
-   - Check 1 holds: sky at (640,20) is #b7dae1.
-   - Check 2 holds: mid-screen (640,400) is #a2c749.
-   - Check 3 holds: `sheep*` ×101 and `wolf` ×4 are listed on screen.
-   - Check 4 holds: `#hud` and `#mode` have 0 overlap and 0 cut off, and there is no `Lighting:` line.
-   - `sand` is still 0.27% [405,302,741,321]. It is a pale line behind the rocks.
-   - The `pines` coplanar face at y=4.30 is still unfixed.
-2. **Plays as DESIGN.md says: 7.**
-   - I did not replay the solo loop or `interact` this session. This carries over from session 4. The `SUSPICION` bar, clover icons and bite dots show in the HUD.
-3. **The clip moment: 7.**
-   - The AI case reads well: a "BITE WASTED / AI SHEEP / Just a sheep. Bite wasted." banner, a "baa?" bubble, the wolf's bite dots dropping to 2, and a documentary caption ("A completely innocent sheep. Awkward.").
-   - The wolf at the pounce is a giant, flat-shaded brown slab whose arms stick out stiffly sideways. It reads as a T-pose, not a leap or a shrug.
-   - I saw the human-reveal banner (PLAYER 1 tag) only in earlier sessions. At frame 50 of the human pounce it had not shown yet. The pounce build-up is slow and the wolf covers half the frame, which makes the clip clumsy.
-4. **Looks like refs/01.jpg: 7.**
-   - The sea, `cliff`, `cloud` ×34, `pines*` ×136, `round-trees*` and bright meadow all show.
-   - `wolf-rock` is up to 0.64%, but the wolf is a brown lump on its right side, not clearly crouched on top.
-   - The beach is not a visible wedge.
-5. **Solo is fun and fair: 7.**
-   - The suspicion bar and the "Shift (suspicious!)" hint are there.
-   - The 3 `clover` objects are 0.15% of the frame, and there is no tutorial text to point at them.
-6. **Local 2-player: 6.**
-   - `aim` and `reach` are "Hidden by the game" in the idle look. I did not test them this session.
-   - The aim ring is still not clearly readable, which is the same open item from Iteration 6.
-7. **`window.__game`, no build, ~100 sheep: 7.**
-   - `__game` works, with its keys, actions and `observe`.
-   - `perf` reads 125 ms with 67 draw calls and 102k triangles. That is SwiftShader only, so it is not a fault.
-8. **Juice: 7.**
-   - Captions, banners, the "baa?" bubble and the wolf's walk, crouch and leap are all there.
-   - Sheep head bob is invisible at the play distance.
-9. **Works at any window size, HUD readable: 6.**
-   - The Iteration 6 fix (smaller HUD, `#mode` moved) was seen only as a phone cell in Iteration 6, and I did not re-run `viewports`.
-   - The laptop-size HUD is fine.
-10. **Faults: 6.**
-    - There are no console errors and no `Never visible` object.
-    - The `pines` coplanar face and the thin sand strip are still open.
-    - The wolf is oversized and stiff in the pounce.
+   - The sky, `ridge*` ×3, the sun disc, `pines*`, `oaks*` and the paper grain all hold.
+   - The `sheep*` now have ink rims (`sheep-ink`).
+   - They are still shaded, lumpy 3D clusters rather than flat cream shapes. The `ground` still has smooth shading with large soft bands.
+   - Both read as 3D game, not woodcut or gouache.
+2. **Compared with BOARD, LOOK.png and the turnarounds: 6.**
+   - The ink rims on the sheep close part of the gap to the turnarounds.
+   - The wolf is a dark silhouette. In the start cell its "subject wolf" share is 0.76%, so the 2.1% Iteration 6 measured is not what this frame shows.
+   - The biggest remaining style gap is the flat two-tone cream sheep and the hard-edged painted `ground`.
+3. **Clip moment: 8.5.**
+   - "pounce human" shows a low, wide leaping wolf with a caption, and the camera is closer than before.
+   - After 110 frames, the woodcut duotone freeze, `splash`, a tilted GOTCHA / HUMAN card in red ink and a PLAYER 1 ribbon are all on screen.
+   - The AI case shows "BAA? SHEEP. Just a sheep. Bite lost." with a `baa?` bubble, and the bite counter drops to 2.
+   - The weak spot is the pounce frame itself: the wolf is 1.3% of it, and there is no clear punch-in on the wolf and the target sheep.
+4. **Core loop and controls: 6.**
+   - The HUD shows TIME 2:59, GANTERS, WOLF BITES and SUSPICION. The `clover` rings are visible but low-contrast.
+   - The counter going up, the win card and the lose card remain unseen.
+5. **Local 2-player: 6.**
+   - I did not play the 3 bites this round, so this holds the previous 6.5 less a little for the wolf's small on-screen size.
+6. **UI typography: 8.5.**
+   - `div#hud` and `div#mode` are cream paper panels with ink borders and IM Fell and Alfa Slab type, and the caption lines are storybook.
+   - The mode panel's text is small.
+7. **Convention and performance: 6.5.**
+   - `perf` reads 287 ms per frame with 242k triangles and 50 draw calls, up from 167k last session. The host is a software renderer, so the frame time is not a budget signal.
+   - The triangle count is rising again, and the sheep ink hulls probably account for much of it.
+   - `div#paper` stays up over the canvas (opacity 0.55, still there after 5.2 s).
+8. **Juice: 6.5.**
+   - I did not check the sound or animation this round, so this holds the last score.
+
+**Faults: 7.5.** `look` reported no `Lighting:` or `Surfaces:` lines and nothing under `Never visible`. I did not read console errors this round.
 
 **Next:**
-1. **Make the sand beach a real wedge, and fix the `pines` coplanar face (asked again).**
-   - Beach: lower the far `ground` edge, or add a sand ring mesh at the shoreline in front of the rocks, so `sand` is above 1%.
-   - Pines: offset the duplicated faces at y=4.30 by 0.001 or delete the hidden one.
-   - To check, run `look` with `sample` at (640,310). It should read sand-coloured, not #ced5ba, and `sand` should be above 1%. The `Surfaces:` line should be gone.
-2. **Rework the wolf's pounce pose and size.**
-   - Make the wolf about 40% smaller in the pounce. Fold the limbs forward in the leap (front legs forward, hind legs back) so it does not read as a T-pose. Give it a pale muzzle and a dark nose.
-   - Add a clear shrug on a miss, with shoulders up and the head tilted.
-   - To check, run `look` with a `sheet` of the pounce at frames 20, 40 and 70 for `human` and `ai`. The wolf should fill less than a third of the frame, with a visible leap arc and the banner readable.
-3. **Make the local-mode `aim` ring and the clovers readable.**
-   - Make the `aim` ring 3–4 units wide, bright, pulsing, with a tint on the targeted sheep. Keep `reach` visible during the leap.
-   - Add a "find the clovers" hint line and a faint glow or sparkle on each `clover`.
-   - To check, run `interact` with `M` and ArrowRight ×30, with `look: true`. `aim` should be above 0.05% in the list. The `clover` share should rise above 0.3%.
+1. **Flatten the sheep and the `ground`, the biggest style gap.**
+   - Make the `sheep*` a flat two-tone cream (a toon or 2-step material with no smooth gradient) under the existing `sheep-ink`.
+   - Replace the soft shading on the `ground` with hard-edged painted shadow shapes.
+   - The check is `look` on frame 0 with `zoom` on the sheep cluster, which should show two flat tones and no gradient.
+2. **Punch the camera in on the pounce (asked again).**
+   - In "pounce human" at about frame 50, move the camera to a close three-quarter view on the wolf and the target sheep.
+   - The check is the sheet cell at wait 50, where the subject wolf share should be above 5%.
+3. **Prove the core loop.**
+   - Use `interact` to move the player onto a `clover` and hold E, expecting `clovers` > 0.
+   - Raise the `clover` ring contrast to a bright cream ring on a darker patch.
+   - Add an `interact` that wins (3 clovers) and one that loses (3 bites), and look at the stamped cards.
 
-SCORE: 6.7
+SCORE: 7.1

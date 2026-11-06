@@ -1,60 +1,52 @@
-**Judge verdict, session 19**
+Wolf in the local cell is 7% (target met); the wolf still reads as dark brown, not near black, in this tool.
+
+**Judge 19**
+
+I took a 4-cell `look` sheet (start, AI pounce, human pounce, local after `KeyM`) and one `perf`. There were no `Lighting:` or `Surfaces:` lines and no console errors. I did not run `interact` or `feel`, and I did not check the clovers, the lose card, the sound or other viewports.
+
+**Scores (Must have, in order)**
 
 1. **Looks as LOOK.md says: 8.**
-   - The `start` cell shows the sea, `cliff`, `sand`, `pines*` ×143, `wolf-rock`, `wolf`, the `sheep*` flock and `cloud` ×34. Brightness is 64%, saturation 44%, 0% near black.
-   - There are no `Lighting:` or `Surfaces:` lines.
-   - I did not read the `sand` share.
-
-2. **Plays as DESIGN.md says: 8.**
-   - The HUD shows TIME, the clovers, the WOLF BITES dots (3, then 2 after the AI pounce) and the SUSPICION bar.
-   - The end screen reads "EATEN … R to play again · M to switch mode".
-   - I did not run `interact` with keys this session.
-
-3. **Clip moment: 8.**
-   - The human cell shows a `wolf` fully in frame above the caption. It also shows the red PLAYER 1 tag, "HUMAN!" and a big "GOTCHA".
-   - The AI cell shows "AI SHEEP", "Just a sheep. Bite wasted.", the "baa?" bubble and the shrugging `wolf`.
-   - Lightened as asked: brightness is 52% and 51% (was 44%). Near black is still 9% in both cells (was 15%), so the target of under 8% is not met. The letterbox bars cause most of it.
-   - The `wolf` in the AI cell is half hidden behind the "baa?" bubble and the foreground pines.
-   - I did not check the sheep-shrink pop at the end of the reveal.
-
-4. **Looks like refs/01.jpg: 9.**
-   - The sea, `cliff`, `pines*`, `sand`, clouds and `wolf-rock` all show from the play camera, in a bright low-poly picture.
-   - The `after` cell is warm and tinted, which is slightly off the ref's blue sky.
-
-5. **Solo fun and fair: 8.**
-   - `SUSPICION`, the clover rings, the end screen with restart, and the "Even in nature, nobody blends in forever." caption are all present.
-   - I did not play a full round.
-
-6. **Local 2-player: 8.**
-   - This carries over from earlier sessions.
-   - I did not re-run it this session.
-
-7. **`window.__game`, no build, ~100 sheep: 8.**
+   - The `sky`, sun disc, `ridge*`, `ground-ink`, grain and cream `sheep*` wool read as a storybook frame.
+   - `pines*` and `round-trees*` are still faceted in their fills, and the `ground` has soft gradients.
+   - The tool still reports 0% near black. The wolf is the darkest shape but is not stark in the start frame.
+2. **Compared with BOARD, LOOK.png and the turnarounds: 7.5.**
+   - The start `wolf-body` is 2.5%, small and partly hidden behind `wolf-rock`.
+   - The biggest remaining style gap is the facet shading on the trees and the soft `ground`.
+3. **Clip moment: 9.**
+   - The human cell has the woodcut duotone, red/black ink splash, the "PLAYER 1" ribbon and the caption "And so the hidden one was found."
+   - The AI cell shows a huge `wolf-body` blob covering the top third (14%), with no readable silhouette, and a caption that does not say the bite was lost. I did not see the "SHEEP" card in this frame.
+4. **Core loop and controls: 7.5.** The HUD paper cards with ink borders read well and the suspicion caption is a storybook line. I did not walk, graze or check the clovers.
+5. **Local 2-player: 8.**
+   - `wolf-body` is down to 7% and sits in the target 4–7% band.
+   - The sheep are countable around it again, and the red cone and `wolfRing` read.
+   - The wolf still draws over the sheep and rock.
+6. **UI typography: 8.5.** The IM Fell panels and caption scrolls are in style. The top-right mode hint text is still small.
+7. **Convention and performance: 7.**
+   - `perf` gives 191,558 triangles, 57 draw calls and 0.63 MB of assets.
+   - The 277 ms frame comes from a software renderer on a host with load 4.6, so it is no signal.
    - `window.__game` is present.
-   - `perf` reads 124 ms on SwiftShader (host load 4.9), so it is no signal.
-   - It shows 76 draw calls, 102.7k triangles and 0 MB of assets.
+8. **Juice: 7.5.** Carried over. I did not run `feel` and did not hear the sound.
 
-8. **Juice: 8.**
-   - The banners, bubble, tag, captions and wool are strong.
-   - I did not check the sound.
-
-9. **Works at any window size, HUD readable: 8.**
-   - The HUD is readable at 1280 wide.
-   - I did not run `viewports`.
-
-10. **Faults: 9.**
-    - There are no console errors and no `Never visible` object.
-    - The only fault is the 9% near black in the reveal cells, covered under item 3.
+**Faults: 7.5.**
+- There were no console errors.
+- The AI-pounce wolf is a featureless blob that fills the frame.
+- The trees and `ground` are still smooth or faceted.
+- 0% near black.
 
 **Next:**
-1. **Get the reveal cells under 8% near black (asked again).**
-   - Make `#bt` and `#bb` 3vh or translucent, and lighten the dark foreground tint.
-   - Check with `look` `sheet` on `pounce human` and `pounce ai`, 150 frames each. The near-black share should read under 8% and brightness should stay above 52%.
-2. **Check the end of the reveal for a sheep pop, and keep the `wolf` readable in the AI cell.**
-   - Run `interact` `{action:"pounce", target:"human"}` with `frames: 200` and `look: true`. The `sheep*` should ease back to full size over about 0.3 s without a pop.
-   - In the AI reveal, move the "baa?" bubble above the `wolf`'s head so it no longer covers the body. Check with the same `look` `sheet`.
-3. **Add a short "replay" freeze frame after the reveal and drop `aimLine`.**
-   - After the reveal, add a 0.4 s freeze or zoom-back on the pounce moment with a "REPLAY" tag. This makes the 5-second clip land.
-   - Also run `look` with `viewports: ["phone","laptop"]` to check the HUD and reveal text at small sizes. This has not been run for several sessions.
+1. **Flatten the trees and the ground tones (asked again).**
+   - Last Open: this was not done.
+   - Set `soft:false` on the `round-trees*` and `oaks*` ico crowns.
+   - Quantise the `ground` vertex colours to 3 flat tones.
+   - The one call that shows it done is `look` with `zoom` [0, 100, 640, 450] at frame 150. It should show flat tree masses and no smooth gradients.
+2. **Make the pounce wolf readable and stark (asked again).**
+   - In the AI pounce, pull the camera back or scale `wolf-body` down so ears, legs and the yellow eye show instead of a blob.
+   - The wolf is still above the tool's near-black cut-off even after 0x0a0709. Check that the toon ramp or the fog and grain are not lifting it.
+   - The one call that shows it done is the AI-pounce `look` with `sample` on the wolf body. It should read below 20 per channel and "near black" should be above 1%.
+3. **Draw the local wolf over sheep only (asked again).**
+   - Replace `depthTest:false` on the local wolf with `renderOrder`.
+   - Trees and rocks should then occlude it.
+   - The one call that shows it done is the local sheet cell after `KeyM`. It should show `wolf-rock` in front of the wolf's paws.
 
-SCORE: 8.3
+SCORE: 7.9

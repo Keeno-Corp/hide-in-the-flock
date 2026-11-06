@@ -1,57 +1,52 @@
-**Judge verdict, session 25**
+Session 25 judge: I looked at one 3-cell sheet (start, human bite, AI bite), one zoom on the wolf, and ran `perf`. I didn't run `interact` or `feel`, and I didn't check sound or other viewports. There were no console errors and no `Lighting:` or `Surfaces:` lines.
 
 1. **Looks as LOOK.md says: 8.**
-   - The reveal frame shows the sea, `cliff`, `sand`, `cloud` ×12, `wolf-rock`, `rocks*` and the `sheep*` flock.
-   - Brightness is 60%, saturation 35–39%, and there are no `Lighting:` or `Surfaces:` lines.
-   - Saturation is a little lower than last session's 45%.
+   - The `sky` with its sun disc, the `ridge*` hills, the inked `oaks*` and pines, the paper grain and the cream `sheep*` read as a storybook.
+   - The tree faces in the zoom are still faceted low-poly inside the ink outline.
+   - The `ground` still has a hard yellow-to-green edge.
+   - Only 1% of the start frame is near black, and that is the wolf.
+2. **Compared with BOARD, LOOK.png and the turnarounds: 7.5.**
+   - The biggest style gap is still the wolf.
+   - In the zoom, `wolf-body` is a black mass with `wolf-rim` loops (brown arcs) in front of `wolf-rock`.
+   - The `wolf-leg` shards are crossing diagonals, with no head, snout, ears or four legs in profile.
+   - It looks nothing like the lean WOLF turnaround.
+   - The rim helps, but the wolf is a tangle.
+3. **Clip moment: 8.5.**
+   - The human bite shows a tilted "GOTCHA / HUMAN" card, a red "PLAYER 1" stamp, ink splash and woodcut duotone, with a storybook caption.
+   - The AI bite shows "BÀA? / SHEEP" with a "baa!" bubble and "Bite lost."
+   - Both read in 5 seconds.
+4. **Core loop and controls: 7.5.**
+   - I carry this over from the last judge, since I didn't play this session.
+   - The HUD shows the timer, bites and clover counters.
+   - The `clover` patches are still faint rings and hard to find, and have no leaf motif.
+5. **Local 2-player: 7.**
+   - I carry this over; I didn't check local mode this session.
+   - The wolf is the same black heap, so pounce targeting depends on `wolfRing`.
+6. **UI typography: 8.5.**
+   - The IM Fell panels and Alfa Slab stamps on cream have ink borders, and nothing overlaps at 1280×800.
+7. **Convention and performance: 7.**
+   - 195,618 triangles (unchanged), 74 draw calls, 0.63 MB of assets.
+   - The 295 ms frame is on SwiftShader, so it is not a signal.
+   - `window.__game` is present.
+   - The triangle count is high for flat painting.
+8. **Juice: 7.5.**
+   - The pounce and bite visuals and the stamps work.
+   - I didn't hear the sound.
 
-2. **Plays as DESIGN.md says: 8.**
-   - The HUD shows TIME, CLOVERS, WOLF BITES and SUSPICION, and the `clover` rings are on the meadow.
-   - The pounce was forced with `act`. I did not drive the keys or play a full round.
-
-3. **Clip moment: 8.**
-   - **Human reveal:** "HUMAN!", a big red "GOTCHA", "PLAYER 1 has been found." and the PLAYER 1 `tag` read clearly.
-   - **AI reveal:** "AI SHEEP", "Bite wasted.", the "baa?" bubble and the `wolf` shrug read. The `wolf` fills only about a quarter of the frame height at `ai150` on phone, where the target was about a third. Item 2 below was only partly met.
-   - **Missing REPLAY beat:** at frame 260 the `human260` cell still shows the GOTCHA banner and the PLAYER 1 tag. There is no zoom-back or "REPLAY" beat.
-
-4. **Looks like refs/01.jpg: 9.**
-   - The sea, `cliff`, `pines*`, `sand`, `cloud` and `wolf-rock` all show from the play camera.
-   - The picture is bright and low-poly.
-   - `wolf-rock` and the crouched `wolf` are not clearly visible at phone size.
-
-5. **Solo fun and fair: 8.**
-   - SUSPICION, the `clover` rings, the caption line and the win/lose screens are present.
-   - I did not play a full round.
-
-6. **Local 2-player: 8.**
-   - This carries over from earlier sessions. I did not re-run it.
-
-7. **`window.__game`, no build, ~100 sheep: 8.**
-   - `perf` reads 106 ms on SwiftShader (host load 5.0), so it is no frame-time signal.
-   - It shows 50 draw calls, 100.7k triangles and 0 MB of assets.
-
-8. **Juice: 8.**
-   - 10 sounds start on the pounce (boom, stab1–3, thud, hit), and the wool burst shows.
-   - The caption voice is funny.
-
-9. **Works at any window size, HUD readable: 9.**
-   - **Overlap fix:** at 390×844 `div#cap` [0, 762, 389, 779] now sits above `div#mode` [214, 797, 383, 835]. The "HTML over the canvas" line reports 0 overlap, so last verdict's Next item 3 is closed.
-   - **Cut-off flag:** `div#reveal` is still reported cut off at [-8, 397], but its text is intact.
-
-10. **Faults: 8.**
-    - There are no console errors and no `Never visible` object.
-    - The `perf` figure is not a fault on this software renderer.
-    - The only fault is the `div#reveal` cut-off by 8px on phone.
+**Faults: 7.5.** There were no console errors. The wolf is unreadable, triangles are unchanged and the clover patches are unfinished. Nothing was added this iteration (Iteration 25 only changed the rim colours).
 
 **Next:**
-1. **Add the REPLAY beat (asked again).**
-   - **Do:** after the reveal, hide `div#reveal`, ease the camera back to the play view, drop `aimLine`, and show a "REPLAY" tag.
-   - **Check:** `look` `sheet` of `pounce human` at 260 frames. The banner should be gone and the "REPLAY" tag visible. The current cell still shows "GOTCHA".
-2. **Make the AI shrug bigger (asked again).**
-   - **Do:** raise the close-up factor again, from 0.5 to about 0.7 for an AI target. Alternatively scale the `wolf` up during the shrug and add a head-shake.
-   - **Check:** `look` `sheet` cell `ai150` at 390×844. The `wolf` should span about a third of the frame height. It currently spans about a quarter.
-3. **Play a full solo round.**
-   - **Do:** playtest with real keys, from walking and grazing on a `clover` through suspicion rising to a pounce, then a win or lose screen and `KeyR`. Fix whatever feels unfair.
-   - **Also:** fix the 8px `div#reveal` overflow on phone. Use `left:0; right:0` or `width:100vw`, and check that the "HTML over the canvas" line no longer says cut off.
+1. **Rebuild the wolf as a profile silhouette (asked again).**
+   - The wolf is made in code from overlapping spheres, so first run `asset_search` for "wolf" or "dog standing low-poly" and see whether a GLB can be flattened to near-black.
+   - If none fits, rebuild the code wolf with a flat lean body, a pointed snout, two upright triangle ears and a tail, with four separated legs.
+   - Move it off `wolf-rock`, for example onto the ridge top beside the rock.
+   - Draw one thick ink rim around the whole silhouette instead of per-part `wolf-rim` loops.
+   - The one call that shows it done is `look` with `zoom` [250, 300, 650, 650]. It should show a snout, two ears and four legs in profile, with a visible gap between the legs.
+2. **Make the clover patches findable and storybook-drawn (asked again).**
+   - Draw each `clover` as an inked patch with a three-leaf motif larger than a sheep's foot, with a soft glow when the player is near.
+   - The one call that shows it done is `look` with `zoom` on a clover position. It should show inked leaf shapes.
+3. **Cut about 40% of the triangles.**
+   - `sheep` and `sheep-heads` use `ico(...,1)` per part, so lower the detail or drop `sheep-heads-ink` and `round-trees-ink`.
+   - Run `perf` with `variants` that hide those groups to see what each saves. The count should be about 120k or less, with the sheep silhouette unchanged.
 
-SCORE: 8.2
+SCORE: 7.7

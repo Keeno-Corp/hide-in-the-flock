@@ -1,55 +1,45 @@
-**Session 41 verdict.** I looked at the 6.2 `lookAt` change, the human reveal, the opening and `perf`. I did not replay the natural clover win, 2-player mode, or the phone and tablet reveals.
+**Session 41 verdict.** I ran a 2-cell sheet (start, human pounce), one local Enter bite and `perf` once. I didn't test a clover, KeyE, or the win and lose cards, so item 4 is carried over from earlier sessions, not re-scored.
 
-1. **Looks as LOOK.md says: 8.**
-   - The opening look has `sky`, `sea`, `cliff`, `sand`, `wolf-rock`, `pines*` ×139, `round-trees*` ×14 and `clover`.
-   - It shows no `Lighting:` or `Surfaces:` lines and no "Never visible" object.
-   - Brightness is 64%, saturation 44%, 0% blown out.
+1. **Looks as LOOK.md says: 7.5.**
+   - The `sheep*` now read cream with dark faces, so the warm cast is fixed.
+   - The `sky`, sun disc, `ridge*`, grain and the inked `pines*` and `oaks*` read as a storybook.
+   - `wolf-body` is a near-black shape but only 1.3% of the start frame.
+   - The hills and trees still carry soft gradients, and the sheep still have soft lumps instead of flat gouache.
 
-2. **Plays as DESIGN.md says: 8.**
-   - Forced pounces on `ai` and `human` both reach their reveal screens.
-   - `setState {t:178, clovers:2}` plus 60 frames left `result` null, so that shortcut does not trigger the win.
-   - `wolf.bites` is not in `observe()`, so I could not compare it with the bite lights.
-   - The natural clover win has now gone unchecked for the sixth session in a row.
+2. **Compared with BOARD, LOOK.png and the turnarounds: 7.**
+   - The sheep colour gap is mostly closed.
+   - The biggest remaining style gap is the gradient shading on `ridge*`, `pines*`, `oaks*` and `ground`. BOARD uses flat masses.
+   - The sheep's faces are small and the sheep sit in a crowd on the lower right.
 
-3. **Clip moment: 9.**
-   - The AI reveal (100 frames) shows "BITE WASTED", "AI SHEEP", "Just a sheep. Bite wasted.", the "baa?" `div#bubble` and the grey `wolf`.
-   - The 6.2 `lookAt` works: the "AI SHEEP" title now ends above the wolf's ears. The wolf is still visible between the foreground `sheep`, though partly crowded by them.
-   - The human reveal shows a red "GOTCHA", "PLAYER 1 has been found." and the red PLAYER 1 `div#tag` over the wolf, and it reads at a glance.
+3. **Clip moment: 9.5.** The human pounce shows the woodcut duotone, a big ink splash, a tilted "GOTCHA / HUMAN / PLAYER 1 has been found." card, a red "PLAYER 1" ribbon and the caption "It had a name, and the name was Player One." It reads clearly in a still.
 
-4. **Looks like refs/01.jpg: 9.**
-   - The opening look shows the sea, sand, pines, grey `cliff` and clouds, and the wolf on `wolf-rock`.
+4. **Core loop and controls: 7 (carried over).** The HUD (TIME, CLOVERS, WOLF BITES, SUSPICION) and the caption read well. The clover, KeyE, win and lose screens have gone untested for five sessions.
 
-5. **Solo fun and fair: 8.**
-   - `div#hud` has the suspicion bar, the clover and bite lights, and the timer. `topSusp` in the state shows which sheep the wolf suspects.
-   - Clover glows are visible on the opening look.
-   - The win screen was not seen.
+5. **Local 2-player: 8.** KeyM switched `mode` to local. Enter started a pounce at frame 1 and `bites` went from 3 to 2 at frame 81. The reveal phase ran and the sheet shows the pounce sound set (boom, stab, thud, baa).
 
-6. **Local 2-player: 8.**
-   - Carried over from earlier sessions; I did not re-run it.
+6. **UI typography: 8.5.** Cream paper panels with ink borders, IM Fell text and Alfa Slab stamps.
 
-7. **`window.__game`, no build, ~100 sheep: 8.**
-   - `observe` and the `pounce` and `startle` actions work, and there are 82 draw calls and 103k triangles.
-   - The 143 ms frame time is a software-renderer artefact (SwiftShader, host load 5.0), so it is no signal.
+7. **Convention and performance: 7.**
+   - `perf` reports 190,778 triangles, 81 draw calls and 0.63 MB of assets.
+   - The 308 ms frame is SwiftShader, so it is no signal.
+   - The triangle target of under 160k is still missed, and 260 ms of the frame is the main scene pass.
 
-8. **Juice: 9.**
-   - Baas, wind, stings and the documentary captions are in place. The caption line at the bottom is small but readable.
+8. **Juice: 8.** The pounce gives 11 sounds (boom, stab1-3, thud, hit, womp, baa). I didn't check the sheep animation this session.
 
-9. **Works at any window size, HUD readable: 8.**
-   - The `div#hud` panel and mode chip are tiny at 1280 wide.
-   - The phone and tablet reveals are still not checked.
-
-10. **Faults: 9.**
-    - There are no console errors and no "Never visible" objects.
+**Faults: 8.** No console errors, `Lighting:` or `Surfaces:` lines, and nothing marked `Never visible`. The only gaps are the untested paths and the triangle count.
 
 **Next:**
-1. **Check the reveal on phone and tablet (asked again).**
-   - **Do:** run `interact` with `{resize:[390,844]}`, then `look` with `sheet:[{steps:[{action:"pounce",target:"human"}],frames:110}]`. Repeat at 820×1180.
-   - **Check:** the "GOTCHA" title, `div#tag` and sub line sit inside the frame. If the title overflows, size it with `min(vw,vh)`.
-2. **Verify the natural clover win and restart (asked again).**
-   - **Do:** don't use the `t`/`clovers` state shortcut. Add `wolf.bites` and `clovers` to `observe()`, then walk to each `clover` and hold `KeyE`.
-   - **Check:** `interact` with `until:{result:"win"}` shows the win screen. After `KeyR`, `wolf.bites` is 3. The bite lights match `wolf.bites` on the EATEN screen.
-3. **Make the wolf stand out more in the AI reveal.**
-   - **Do:** clear the sheep in front of the wolf. Push nearby `sheep` outward during the reveal, or lift the camera slightly. Give the wolf a brief rim light or a bigger shrug.
-   - **Check:** `look` after the AI pounce plus 100 frames. The `wolf` silhouette should be fully clear of foreground `sheep`, and the "baa?" bubble should not overlap the sub line.
+1. **Run the clover, solo and win/lose passes (asked again, fifth time).**
+   - Use `observe` to get a clover position, then `look` with `zoom` on it. It should show three inked leaves.
+   - Run `interact` with KeyE held 120 frames and `trace` `cloverProgress.0`; it should rise from 0.
+   - Use `interact` with `state: {result:"win"}` and then `"lose"` and `look` at both cards. They should be stamped storybook cards with a restart prompt.
+2. **Flatten `pines*`, `oaks*`, `ridge*` and `ground` (asked again).**
+   - Use flat per-mass colour with no vertex gradient.
+   - Proof: `look` with `sample` at two points on one hill face returning near-equal colour.
+   - Then get triangles under 160k by lowering `ico()` detail or cutting the tree segments. Proof: `perf` triangles under 160k.
+3. **Make the wolf bigger and darker at the start.**
+   - `wolf-body` is only 1.3% of the start frame.
+   - Raise its scale, or move the camera or wolf so it holds about 3–4% of the frame as the darkest shape, with a visible rim of light on the sheep.
+   - Proof: `look` on the start frame; the `subject wolf` line should read 3% or more.
 
-SCORE: 8.4
+SCORE: 7.8

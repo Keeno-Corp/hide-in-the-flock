@@ -1,54 +1,59 @@
-**Judge verdict, session 33**
+**Session 33 verdict.** I looked at a 3-cell sheet (start, human bite, AI bite), took the wolf zoom [250,340,760,640] and ran `perf` once. I did not run `interact` or `feel`, did not check sound, and did not zoom on a clover. The sheet showed no `Lighting:` or `Surfaces:` lines.
 
-1. **Looks as LOOK.md says: 8.**
-   - The reveal frame now shows the `sky` (34%), `sea`, `cliff`, `round-trees*`, `cloud` ×11 and the `ground` meadow around the wolf. There are no `Lighting:` or `Surfaces:` lines.
-   - Saturation is 30% and grey is 64%, both counting the dark `wolf` as grey. That is under the 35% and 50% targets, but the frame reads bright.
-   - `sand` is a 0.0023% sliver. `wolf-rock` shows as "Never visible", hidden behind sheep.
+1. **Looks as LOOK.md says: 7.5.**
+   - The `sky` and sun disc, the layered `ridge*` hills, the inked `oaks*` and pines, the paper grain and the cream `sheep*` still read as a storybook.
+   - `wolf-body` is the darkest shape on screen (3% near black), so that Check holds.
+   - The `wolf-head` ears are now small cones and no longer read as horns.
+   - The wolf is still a large flat blob. Its brown `wolf-outline` is a thick offset halo, not an ink line, and the hatching on it reads as a texture.
 
-2. **Plays as DESIGN.md says: 8.**
-   - `{action:"pounce",target:"ai"}` took `bites` from 3 to 2, set `pounce.ph` to "reveal" with `human` false and set `wolf.pose` to "shrug".
-   - A 60 s hold of Space (graze) went `wolf.state` "watch" then "stalk" and `bites` 3 to 1. The AI bites came well apart rather than back-to-back, so the cooldown looks fine. That is a rough read, not a timestamped one.
-   - I did not run a clover win or a "lose" this session.
+2. **Compared with BOARD, LOOK.png and the turnarounds: 6.5.**
+   - The zoom shows a profile with a long snout, a yellow eye and four `wolf-leg`s, which is better than last round.
+   - There is no jaw notch, so the snout is a plain wedge.
+   - The body is a stiff rectangle with no shoulder, haunch or tail curve, unlike the WOLF turnaround's prowl.
+   - The legs are straight dark stubs, and the front pair sits in front of the `wolf-rock`.
+   - Biggest remaining style gap: the wolf's silhouette is a block with no neck, chest or haunch shape.
 
 3. **Clip moment: 9.**
-   - It shows the "AI SHEEP" title, the "BITE WASTED" kicker, the "Just a sheep. Bite wasted." sub line, `div#bubble` "baa?" and `div#cap` "The wolf reconsiders his life choices."
-   - 11 sounds played: `boom`, `stab1` to `stab3`, `thud`, `hit`, `womp` ×2, `baa` and `wind`.
-   - The wolf's dark mass is still big in the lower frame, but the title and the joke read at a glance.
+   - The human bite shows "GOTCHA / HUMAN" in red ink, the "PLAYER 1" stamp, red splatter and a woodcut duotone.
+   - The AI bite shows "BAA? / SHEEP", "Just a sheep. Bite lost." and the "baa?" bubble.
+   - I did not time when the card lands.
 
-4. **Looks like refs/01.jpg: 8.**
-   - The play camera shows the `sea`, `cliff`, trees, `cloud` and the meadow, all bright and low-poly.
-   - The reveal frame hides `wolf-rock` and the beach.
+4. **Core loop and controls: 7.5.**
+   - Carried over without playing.
+   - The `clover` rings read as green discs at the start camera, but they are not verified at zoom.
+   - The HUD text is small in the 1280-wide sheet.
 
-5. **Solo fun and fair: 8.**
-   - The suspicion bar sits in `div#hud`. With the player grazing, the wolf took 2 bites in about 56 s, so the first clip moment arrives within a minute.
-   - The full natural win and the "EATEN" screen were not replayed.
+5. **Local 2-player: 7.** Carried over without playing. I did not check pounce targeting.
 
-6. **Local 2-player: 8.**
-   - Carried over from earlier sessions. I did not re-run it.
+6. **UI typography: 8.5.** IM Fell panels and Alfa Slab stamps on cream have ink borders, and the captions are storybook lines. The HUD panels are tiny in the 1280×800 view.
 
-7. **`window.__game`, no build, ~100 sheep: 8.**
-   - `observe` works, the page starts playing on load, and the game instances its sheep.
-   - `perf` gave 185.9 ms per frame, 77 draw calls and 102.8k triangles. This is a software renderer, so the frame time is no signal.
+7. **Convention and performance: 7.5.**
+   - The page draws 115,310 triangles with 79 draw calls and 0.63 MB of assets.
+   - The 247 ms frame is SwiftShader on a busy host (load 4.9), so it is not a signal.
+   - `window.__game` is present.
+   - The `#paper` overlay cleared after about 2.3 s.
 
-8. **Juice: 9.**
-   - Baas, `wind`, `womp`, `boom`, `stab*`, `thud` and `hit` all fire. The caption voice is funny.
+8. **Juice: 7.5.**
+   - The pounce, splash and stamps work.
+   - I did not hear the sound.
 
-9. **Works at any window size, HUD readable: 8.**
-   - At 1280×800 there are 0 overlaps, 0 off-screen and 0 cut-off elements. I did not re-check other sizes.
-
-10. **Faults: 8.**
-    - There are no console errors and no `Lighting:` or `Surfaces:` lines.
-    - `wolf-rock` is "Never visible" in the reveal frame, hidden behind sheep.
+**Faults: 7.5.**
+- There were no console errors.
+- The wolf's brown halo is thick.
+- The `clover` and play pass are still unchecked.
 
 **Next:**
-1. **Run the full solo round.**
-   - **Do:** walk to the three `clover` patches and hold E on each, with the wolf active.
-   - **Check:** `result` reaches "win" on its own. Then run `{action:"pounce",target:"human"}` three times and check that the "EATEN" screen shows with a restart.
-2. **Lighten the wolf in the reveal (asked again).**
-   - **Do:** give `wolf` a lighter fur colour or a rim light while `pounce.ph` is "reveal", so it separates from the grass.
-   - **Check:** `look` after the AI pounce and `wait:150`. Grey should be under 50%.
-3. **Show `wolf-rock` and the beach in the opening shot.**
-   - **Do:** keep sheep from standing in front of `wolf-rock` at the start, or move the opening camera slightly, so the "wolf crouched on its rock" reads.
-   - **Check:** `look` with no steps should list `wolf-rock` as on screen with a pixel share above 0.5%.
+1. **Reshape the wolf silhouette and add a jaw notch (asked again).**
+   - Edit the `wolf-body` polygon in game.js. The head is a separate group, so the notch has to be a gap under the jaw on the snout mesh (`wolf-head`) or a cut-out in that group.
+   - Give the polygon a raised shoulder, a sloped back, a tucked belly and a curved tail.
+   - Thin the `wolf-outline` offset to about a third of its current width, so it reads as ink rather than a halo.
+   - The one call that shows it done is `look` with `zoom` [250, 340, 760, 640]. It should show a notch below the snout, a back that is not a flat rectangle and a thin outline.
+2. **Verify the `clover` leaves and add a glow ring when the player is near (asked again).**
+   - Get a clover position from `observe`, then run `look` with `zoom` on it. It should show three inked heart leaves.
+   - Then run `look` with `sample` at the ring pixels while the player stands beside it.
+3. **Play-check solo with `interact` and enlarge the HUD (asked again).**
+   - Run one `interact`: hold `ShiftLeft` for 60 frames, then `E` on a clover, with `trace` on the state's suspicion value.
+   - Check that the Motion line shows eased movement.
+   - Raise the HUD panel text, which is tiny at 1280 wide, and check it with `look` `viewports` ["laptop"].
 
-SCORE: 8.2
+SCORE: 7.6

@@ -1,61 +1,49 @@
-**Judge verdict, session 13**
+**Judge 13**
 
-1. **Looks as LOOK.md says: 8.**
-   - Check 1 holds: sky at (640,20) is #b7dae1.
-   - Check 2 holds: (640,400) is #a2c749, a green meadow. `ground` is 38% and green is 51% of the hues.
-   - Check 3 holds: `sheep*` ×101 and `wolf` ×6 show.
-   - Check 4 holds: `#hud` and `#mode` show 0 overlap, and there are no `Lighting:` or `Surfaces:` fault lines.
+I took a 3-cell `look` sheet (start at frame 150, human pounce, AI pounce) and one real-key `interact` in local mode. I also ran `perf`. There were no console errors, no `Lighting:` or `Surfaces:` lines, and no "Never visible" object. I did not check sound beyond the `interact` Sound line (boom, stab1–3, baa2 fired on the pounce).
 
-2. **Plays as DESIGN.md says: 8.**
-   - Solo shows the `SUSPICION` bar, clover icons and 3 bite dots.
-   - KeyM then ArrowRight ×30 gives mode "local" and the wolf at x −4.5 with state "ctrl" and pose "walk".
-   - The red `aim` ring with its white outline and the `aimArrow` cone read clearly in the flock.
+**Scores (Must have, in order)**
 
+1. **Looks as LOOK.md says: 7.5.**
+   - The sky, sun disc, `ridge*`, `pines*`, `oaks*`, `*-ink` outlines and the paper grain read as storybook.
+   - The `ground` is now smooth and painted, but it has no ink edge between tone bands.
+   - The `sheep` wool shows light and dark faceted blobs, which looks more like low-poly than flat gouache.
+2. **Compared with BOARD, LOOK.png and the turnarounds: 7.**
+   - The start wolf is 4.4%, above the 3.5% target.
+   - The biggest remaining style gap is the faceted shading on `sheep` wool and the `ground`'s missing contour ink.
+   - The wolf is dark (brightness 14% against 61% around it), but 0% of the frame is near black.
 3. **Clip moment: 9.**
-   - AI branch: "BITE WASTED", "AI SHEEP", "Just a sheep. Bite wasted.", the "baa?" bubble, and the wolf large in the cell with its head tilted.
-   - Human branch: "HUMAN!", "GOTCHA", "PLAYER 1 has been found." and the PLAYER 1 tag over the red sheep. The wolf is small in this branch.
-   - The caption voice ("Mistaken identity. Nature is humbling.") is good.
+   - The AI cell shows the ink splash, the woodcut duotone, the "baa?" bubble and the caption "And the wolf was wrong, as wolves so often are."
+   - The pounce framing is still crowded, with the wolf over the flock at 2.1%.
+   - I did not see the "SHEEP" stamp card itself this session.
+4. **Core loop and controls: 7.5.**
+   - The solo HUD, the stamped cards and the toast "Wolf: walk to the flock with arrows, get close, Enter to pounce" read well.
+   - I did not exercise the clover patches.
+5. **Local 2-player: 7.**
+   - `KeyM` switches to `mode: local`. Real `Enter` fired `pounce` (`pose: leap`) with the wolf at x 1.78, z -4.06.
+   - The `interact` reported `human: false`, and the bites-left count never changed. The three Enters did not reach a WOLF WINS card, so bite counting from real keys is still unproven.
+   - The pounce targeting reads weakly: `aim`, `aimArrow` and `wolfRing` are hidden in the picture.
+6. **UI typography: 8.5.**
+   - `div#hud`, `div#mode`, `div#toast` and `div#cap` are cream paper panels with ink borders and IM Fell type, and nothing is cut off.
+   - The `div#mode` text is still small.
+7. **Convention and performance: 7.**
+   - `perf` gives 183k triangles, 54 draw calls and 0.63 MB of assets. The 287 ms frame is a software renderer, so it is no signal.
+   - `window.__game` is present and the sheep are instanced.
+8. **Juice: 7.5.**
+   - The sound events and the cards work, and the sheep hop.
 
-4. **Looks like refs/01.jpg: 9.**
-   - The sea, `cliff`, `cloud` ×34, `pines*` ×136, `sand` and `wolf-rock` all show.
-   - The wolf is crouched on `wolf-rock`.
-   - The `sand` strip is thin, at 0.43%.
-
-5. **Solo fun and fair: 8.**
-   - 3–4 `clover` glowing discs with light columns are findable.
-   - The suspicion bar, hint line, captions and restart are present.
-
-6. **Local 2-player: 8.**
-   - `aim` ×2 is 0.072% and `aimArrow` is 0.11%. The white-outlined red ring is readable on the targeted sheep.
-   - There is still no line from the wolf to the target, and the wolf sits in a dark clump so it is hard to find.
-
-7. **`window.__game`, no build, ~100 sheep: 8.**
-   - `perf` reads 125 ms on SwiftShader, which is no signal. It has 76 draw calls and 102.7k triangles, both modest.
-   - Host load is 5.0.
-
-8. **Juice: 8.**
-   - The banners, caption voice, bubble and tag are strong.
-   - The grazing head bob is not readable at the play distance. I did not check the sound.
-
-9. **Works at any window size, HUD readable: 7.**
-   - `viewports` phone, tablet and laptop show a readable `#hud` in every cell.
-   - On the phone, `#mode` drops to a tiny bottom-right label, and the picture is small in a letterboxed cell. The phone `#hud` text is tiny, about 5 px.
-   - The tablet and phone cells have a lot of empty black space around the canvas. This might be the viewer's framing, but I could not confirm it.
-
-10. **Faults: 9.**
-    - There are no console errors, no `Never visible` object and 0 overlap.
+**Faults: 8.** There were no console errors and no fault lines. The `ground` ink edge and the real-key bite count are still open.
 
 **Next:**
-1. **Make the wolf readable in local mode and in the human reveal.**
-   - Draw a thin line (a stretched quad, `depthTest` off) from `wolf` to the targeted sheep, and give the wolf a rim light or a contrasting ear/eye mark so it shows against the dark rock and flock.
-   - In the human branch, add the same punch-in on the wolf that the AI branch has.
-   - Check with `interact` KeyM, ArrowRight ×30, `look: true`: a line object above 0.05% in the ID list, and `look` `sheet` `{action:"pounce", target:"human"}` with the wolf larger in the cell.
-2. **Raise phone legibility.**
-   - Scale the `#hud` font with `clamp()` so the TIME and SUSPICION text reads at 390 px wide. Move the phone hint to a short tap-friendly line.
-   - Check with `look` `viewports: ["phone"]`: the `#hud` text is clearly legible.
-3. **Make the grazing head bob and the bite-tick readable (asked again).**
-   - Increase the `sheep-heads*` bob amplitude about 2×.
-   - Add a pop or shake on the bite dot as it goes dark after a wasted bite.
-   - Check with `interact` `{action:"pounce", target:"ai"}` and `trace` on the bite count, plus a zoom on the `#hud` bite dots.
+1. **Prove and fix real-key local bites (asked again).**
+   - Run `interact` with `trace` on `bites` and `pounce.human`: `KeyM`, then walk the wolf with the arrows until the human is within reach, then press `Enter` three times with about 90 frames between presses.
+   - It is done when the bites count falls to 0 and the WOLF WINS card appears. If the pounce never targets the human, make the aim snap to the nearest sheep within `reach` and show the `aimRing` in the local-mode view.
+2. **Add a `ground-ink` contour pass (asked again, 4th time).**
+   - Quantise the `ground` vertex colours to 3 flat tones and draw a dark-brown ink line along the tone borders.
+   - The one call that shows it done is `look` with `zoom` [0, 180, 512, 340] at frame 150. It should show inked band edges.
+3. **Flatten the wool shading.**
+   - Give the `sheep` and `sheep-heads` a 2-step cream and ochre toon ramp instead of the faceted per-blob shading.
+   - Pull the pounce camera back so `wolf-body` is 3% or more with clear space around it.
+   - The one call that shows it done is `look` with `sheet` at the pounce cell. It should show the wolf at 3% or more over flat wool tones.
 
-SCORE: 8.3
+SCORE: 7.7

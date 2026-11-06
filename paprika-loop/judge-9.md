@@ -1,58 +1,54 @@
-**Judge verdict, session 9**
+**Judge 9**
 
-1. **Looks as LOOK.md says: 8.**
-   - Check 1 holds: sky at (640,20) is #b7dae1.
-   - Check 2 holds: (640,400) is #a2c749.
-   - Check 3 holds: `sheep*` ×101 and `wolf` ×4 are on screen.
-   - Check 4 holds: `#hud` and `#mode` have 0 overlap and 0 cut off.
-   - The `Surfaces:` line for `pines` is gone. It had been open for 5 sessions.
-   - There are no `Lighting:` or `Surfaces:` faults.
-   - The beach now reads as a pale sand ground colour along the shore and the trails. `sand` is still 0.43% in the ID list.
-2. **Plays as DESIGN.md says: 7.**
-   - The HUD shows `SUSPICION`, 3 clover icons and 3 bite dots.
-   - Pounce forced with `{action:"pounce", target:"human"}` ran from "land" to "reveal".
-   - I did not run the local-mode `interact` this session, so I could not check `aim`. It is hidden by the game in solo.
-3. **The clip moment: 8.**
-   - The human reveal shows a huge red "GOTCHA" with "HUMAN!" above it, "PLAYER 1 has been found.", a red PLAYER 1 tag over a red figure, and a vignette and band.
-   - The caption reads "Even in nature, nobody blends in forever."
-   - There are 10 sounds (boom, stab1–3, thud, hit).
-   - The wolf at reveal is a small brown shape, 0.36%, beside the large `wolf-rock`. It is not the star of the clip. I did not play the AI-sheep branch this session.
-4. **Looks like refs/01.jpg: 8.**
-   - The sea, `cliff`, `cloud` ×34, `pines*` ×136, `round-trees*` and the bright meadow all show, and the picture is a good match.
-   - The wolf is still not crouched on top of `wolf-rock`. It is a brown lump on the rock's right edge, at 0.53%.
-5. **Solo fun and fair: 7.**
-   - The suspicion bar, the hint line, the captions and the restart key are present.
-   - The 3 `clover` objects are only 0.15% of the frame. The pale beam is faint at the play distance, so they are hard to find.
-6. **Local 2-player: 6.**
-   - I did not re-check `aim` this session. It is hidden in solo.
-   - Last session it was a dim ring among ~100 sheep.
-7. **`window.__game`, no build, ~100 sheep: 8.**
-   - The keys, actions and `observe` all work.
-   - `perf` reads 227 ms on SwiftShader, which is a software renderer and no signal. It has 71 draw calls and 102k triangles, which are modest.
-   - Host load is 2.1 on 8 cores.
-8. **Juice: 8.**
-   - The sounds fire at the reveal.
-   - The banners, the captions, the wool particles and the vignette are good.
-   - The sheep head bob is not visible at the play distance.
-9. **Works at any window size, HUD readable: 6.**
-   - The `viewports` look at 1024×600 is fine. The HUD sits in the corners with no overlap.
-   - On the phone (390×844) the HUD panel is tiny, and the `#mode` text is cut off to a small "[M] Mode: SOLO" chip.
-   - The canvas is letterboxed with black at that size, so the page does not fill the window.
-10. **Faults: 8.**
-    - There are no console errors and no `Never visible` object, and the `pines` plane is fixed.
-    - The wolf is still not placed on its rock, and the clover beam is weak.
+I took one 3-cell `look` sheet (start, pounce, bitecard) and ran `perf` with `costs`. I did not run `interact`, so the lose card, the 3-bite local game and the clover graze were not played this session. I did not read console errors.
+
+**Scores (Must have, in order)**
+
+1. **Looks as LOOK.md says: 7.**
+   - The sky, the sun disc, `ridge*` ×3, `pines*` ×21 and the paper grain read as storybook. The `oaks*` and `round-trees*` now have ink hulls.
+   - The `ground` is still smooth gradient slopes with no hard painted bands, so the frame reads as a 3D scene under a filter, not flat gouache.
+   - The raking indigo shadows are weak in the start cell.
+2. **Compared with BOARD, LOOK.png and the turnarounds: 6.5.**
+   - The sheep are close to SHEEP.png.
+   - `wolf-body` is the darkest shape, but it is only 2.3% of the frame at start and sits small and low-left.
+   - The biggest style gap is the `ground`, which has no hard bands and no ink edge.
+3. **Clip moment: 9.**
+   - The pounce cell shows the wolf mid-leap at 3.6% over a dense flock, with the caption "Dusk is patient. The wolf is patient too."
+   - The bitecard cell shows the woodcut duotone freeze with the ink splash and red drops, a tilted "GOTCHA / HUMAN" stamp card, "PLAYER 1 has been found." and a "PLAYER 1" tag.
+   - The "baa?" SHEEP variant was not looked at.
+4. **Core loop and controls: 7.**
+   - Not played this session. Iteration 8 proved the clover graze and the win card.
+   - The `clover` ring is small and hard to read at the start camera.
+   - The lose card is still unseen on its own.
+5. **Local 2-player: 6.**
+   - Not played. It shares the pounce path with solo, and the 3 bites and the targeting are unverified.
+6. **UI typography: 8.5.**
+   - `div#hud` and `div#mode` are cream paper panels with ink borders and IM Fell type.
+   - The `div#mode` text is tiny at 1280 px.
+   - The stamp card and the narrator caption read well.
+7. **Convention and performance: 6.5.**
+   - `perf` gives 179,282 triangles and 52 draw calls, down from 242k. The frame time of 276 ms is on a software renderer, so it is no signal.
+   - 117,594 triangles cast shadows. `sheep` (61k) and `sheep-heads` (14k) are the cause. This is above the 60k target.
+   - `ground` is 24,200 triangles.
+   - `div#paper` is still up after 5.1 s.
+8. **Juice: 7.**
+   - The bite card, splash and freeze are seen.
+   - Sound was not heard or checked this session.
+
+**Faults: 7.** `look` listed no `Lighting:` or `Surfaces:` lines and no "Never visible" object. The `perf` figures are not a fault on a software renderer. `div#paper` over the canvas, the shadow-caster count and the unread console errors remain open.
 
 **Next:**
-1. **Put the wolf on `wolf-rock` and crouch it.**
-   - It has been asked three times, and Iteration 9 did not touch it. Set the wolf `root` position to the top of `wolf-rock` (its bounding-box max y at about (370,520) in the idle frame).
-   - Pose it low: front legs bent, head down. Add a pale muzzle and a dark nose.
-   - To check, run `look` for the idle frame. `wolf` and `wolf-rock` overlap, the wolf's y is above the rock's top, and `wolf` is above 0.8%.
-2. **Make the `clover` patches findable.**
-   - Give each `clover` a bigger emissive pulsing ring, radius about 1.5, in pale yellow, with `depthTest` off, plus a taller light beam.
-   - To check, run `look` with `sample` at a clover at (440,543) in the picture. The pixel should be clearly brighter than the green around it, and `clover` should be above 0.4%.
-3. **Verify and brighten the local-mode `aim`, and fix the full-window fit on tall viewports.**
-   - Run `interact` with M and ArrowRight ×30, `look: true`. `aim` should be a clearly visible, bright ring under the wolf.
-   - Run `look` with `viewports` ["phone"]. The canvas should fill the window and the `#mode` text should not be cut off.
-   - To check, make the `#mode` panel collapse to a short line on narrow screens, and fill the canvas height.
+1. **Make the `ground` hard-banded (asked again).**
+   - Use flat normals and a 2–3 step toon ramp, with an indigo shadow patch under the oaks and hills.
+   - The one call that shows it done is `look` with `zoom` on the foreground `ground` at the start camera. It should show flat tone steps with hard edges and no smooth gradient.
+2. **Cut shadow casters (asked again).**
+   - Give `sheep` and `sheep-heads` a low-poly shadow proxy or a `customDepthMaterial`.
+   - Lower the `ground` grid from 110 to 70.
+   - The one call that shows it done is `perf` with `costs`. It should show under 60k casting shadows and `ground` under 12k.
+3. **Bring the wolf up at frame 0, and play the untested paths.**
+   - Move the start camera so `wolf-body` is at least 3.5% of the picture in `look`, or scale `wolf-rock` in the foreground.
+   - Make the `clovers` ring brighter and larger, and fade `div#paper` out within about 2 s.
+   - Then run one `interact` that loses all 3 bites in local mode (`Enter` ×3, `KeyM`) with `look: true`, to see the lose card and the 3-bite flow.
+   - The `look` with `sample` at the ring pixels should read cream against dark green.
 
-SCORE: 7.4
+SCORE: 7.1

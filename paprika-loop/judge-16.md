@@ -1,62 +1,53 @@
-**Judge verdict, session 16**
+**Judge 16**
+
+I took a 4-cell `look` sheet (start, AI pounce, human pounce, local after `KeyM`) and one `perf`. There were no `Lighting:` or `Surfaces:` lines. I did not run `interact`, so the clover patches, the sound and the stamp-card timing are unchecked. The "Juice" score is carried over from judge 15.
+
+**Scores (Must have, in order)**
 
 1. **Looks as LOOK.md says: 8.**
-   - The `start` cell shows the sea, `cliff`, `sand`, `pines*` ×143, `wolf-rock` with the `wolf` crouched on it, `cloud` ×32 and `sheep*`. Brightness is 64% and saturation 44%. There are no `Lighting:` or `Surfaces:` lines.
-   - The `sand` strip is still only 0.43%, and it was 0.46% last session.
+   - The wool is now flat cream blobs with an ochre shadow side and thicker outlines, which is a real gain.
+   - The `sky`, sun disc, `ridge*`, `pines*`, `oaks*`, `ground-ink` contours and grain all hold.
+   - `pines*` and `round-trees*` are still faceted shapes with thin outlines.
+   - 0% of the frame is near black, so the wolf is not the stark darkest shape.
+2. **Compared with BOARD, LOOK.png and the turnarounds: 7.5.**
+   - The start wolf is 4.4%, over the 3.5% target.
+   - The biggest remaining style gap is the faceted trees.
+   - The `ground` still has soft gradients where BOARD has flat tones.
+3. **Clip moment: 8.5.**
+   - The human cell shows the held woodcut duotone, ink splash, tilted "GOTCHA / HUMAN / PLAYER 1" card and the caption.
+   - The AI pounce cell has the wolf at 0.96%, so the camera is too far back.
+   - The human pounce cell has the wolf at 5.3%.
+4. **Core loop and controls: 7.5.**
+   - The HUD and toast read as storybook paper panels.
+   - I did not exercise the clovers or the SHEEP card.
+5. **Local 2-player: 6.5.**
+   - `aimArrow` (red triangle) and the `reach` ring show.
+   - The wolf is 0.5% of the frame and is lost in the flock, so the wolf player cannot see their wolf.
+   - Item 2 of judge 15 is not done.
+6. **UI typography: 8.5.**
+   - The panels use IM Fell on cream paper with ink borders, and the Alfa Slab stamp reads.
+   - The `div#mode` text is small.
+7. **Convention and performance: 7.**
+   - `perf` gives 188,746 triangles, 56 draw calls and 0.63 MB of assets.
+   - The 377 ms frame is a software renderer, so it is no signal.
+   - `window.__game` is present and the sheep are instanced.
+8. **Juice: 7.5.** Carried over from judge 15.
 
-2. **Plays as DESIGN.md says: 8.**
-   - KeyM then ArrowRight ×60 gives mode "local" and wolf state "ctrl", with the wolf at x −1, z −6.
-   - The solo HUD shows the TIME clock, the WOLF BITES dots and the SUSPICION bar.
-
-3. **Clip moment: 8.**
-   - The human cell shows a big red "GOTCHA", "PLAYER 1 has been found.", the PLAYER 1 tag over the red sheep, and the caption "Even in nature, nobody blends in forever."
-   - In the human cell the `wolf` is only a flat dark sliver at the lower left. It is much smaller than in the AI cell, and the sheep hide it.
-   - The AI cell shows "BITE WASTED", "AI SHEEP", the "baa?" bubble, a large `wolf` and the caption "A completely innocent sheep. Awkward."
-   - Both cells are dark: brightness is 42% in the human cell and 40% in the AI cell, with about 15% near black. The dark band behind the banner is heavy.
-
-4. **Looks like refs/01.jpg: 9.**
-   - The sea, `cliff`, `cloud`, `pines*`, `sand` and `wolf-rock` all show from the play camera, and it reads bright and low-poly.
-
-5. **Solo fun and fair: 8.**
-   - `SUSPICION`, the clover rings and the restart text are present.
-   - I did not play a full round this session.
-
-6. **Local 2-player: 8.**
-   - `wolfRing` is 0.13% (14.2 units across) and `aim` ×3 is 0.14%. The wolf is now clearly circled by the yellow ring.
-   - `aimArrow` is 0.17% and reads as a red triangle at the target.
-   - `aimLine` is 0.00078%, so it is still invisible. It is redundant now.
-
-7. **`window.__game`, no build, ~100 sheep: 8.**
-   - `perf` reads 117.8 ms on SwiftShader, which is no signal.
-   - It shows 76 draw calls and 102.7k triangles, both modest.
-   - Host load is 4.6.
-
-8. **Juice: 8.**
-   - The banners, bubble, tag and captions are strong.
-   - The bite-pip pop and the sound were not checked this session.
-
-9. **Works at any window size, HUD readable: 8.**
-   - At 1280 wide there are 0 overlap and 0 cut off.
-   - On the phone the `#hud` panel is intact and `#mode` is now a small "[M] Mode: SOLO" chip at the bottom, which is readable.
-   - On the tablet the `#mode` panel shows the full controls text, so that works too.
-   - On the phone, the sheep near the camera are cropped at the sides because the view is narrow.
-
-10. **Faults: 9.**
-    - No console errors, no `Never visible` object and 0 overlap.
-    - `player` and `reach` are shader-placed, so they are not a fault.
+**Faults: 7.5.** There were no console errors. Local-mode wolf visibility is still broken, and the AI pounce camera is still too far back.
 
 **Next:**
-1. **Make the human reveal as readable as the AI one.**
-   - Move `cam.close` to the side and lower it, so no `sheep*` cover the `wolf` in the human cell.
-   - Make the wolf at least as large as in the AI cell.
-   - Lighten the dark banner band, which leaves about 15% near black in both reveal cells.
-   - Check with `look` `sheet` on `pounce human`, 150 frames. The wolf should show as a clear grey shape of about the AI cell's size, and the near-black share should drop under 8%.
-2. **Widen the `sand` strip (asked again).**
-   - Raise it where it meets the sea, as seen from the play camera, so `sand` is about 1% or more.
-   - Check with `look` on the `start` view. The `sand` line should read 1% or more, and it is 0.43% now.
-3. **Verify the bite-pip pop, then drop the dead `aimLine`.**
-   - Run `interact` `{action:"pounce", target:"ai"}`, then `look` `zoom` on `#hud` [14, 12, 241, 101]. A pip should be mid-animation, dark or shrinking.
-   - Remove `aimLine` or make it a thicker dashed line, since it is 0.0008% and adds nothing.
-   - Then, for the finish: add a faint wind or leaf drift on the screen edge and a clip-friendly "replay" freeze frame after the reveal.
+1. **Make the wolf readable in local mode (asked again).**
+   - Create `wolfRing` and `aimLine` with `depthTest:false`, `transparent:true` and a high `renderOrder`, and set `renderOrder` on the material of whatever you add. Judge 16's Next noted that `depthTest: false` alone did not work.
+   - Add a "P2 wolf" marker over `wolf-body`.
+   - Raise the local-mode camera or zoom it in on the wolf.
+   - The one call that shows it done is `look` after `KeyM` and 30 frames. `wolf-body` should be 1.5% or more and `wolfRing` and `aimLine` should leave the "Never visible" list.
+2. **Pull the AI pounce camera in (asked again).**
+   - Edit the `sc2`/`cam.punch` lines around 890-897 so the wolf is 3.5% or more in the leap.
+   - The AI cell currently shows the wolf at 0.96%. The previous Next said "3.5% or less", which was the wrong way round. The wolf should fill more of the frame.
+   - The one call that shows it done is the `look` `sheet` cell `{steps:[{action:"pounce",target:"ai"},{wait:50}]}`, with `wolf-body` at 3.5% or more.
+3. **Flatten the trees and the ground tones.**
+   - Give the `pines*` and `round-trees*` the same 2-step ochre toon ramp as the sheep, with a thicker `*-ink` hull.
+   - Quantise the `ground` vertex colours to 3 flat tones.
+   - The one call that shows it done is `look` with `zoom` [0, 100, 640, 450] at frame 150. It should show flat tree masses with inked edges and no smooth gradients on the grass.
 
-SCORE: 8.2
+SCORE: 7.7

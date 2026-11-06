@@ -1,58 +1,47 @@
-**Judge verdict, session 17**
+**Judge 17**
+
+I took a 4-cell `look` sheet (start, AI pounce, human pounce, local after `KeyM`), one `interact` (walk and graze) and one `perf`. There were no `Lighting:` or `Surfaces:` lines. I did not check the clovers, the SHEEP card or the sound.
+
+**Scores (Must have, in order)**
 
 1. **Looks as LOOK.md says: 8.**
-   - The `start` cell shows the sea, `cliff`, `sand`, `pines*` ×136, `wolf-rock`, `wolf` and the `sheep*` flock. Brightness is 64%, saturation 45%, 0% near black.
-   - I did not read the `sand` percentage. The strip is visible but thin on the left.
-   - There are no `Lighting:` or `Surfaces:` lines.
+   - The `sky`, sun disc, `ridge*`, `ground-ink`, grain and flat-cream `sheep*` wool hold.
+   - `pines*` and `oaks*` are still faceted and thinly outlined.
+   - The `ground` still has soft gradients.
+   - 0% of the frame is near black, so the wolf is not the stark darkest shape.
+2. **Compared with BOARD, LOOK.png and the turnarounds: 7.5.**
+   - The start wolf is 4.3%, which is acceptable.
+   - The biggest remaining style gap is the trees and the smooth `ground`.
+3. **Clip moment: 9.**
+   - The AI pounce cell now has `wolf-body` at 5.5% (was 0.96%) with a readable leap.
+   - The human cell has the woodcut duotone, ink splash, red "PLAYER 1" stamp and the caption.
+4. **Core loop and controls: 7.5.**
+   - The `KeyD` and `KeyE` walk-and-graze step works: `player.grazing` is true and `flock.graze` is 0.47.
+   - The HUD panels read as storybook paper.
+   - I did not check the clovers or the SHEEP card.
+5. **Local 2-player: 7.**
+   - `wolfMark` (red cone) and `wolfRing` now show, so the wolf can be found.
+   - `wolf-body` is only 1.2% and is still partly swallowed by the flock, which is below the 1.5% target.
+6. **UI typography: 8.5.** The IM Fell panels, the Alfa Slab stamp and the caption scroll are in style. The `div#mode` text is small.
+7. **Convention and performance: 7.**
+   - `perf` gives 188,746 triangles, 56 draw calls and 0.63 MB of assets.
+   - The 265 ms frame is a software renderer, so it is no signal.
+   - `window.__game` is present.
+8. **Juice: 7.5.** Carried over; I did not run `feel`.
 
-2. **Plays as DESIGN.md says: 8.**
-   - The solo HUD shows TIME 2:59, the WOLF BITES dots and the SUSPICION bar.
-   - I did not run `interact` this session. This score carries over from session 16, where KeyM then ArrowRight gave mode "local" with the wolf under control.
-
-3. **Clip moment: 8.**
-   - The human cell shows a big red "GOTCHA", "PLAYER 1 has been found.", the PLAYER 1 tag over the red sheep, and the caption "Even in nature, nobody blends in forever."
-   - In the human cell the `wolf` is still a flat dark sliver at the lower centre, half hidden by `sheep*` ×60. This is the same fault as last session, and the camera is unchanged.
-   - The AI cell shows "BITE WASTED", "AI SHEEP", the "baa?" bubble, a large `wolf` and the caption "A completely innocent sheep. Awkward."
-   - Both reveal cells are still dark: brightness 46% and 44%, with 14–15% near black, much of it the letterbox bars. The target of under 8% was not met.
-
-4. **Looks like refs/01.jpg: 9.**
-   - The sea, `cliff`, `pines*`, `sand`, clouds and `wolf-rock` all show from the play camera. The picture is bright and low-poly.
-
-5. **Solo fun and fair: 8.**
-   - `SUSPICION`, the clover rings and the restart text are present.
-   - I did not play a full round.
-
-6. **Local 2-player: 8.**
-   - This carries over from session 16: `wolfRing`, `aim` ×3 and `aimArrow` are visible.
-   - I did not re-run it this session.
-
-7. **`window.__game`, no build, ~100 sheep: 8.**
-   - `perf` reads 152.7 ms on SwiftShader, which is no signal. The host load is 5.7.
-   - It shows 77 draw calls, 102.8k triangles and 0 MB of assets, all modest.
-
-8. **Juice: 8.**
-   - The banners, bubble, tag and captions are strong.
-   - I did not check the sound or the bite-pip pop.
-
-9. **Works at any window size, HUD readable: 8.**
-   - The HUD is readable at 1280 wide.
-   - I did not run `viewports` this session. The phone crop of near sheep from session 16 is unchanged.
-
-10. **Faults: 9.**
-    - There is no `Never visible` object, and the sheet and `perf` raised no console errors.
-    - The human-reveal `wolf` is still small, but this is covered under item 3.
+**Faults: 8.** There were no console errors. The faceted trees and the 1.2% local wolf are the remaining faults.
 
 **Next:**
-1. **Make the human reveal show the wolf (asked again).**
-   - Last session's sideways, lower `cam.close` made the `wolf` leave the frame, so use a different approach.
-   - Hide or scale down the `sheep*` within about 6 units of the wolf during the reveal, or put the camera on the wolf-to-target line just behind the wolf, at its height, looking at the target.
-   - Check with `look` `sheet` on `pounce human`, 150 frames. The `wolf` should show as a clear grey shape about the size it has in the AI cell.
-2. **Lighten the reveal cells (asked again).**
-   - Make the letterbox bars thinner or semi-transparent, and give the band a lighter tint. About 15% of the pixels are near black in both reveal cells.
-   - Check with the same `look` `sheet`: near black should be under 8% and brightness above 55%.
-3. **Read the `sand` share, then finish.**
-   - Run a plain `look` on the `start` view and widen the `sand` ring if it is under 1%.
-   - Run `interact` `{action:"pounce", target:"ai"}`, then `look` `zoom` on `#hud` [14, 12, 241, 101] to check the pip pop, and drop the invisible `aimLine`.
-   - Then add a clip-friendly "replay" freeze frame after the reveal.
+1. **Flatten the trees and the ground tones (asked again).**
+   - Give the `pines*` and `oaks*` the same 2-step ochre toon ramp as the sheep, with a thicker `*-ink` hull.
+   - Quantise the `ground` vertex colours to 3 flat tones.
+   - The one call that shows it done is `look` with `zoom` [0, 100, 640, 450] at frame 150. It should show flat tree masses with inked edges and no smooth gradients on the grass.
+2. **Make the local wolf bigger (asked again).**
+   - Pull the local camera in further, or scale `wolf-body` ×1.3 in local mode only.
+   - Draw `wolf-body` with `depthTest:false` and `renderOrder` 8, so that sheep wool no longer covers it.
+   - The one call that shows it done is the local sheet cell after `KeyM` and 40 frames. It should show `wolf-body` at 1.5% or more.
+3. **Make the wolf the darkest shape.**
+   - Set the wolf's fill to near black (about #0e0a0c), and darken the sheep face tones slightly less than the wolf.
+   - The one call that shows it done is the start `look`, which should report "near black" above 1%, with `sample` on the wolf pixels reading below 20 in each channel.
 
-SCORE: 8.2
+SCORE: 7.9

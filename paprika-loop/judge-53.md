@@ -1,30 +1,19 @@
-**Session 53 verdict.** I opened the page and ran a `sheet` of start, AI reveal and human reveal. I forced the win screen with `state` and ran `perf` once. I did not play the natural clover win with `KeyE`, 2-player mode, or the tablet and phone sizes.
+**Scores (session 53)**
 
-1. **Looks as LOOK.md says: 8.** The start cell shows `sea`, `sand`, `cliff`, `wolf-rock`, `pines*` ×139, `round-trees*` and the `clover` rings. Brightness is 64% with 0% blown out, and there are no `Lighting:` or `Surfaces:` lines.
-2. **Plays as DESIGN.md says: 8.** Forced `pounce` on `ai` and on `human` both reach their reveals. The `div#hud` shows TIME, CLOVERS, WOLF BITES and SUSPICION. The natural clover win has still not been played; I only set `result:"win"` through `state`.
-3. **Clip moment: 9.**
-   - **Human reveal:** the red GOTCHA title, "PLAYER 1 has been found." and the red `div#tag` over the red figure are all in frame.
-   - **AI reveal:** the AI SHEEP title, "Just a sheep. Bite wasted." and the "baa?" `div#bubble` over the grey `wolf` are all in frame. The `wool` burst is hard to see at this frame in the `ai` cell, so I can't confirm the bigger burst from iteration 53.
-4. **Looks like refs/01.jpg: 9.** The start view shows sea, sand, cliffs, pines, 40 puffy `cloud` shapes and the `wolf` on `wolf-rock`.
-5. **Solo fun and fair: 8.**
-   - **Win screen:** forced, it shows "YOU BLEND IN... YOU BLENDED IN" with the line "Three clovers. Three minutes. Zero bites. · R to play again · M to switch mode". It is readable.
-   - **Timer:** it reads 3:00 because I forced the state, so it says nothing about a real win time.
-   - **Natural play:** the suspicion bar and clover rings are present, but a natural win is not verified.
-6. **Local 2-player: 8.** Carried over from earlier sessions; I did not re-run it.
-7. **`window.__game`, no build, ~100 sheep: 8.** `perf` shows 82 draw calls, 103k triangles and 0 MB of assets. The 238 ms frame is a SwiftShader artefact, so it is no signal.
-8. **Juice: 9.** The captions, the "baa?" `div#bubble` and the reveal sounds (carried over from session 50) are in place.
-9. **Works at any window size, HUD readable: 8.** The desktop HUD is readable. On the forced win screen `div#reveal` [0,136,1279,306] overlaps `div#hud`, but the text stays legible. The phone and tablet sizes were not re-checked this session.
-10. **Faults: 9.** I saw no console errors and no "Never visible" object.
+1. **Looks as LOOK.md says: 7.5.** The `start` frame has the cloud-band sky, low `sun`, layered `ridge*` ×3 and a paper grain. The `pines*` ×17 and `ink*` outlines are inked and wobbly. The round tree crowns are now smooth blobs, which was the faceted-crowns fix asked for in Judge 52. The cream `sheep*` ×69 are busy, and the bottom-right crowd and `ground` still dominate the frame. The `ground` texture detail is unsoftened. The wolf is still the darkest shape.
+2. **Compared with BOARD, LOOK.png and the turnarounds: 7.** `wolf-body` is a flat lump on `wolf-rock`, and the legs read as brown boxes next to the WOLF.png turnaround. The sheep are close to SHEEP.png. The biggest style gap is the wolf silhouette. After that come the front-crowd density and the `ground` detail, which is busier than the flat meadow in refs/study.
+3. **Clip moment: 9.** The pounce frame has the wolf at 32% of the picture. The bite frame shows the GOTCHA / HUMAN / PLAYER 1 card slammed in over the woodcut duotone, with ink splash and red drops. The sheepbite frame shows BAA? / SHEEP / "Just a sheep. Bite lost." with the "baa?" bubble. Both read clearly in a 5-second clip.
+4. **Core loop and controls: 8.** The `#hud` shows time 2:59, `clover` slots, the three bite drops and the suspicion bar. The narrator line is in storybook voice. I did not replay a win or clover play this session.
+5. **Local 2-player: 7.5.** The `[M] mode: SOLO` panel and its hint are present. I did not play local this session, so this is carried over.
+6. **UI typography: 8.5.** The `#hud` and `#mode` cream panels have ink borders, with IM Fell and Alfa Slab type. The stamped card is tilted, and nothing is cut off or overlapping.
+7. **Convention and performance: 8.** `window.__game` is present and the page starts on load. It draws 72 draw calls and 158k triangles. The 413 ms frame is a SwiftShader figure on a host with load 3.6, so it is noise and not a fault. Most of the time is the main scene pass, so a real GPU should be fine.
+8. **Juice: 8.** The pounce and bite animation show in the frames, but I did not listen to the sound this session, so this is carried over.
+
+**Faults: 7.** The console is clean and nothing is `Never visible`. There are no Lighting or Surfaces lines. The `sheep*` front crowd and `ground` detail are the same as last round. The wolf at start is only 5.2% of the frame.
 
 **Next:**
-1. **Play the natural clover win and the `KeyR` restart (asked again since iteration 44).**
-   - **Do:** run `interact` to walk the player onto each of the 3 `clover` rings and hold `KeyE` with `until:{result:"win"}`. Then press `KeyR`.
-   - **Check:** `result` becomes "win" with a sensible time, and after `KeyR` `observe` shows `bites` 3, `clovers` 0 and `result` null.
-2. **Make the AI-reveal `wool` burst read in the `sheet` `ai` cell (asked again).**
-   - **Do:** in the `ai` cell, the wool particles are not visible around the grey `wolf` at 110 frames. Make the burst bigger, whiter and slower to fade, and look at an earlier frame, around 30 to 50.
-   - **Check:** `look` `sheet` with the `ai` cell at 40 frames shows a white cloud over the `wolf`.
-3. **Play local 2-player and check the reveal at tablet and phone size.**
-   - **Do:** run `interact` with `KeyM`, wolf moves, then `Enter`. Run the human reveal at 820×1180 and 390×844.
-   - **Check:** the WOLF BITES dots go 3→2, the aim ring is clear, and `div#reveal` does not cover `div#hud` or crowd `div#mode`.
+1. **Soften `ground` and thin the front `sheep*` crowd (asked again).** Fade the `ground` texture detail with distance, and remove or shrink the front-row `sheep*` so the crowd is under 10% of the frame. One `look` at frame 60 shows it done: `sheep*` is under 10% in the subject line, and the bottom-right frame area is calmer. Sample [900,700] and [1000,650]: the colours should be near equal.
+2. **Reshape the wolf to match WOLF.png (asked again).** Give `wolf-body` a long muzzle, tall ears and a bushy `wolf-tail`. Replace the brown box `wolf-leg` shapes with tapered near-black legs. Add a thin pale rim behind the wolf so it separates from `wolf-rock`. One `look` with `zoom` on the wolf in the `start` frame shows it done: the ears, muzzle and tail are distinct from the rock. Run `asset_search` for "wolf" first, since the wolf is made in code and no search is recorded for it.
+3. **Run `asset_search` for "stylized tree" and "pine tree".** The `pines*` and `round-trees*` are made in code and no search is recorded for them. Then play a natural solo win and a 2-player round with `interact` to confirm the clover and 3-bite flows still work with the larger wolf.
 
-SCORE: 8.4
+SCORE: 7.9

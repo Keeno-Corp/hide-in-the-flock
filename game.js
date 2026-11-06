@@ -16,7 +16,7 @@ const pick = a => a[Math.floor(Math.random() * a.length)];
 // Storybook pastoral: toon-banded flat fills -> render target -> one ink/paper post pass.
 const PAL = {
   ink: 0x2a1c12, paper: 0xefe3c8, wool: 0xf3e8cc, face: 0x2b211c, ochre: 0xb9a24f, sage: 0x8e9a58, olive: 0x6f7a45,
-  indigo: 0x3f4a6e, skyTop: 0x7d86a6, rose: 0xd9a49a, apricot: 0xf2b47a, sun: 0xffe2a8, mauve: 0x8a7f9a, wolf: 0x17110e, red: 0xb3261e,
+  indigo: 0x3f4a6e, skyTop: 0x7d86a6, rose: 0xd9a49a, apricot: 0xf2b47a, sun: 0xffe2a8, mauve: 0x8a7f9a, wolf: 0x030203, red: 0xb3261e,
 };
 const renderer = new THREE.WebGLRenderer({ antialias: false });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
@@ -60,10 +60,10 @@ const post = new THREE.ShaderMaterial({
     // gouache: lifted blacks, brush streaks, soft blotches
     float brush=vn(vec2(fc.x*.012,fc.y*.16)+vn(fc*.01)*2.)*.6+vn(fc*.03)*.4;
     col*=1.+(brush-.5)*.15;
-    col=mix(col,paper*.35,.045);
+    col=mix(col,paper*.35,.045*smoothstep(.02,.2,lum(col)));
     float grain=h21(floor(fc)+.37)-.5; float fib=vn(vec2(fc.x*.7+fc.y*.1,fc.y*.045))-.5;
     col*=1.+grain*.11+fib*.07;
-    float Ld=lum(col); float hatch0=step(.62,fract((fc.x-fc.y)*.14+vn(fc*.02)*.8))*smoothstep(.2,.07,Ld)*(1.-sky)*smoothstep(1./600.,1./90.,c); col=mix(col,ink,hatch0*.36);
+    float Ld=lum(col); float hatch0=step(.62,fract((fc.x-fc.y)*.14+vn(fc*.02)*.8))*smoothstep(.2,.07,Ld)*(1.-sky)*smoothstep(1./600.,1./90.,c); col=mix(col,ink,hatch0*.2);
     col=mix(col,ink,edge*.95);
     vec2 q=vUv-.5; float v=smoothstep(.35,.95,length(q*vec2(1.1,1.)));
     col=mix(col,col*vec3(.72,.62,.55),v*.55);
@@ -104,18 +104,18 @@ addEventListener('resize', () => { renderer.setSize(innerWidth, innerHeight); ca
       vec3 d=normalize(vP); float e=clamp(d.y,0.,1.);
       vec3 c=mix(hor,rose,smoothstep(0.,.1,e)); c=mix(c,mid,smoothstep(.07,.26,e)); c=mix(c,top,smoothstep(.2,.7,e));
       // glow around the low sun
-      float sd=dot(d,sunDir); c=mix(c,sun,smoothstep(.6,.995,sd)*.62); 
+      float sd=dot(d,sunDir); c=mix(c,sun,smoothstep(.45,.995,sd)*.8); 
       // painted cloud bands: horizontal streaks, quantised into flat shapes with a shaded underside
       vec2 p=d.xz/(d.y+.16); p*=vec2(.55,1.9);
       float n=fbm(p*vec2(1.4,3.2)+vec2(0.,2.)); float band=smoothstep(.02,.18,e)*smoothstep(.95,.35,e);
-      float m=smoothstep(.47,.5,n+(.5-e)*.12)*band;
+      float m=smoothstep(.44,.47,n+(.5-e)*.12)*band;
       float under=smoothstep(.47,.5,fbm(p*vec2(1.4,3.2)+vec2(0.,2.)+vec2(0.,.07)));
-      vec3 cl=mix(mix(rose,vec3(1.,.95,.86),.7),sun,smoothstep(.5,.99,sd)*.6);
+      vec3 cl=mix(mix(vec3(.93,.55,.5),vec3(1.,.8,.6),.5),sun,smoothstep(.5,.99,sd)*.6);
       vec3 sh=mix(indigo,rose,.35);
       c=mix(c,mix(sh,cl,under),m*.95);
       float m2=smoothstep(.6,.64,fbm(p*vec2(2.4,6.)+7.))*band*.55; c=mix(c,mix(cl,hor,.4),m2);
       // sun disc with ink ring
-      float disc=smoothstep(.9992,.9994,sd); c=mix(c,vec3(1.,.93,.7),disc);
+      float disc=smoothstep(.9962,.9964,sd); float ring=smoothstep(.9950,.9952,sd)*(1.-smoothstep(.9954,.9956,sd)); c=mix(c,vec3(.93,.62,.5),ring*.6); c=mix(c,vec3(1.,.93,.7),disc);
       gl_FragColor=vec4(c,1.); }`,
   }));
   sky.name = 'sky'; sky.renderOrder = -10; sky.onBeforeRender = (r, s, cam) => sky.position.copy(cam.position); scene.add(sky);
@@ -131,17 +131,18 @@ addEventListener('resize', () => { renderer.setSize(innerWidth, innerHeight); ca
   });
 }
 const rim = new THREE.PointLight(0xffe2b8, 0, 14, 1.2); scene.add(rim);
-const sun = new THREE.DirectionalLight(0xffd8a8, 3.6);
+const sun = new THREE.DirectionalLight(0xfff0dc, 3.6);
 sun.position.copy(SUN_DIR).multiplyScalar(110);
 sun.castShadow = true;
 sun.shadow.mapSize.set(4096, 4096);
 Object.assign(sun.shadow.camera, { left: -44, right: 44, top: 44, bottom: -44, near: 10, far: 260 });
 sun.shadow.bias = -0.0008; sun.shadow.normalBias = 0.06;
 scene.add(sun, sun.target);
-const hemi = new THREE.HemisphereLight(0xdcc8d0, 0x4c5688, 2.5); scene.add(hemi);
+const hemi = new THREE.HemisphereLight(0xe4dcdc, 0x4c5688, 2.5); scene.add(hemi);
 
 // toon bands: shade / mid / lit
 const toonMap = (() => { const n = 24, d = new Uint8Array(n * 4); for (let i = 0; i < n; i++) { const nl = ((i + 0.5) / n) * 2 - 1, v = nl < 0.02 ? 0 : nl < 0.4 ? 0.82 : 1; d[i * 4] = d[i * 4 + 1] = d[i * 4 + 2] = Math.round(v * 255); d[i * 4 + 3] = 255; } const t = new THREE.DataTexture(d, n, 1, THREE.RGBAFormat); t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t; })();
+const toonGround = (() => { const d = new Uint8Array([150,148,160,255, 255,255,255,255]); const t = new THREE.DataTexture(d, 2, 1, THREE.RGBAFormat); t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t; })();
 
 // ───────────────────────── terrain: a dusk meadow ringed by hills ─────────────────────────
 function gh(x, z) {
@@ -157,27 +158,43 @@ function gh(x, z) {
 }
 const PLAY_R = 30;
 {
-  const N = 300, S = 440;
+  const N = 70, S = 440;
   let g = new THREE.PlaneGeometry(S, S, N, N); g.rotateX(-Math.PI / 2);
   const p = g.attributes.position;
   for (let i = 0; i < p.count; i++) p.setY(i, gh(p.getX(i), p.getZ(i)));
   g.computeVertexNormals(); g = g.toNonIndexed();
   const pos = g.attributes.position, nor = g.attributes.normal, col = new Float32Array(pos.count * 3);
-  const ochre = new THREE.Color(0xc2b062), sage = new THREE.Color(0x9aa86a), olive = new THREE.Color(0x6a7e46), warm = new THREE.Color(0xb1b274), hill = new THREE.Color(0x707a5c), far = new THREE.Color(0x8a8a78), rock = new THREE.Color(0x9a927f), c = new THREE.Color();
+  const ochre = new THREE.Color(0xc2b062), sage = new THREE.Color(0x9aa86a), olive = new THREE.Color(0x6a7e46), warm = new THREE.Color(0xb1b274), hill = new THREE.Color(0x707a5c), far = new THREE.Color(0x8a8a78), rock = new THREE.Color(0x9a927f), indigo = new THREE.Color(0x4c5688), c = new THREE.Color();
   for (let i = 0; i < pos.count; i++) {
     const cx = pos.getX(i), cz = pos.getZ(i), cy = pos.getY(i), ny = nor.getY(i), r = Math.hypot(cx, cz);
     const wob = 0.32 * Math.sin(cx * 0.55 + cz * 0.35) * Math.sin(cz * 0.5 - cx * 0.3) + 0.15 * Math.sin(cx * 1.3 + cz * 0.9);
     const patch = Math.sin(cx * 0.09 + Math.sin(cz * 0.07) * 2) + Math.sin(cz * 0.11 - cx * 0.05) * 0.8 + wob;
-    c.copy(sage).lerp(warm, sm(-0.4, -0.3, patch)).lerp(ochre, sm(1.05, 1.15, patch));
-    c.lerp(olive, sm(0.55, 0.62, Math.sin(cx * 0.21 - cz * 0.17) * Math.sin(cz * 0.13 + cx * 0.09) + wob * 0.8) * 0.8);
-    if (r > 34) c.lerp(hill, sm(34, 70, r) * 0.75);
-    if (r > 90) c.lerp(far, sm(90, 190, r) * 0.7);
+    c.copy(sage).lerp(warm, patch > -0.35 ? 1 : 0).lerp(ochre, patch > 1.1 ? 1 : 0);
+    c.lerp(olive, (Math.sin(cx * 0.21 - cz * 0.17) * Math.sin(cz * 0.13 + cx * 0.09) + wob * 0.8) > 0.58 ? 0.8 : 0);
+    if (r > 34) c.lerp(hill, Math.round(sm(34, 70, r) * 3) / 3 * 0.75);
+    if (r > 90) c.lerp(far, Math.round(sm(90, 190, r) * 3) / 3 * 0.7);
     if (ny < 0.8 && cy > 3) c.lerp(rock, 0.6);
+    { const ip = Math.sin(cx * 0.14 + 1.7) * Math.sin(cz * 0.12 - 0.6) + 0.5 * Math.sin(cx * 0.3 + cz * 0.22); if (r < 60) c.lerp(indigo, ip > 0.7 ? 0.4 : 0); }
     col[i * 3] = c.r; col[i * 3 + 1] = c.g; col[i * 3 + 2] = c.b;
   }
   g.setAttribute('color', new THREE.BufferAttribute(col, 3));
-  const m = new THREE.Mesh(g, new THREE.MeshToonMaterial({ vertexColors: true, gradientMap: toonMap }));
+  const m = new THREE.Mesh(g, new THREE.MeshToonMaterial({ vertexColors: true, gradientMap: toonGround }));
   m.name = 'ground'; m.receiveShadow = true; scene.add(m);
+  // ground-ink: marching-squares contour of the tone-band field, drawn as dark-brown ribbons
+  {
+    const F = (x, z) => Math.sin(x * 0.09 + Math.sin(z * 0.07) * 2) + Math.sin(z * 0.11 - x * 0.05) * 0.8 + 0.32 * Math.sin(x * 0.55 + z * 0.35) * Math.sin(z * 0.5 - x * 0.3) + 0.15 * Math.sin(x * 1.3 + z * 0.9);
+    const st = 0.7, R = 30, n = Math.round(R * 2 / st), V = [];
+    const seg = (a, b, c, d) => { const dx = d - b, dz = -(c - a), L = Math.hypot(dx, dz) || 1, ox = dx / L * 0.12, oz = dz / L * 0.12; const y1 = gh(a, b) + 0.06, y2 = gh(c, d) + 0.06; V.push(a - ox, y1, b - oz, a + ox, y1, b + oz, c + ox, y2, d + oz, a - ox, y1, b - oz, c + ox, y2, d + oz, c - ox, y2, d - oz); };
+    for (const T of [-0.35, 1.1]) for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+      const x0 = -R + i * st, z0 = -R + j * st; if (Math.hypot(x0, z0) > R) continue;
+      const v = [F(x0, z0), F(x0 + st, z0), F(x0 + st, z0 + st), F(x0, z0 + st)], P = [[x0, z0], [x0 + st, z0], [x0 + st, z0 + st], [x0, z0 + st]], pts = [];
+      for (let k = 0; k < 4; k++) { const a = v[k], b = v[(k + 1) % 4]; if ((a > T) !== (b > T)) { const t = (T - a) / (b - a), A = P[k], B = P[(k + 1) % 4]; pts.push([A[0] + (B[0] - A[0]) * t, A[1] + (B[1] - A[1]) * t]); } }
+      if (pts.length >= 2) seg(pts[0][0], pts[0][1], pts[1][0], pts[1][1]); if (pts.length === 4) seg(pts[2][0], pts[2][1], pts[3][0], pts[3][1]);
+    }
+    const gi = new THREE.BufferGeometry(); gi.setAttribute('position', new THREE.Float32BufferAttribute(V, 3));
+    const li = new THREE.Mesh(gi, new THREE.MeshBasicMaterial({ color: 0x33231a, side: THREE.DoubleSide, transparent: true, opacity: 0.28, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 }));
+    li.name = 'ground-ink'; scene.add(li);
+  }
 }
 
 // ───────────────────────── geometry builder ─────────────────────────
@@ -197,16 +214,19 @@ function mk(geo, hex, { p = [0, 0, 0], r = [0, 0, 0], s = [1, 1, 1], jit = 0, so
 const ico = (r, d = 1) => new THREE.IcosahedronGeometry(r, d);
 const box = (x, y, z) => new THREE.BoxGeometry(x, y, z);
 const cone = (r, h, n = 6) => new THREE.ConeGeometry(r, h, n);
+const toon2 = (() => { const d = new Uint8Array([120,125,150,255, 255,255,255,255]); const t = new THREE.DataTexture(d, 2, 1, THREE.RGBAFormat); t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t; })();
+const treeMat = () => new THREE.MeshToonMaterial({ vertexColors: true, gradientMap: toon2, emissive: 0x1c2a22 });
 const flat = (mat = {}) => new THREE.MeshToonMaterial({ vertexColors: true, gradientMap: toonMap, ...mat });
 
 // ───────────────────────── sheep geometry (shared by all 101) ─────────────────────────
 const WOOL = PAL.wool, DARK = PAL.face;
 const sheepBodyGeo = mergeGeometries([
-  mk(ico(0.5, 1), WOOL, { p: [0, 0.62, 0], s: [1, 0.82, 1.3], jit: 0.04, soft: true }),
-  mk(ico(0.3, 1), WOOL, { p: [0.22, 0.98, 0.22], jit: 0.04, soft: true }), mk(ico(0.3, 1), WOOL, { p: [-0.22, 0.98, 0.1], jit: 0.04, soft: true }),
-  mk(ico(0.3, 1), WOOL, { p: [0, 1.0, -0.3], jit: 0.04, soft: true }), mk(ico(0.26, 1), WOOL, { p: [0.3, 0.7, -0.62], jit: 0.04, soft: true }),
-  mk(ico(0.26, 1), WOOL, { p: [-0.3, 0.7, -0.6], jit: 0.04, soft: true }),
-  ...[[-1, -1], [1, -1], [-1, 1], [1, 1]].map(([x, z]) => mk(box(0.13, 0.42, 0.13), DARK, { p: [x * 0.22, 0.21, z * 0.42] })),
+  mk(ico(0.5, 1), WOOL, { p: [0, 0.62, 0], s: [1, 0.82, 1.3], jit: 0, soft: true }),
+  mk(ico(0.3, 1), WOOL, { p: [0.22, 0.98, 0.22], jit: 0, soft: true }), mk(ico(0.3, 1), WOOL, { p: [-0.22, 0.98, 0.1], jit: 0, soft: true }),
+  mk(ico(0.46, 1), 0x4a5278, { p: [0, 0.36, 0], s: [0.95, 0.4, 1.25], soft: true }),
+  mk(ico(0.3, 1), WOOL, { p: [0, 1.0, -0.3], jit: 0, soft: true }), mk(ico(0.26, 1), WOOL, { p: [0.3, 0.7, -0.62], jit: 0, soft: true }),
+  mk(ico(0.26, 1), WOOL, { p: [-0.3, 0.7, -0.6], jit: 0, soft: true }),
+  ...[[-1, -1], [1, -1], [-1, 1], [1, 1]].map(([x, z]) => mk(box(0.09, 0.46, 0.09), 0x1c1514, { p: [x * 0.22, 0.21, z * 0.42] })),
 ]);
 const sheepHeadGeo = mergeGeometries([
   mk(box(0.36, 0.34, 0.44), DARK, { p: [0, 0, 0.2] }),
@@ -214,64 +234,98 @@ const sheepHeadGeo = mergeGeometries([
   mk(box(0.07, 0.07, 0.03), 0xf3e8cc, { p: [0.1, 0.07, 0.42] }), mk(box(0.07, 0.07, 0.03), 0xf3e8cc, { p: [-0.1, 0.07, 0.42] }),
   mk(ico(0.2, 1), WOOL, { p: [0, 0.22, 0.02], soft: true }),
 ]);
-const SS = 1.3;
+const SS = 1.8;
 const HEAD_P = new THREE.Vector3(0, 0.78, 0.6);
 const N_AI = 100, N = N_AI + 1;
-const sheepMat = flat({ emissive: 0x645440 }); const bodyIM = new THREE.InstancedMesh(sheepBodyGeo, sheepMat, N); bodyIM.name = 'sheep'; bodyIM.castShadow = true; bodyIM.frustumCulled = false;
-const headIM = new THREE.InstancedMesh(sheepHeadGeo, sheepMat, N); headIM.name = 'sheep-heads'; headIM.castShadow = true; headIM.frustumCulled = false;
+const toonSheep = (() => { const d = new Uint8Array([246,240,224,255, 255,255,255,255]); const t = new THREE.DataTexture(d, 2, 1, THREE.RGBAFormat); t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t; })();
+const sheepMat = flat({ emissive: 0x4a443a, gradientMap: toonSheep }); const bodyIM = new THREE.InstancedMesh(sheepBodyGeo, sheepMat, N); bodyIM.name = 'sheep'; bodyIM.castShadow = false; bodyIM.frustumCulled = false;
+const headIM = new THREE.InstancedMesh(sheepHeadGeo, sheepMat, N); headIM.name = 'sheep-heads'; headIM.castShadow = false; headIM.frustumCulled = false;
 { const tints = [0xffffff, 0xfaf0dc, 0xefe2c6, 0xffffff, 0xf2e6cf, 0xe0d4bb]; const c = new THREE.Color();
   for (let i = 0; i < N; i++) { const j = i === 0 ? 13 : i, t = tints[(j * 7 + (j >> 2)) % tints.length]; c.setHex(t).multiplyScalar(0.92 + ((j * 37) % 17) / 17 * 0.1); bodyIM.setColorAt(i, c); headIM.setColorAt(i, new THREE.Color(0xffffff)); } }
 const SZ = Array.from({ length: N }, (_, i) => 0.88 + (((i === 0 ? 13 : i) * 53) % 23) / 23 * 0.3);
 scene.add(bodyIM, headIM);
+const hullBody = mergeGeometries([mk(ico(0.5, 1), WOOL, { p: [0, 0.68, -0.02], s: [1.05, 0.95, 1.45], soft: true }), mk(ico(0.3, 0), WOOL, { p: [0, 0.4, 0], s: [1, 0.6, 1.6], soft: true })]);
+const hullHead = mergeGeometries([mk(ico(0.28, 1), DARK, { p: [0, 0.02, 0.2], s: [1, 0.95, 1.2], soft: true })]);
+const shBody = mergeGeometries([mk(ico(0.5, 0), WOOL, { p: [0, 0.68, -0.02], s: [1.05, 0.95, 1.45], soft: true })]);
+const shHead = mergeGeometries([mk(ico(0.28, 0), DARK, { p: [0, 0.02, 0.2], s: [1, 0.95, 1.2], soft: true })]);
+{ const hull = (g, d) => { const h = g.clone(); h.deleteAttribute('color'); const p = h.attributes.position, n = h.attributes.normal; for (let i = 0; i < p.count; i++) p.setXYZ(i, p.getX(i) + n.getX(i) * d, p.getY(i) + n.getY(i) * d, p.getZ(i) + n.getZ(i) * d); return h; };
+  const im = new THREE.MeshBasicMaterial({ color: 0x1a1210, side: THREE.BackSide, fog: false });
+  const ob = new THREE.InstancedMesh(hull(hullBody, 0.125), im, N), oh = new THREE.InstancedMesh(hull(hullHead, 0.08), im, N);
+  ob.instanceMatrix = bodyIM.instanceMatrix; oh.instanceMatrix = headIM.instanceMatrix; { const pm = new THREE.MeshBasicMaterial({ colorWrite: false, depthWrite: false }); const pb = new THREE.InstancedMesh(shBody, pm, N), ph = new THREE.InstancedMesh(shHead, pm, N); pb.instanceMatrix = bodyIM.instanceMatrix; ph.instanceMatrix = headIM.instanceMatrix; pb.name = 'sheep-shadow'; ph.name = 'sheep-heads-shadow'; pb.castShadow = ph.castShadow = true; pb.frustumCulled = ph.frustumCulled = false; scene.add(pb, ph); }
+  ob.name = 'sheep-ink'; oh.name = 'sheep-heads-ink'; ob.frustumCulled = oh.frustumCulled = false; scene.add(ob); }
 
 // ───────────────────────── wolf ─────────────────────────
-const wolf = { x: -10, z: 3, y: 0, yaw: 0.6, state: 'watch', pose: 'crouch', t: 0, bites: 3, cd: 5, sulk: 0, target: null, abort: 0, stalkT: 0, lookX: 0, lookZ: 0, phase: 0, onRock: true, shrug: 0, pitch: 0 };
-const ROCK = { x: -10, z: 3, top: 3.15 };
+const wolf = { x: -15, z: -2, y: 0, yaw: 0.6, state: 'watch', pose: 'crouch', t: 0, bites: 3, cd: 5, sulk: 0, target: null, abort: 0, stalkT: 0, lookX: 0, lookZ: 0, phase: 0, onRock: true, shrug: 0, pitch: 0 };
+const ROCK = { x: -15, z: -2, top: 4.1 };
 const W = {};
 {
   const grey = PAL.wolf, light = 0x1d1511, dk = 0x0e0a08;
-  W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(4.4);
+  W.root = new THREE.Group(); W.root.name = 'wolf'; W.root.scale.setScalar(4.5);
   W.body = new THREE.Group(); W.root.add(W.body);
-  const mat = new THREE.MeshBasicMaterial({ vertexColors: true, fog: false });
-  const add = (parent, g) => { const m = new THREE.Mesh(g, mat); m.castShadow = true; parent.add(m); return m; };
-  add(W.body, mergeGeometries([
-    mk(ico(0.5, 1), grey, { p: [0, 0.7, 0], s: [0.7, 0.62, 1.7], jit: 0.02 }),
-    mk(ico(0.5, 1), grey, { p: [0, 0.78, 0.62], s: [0.62, 0.62, 0.7], jit: 0.08 }),
-    mk(ico(0.3, 0), light, { p: [0, 0.55, 0.45], s: [0.9, 0.6, 1.2] }),
-    mk(ico(0.3, 0), 0x1c1410, { p: [0, 0.85, -0.2], s: [1, 0.7, 1.4], jit: 0.1 }),
-  ]));
-  W.head = new THREE.Group(); W.head.position.set(0, 0.88, 1.08); W.body.add(W.head);
+  const mat = new THREE.MeshBasicMaterial({ color: PAL.wolf, fog: false });
+  const legMat = new THREE.MeshBasicMaterial({ color: 0x15110e, fog: false });
+  const rimMat = new THREE.MeshBasicMaterial({ color: 0x2a2119, fog: false });
+  const add = (parent, g, mm) => { const m = new THREE.Mesh(g, mm || mat); m.castShadow = true; parent.add(m); return m; };
+  // smooth rounded masses only (WOLF.png: sleek long-snouted silhouette, tall ears, bush tail, slim legs)
+  const blob = (sx, sy, sz, px, py, pz, rx = 0, ry = 0, rz = 0) => new THREE.SphereGeometry(0.5, 16, 12).scale(sx, sy, sz).rotateX(rx).rotateY(ry).rotateZ(rz).translate(px, py, pz);
+  const taper = (r0, r1, len, px, py, pz, rx = 0, rz = 0) => new THREE.CylinderGeometry(r1, r0, len, 10).rotateX(rx).rotateZ(rz).translate(px, py, pz);
+  // lean side-profile silhouette: one extruded polygon (z forward, y up), thin in x
+  {
+    const sh = new THREE.Shape();
+    const pts = [[-1.62, 0.75], [-1.4, 1.02], [-1.05, 1.06], [-0.6, 0.97], [-0.15, 1.08], [0.3, 1.22], [0.65, 1.2], [0.95, 1.12], [1.08, 0.95], [1.0, 0.75], [0.8, 0.52], [0.5, 0.4], [0.15, 0.48], [-0.2, 0.62], [-0.55, 0.56], [-0.95, 0.5], [-1.3, 0.42], [-1.55, 0.5]];
+    sh.moveTo(pts[0][0], pts[0][1]); pts.slice(1).forEach(p => sh.lineTo(p[0], p[1])); sh.closePath();
+    const eg = new THREE.ExtrudeGeometry(sh, { depth: 0.32, bevelEnabled: true, bevelThickness: 0.1, bevelSize: 0.08, bevelSegments: 2, curveSegments: 6 });
+    eg.translate(0, 0, -0.16).rotateY(-Math.PI / 2);
+    eg.deleteAttribute('uv');
+    const m = add(W.body, eg); m.name = 'wolf-body';
+  }  W.head = new THREE.Group(); W.head.name = 'wolf-head'; W.head.position.set(0, 1.0, 1.1); W.body.add(W.head);
   add(W.head, mergeGeometries([
-    mk(ico(0.5, 1), grey, { p: [0, 0, 0.05], s: [0.62, 0.55, 0.78], jit: 0.08 }),
-    mk(box(0.22, 0.17, 0.46), light, { p: [0, -0.07, 0.45] }), mk(box(0.1, 0.09, 0.08), dk, { p: [0, -0.01, 0.7] }),
-    mk(cone(0.1, 0.32, 4), grey, { p: [0.15, 0.3, -0.02], r: [-0.2, 0, -0.2] }), mk(cone(0.1, 0.32, 4), grey, { p: [-0.15, 0.3, -0.02], r: [-0.2, 0, 0.2] }),
-    mk(box(0.09, 0.06, 0.04), 0xf2c35a, { p: [0.15, 0.1, 0.36] }), mk(box(0.09, 0.06, 0.04), 0xf2c35a, { p: [-0.15, 0.1, 0.36], }),
+    blob(0.3, 0.3, 0.5, 0, 0, 0.06),                        // skull
+    taper(0.09, 0.04, 0.75, 0, 0.0, 0.6, Math.PI / 2 + 0.05),  // upper jaw
+    taper(0.06, 0.025, 0.6, 0, -0.14, 0.55, Math.PI / 2 - 0.12), // lower jaw (notch between)
+    blob(0.08, 0.06, 0.1, 0, 0.03, 0.98),                    // nose
+    blob(0.2, 0.3, 0.3, 0, -0.2, -0.3, 0.6),                  // neck
   ]));
+  add(W.head, mergeGeometries([
+    new THREE.ConeGeometry(0.13, 0.4, 6).translate(0, 0.2, 0).rotateX(-0.25).translate(0.12, 0.24, -0.05),
+    new THREE.ConeGeometry(0.13, 0.4, 6).translate(0, 0.2, 0).rotateX(-0.25).translate(-0.12, 0.24, -0.05),
+  ]));
+  const eyeMat = new THREE.MeshBasicMaterial({ color: 0xe9c46a, fog: false });
+  [-1, 1].forEach(sx => { const e = new THREE.Mesh(new THREE.SphereGeometry(0.035, 8, 6).scale(1.3, 0.8, 1), eyeMat); e.position.set(sx * 0.15, 0.06, 0.36); W.head.add(e); });
   W.legs = [];
-  [[-1, 0.62], [1, 0.62], [-1, -0.62], [1, -0.62]].forEach(([sx, z]) => {
-    const g = new THREE.Group(); g.position.set(sx * 0.26, 0.72, z); W.body.add(g);
-    add(g, mergeGeometries([mk(new THREE.CylinderGeometry(0.1, 0.07, 0.62, 7), 0x1a1310, { p: [0, -0.3, 0] }), mk(box(0.2, 0.08, 0.28), dk, { p: [0, -0.62, 0.05] })]));
+  [[-1, 0.72], [1, 0.72], [-1, -0.6], [1, -0.6]].forEach(([sx, z]) => {
+    const g = new THREE.Group(); g.name = 'wolf-leg'; g.position.set(sx * 0.13, 0.72 + (z < 0 ? 0.012 : 0) + (sx > 0 ? 0.006 : 0), z); W.body.add(g);
+    add(g, taper(0.16, 0.08, 0.7, 0, -0.33, 0), legMat);
+    add(g, blob(0.1, 0.06, 0.22, 0, -0.55, 0.06), rimMat);
     W.legs.push(g);
   });
-  W.tail = new THREE.Group(); W.tail.position.set(0, 0.8, -0.95); W.body.add(W.tail);
-  add(W.tail, mk(cone(0.14, 0.7, 5), grey, { p: [0, -0.12, -0.28], r: [-1.9, 0, 0] }));
+  W.tail = new THREE.Group(); W.tail.name = 'wolf-tail'; W.tail.position.set(0, 0.8, -1.3); W.body.add(W.tail);
+  add(W.tail, blob(0.42, 0.42, 1.3, 0, -0.3, -0.5, -0.9)); add(W.tail, blob(0.2, 0.2, 0.5, 0, -0.05, -0.85, -0.3), new THREE.MeshBasicMaterial({ color: 0xcfc3a8, fog: false }));
+  // ink rim: a lighter brown shell pushed out along the normals, drawn behind each wolf mesh
+  const rimInk = new THREE.MeshBasicMaterial({ color: 0x8a7058, side: THREE.BackSide, fog: false });
+  const meshes = []; W.body.traverse(o => { if (o.isMesh && o.geometry && o.geometry.attributes.normal && o.material !== eyeMat) meshes.push(o); });
+  meshes.forEach(o => {
+    const g = o.geometry.clone(), p = g.attributes.position; const n = g.attributes.normal; { const acc = new Map(), key = i => p.getX(i).toFixed(3) + ',' + p.getY(i).toFixed(3) + ',' + p.getZ(i).toFixed(3); for (let i = 0; i < p.count; i++) { const k = key(i), a = acc.get(k) || [0, 0, 0]; a[0] += n.getX(i); a[1] += n.getY(i); a[2] += n.getZ(i); acc.set(k, a); } for (let i = 0; i < p.count; i++) { const a = acc.get(key(i)), l = Math.hypot(a[0], a[1], a[2]) || 1; n.setXYZ(i, a[0] / l, a[1] / l, a[2] / l); } }
+    for (let i = 0; i < p.count; i++) p.setXYZ(i, p.getX(i) + n.getX(i) * 0.03, p.getY(i) + n.getY(i) * 0.03, p.getZ(i) + n.getZ(i) * 0.03);
+    if (o.name === 'wolf-body') { const h = new THREE.Mesh(g, rimInk); h.name = 'wolf-outline'; o.parent.add(h); }
+  });
   scene.add(W.root);
 }
 // the rock the wolf watches from
 const rockMat = flat();
 {
   const g = mergeGeometries([
-    mk(ico(2.2, 2), 0xa39a86, { p: [0, 0.4, 0], s: [1.2, 0.8, 1], soft: true }),
-    mk(ico(1.5, 2), 0x8f8774, { p: [1.4, 0.5, 1.0], s: [1, 0.8, 1], soft: true }),
-    mk(ico(1.2, 2), 0xb3aa94, { p: [-1.0, 0.9, -0.6], soft: true }),
+    mk(ico(2.2, 1), 0xa39a86, { p: [0, 0.4, 0], s: [1.2, 0.8, 1], soft: true }),
+    mk(ico(1.5, 1), 0x8f8774, { p: [1.4, 0.5, 1.0], s: [1, 0.8, 1], soft: true }),
+    mk(ico(1.2, 1), 0xb3aa94, { p: [-1.0, 0.9, -0.6], soft: true }),
   ]);
-  const m = new THREE.Mesh(g, rockMat); m.position.set(ROCK.x, gh(ROCK.x, ROCK.z) + 0.2, ROCK.z); m.castShadow = m.receiveShadow = true; m.name = 'wolf-rock'; m.scale.setScalar(1.3); scene.add(m);
+  const m = new THREE.Mesh(g, rockMat); m.position.set(ROCK.x, gh(ROCK.x, ROCK.z) + 0.2, ROCK.z); m.castShadow = m.receiveShadow = true; m.name = 'wolf-rock'; m.scale.setScalar(1.5); scene.add(m);
 }
 
 // ───────────────────────── scenery (instanced) ─────────────────────────
 const dummy = new THREE.Object3D();
 function scatterInst(geo, count, gen, { shadow = true, name = '' } = {}) {
-  const im = new THREE.InstancedMesh(geo, flat(), count); im.name = name; im.castShadow = shadow; im.receiveShadow = true;
+  const im = new THREE.InstancedMesh(geo, /pine|tree/.test(name) ? treeMat() : flat(), count); im.name = name; im.castShadow = shadow; im.receiveShadow = true;
   let k = 0, tries = 0;
   while (k < count && tries++ < count * 60) {
     const o = gen(); if (!o) continue;
@@ -284,23 +338,25 @@ const polar = (r0, r1) => { const a = rnd(0, 6.283), r = rnd(r0, r1); return [Ma
 // pines: dark triangle tiers (indigo-green), oaks: teardrop crowns, walls: dry-stone runs
 const pineGeo = mergeGeometries([
   mk(cone(0.2, 0.9, 7), 0x3a2a20, { p: [0, 0.45, 0], soft: true }),
-  mk(cone(1.15, 2.0, 11), 0x34503f, { p: [0, 1.7, 0], jit: 0.0, soft: true }), mk(cone(0.9, 1.8, 11), 0x3a5a45, { p: [0, 2.8, 0], soft: true }), mk(cone(0.6, 1.6, 11), 0x41644a, { p: [0, 3.8, 0], soft: true }),
+  mk(cone(1.15, 2.0, 10), 0x34503f, { p: [0, 1.7, 0], jit: 0.0, soft: true }), mk(cone(0.9, 1.8, 10), 0x3a5a45, { p: [0, 2.8, 0], soft: true }), mk(cone(0.6, 1.6, 10), 0x41644a, { p: [0, 3.8, 0], soft: true }),
 ]);
-const pinesMesh = scatterInst(pineGeo, 130, () => { const [x, z] = polar(36, 130); if (z > 4) return null; const h = gh(x, z); const s = rnd(1.1, 2.4) * (Math.hypot(x, z) > 70 ? 1.6 : 1); return { x, z, s, sy: s * rnd(1.0, 1.5), y: h - 0.2 }; }, { name: 'pines' });
+const pinesMesh = scatterInst(pineGeo, 32, () => { const [x, z] = polar(52, 130); if (z > 4) return null; const h = gh(x, z); const s = rnd(1.1, 2.4) * (Math.hypot(x, z) > 70 ? 1.6 : 1); return { x, z, s, sy: s * rnd(1.0, 1.5), y: h - 0.2 }; }, { name: 'pines' });
 const roundTreeGeo = mergeGeometries([
   mk(cone(0.24, 2.0, 7), 0x4a3324, { p: [0, 1.0, 0], soft: true }),
-  mk(ico(1.2, 2), 0x6f7d44, { p: [0, 2.9, 0], s: [1, 1.2, 1], soft: true }), mk(ico(0.85, 2), 0x84914f, { p: [0.7, 2.4, 0.25], soft: true }), mk(ico(0.75, 2), 0x5f6e3b, { p: [-0.65, 2.45, -0.2], soft: true }), mk(ico(0.6, 2), 0x93a05a, { p: [0.15, 3.7, 0.1], soft: true }),
+  mk(ico(1.2, 2), 0x7a8848, { p: [0, 2.9, 0], s: [1, 1.2, 1], soft: true }), mk(ico(0.85, 2), 0x7a8848, { p: [0.7, 2.4, 0.25], soft: true }), mk(ico(0.75, 2), 0x7a8848, { p: [-0.65, 2.45, -0.2], soft: true }), mk(ico(0.6, 2), 0x7a8848, { p: [0.15, 3.7, 0.1], soft: true }),
 ]);
 scatterInst(roundTreeGeo, 14, () => { const [x, z] = polar(33, 58); if (z > 2 || Math.hypot(x, z) < 33) return null; const s = rnd(1.1, 1.7); return { x, z, s }; }, { name: 'round-trees' });
 // two big framing oaks at the meadow's edge
-{ const im = new THREE.InstancedMesh(roundTreeGeo, flat(), 3); im.name = 'oaks'; im.castShadow = im.receiveShadow = true;
+{ const im = new THREE.InstancedMesh(roundTreeGeo, treeMat(), 3); im.name = 'oaks'; im.castShadow = im.receiveShadow = true;
   [[-35, -8, 2.4], [37, -16, 2.2], [-14, -42, 2.8]].forEach(([x, z, s], i) => { dummy.position.set(x, gh(x, z) - 0.1, z); dummy.rotation.set(0, i * 2, 0); dummy.scale.setScalar(s); dummy.updateMatrix(); im.setMatrixAt(i, dummy.matrix); }); scene.add(im); }
-const rockGeo = mergeGeometries([mk(ico(0.8, 2), 0xa39a86, { s: [1, 0.7, 1], soft: true }), mk(ico(0.5, 2), 0xb3aa94, { p: [0.6, -0.1, 0.2], soft: true })]);
+const treeInk = im => { const h = im.geometry.clone(); h.deleteAttribute('color'); const p = h.attributes.position, n = h.attributes.normal; for (let i = 0; i < p.count; i++) p.setXYZ(i, p.getX(i) + n.getX(i) * 0.14, p.getY(i) + n.getY(i) * 0.14, p.getZ(i) + n.getZ(i) * 0.14); const o = new THREE.InstancedMesh(h, new THREE.MeshBasicMaterial({ color: 0x1a1210, side: THREE.BackSide, fog: false }), im.count); o.instanceMatrix = im.instanceMatrix; o.name = im.name + '-ink'; o.frustumCulled = false; scene.add(o); };
+treeInk(scene.getObjectByName('oaks')); treeInk(pinesMesh);
+const rockGeo = mergeGeometries([mk(ico(0.8, 1), 0xa39a86, { s: [1, 0.7, 1], soft: true }), mk(ico(0.5, 1), 0xb3aa94, { p: [0.6, -0.1, 0.2], soft: true })]);
 scatterInst(rockGeo, 40, () => { const [x, z] = polar(18, 56); const h = gh(x, z); if (Math.hypot(x - ROCK.x, z - ROCK.z) < 5) return null; const s = rnd(0.5, 1.4) * (Math.hypot(x, z) > 32 ? 2.4 : 1); return { x, z, s, y: h + 0.2 * s }; }, { name: 'rocks' });
-const bushGeo = mergeGeometries([mk(ico(0.6, 2), 0x74834a, { s: [1, 0.75, 1], soft: true }), mk(ico(0.45, 2), 0x86954f, { p: [0.45, -0.05, 0.1], soft: true }), mk(ico(0.4, 2), 0x66743f, { p: [-0.4, -0.05, -0.1], soft: true })]);
+const bushGeo = mergeGeometries([mk(ico(0.6, 1), 0x74834a, { s: [1, 0.75, 1], soft: true }), mk(ico(0.45, 1), 0x86954f, { p: [0.45, -0.05, 0.1], soft: true }), mk(ico(0.4, 1), 0x66743f, { p: [-0.4, -0.05, -0.1], soft: true })]);
 scatterInst(bushGeo, 34, () => { const [x, z] = polar(8, 33); if (Math.hypot(x - ROCK.x, z - ROCK.z) < 4) return null; return { x, z, s: rnd(0.6, 1.1), y: gh(x, z) + 0.25 }; }, { name: 'bushes' });
 const tuftGeo = mergeGeometries([0, 1, 2].map(i => mk(cone(0.1, 0.55, 3), i === 1 ? 0xd2bd6c : 0x98a257, { p: [Math.cos(i * 2.1) * 0.12, 0.25, Math.sin(i * 2.1) * 0.12], r: [Math.sin(i * 2.1) * 0.35, 0, -Math.cos(i * 2.1) * 0.35], jit: 0.12 })));
-scatterInst(tuftGeo, 520, () => { const [x, z] = polar(0, 33); return { x, z, s: rnd(0.7, 1.6), y: gh(x, z) - 0.05 }; }, { shadow: false, name: 'tufts' });
+scatterInst(tuftGeo, 180, () => { const [x, z] = polar(0, 33); return { x, z, s: rnd(0.7, 1.6), y: gh(x, z) - 0.05 }; }, { shadow: false, name: 'tufts' });
 // dry-stone wall runs (merged, one mesh)
 {
   const runs = [
@@ -316,22 +372,22 @@ scatterInst(tuftGeo, 520, () => { const [x, z] = polar(0, 33); return { x, z, s:
       for (let d = 0; d < L; d += 0.75) {
         const x = lerp(x0, x1, d / L), z = lerp(z0, z1, d / L), y = gh(x, z);
         for (let row = 0; row < 3; row++) {
-          const w = rnd(0.55, 0.8), hgt = 0.34 + rnd(0, 0.08), off = (row % 2) * 0.35;
+          const w = rnd(0.55, 0.8), hgt = 0.34 + rnd(0.002, 0.08), off = (row % 2) * 0.35;
           const px = x + Math.cos(a) * (off - 0.2) * 0, pz = z;
-          parts.push(mk(box(0.95, hgt, w), sh[(row + Math.floor(d * 3)) % 4], { p: [x, y + 0.12 + row * 0.4 + hgt / 2 - 0.12, pz], r: [0, a - Math.PI / 2 + rnd(-0.06, 0.06), 0], jit: 0.07 }));
+          parts.push(mk(box(rnd(0.9, 1.0), hgt, w), sh[(row + Math.floor(d * 3)) % 4], { p: [x, y + 0.12 + row * 0.4 + hgt / 2 - 0.12 + rnd(0, 0.01), pz], r: [0, a - Math.PI / 2 + rnd(-0.06, 0.06), 0], jit: 0.07 }));
         }
-        if (Math.random() < 0.35) parts.push(mk(box(1.0, 0.22, 0.95), 0xbfb7a0, { p: [x, y + 1.35, z], r: [0, a - Math.PI / 2, 0], jit: 0.06 }));
+        if (Math.random() < 0.35) parts.push(mk(box(rnd(0.96, 1.04), 0.22, rnd(0.9, 0.98)), 0xbfb7a0, { p: [x, y + 1.35 + rnd(0.002, 0.03), z], r: [0, a - Math.PI / 2, 0], jit: 0.06 }));
       }
     }
   });
-  const wm = new THREE.Mesh(mergeGeometries(parts), flat()); wm.name = 'walls'; wm.castShadow = wm.receiveShadow = true; scene.add(wm);
+  const wm = new THREE.Mesh(mergeGeometries(parts), flat({ polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 })); wm.name = 'walls'; wm.castShadow = wm.receiveShadow = true; scene.add(wm);
 }
 const clouds = [];
 
 // ───────────────────────── clover patches ─────────────────────────
 const clovers = [];
 {
-  const cm = flat(), star = new THREE.MeshBasicMaterial({ color: 0xf6d98a, transparent: true, opacity: 0, depthWrite: false, depthTest: false, fog: false });
+  const cm = flat(), star = new THREE.MeshBasicMaterial({ color: 0xfff6d0, transparent: true, opacity: 0, depthWrite: false, depthTest: false, fog: false });
   const geo = mergeGeometries([
     ...[0, 1, 2, 3, 4, 5].map(i => mk(ico(0.3, 0), i % 2 ? 0x6b7f38 : 0x7f9348, { p: [Math.cos(i * 1.05) * 0.5, 0.1, Math.sin(i * 1.05) * 0.5], s: [1, 0.45, 1], jit: 0.1 })),
     mk(ico(0.12, 0), 0xf3e8cc, { p: [0.2, 0.28, 0.1] }), mk(ico(0.12, 0), 0xd9a49a, { p: [-0.3, 0.26, -0.2] }), mk(ico(0.12, 0), 0xf3e8cc, { p: [0.0, 0.3, -0.5] }),
@@ -340,9 +396,16 @@ const clovers = [];
     const g = new THREE.Group(); g.position.set(x, gh(x, z), z); g.name = 'clover';
     const m = new THREE.Mesh(geo, cm); m.receiveShadow = true; g.add(m);
     const sp = new THREE.Group(); sp.position.y = 2.2; sp.scale.setScalar(2);
-    sp.add(new THREE.Mesh(box(0.1, 0.9, 0.02), star), new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.6, 9, 8, 1, true), star), new THREE.Mesh(box(0.7, 0.08, 0.02), star)); g.add(sp);
-    const cr = new THREE.Mesh(new THREE.RingGeometry(1.1, 1.7, 28).rotateX(-Math.PI / 2), star); cr.position.y = 0.25; cr.material = star; sp.userData.ring = cr; g.add(cr);
+    sp.add(new THREE.Mesh(box(0.1, 0.9, 0.02), star), new THREE.Mesh(box(0.7, 0.08, 0.02), star)); g.add(sp);
+    const cr = new THREE.Mesh(new THREE.RingGeometry(1.0, 1.9, 28).rotateX(-Math.PI / 2), star); cr.position.y = 0.25; cr.material = star; sp.userData.ring = cr; g.add(cr);
     const dm = new THREE.MeshBasicMaterial({ color: 0xf2b47a, transparent: true, opacity: 0.55, depthWrite: false, depthTest: false, fog: false });
+    const outl = new THREE.Mesh(new THREE.RingGeometry(2.6, 3.0, 40).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0x2a1c12, transparent: true, opacity: 0.8, depthWrite: false, fog: false })); outl.position.y = 0.28; g.add(outl);
+    const patch = new THREE.Mesh(new THREE.CircleGeometry(2.6, 40).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0x4f6a2c, transparent: true, opacity: 0.9, depthWrite: false, fog: false })); patch.position.y = 0.27; g.add(patch);
+    { const lm = new THREE.MeshBasicMaterial({ color: 0x9be04a, transparent: true, opacity: 0.95, depthWrite: false, fog: false }), im = new THREE.MeshBasicMaterial({ color: 0x1f2a12, side: THREE.BackSide, fog: false, depthWrite: false });
+      for (let k = 0; k < 3; k++) { const a = k * 2.094 + 0.5, hs = new THREE.Shape(); hs.moveTo(0, 0); hs.bezierCurveTo(-0.9, 0.2, -0.8, 1.2, 0, 0.9); hs.bezierCurveTo(0.8, 1.2, 0.9, 0.2, 0, 0);
+        const gm = new THREE.ShapeGeometry(hs).rotateX(-Math.PI / 2).scale(1.1, 1, 1.1).rotateY(a);
+        const lf = new THREE.Mesh(gm, lm); lf.position.y = 0.36 + k * 0.012; lf.renderOrder = 3; g.add(lf);
+        const ol = new THREE.Mesh(gm.clone().scale(1.18, 1, 1.18), new THREE.MeshBasicMaterial({ color: 0x1f2a12, transparent: true, opacity: 0.9, depthWrite: false, fog: false })); ol.position.y = 0.34 + k * 0.012; ol.renderOrder = 2; g.add(ol); } }
     const disc = new THREE.Mesh(new THREE.RingGeometry(0, 1.9, 32).rotateX(-Math.PI / 2), dm); disc.position.y = 0.3; disc.renderOrder = 4; g.add(disc);
     scene.add(g); clovers.push({ x, z, g, mesh: m, star: sp, prog: 0, eaten: false });
   });
@@ -354,7 +417,8 @@ const marker = new THREE.Mesh(new THREE.RingGeometry(0.85, 1.1, 28).rotateX(-Mat
 const reach = new THREE.Mesh(new THREE.RingGeometry(4.4, 4.6, 40).rotateX(-Math.PI / 2), ringMat(0xb3261e)); reach.name = 'reach'; reach.visible = false; scene.add(reach);
 const aim = new THREE.Mesh(new THREE.RingGeometry(2.4, 3.8, 32).rotateX(-Math.PI / 2), ringMat(0xe0a03a)); aim.material.opacity = 0.95; aim.material.depthTest = false; aim.renderOrder = 5; aim.name = 'aim'; { const am = new THREE.MeshBasicMaterial({ color: 0xb3261e, depthTest: false, fog: false }); const ar = new THREE.Mesh(new THREE.ConeGeometry(0.9, 1.8, 4).rotateX(Math.PI), am); ar.renderOrder = 6; ar.position.y = 5; ar.name = 'aimArrow'; aim.add(ar); const ar2 = new THREE.Mesh(new THREE.RingGeometry(1.5, 2.4, 32).rotateX(-Math.PI / 2), am); ar2.renderOrder = 5; aim.add(ar2); { const wm = new THREE.MeshBasicMaterial({ color: 0xffffff, depthTest: false, fog: false, transparent: true, opacity: 0.9 }); const ro = new THREE.Mesh(new THREE.RingGeometry(3.8, 4.2, 32).rotateX(-Math.PI / 2), wm); ro.renderOrder = 5; aim.add(ro); } aim.userData.arrow = ar; } aim.visible = false; scene.add(aim);
 const aimLine = new THREE.Mesh(new THREE.PlaneGeometry(1, 1.6).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xb3261e, depthTest: false, fog: false, transparent: true, opacity: 0.8 })); aimLine.renderOrder = 4; aimLine.name = 'aimLine'; aimLine.visible = false; scene.add(aimLine);
-const wolfRing = new THREE.Mesh(new THREE.RingGeometry(6.4, 7.8, 36).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xe0a03a, depthTest: false, fog: false, transparent: true, opacity: 0.9 })); wolfRing.renderOrder = 6; wolfRing.name = 'wolfRing'; { const f = new THREE.Mesh(new THREE.CircleGeometry(6.3, 28).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0x8e9a58, depthTest: false, fog: false, transparent: true, opacity: 0.45 })); f.renderOrder = 6; f.name = 'wolfRingFill'; wolfRing.add(f); wolfRing.userData.fill = f; } wolfRing.visible = false; scene.add(wolfRing);
+const wolfRing = new THREE.Mesh(new THREE.RingGeometry(6.4, 7.8, 36).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xe0a03a, depthTest: false, fog: false, transparent: true, opacity: 0.9 })); wolfRing.renderOrder = 6; wolfRing.name = 'wolfRing'; { const f = new THREE.Mesh(new THREE.CircleGeometry(6.3, 28).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0x8e9a58, depthTest: false, fog: false, transparent: true, opacity: 0.45 })); f.renderOrder = 6; f.name = 'wolfRingFill'; wolfRing.add(f); wolfRing.userData.fill = f; } wolfRing.visible = false; wolfRing.frustumCulled = false; scene.add(wolfRing);
+const wolfMark = new THREE.Mesh(new THREE.ConeGeometry(1.6, 3.4, 4).rotateX(Math.PI), new THREE.MeshBasicMaterial({ color: 0xb3261e, depthTest: false, depthWrite: false, fog: false, transparent: true, opacity: 0.95 })); wolfMark.renderOrder = 9; wolfMark.name = 'wolfMark'; wolfMark.frustumCulled = false; wolfMark.visible = false; scene.add(wolfMark);
 const outline = new THREE.Group(); outline.visible = false; outline.name = 'outline';
 {
   const om = new THREE.MeshBasicMaterial({ color: 0xb3261e, side: THREE.BackSide, depthTest: false }); om.fog = false;
@@ -392,14 +456,15 @@ const cam = { x: 0, z: 0, punch: 0, close: 0, fov: 45, zoom: 1 };
 
 function reset(newMode) {
   if (newMode) mode = newMode;
-  T = 0; result = null; clock = 0; startleT = rnd(18, 24); zoomT = 16; decoyI = 0; pounce.ph = null; toastT = 0;
+  T = 0; cam.zoom = mode === 'solo' ? 0.66 : cam.zoom; result = null; clock = 0; startleT = rnd(18, 24); zoomT = 16; decoyI = 0; pounce.ph = null; toastT = 0;
   flock.angle = rnd(0, 6.28); flock.target = flock.angle; flock.turnT = 12;
   // clusters of sheep
-  const cl = []; for (let k = 0; k < 16; k++) { const [x, z] = polar(2, 26); cl.push([x, z]); }
+  const cl = []; for (let k = 0; k < 16; k++) { const [x, z] = polar(4, 26); cl.push([x, z]); }
   sheep.forEach((s, i) => {
-    const [cx, cz] = cl[i % cl.length]; const [dx, dz] = polar(0, 9);
-    let x = cx + dx, z = cz + dz; if (Math.hypot(x - ROCK.x, z - ROCK.z) < 4) { x += 6; z += 6; }
+    const [cx, cz] = cl[i % cl.length]; const [dx, dz] = polar(1.5, 11);
+    let x = cx + dx, z = cz + dz; if (Math.hypot(x - ROCK.x, z - ROCK.z) < 8) { x += 9; z += 9; }
     if (Math.hypot(x, z) > 27) { x *= 0.8; z *= 0.8; }
+    if (i > 0) { const px = x, pz = z - 1.5, pd = Math.hypot(px, pz) || 0.1; if (pd < 11) { const k = (11 + (i % 5) * 0.8) / pd; x = px * k; z = pz * k + 1.5; } }
     Object.assign(s, { x, z, vx: 0, vz: 0, yaw: rnd(0, 6.28), st: Math.random() < 0.5 ? 'graze' : 'walk', t: rnd(1, 6), runT: 0, zoom: 0, susp: 0, still: 0, yawRate: 0, speedMax: rnd(0.9, 1.4), pitch: 0, frozen: false, immune: 0, hop: 0, hopV: 0, spin: 0, graze: false, phase: rnd(0, 6) });
   });
   Object.assign(P, { x: 0, z: 1.5, yaw: Math.PI, st: 'walk' });
@@ -424,7 +489,7 @@ function updateModeUI() {
 function toast(t, d = 2.2) { const e = $('toast'); e.textContent = t; e.style.opacity = 1; toastT = d; }
 function hideReveal() {
   $('toast').style.opacity = 0; toastT = 0; $('rbig').style.fontSize = ''; splash.clear(); post.uniforms.freeze.value = 0; $('reveal').classList.remove('slam');
-  $('reveal').style.opacity = 0; $('bubble').style.display = 'none'; $('tag').style.display = 'none'; $('cap').style.opacity = 0;
+  $('mode').style.opacity = ''; $('hud').style.opacity = ''; $('reveal').style.opacity = 0; $('bubble').style.display = 'none'; $('tag').style.display = 'none'; $('cap').style.opacity = 0;
   $('bt').style.height = $('bb').style.height = '0'; $('vig').style.opacity = 0; outline.visible = false;
 }
 const caps = {
@@ -439,10 +504,11 @@ function renderBites() {
   if (e.dataset.v !== h) { e.innerHTML = h; e.dataset.v = h; }
 }
 function renderClovers() {
-  let h = ''; const n = eatenCount(); for (let i = 0; i < 3; i++) h += `<span class="clv${i < n ? ' on' : ''}"></span>`;
+  let h = ''; const n = eatenCount(); for (let i = 0; i < 3; i++) h += `<span class="clv${i < n ? ' on' : ''}"></span>`; h += '<small> win at 3:00</small>';
   const e = $('clv'); if (e.dataset.v !== h) { e.innerHTML = h; e.dataset.v = h; }
 }
 function showResult(big, sub, kicker, color) {
+  $('mode').style.opacity = 0; $('hud').style.opacity = 0;
   const stamp = color === '#ff3a2a' ? '#b3261e' : color === '#8e9a58' || color === '#8ee04a' ? '#4a5a24' : '#2a1c12';
   $('rbig').style.fontSize = big.length > 8 ? 'clamp(40px,7vw,110px)' : '';
   $('rk').textContent = kicker; $('rbig').textContent = big; $('rsub').textContent = sub; $('reveal').style.setProperty('--stampc', stamp);
@@ -487,7 +553,7 @@ function place(el, wx, wy, wz) { vp.set(wx, wy, wz).project(camera); el.style.le
 const act = a => {
   if (a.action === 'pounce') { startPounce(a.target === 'human' ? P : sheep[1 + Math.floor(Math.random() * N_AI)]); return; }
   if (a.action === 'win') { endGame('win', 'YOU BLENDED IN', 'Three clovers. Three minutes. Zero bites.', 'The flock wins', '#8ee04a'); return; }
-  if (a.action === 'lose') { endGame('lose', 'EATEN', 'The wolf got you', 'You were the human'); return; }
+  if (a.action === 'lose') { endGame('lose', 'HUMAN', 'The wolf got you', 'Gotcha'); return; }
   if (a.action === 'startle') { startle(); return; }
   if (a.key === undefined) return;
   if (a.down === false) keys.delete(a.key);
@@ -618,7 +684,7 @@ function startPounce(t) {
 }
 function localPounce() {
   if (pounce.ph || result || wolf.bites <= 0) return;
-  let best = null, bd = 4.6;
+  let best = null, bd = 7;
   for (const s of sheep) { const d = Math.hypot(s.x - wolf.x, s.z - wolf.z); if (d < bd) { bd = d; best = s; } }
   if (best) startPounce(best); else toast('Nothing in reach: close in on a sheep!', 1.3);
 }
@@ -648,7 +714,7 @@ function updateWolf(dt) {
     }
     const t = topSusp;
     if (t) { w.lookX = lerp(w.lookX, t.x, Math.min(1, dt * 4)); w.lookZ = lerp(w.lookZ, t.z, Math.min(1, dt * 4)); }
-    else { w.lookX = w.x + Math.sin(w.t * 0.5) * 12; w.lookZ = w.z + 8 + Math.cos(w.t * 0.37) * 8; }
+    else { w.lookX = w.x + 12; w.lookZ = w.z + Math.sin(w.t * 0.4) * 3; }
     w.yaw += angDiff(w.yaw, Math.atan2(w.lookX - w.x, w.lookZ - w.z)) * Math.min(1, dt * 2.5);
     if (t && t.susp >= 1.5 && w.cd <= 0) { w.state = 'stalk'; w.target = t; w.abort = 0; w.stalkT = 0; w.onRock = false; w.y = gh(w.x, w.z) + (w.y > 1 ? 0 : 0); caption(pick(caps.stalk)); play('wind', 0.6); if (mode === 'solo') { play('boom', 0.7); play('stab1', 0.8); } if (t.player) toast('! The wolf has noticed you: blend in, graze!', 1.8); }
   } else if (w.state === 'stalk') {
@@ -731,7 +797,7 @@ function updatePounce(rdt) {
     p.ph = null; t.frozen = false; w.target = null; hideReveal(); cam.punch = 0;
     if (p.human) {
       wolf.state = 'done'; t.frozen = true;
-      if (mode === 'solo') endGame('lose', 'EATEN', 'The wolf got you · ' + eatenCount() + '/3 clovers', 'You were the human'); else endGame('wolf', 'WOLF WINS', 'Player 2 found PLAYER 1', 'Gotcha');
+      if (mode === 'solo') endGame('lose', 'HUMAN', 'The wolf got you · ' + eatenCount() + '/3 clovers', 'Gotcha'); else endGame('wolf', 'WOLF WINS', 'Player 2 found PLAYER 1', 'Gotcha');
       outline.visible = true; $('tag').style.display = 'block'; $("vig").style.opacity = 0.25; $('bb').style.height = '0';
     } else {
       t.immune = 6; t.susp = 0; t.zoom = 1.2; t.dir = rnd(0, 6.28);
@@ -761,7 +827,7 @@ function updateClovers(dt) {
     c.star.children.concat(c.g.children.filter(o => o.geometry && o.geometry.type === 'RingGeometry')).forEach(m => m.material.opacity = (c.eaten ? 0 : 0.55 + 0.45 * near) * (0.75 + 0.25 * Math.sin(clock * 5 + c.x)));
     c.star.rotation.y = clock * 0.8; c.star.scale.setScalar(0.7 + 0.4 * Math.sin(clock * 5 + c.x) ** 2); c.star.position.y = 2.2 + Math.sin(clock * 2) * 0.15;
     if (c.eaten) return;
-    if (d < 1.9 && P.graze && !P.frozen && !result) {
+    if (d < 2.6 && P.graze && !P.frozen && !result) {
       c.prog += dt / 2.4; c.mesh.scale.setScalar(1 - 0.5 * c.prog); munchT -= dt;
       if (munchT <= 0) { play('munch', 1); munchT = 0.38; }
       if (c.prog >= 1) { c.eaten = true; c.mesh.scale.setScalar(0.25); toast(`Clover eaten! ${eatenCount()}/3`, 1.8); play('powerup', 0.5); checkWin(); }
@@ -785,6 +851,7 @@ function drawSheep(dt) {
     const roll = Math.sin(s.phase) * 0.06 * Math.min(1, sp);
     e3.set(s.hop > 0 ? s.spin * 0.1 : 0, s.yaw, roll, 'YXZ'); q.setFromEuler(e3);
     let k = 1; if (pounce.ph === 'reveal' && s !== pounce.target && Math.hypot(s.x - wolf.x, s.z - wolf.z) < (pounce.human ? 7 : 5.5)) k = Math.max(0.25, 1 - pounce.t * 4);
+    if (i > 0 && s !== pounce.target) { const fz = s.z - cam.z; if (fz > 5) k *= Math.max(0.55, 1 - (fz - 5) * 0.06); }
     if (k < 1) { scK.setScalar(SS * k * SZ[i]); mB.compose(v3.set(s.x, s.y + bob + s.hop, s.z), q, scK); } else
     mB.compose(v3.set(s.x, s.y + bob + s.hop, s.z), q, scZ.setScalar(SS * SZ[i]));
     bodyIM.setMatrixAt(i, mB);
@@ -799,14 +866,14 @@ function drawSheep(dt) {
 function drawWolf(dt) {
   const w = wolf, r = W.root, pz = w.pose;
   r.position.set(w.x, w.y, w.z); r.rotation.y = w.yaw;
-  { const want = (pz === 'leap' || pz === 'land' || pz === 'shrug' || pz === 'grin') ? 2.4 : 4.4; r.scale.setScalar(r.scale.x + (want - r.scale.x) * Math.min(1, dt * 10 + 0.05)); }
+  { const want = (pz === 'leap' || pz === 'land' || pz === 'shrug' || pz === 'grin') ? 1.7 : (pounce.ph || mode !== "solo" ? 2.4 : 2.0); r.scale.setScalar(r.scale.x + (want - r.scale.x) * Math.min(1, dt * 10 + 0.05)); }
   const ph = w.phase, t = clock;
   W.body.position.set(0, 0, 0); W.body.rotation.set(0, 0, 0); W.head.rotation.set(0, 0, 0); W.head.position.set(0, 0.88, 1.08);
   W.legs.forEach(l => l.rotation.set(0, 0, 0)); W.tail.rotation.set(0, 0, 0);
   if (pz === 'crouch') {
-    W.body.position.y = -0.2 + Math.sin(t * 2) * 0.02; W.body.rotation.x = 0.1;
-    W.head.rotation.x = 0.2; W.head.position.y = 0.7;
-    W.legs.forEach((l, i) => { l.rotation.x = i < 2 ? -0.5 : 0.6; l.scale.y = 0.7; });
+    W.body.position.y = -0.05 + Math.sin(t * 2) * 0.02; W.body.rotation.x = -0.05;
+    W.head.rotation.x = -0.1; W.head.position.y = 0.95;
+    W.legs.forEach((l, i) => { l.rotation.x = i < 2 ? -0.12 : 0.15; l.scale.y = 0.95; });
     W.tail.rotation.y = Math.sin(t * 1.5) * 0.2;
   } else if (pz === 'walk') {
     W.body.position.y = -0.15 + Math.abs(Math.sin(ph)) * 0.05; W.body.rotation.x = 0.12; W.head.rotation.x = 0.25; W.head.position.y = 0.72;
@@ -835,28 +902,30 @@ function drawWolf(dt) {
   r.visible = true;
   // aim rings (local mode)
   const loc = mode === 'local';
-  reach.visible = loc && !pounce.ph && !result; reach.position.set(w.x, gh(w.x, w.z) + 0.15, w.z);
+  reach.visible = loc && !pounce.ph && !result; reach.scale.setScalar(1.55); reach.position.set(w.x, gh(w.x, w.z) + 0.15, w.z);
   aim.visible = false; aimLine.visible = false;
   wolfRing.visible = loc && !pounce.ph && !result; if (wolfRing.visible) { wolfRing.position.set(w.x, gh(w.x, w.z) + 0.3, w.z); wolfRing.scale.setScalar(1 + 0.15 * Math.sin(clock * 8)); const rdy = 1 - Math.min(1, (w.dashCd || 0) / 2.5); wolfRing.userData.fill.scale.setScalar(Math.max(0.02, rdy)); wolfRing.userData.fill.material.color.setHex(rdy >= 1 ? 0x8e9a58 : 0xb3261e); }
-  if (loc && !pounce.ph && !result) { let best = null, bd = 9; for (const s of sheep) { const d = Math.hypot(s.x - w.x, s.z - w.z); if (d < bd) { bd = d; best = s; } } if (best) { aim.visible = true; aim.position.set(best.x, best.y + 0.2, best.z); aim.scale.setScalar(1.5 + 0.2 * Math.sin(clock * 9)); aim.userData.arrow.position.y = 5 + Math.sin(clock * 7); { const dx = best.x - w.x, dz = best.z - w.z, L = Math.hypot(dx, dz) || 1; aimLine.visible = true; aimLine.position.set((w.x + best.x) / 2, best.y + 0.6, (w.z + best.z) / 2); aimLine.rotation.y = Math.atan2(-dz, dx); aimLine.scale.set(L, 1, 1); } const inR = bd < 4.6; aim.material.opacity = inR ? 0.7 + 0.25 * Math.sin(clock * 9) : 0.25; reach.material.color.setHex(inR ? 0xe0a03a : 0xb3261e); reach.scale.setScalar(inR ? 1.35 : 1); aim.userData.arrow.visible = inR; } }
+  { const k = loc ? 4.6 : 5.0; W.root.scale.setScalar(k); W.root.traverse(o => { if (o.material) { o.material.depthTest = true; o.renderOrder = 0; } }); }
+  wolfMark.visible = wolfRing.visible; if (wolfMark.visible) wolfMark.position.set(w.x, gh(w.x, w.z) + 7.5 + Math.sin(clock * 6) * 0.5, w.z);
+  if (loc && !pounce.ph && !result) { let best = null, bd = 9; for (const s of sheep) { const d = Math.hypot(s.x - w.x, s.z - w.z); if (d < bd) { bd = d; best = s; } } if (best) { aim.visible = true; aim.position.set(best.x, best.y + 0.2, best.z); aim.scale.setScalar(1.5 + 0.2 * Math.sin(clock * 9)); aim.userData.arrow.position.y = 5 + Math.sin(clock * 7); { const dx = best.x - w.x, dz = best.z - w.z, L = Math.hypot(dx, dz) || 1; aimLine.visible = true; aimLine.position.set((w.x + best.x) / 2, best.y + 0.6, (w.z + best.z) / 2); aimLine.rotation.y = Math.atan2(-dz, dx); aimLine.scale.set(L, 1, 1); } const inR = bd < 7; aim.material.opacity = inR ? 0.7 + 0.25 * Math.sin(clock * 9) : 0.25; reach.material.color.setHex(inR ? 0xe0a03a : 0xb3261e); reach.scale.setScalar(inR ? 1.7 : 1.55); aim.userData.arrow.visible = inR; } }
 }
 
 // ───────────────────────── camera ─────────────────────────
 function updateCamera(dt, rdt) {
   let tx = P.x, tz = P.z, zoom = 1;
   const dW = Math.hypot(wolf.x - P.x, wolf.z - P.z);
-  if (mode === 'solo') { const k = dW < 32 ? 0.28 : 0; tx += (wolf.x - P.x) * k; tz += (wolf.z - P.z) * k; }
-  else { tx += (wolf.x - P.x) * 0.5; tz += (wolf.z - P.z) * 0.5; zoom = 1 + clamp((dW - 14) / 30, 0, 0.55); }
+  if (mode === 'solo') { if (T < 14) zoom = 0.62; else if (dW < 32) zoom = 0.82; const k = dW < 32 ? (T < 12 ? 0.28 + 0.2 * (1 - T / 12) : 0.28) : 0; tx += (wolf.x - P.x) * k; tz += (wolf.z - P.z) * k; }
+  else { tx += (wolf.x - P.x) * 0.75; tz += (wolf.z - P.z) * 0.75; zoom = 0.6 + clamp((dW - 20) / 40, 0, 0.4); }
   if (pounce.ph && pounce.target) { const m = pounce.target; tx = lerp(tx, (wolf.x + m.x) / 2, cam.punch); tz = lerp(tz, (wolf.z + m.z) / 2, cam.punch); }
   if (pounce.ph === 'reveal' && pounce.t < 2.0) { tx = wolf.x; tz = wolf.z - 2; }
   cam.close += ((pounce.ph === 'reveal' && pounce.t < 2.0 ? 1 : 0) - cam.close) * (1 - Math.exp(-rdt * (pounce.ph === 'reveal' ? 3.5 : 6)));
   rim.position.set(wolf.x + 1.5, 4, wolf.z + 4); rim.intensity = 90 * cam.close;
     const kf = 1 - Math.exp(-rdt * (cam.punch > 0.05 ? 7 : 2.4));
   cam.x += (tx - cam.x) * kf; cam.z += (tz - cam.z) * kf; cam.zoom += (zoom - cam.zoom) * kf;
-  const sc2 = (1 - 0.3 * cam.punch - (pounce.target && !pounce.human ? 0.42 : 0.2) * cam.close) * cam.zoom;
+  const sc2 = (1 - (pounce.target && !pounce.human ? 0.7 : 0.52) * cam.punch - (pounce.target && !pounce.human ? 0.42 : 0.2) * cam.close) * cam.zoom;
   camera.position.set(cam.x, 16 * sc2 + 3 + (pounce.target && !pounce.human ? 5 * cam.close : 0), cam.z + 44 * sc2 + 8);
-  camera.lookAt(cam.x, lerp(10.5, 3.0, cam.close), cam.z - 8 * (1 - cam.close) - 1 * cam.close);
-  let fov = 42 - 12 * cam.punch - (pounce.ph === 'reveal' ? 9 * Math.max(0, 1 - pounce.t / 0.6) : 0); { const a = innerWidth / innerHeight; if (a < 1.4) fov = Math.min(80, (2 * Math.atan(Math.tan(fov * Math.PI / 360) * 1.4 / a)) * 180 / Math.PI); } if (Math.abs(camera.fov - fov) > 0.01) { camera.fov = fov; camera.updateProjectionMatrix(); }
+  camera.lookAt(cam.x, lerp(10.5, 3.0, Math.max(cam.close, cam.punch * 0.9)), cam.z - 8 * (1 - Math.max(cam.close, cam.punch * 0.9)) - 1 * cam.close);
+  let fov = 42 - 16 * cam.punch - (pounce.ph === 'reveal' ? 9 * Math.max(0, 1 - pounce.t / 0.6) : 0); { const a = innerWidth / innerHeight; if (a < 1.4) fov = Math.min(80, (2 * Math.atan(Math.tan(fov * Math.PI / 360) * 1.4 / a)) * 180 / Math.PI); } if (Math.abs(camera.fov - fov) > 0.01) { camera.fov = fov; camera.updateProjectionMatrix(); }
   pinesMesh.visible = cam.close < 0.8;
   { const ly = camera.position.y; }
   camShake.update(rdt);
@@ -908,13 +977,17 @@ function loop(now) {
   step(rdt);
   post.uniforms.time.value = clock;
   renderer.setRenderTarget(rt); renderer.render(scene, camera); renderer.setRenderTarget(null); renderer.render(postScene, postCam);
+  // let inspection tools see the main scene as the last render: a draw-nothing pass (empty layer, no clear, no shadow update)
+  { const ac = renderer.autoClear, sa = renderer.shadowMap.autoUpdate, ml = camera.layers.mask; renderer.autoClear = false; renderer.shadowMap.autoUpdate = false; camera.layers.set(31); renderer.render(scene, camera); camera.layers.mask = ml; renderer.autoClear = ac; renderer.shadowMap.autoUpdate = sa; }
 }
 requestAnimationFrame(loop);
 
 // ───────────────────────── window.__game ─────────────────────────
 const r2 = v => +v.toFixed(2);
+window.scene = scene; window.camera = camera; window.renderer = renderer;
 window.__game = {
-  subject: 'player',
+  scene, camera,
+  subject: 'wolf',
   describe: () => ({
     name: 'Hide in the Flock', units: 'world units, y up, x right, z toward camera',
     keys: { KeyW: 'walk up', KeyA: 'walk left', KeyS: 'walk down', KeyD: 'walk right', ArrowKeys: 'solo: walk; local: move the wolf', ShiftLeft: 'run (suspicious)', KeyE: 'graze (hold on clover)', Space: 'graze (solo)', Enter: 'local: wolf pounce', KeyM: 'toggle Solo/Local', KeyR: 'restart' },
@@ -927,7 +1000,7 @@ window.__game = {
     pounce: pounce.ph ? { ph: pounce.ph, t: r2(pounce.t), human: pounce.human } : null,
     flock: { moving: r2(flock.moving), running: r2(flock.running), graze: r2(flock.graze) },
     topSusp: topSusp ? { i: topSusp.i, s: r2(topSusp.susp), player: topSusp.player } : null,
-    cloverProgress: clovers.map(c => r2(c.prog)),
+    cloverProgress: clovers.map(c => r2(c.prog)), cloverPos: clovers.map(c => [c.x, c.z]),
     decoys: decoyI,
   }),
   act,
@@ -943,3 +1016,5 @@ window.__game = {
     if (s.pounce) startPounce(s.pounce === 'human' ? P : sheep[1 + Math.floor(Math.random() * N_AI)]);
   },
 };
+
+setTimeout(() => { const p = document.getElementById('paper'); if (p) { p.style.transition = 'opacity 1s'; p.style.opacity = 0; setTimeout(() => p.remove(), 1100); } }, 800);

@@ -1,57 +1,55 @@
-Session 37 verdict: the human reveal now works, and the exposure change from session 37 made the reveal frames less washed out. I opened the page and played the human reveal, the AI reveal, the opening look and `perf`. I did not play the clover win, the EATEN screen, the 2-player mode or phone and tablet sizes this session.
+**Session 37 verdict.** I ran a 3-cell sheet (start, human pounce, AI pounce), one local-mode `interact` with `look`, and `perf` once. I did not play solo, zoom on a clover, or time the card.
 
-1. **Looks as LOOK.md says: 8.**
-   - The opening look has `sky`, `sea`, `cliff`, `sand`, `wolf-rock`, `pines*` ×142 and `clover` ×11. It has no `Lighting:` or `Surfaces:` lines, and saturation is 44%.
-   - The human reveal frame has grey at 48% (it was 65%) and saturation at 38%, so it is no longer washed out.
-   - The AI reveal frame has saturation at 30%, and wool and the grey `wolf` still pull it towards grey.
+1. **Looks as LOOK.md says: 7.**
+   - The `sky`, sun disc, layered `ridge*` hills, inked `pines*` and `oaks*`, paper grain and cream `sheep*` read as a storybook.
+   - The trees and sheep are visibly faceted low-poly: `sheep*` look like crumpled polygons and the hill shading has hard facets. This breaks the "no faceted generic low-poly" Check.
+   - The meadow hatch is calmer than in session 36.
+   - `wolf-body` is the darkest shape, but it stays a flat black slab. `wolf-shoulder` shows only as a brown oval on top of it.
 
-2. **Plays as DESIGN.md says: 8.**
-   - `{action:"pounce",target:"human"}` with `until:{"pounce.ph":"reveal"}` reached "reveal" at frame 109, with `pounce.human` true and `wolf.pose` "land".
-   - `wolf.bites` was not read after the human pounce. The bite lights in `div#hud` still showed three on that frame.
-   - The natural clover win, the EATEN screen and the restart were not replayed, for the fourth session in a row.
+2. **Compared with BOARD, LOOK.png and the turnarounds: 6.5.**
+   - The wolf head and tail still merge into the body, and `wolf-leg` is under 1 pixel.
+   - Biggest remaining style gap: the faceted sheep and trees against the flat painted masses of BOARD. The wolf silhouette comes second.
 
 3. **Clip moment: 9.**
-   - The human reveal shows the "HUMAN!" kicker, the huge "GOTCHA" title, the "PLAYER 1 has been found." sub line and the red `div#tag` "PLAYER 1" over the player.
-   - The caption reads "Even in nature, nobody blends in forever".
-   - 10 sounds played, among them `boom`, `stab1` to `stab3`, `thud` and `hit`.
-   - The AI reveal shows "BITE WASTED", "AI SHEEP", "Just a sheep. Bite wasted.", a "baa?" bubble and the caption "Mistaken identity. Nature is humbling."
-   - In the AI reveal the `wolf` is still partly covered by `wool` at the bottom of the frame.
+   - The human pounce gives a cream card with "GOTCHA", a red "HUMAN", "PLAYER 1" and ink splatter over a woodcut duotone.
+   - The AI pounce gives "BAA? SHEEP", "Just a sheep. Bite lost." and a "baa?" bubble.
+   - I did not time the card.
 
-4. **Looks like refs/01.jpg: 9.**
-   - The opening look shows the sea, sand strip, pine forests, grey `cliff` and `cloud`s, with the wolf on `wolf-rock`.
-   - It is bright and low-poly.
+4. **Core loop and controls: 7.**
+   - The HUD is clear.
+   - Solo suspicion and win/lose screens are carried over, and clover patches are still unchecked.
 
-5. **Solo fun and fair: 8.**
-   - The suspicion bar, the three clover drops and the bite lights are all in `div#hud`, and the glowing clover patches are visible in the opening.
-   - A full win and lose round was not replayed.
+5. **Local 2-player: 7.5.**
+   - KeyM gives `mode: local`, and ArrowRight moves the wolf (state `ctrl`).
+   - Targeting shows `wolfRing`, an `aim` ring, `aimArrow` and red `wolfMark` triangles over the target.
+   - The ring is orange and busy over the sheep, but the target reads clearly.
+   - I did not test Enter through to a bite this session.
 
-6. **Local 2-player: 8.**
-   - Carried over from earlier sessions; I did not re-run it.
+6. **UI typography: 8.5.** IM Fell panels on cream with ink borders, Alfa Slab stamps, and a storybook caption. The toast reads "Wolf: walk to the flock with arrows, get close, Enter to pounce".
 
-7. **`window.__game`, no build, ~100 sheep: 8.**
-   - `observe` and the `act` actions work, and the page starts playing on load.
-   - `perf` gave 146 ms per frame, 82 draw calls and 103k triangles on a software renderer, with host load 1.7. The frame time is no signal.
+7. **Convention and performance: 7.5.**
+   - 81 draw calls, 116,950 triangles and 0.63 MB of assets.
+   - `window.__game` is present and `#paper` clears.
+   - The 293 ms frame is SwiftShader with host load 4.2, so it is not a signal.
 
-8. **Juice: 9.**
-   - Baas, stings, `boom`, `thud`, `hit` and the documentary caption voice all fire.
+8. **Juice: 7.5.** I did not re-check sounds or sheep animation this session.
 
-9. **Works at any window size, HUD readable: 8.**
-   - At 1280×800 there are 0 overlaps, 0 off-screen and 0 cut off.
-   - Phone and tablet sizes are unchecked.
-
-10. **Faults: 9.**
-    - There are no console errors and no "Never visible" objects.
-    - The `perf` frame time is a software-renderer artefact.
+**Faults: 8.**
+- `Never visible: none`, and there were no console errors, `Lighting:` lines or `Surfaces:` lines.
+- `wolf-leg` is 0.00023% of the picture, so effectively invisible.
+- The clover is still unchecked.
 
 **Next:**
-1. **Run the full solo round (asked again).**
-   - **Do:** walk to each `clover` and hold E, then let the wolf eat the player three times.
-   - **Check:** `interact` with `until:{result:"win"}` shows the win screen. A forced human pounce should show the EATEN screen, and `{key:"KeyR"}` should reset `bites` to 3.
-2. **Keep the wolf clear of wool in the AI reveal.**
-   - **Do:** raise the camera target or push the punch-in so the `wolf` sits above the nearest sheep, or hide sheep within about 3 units of the wolf during "reveal".
-   - **Check:** `look` after the AI pounce plus 60 frames. The `wolf` share should be above 6%, with no `wool` over its head.
-3. **Check phone and tablet HUD sizes.**
-   - **Do:** `look` with `viewports:["phone","tablet"]` during a reveal.
-   - **Check:** `div#tag`, the title and `div#hud` should show 0 overlaps and 0 cut off. If the "GOTCHA" title overflows on the phone, scale it with `min(vw, vh)`.
+1. **Flatten the faceted sheep and trees.**
+   - Smooth the normals on the instanced `sheep` and `sheep-heads` meshes and on `round-trees*` and `pines*`. Use a flat toon or ramp colour per mass, with the facet variation removed.
+   - Also reduce the vertex-colour jitter. Facets should not show in `look` zoom [330,560,900,900]; the sheep should read as soft cream blobs with an ink outline.
+2. **Make the wolf silhouette readable (asked again).**
+   - Make `wolf-leg` four visible dark legs, raise and separate `wolf-head` with an ear and snout notch, and make `wolf-tail` a plume.
+   - Add a thin warm rim light on the top edge against `wolf-rock`.
+   - `look` zoom [450,560,920,720] should then show four legs, a tail and an ear, with `wolf-leg` over 0.05% of the picture in the On screen list.
+3. **Run the clover and solo passes (asked again).**
+   - Get a clover position from `observe`, then `look` with `zoom` on it. It should show three inked heart leaves and a glow ring.
+   - Run a solo `interact` of KeyE on the clover for about 120 frames, and confirm the progress state rises.
+   - Run a local `interact` of Enter near a sheep to confirm the bite resolves. Keep the `aim` ring thinner and in cream or ink so it does not read as a UI overlay.
 
-SCORE: 8.4
+SCORE: 7.6

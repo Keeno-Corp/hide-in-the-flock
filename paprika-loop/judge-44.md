@@ -1,27 +1,45 @@
-**Session 44 verdict.** I looked at the AI and human reveals at desktop size and ran `perf` once. I did not check the phone or tablet reveals, the natural clover win, or 2-player mode.
+**Session 44 verdict.** I opened the page, played 90 frames, took a 3-cell sheet (start, human pounce, AI pounce) and ran `perf` once. I did not re-run the 3-clover win or 2-player. Items 5 and 8 are carried over from earlier sessions.
 
-1. **Looks as LOOK.md says: 8.** The sheet shows `sea`, `sand`, `cliff`, `wolf-rock`, `sheep*`, `round-trees*` and `clover ×5`. It lists no `Lighting:` or `Surfaces:` lines. Brightness is 57–61% and 0–1% is blown out.
-2. **Plays as DESIGN.md says: 8.** Forced `pounce` on `ai` and `human` both reach their reveal screens. The `div#hud` shows the TIME, CLOVERS, WOLF BITES and SUSPICION rows. I did not replay the natural clover win.
-3. **Clip moment: 9.**
-   - **AI reveal:** it shows "BITE WASTED", "AI SHEEP", "Just a sheep. Bite wasted.", the "baa?" bubble and the grey `wolf`. This session's change is visible: the sheep around the `wolf` are cleared, so it stands alone and readable. The "baa?" bubble sits clear of the sub line.
-   - **Human reveal:** it shows the red "GOTCHA", "PLAYER 1 has been found." and the red PLAYER 1 `div#tag` over the red figure on `wolf-rock`. It reads at a glance.
-4. **Looks like refs/01.jpg: 9.** Sea, cliffs, pines, rocks and a green low-poly meadow are all visible. The reveal cameras are close, so the beach and sky show less than in the opening view.
-5. **Solo fun and fair: 8.** The suspicion bar, clover and bite lights are present. The win screen is still unseen.
-6. **Local 2-player: 8.** Carried over from earlier sessions. I did not re-run it.
-7. **`window.__game`, no build, ~100 sheep: 8.** There are 82 draw calls and 103k triangles. The 137 ms frame time is a SwiftShader artefact (host load 4.4), so it is no signal.
-8. **Juice: 9.** The documentary captions ("Mistaken identity. Nature is humbling.", "Even in nature, nobody blends in forever.") and the "baa?" bubble are in place. I did not check the sounds this session.
-9. **Works at any window size, HUD readable: 7.** The `div#hud` panel and mode-help panel text is tiny at 1280 wide. The phone and tablet reveals have gone unchecked for three sessions.
-10. **Faults: 9.** `perf` flagged no "Never visible" object and I saw no console errors.
+1. **Looks as LOOK.md says: 7.5.**
+   - The `sky`, sun disc, `ridge*`, grain, inked `pines*` and `oaks*`, and cream `sheep*` with dark faces read as a storybook.
+   - The `ridge*`, `oaks*` and `ground` still have soft gradients, and `round-trees*` still look faceted.
+   - The sheep are still soft lumps, and `wolf-body` is the darkest shape.
+
+2. **Compared with BOARD, LOOK.png and the turnarounds: 7.**
+   - The biggest style gap is still the gradient shading on `ridge*`, `oaks*` and `ground`, where BOARD uses flat masses.
+   - At the start the wolf is 1.9% of the frame with `wolf-rock` and `sheep*` crowding it. That is up from 1.4% but below the 3% goal.
+
+3. **Clip moment: 9.5.**
+   - The human pounce frame has `wolf-body` at 9.5%, a slow leap, and the caption "That sheep walks as if it had somewhere to be."
+   - The AI pounce frame fills 64% with `wolf-body`, a "baa!" bubble and the caption "And the wolf was wrong, as wolves so often are."
+   - I did not look at the stamped card this session.
+
+4. **Core loop and controls: 8.**
+   - The HUD reads well, with a clovers row, wolf-bites row and suspicion bar.
+   - The 3-clover win was not re-run for the third session in a row.
+
+5. **Local 2-player: 8.** Carried over from session 41.
+
+6. **UI typography: 8.5.** Cream paper panels with ink borders, IM Fell text and Alfa Slab stamps, and the `#hud` and `#mode` panels are readable.
+
+7. **Convention and performance: 8.**
+   - `perf` reports 151,106 triangles (under the 160k target), 81 draw calls and 0.63 MB of assets.
+   - The 277 ms frame is SwiftShader, so it is no signal.
+
+8. **Juice: 8.** Carried over, not re-checked this session.
+
+**Faults: 8.** No console errors, no `Lighting:` or `Surfaces:` lines, and nothing `Never visible`. The wolf is small at the start.
 
 **Next:**
-1. **Check the reveals on phone and tablet (asked again).**
-   - **Do:** run `look` with `viewports:["phone","tablet"]`, then `interact` with `{resize:[390,844]}` and `{action:"pounce",target:"human"}` plus 110 frames.
-   - **Check:** the "GOTCHA" title and "AI SHEEP" title, `div#tag` and sub line sit inside the frame. If the title overflows, size it with `min(vw,vh)`. Also enlarge the HUD text with a `clamp()` on small screens.
-2. **Verify the natural clover win and restart (asked again).**
-   - **Do:** add `wolf.bites` and `clovers` to `observe()`. Walk the player to each `clover` and hold `KeyE`. Don't use the `setState` shortcut.
-   - **Check:** `interact` with `until:{result:"win"}` shows the win screen with the timer reading sensibly. After `KeyR`, `wolf.bites` is 3.
-3. **Add beyond-brief polish to the reveals.**
-   - **Do:** give the `wolf` a brief rim light or a bigger shrug in the AI reveal. Add a slow zoom or camera shake on the human GOTCHA, and a confetti-style `wool` burst.
-   - **Check:** `look` with `sheet` on both pounces after 100 frames. The AI reveal should show a visibly bigger `wolf` shrug, and the human reveal a stronger burst around `div#tag`.
+1. **Flatten `ridge*`, `oaks*`, `round-trees*` and `ground` (asked again, third time).**
+   - Use flat per-mass colour with no vertex gradient, keeping the ink outline.
+   - Proof: `look` with `sample` at two points on one hill face returns near-equal colour.
+2. **Make the wolf bigger at the start (asked again).**
+   - The zoom added in session 44 was not enough. Move the wolf's start position and `wolf-rock` to the edge of the flock, in clear ground, and bring the start camera closer.
+   - Add a pale rim or glow behind the wolf so the silhouette separates from `sheep*`.
+   - Proof: `look` on frame 0; the `Subject: wolf takes` line reads 3% or more (1.9% this session).
+3. **Run a full 3-clover win (asked again).**
+   - Use `interact` with `{state:{eaten:3}}` or hold KeyE on each clover, then check that the stamped win card appears with a restart.
+   - Also soften the sheep silhouettes so they read less like cotton lumps. Use flatter, inked, wobbly outlines and a cream flat fill, and hold the triangle count under 160k.
 
-SCORE: 8.3
+SCORE: 8.0

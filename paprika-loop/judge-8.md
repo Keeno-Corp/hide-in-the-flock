@@ -1,59 +1,55 @@
-**Judge verdict, session 8**
+**Judge 8**
+
+I looked at a 3-cell `look` sheet (start, pounce30, clover) and ran `perf` once. I did not re-check the clover ring close up. I did not play the 3-bite local game or the lose card. I did not read console errors, and `interact` was not run this session.
+
+**Scores (Must have, in order)**
 
 1. **Looks as LOOK.md says: 7.**
-   - Check 1 holds: sky at (640,20) is #b7dae1.
-   - Check 2 holds: mid-screen (640,400) is #a2c749.
-   - Check 3 holds: `sheep*` ×101 and `wolf` ×4 are on screen.
-   - Check 4 holds: `#hud` and `#mode` have 0 overlap and 0 cut off.
-   - `sand` is still 0.43%, [362,298,794,321], and the sample at (640,310) is #dbd8be. Iteration 8 widened the ring, but the beach is still a pale strip behind the rocks.
-   - The `Surfaces:` line for `pines` at y=4.30 is still there, 17 × 73 units. It has now been open for 4 sessions.
-2. **Plays as DESIGN.md says: 7.**
-   - I pressed `M`, then ArrowRight ×30. The mode switched to local and the `wolf` moved to x=-4.5 with pose "walk".
-   - Solo HUD shows the `SUSPICION` bar, 3 clover icons and the 3 bite dots.
-3. **The clip moment: 8.**
-   - The pounce is much better than in session 7. In h50 the wolf is a small, readable leap over the flock and no black boxes fill the frame.
-   - By frame 100 the human case shows "HUMAN! GOTCHA", "PLAYER 1 has been found." and a red PLAYER 1 tag over a red figure.
-   - The AI case shows "BITE WASTED / AI SHEEP", a "baa?" bubble, bite dots dropping to 2 and wool particles.
-   - The a100 wolf is still a brown stiff figure standing on its hind legs. It reads as a shrug only weakly.
-   - The slow-mo arc and the wool burst are not strong in a50, where the wolf is a dark lump at distance.
-4. **Looks like refs/01.jpg: 7.**
-   - The sea, `cliff`, `cloud` ×34, `pines*` ×136, `round-trees*` and the bright meadow all show.
-   - `wolf-rock` is 0.64%. The wolf in the idle look is a brown lump beside the rock, not crouched on top.
-   - The beach is a thin sliver.
-5. **Solo fun and fair: 7.**
-   - The suspicion bar, the hint line, the captions and the restart key are present.
-   - The 3 `clover` objects are 0.15% of the frame and the glow is hard to see. They are findable only as small green blobs.
-6. **Local 2-player: 7.**
-   - After ArrowRight ×30 the `aim` ring shows as a faint orange ring under the wolf at about (470,400) in the picture.
-   - It is visible but dim, and `aim` is listed only under "not found by the ID image". The pounce target is not obvious from the wolf's position among 90 sheep.
-   - 3 bites show in the local HUD.
-7. **`window.__game`, no build, ~100 sheep: 7.**
-   - `__game` has its keys and actions, and `observe` works.
-   - `perf` reads 170 ms with 68 draw calls and 102k triangles on SwiftShader. Host load is 3.0 on 8 cores. There is no signal about a real GPU.
-   - 68 draw calls and 102k triangles are modest.
+   - The sky, sun disc, `ridge*` ×3, `pines*` ×20 and paper grain hold, and the two-tone cream `sheep*` under `sheep-ink` read as storybook.
+   - The `ground` and `round-trees*` are still smooth, gradient-shaded 3D masses with no ink outline.
+   - The overall picture is a 3D scene under a filter. It is not yet flat gouache.
+2. **Compared with BOARD, LOOK.png and the turnarounds: 6.5.**
+   - The sheep are close to SHEEP.png, and `wolf-body` is the darkest shape.
+   - The wolf is only 2.4% of the frame at start and 1.4% in the clover cell, and sits small and low-left.
+   - The biggest style gap is still the `ground` and `round-trees*`, which have no `sheep-ink` equivalent and no hard painted bands.
+3. **Clip moment: 9.**
+   - pounce30 shows the wolf mid-leap at 4.6% over a dense flock, with a caption.
+   - Iteration 8's Saw line records the HUMAN card, the PLAYER 1 tag and the bite counter. I did not re-look at the bite card this session.
+4. **Core loop and controls: 7.**
+   - Iteration 8 proved the clover graze: `clovers` reached 1 with the toast "Clover eaten! 1/3". It also showed the win card "THE FLOCK WINS".
+   - The `clover` ring is still not visible in the start or clover cells at this scale.
+   - The lose card is unseen on its own.
+5. **Local 2-player: 6.**
+   - Pounce uses the same path as solo.
+   - The 3 bites, the wolf targeting and the lose card were not played.
+6. **UI typography: 8.5.**
+   - `div#hud` and `div#mode` are cream paper panels with ink borders and IM Fell type.
+   - The `div#mode` text is tiny at 1280 px.
+7. **Convention and performance: 6.**
+   - `perf` gives 242,264 triangles and 50 draw calls, with the frame at 292 ms. The host is a software renderer, so the frame time is not a budget signal.
+   - `sheep` and `sheep-ink` are 61k triangles each. `sheep-heads` and `sheep-heads-ink` are 14k each, and 135k triangles cast shadows.
+   - `bushes` (18k) and `rocks` (14k) cost more than their flat look needs.
+   - `div#paper` is still up after 5.2 s.
 8. **Juice: 7.**
-   - The banners, the "baa?" bubble, wool bursts and the nature-documentary captions ("That sheep walks like it has somewhere to be.", "A completely innocent sheep. Awkward.") are good.
-   - The sound line was not checked. Sheep head bob is invisible at the play distance.
-9. **Works at any window size, HUD readable: 6.**
-   - The 1280×800 HUD is fine. I did not run `viewports` this session, so it stays at 6.
-10. **Faults: 6.**
-    - There are no console errors and no `Never visible` object.
-    - The `pines` coplanar line, the thin beach and the wolf not crouched on its rock are all still open.
+   - Iteration 8's Saw line records munch and powerup sounds and the bite card's splash and freeze.
+   - I did not hear the gong or stab.
+
+**Faults: 7.** `look` listed no `Lighting:` or `Surfaces:` lines. The `look` output showed no "Never visible" line. `perf` reports `div#paper` over the canvas, and the triangle count is open. I did not read console errors.
 
 **Next:**
-1. **Fix the `pines` coplanar face for real (asked again).**
-   - Iteration 8 shortened the trunk cone, and the same y=4.30 line is still listed. Find the plane another way.
-   - Run `eval` to list, for each `pines` mesh, the distinct y values of its vertex positions and which part owns the y=4.30 ones.
-   - Likely it is the shared base disc of two stacked cone tiers. Offset the upper tier's base by 0.01, or drop its bottom cap (`openEnded`).
-   - To check, run `look`. The `Surfaces:` line for `pines` is gone.
-2. **Make the beach a real wedge (asked again).**
-   - `sand` is 144×144 and the ring change had no effect, because `ground` covers it. Lower the `ground` vertex heights where the distance from the centre is above about 55, so the shore slopes under the sand. Alternatively raise `sand` y by 0.05 above `ground` with polygonOffset.
-   - Make the sand colour warmer, about #e8d49a.
-   - To check, run `look` with `sample` at (640,310) and (500,300). `sand` should be above 1% in the list and read as a golden strip against the sea.
-3. **Make the wolf read as crouched on `wolf-rock`, and make the clovers and `aim` pop (asked again).**
-   - The wolf at idle is a brown lump beside the rock. Put its `root` on top of `wolf-rock`, with a crouch pose (front legs down, head low). Add a pale muzzle and a dark nose.
-   - Give each `clover` a pulsing pale-yellow sparkle ring, or a vertical light beam, that is visible at the play distance.
-   - Make the `aim` ring brighter, with an emissive colour and a radius of 2.5.
-   - To check, run `look` for the idle frame. `wolf` sits on top of `wolf-rock` and `clover` is above 0.3%. Then run `interact` with `M` and ArrowRight ×30, with `look: true`. The ring should be clearly visible.
+1. **Flatten the `ground` and `round-trees*` (asked again).**
+   - Replace the smooth `ground` vertex colours with 3–4 hard-edged painted bands and long indigo shadow patches.
+   - Give `round-trees*` and `oaks*` the same 2-step toon material and an ink hull as `sheep-ink`.
+   - The one call that shows it done is `look` with `zoom` on the left tree cluster and the foreground `ground`. It should show flat tones with a dark outline and no gradient.
+2. **Cut triangles (asked again).**
+   - Swap the `sheep-ink` and `sheep-heads-ink` hulls for a low-poly sphere with back-face scaling.
+   - Lower the `wool` detail, and simplify `bushes` and `rocks`.
+   - Stop shadow casting for `sheep`.
+   - The one call that shows it done is `perf` with `costs`. It should show well under 150k triangles and under 60k casting shadows.
+3. **Bring the wolf up at frame 0 and make the clover ring read.**
+   - Frame the start camera so the wolf is at least 3% of the picture in `look`. Alternatively, put `wolf-rock` in the foreground.
+   - Make the `clovers` ring visible from the start camera at low zoom: a bright cream ring on a dark patch, larger.
+   - Fade `div#paper` out, or fold it into the post pass.
+   - The one call that shows it done is `look` with `sample` at the clover ring pixels, which should read cream against dark green.
 
-SCORE: 6.9
+SCORE: 7.1

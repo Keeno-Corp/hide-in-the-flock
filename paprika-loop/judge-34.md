@@ -1,56 +1,61 @@
-**Judge verdict, session 34**
+**Session 34 verdict.** I looked at a 2-cell sheet (start, forced human pounce) and the wolf zoom [250,340,760,640]. I ran one `interact` (D, Shift+W, E) and `perf` once. I did not check sound beyond the interact's Sound line (baa, baa2, wind started), and I did not zoom on a clover or run the AI-bite or 2-player moments. The sheet showed no `Lighting:` or `Surfaces:` lines.
 
-1. **Looks as LOOK.md says: 8.**
-   - The opening look has `sky` 20%, `sea` 8.9%, `cliff` and `sand` all on screen. There are `pines*` ×134, 15 `round-trees*` and `cloud` ×40. There are no `Lighting:` or `Surfaces:` lines.
-   - `wolf-rock` is on screen at 0.43% in the opening and 1.3% after the pounce. Last session it was "Never visible", so that fault is fixed.
-   - In the reveal frame, grey is 65% and saturation 28%. The `rim` light did not change that, because the `sheep*` wool and the grey `wolf` count as grey.
-   - The reveal frame is washed out: the `sand` strip is only 0.13%, and the sea band and sky are pale.
+1. **Looks as LOOK.md says: 7.**
+   - The `sky` and sun disc, the layered `ridge*` hills, the inked `oaks*` and pines, the paper grain and the cream `sheep*` still read as a storybook.
+   - `wolf-body` is the darkest shape on screen (3% near black).
+   - The wolf is about 4× the size of a sheep and a flat black slab. That breaks the "hidden among sheep" scale and reads as a cut-out sticker rather than a painted mass. It has no interior tone and only diagonal hatching.
+   - The thin `wolf-outline` is better than last round's halo.
 
-2. **Plays as DESIGN.md says: 7.**
-   - `{action:"pounce",target:"ai"}` took `bites` from 3 to 2. It set `pounce.ph` to "reveal" and `human` to false, and set `wolf.pose` to "shrug".
-   - `{action:"pounce",target:"human"}` plus 150 frames returned `pounce:null` and `wolf.state` "return". `bites` stayed at 2 and no "HUMAN! GOTCHA" frame was captured. The forced human pounce either misses or ends inside the wait, so I could not confirm that branch.
-   - I did not run the natural clover win or the "EATEN" screen again. That is now the third session in a row.
+2. **Compared with BOARD, LOOK.png and the turnarounds: 6.**
+   - The shoulder hump and the dipped back now show, so the body is no longer a rectangle.
+   - The snout is still a plain wedge with no jaw notch.
+   - The `wolf-tail` is invisible.
+   - The legs are straight dark stubs, and the front pair sits on top of the sheep and beside the `wolf-rock`.
+   - The ears are two brown triangles, lighter than the body, so the wolf is not one silhouette.
+   - Biggest remaining style gap: the wolf's scale and its head and neck. The head is a wedge stuck to the front of the body with no neck, jaw or tail.
 
-3. **Clip moment: 8.**
-   - The AI reveal shows the "AI SHEEP" title, the "BITE WASTED" kicker, the "Just a sheep. Bite wasted." sub line, `div#bubble` "baa?" and `div#cap` "Mistaken identity. Nature is humbling."
-   - 9 sounds played: `boom`, `stab1` to `stab3`, `thud`, `hit`, `womp` ×2 and `baa`.
-   - The "HUMAN! GOTCHA" and PLAYER 1 tag half was not seen this session.
-   - The wolf is half hidden behind wool at the bottom of the frame.
+3. **Clip moment: 8.5.**
+   - The forced human pounce shows a tilted "YOU WERE THE HUMAN / EATEN" card, a red "PLAYER 1" stamp and splatter, and a duotone.
+   - The brief asks for "HUMAN" and "GOTCHA" in red ink, and this card says "EATEN" instead.
+   - It covers the top of the frame and hides the wolf.
+   - I did not run the AI "SHEEP / baa?" case or time the card.
 
-4. **Looks like refs/01.jpg: 9.**
-   - The play camera shows `sea`, `sand`, `cliff`, pines, `cloud` and the meadow, and `wolf-rock` with the wolf next to it.
-   - It is bright and low-poly, and the saturation is 44%.
+4. **Core loop and controls: 7.**
+   - Moving, running and grazing work: the interact gave `player.grazing: true`, `susp: 1.25`, eased wolf movement (it stopped at frame 21), and the flock reacted (`flock.moving`, `graze`).
+   - The suspicion value is `player.susp` or `topSusp`, not a top-level `suspicion`.
+   - The `clover` rings read as green discs, with no heart leaves at the start camera.
+   - The HUD panels are tiny at 1280 wide.
 
-5. **Solo fun and fair: 8.**
-   - The suspicion bar, the three `clover` patches (the look lists ×4) and the bites are all in `div#hud`.
-   - A natural win and a lose were not replayed.
+5. **Local 2-player: 6.5.** Not played this round. I did not check pounce targeting, so the score is carried over.
 
-6. **Local 2-player: 8.**
-   - Carried over from earlier sessions. I did not re-run it.
+6. **UI typography: 8.5.** IM Fell panels, Alfa Slab stamps and an ink border on cream. The HUD text is small.
 
-7. **`window.__game`, no build, ~100 sheep: 8.**
-   - `observe` works and the page starts playing on load. `sheep*` ×101 are on screen.
-   - `perf` gave 204 ms per frame, 82 draw calls and 103k triangles on a software renderer, so the frame time is no signal. Host load was 1.0.
+7. **Convention and performance: 7.5.**
+   - 115,358 triangles, 79 draw calls and 0.63 MB of assets.
+   - `window.__game` is present and the `#paper` overlay clears.
+   - The 253 ms frame is SwiftShader on a busy host (load 6.0), so it is not a signal.
 
-8. **Juice: 9.**
-   - Baas, `wind`, `womp`, `boom`, `stab*` and `thud` all fire, and the caption voice is funny.
+8. **Juice: 7.5.** The Sound line shows `baa`, `baa2` and `wind` starting; the pounce, splash and stamps work. I did not hear the gong or the stab.
 
-9. **Works at any window size, HUD readable: 8.**
-   - At 1280×800 there are 0 overlaps, 0 off-screen and 0 cut off. I did not check other sizes.
-
-10. **Faults: 8.**
-    - There are no console errors, no `Lighting:` or `Surfaces:` lines, and no "Never visible" objects.
-    - The forced human pounce did not reveal, as noted under item 2.
+**Faults: 7.5.**
+- There were no console errors.
+- The wolf is oversized and looks pasted on.
+- The bite card hides the wolf.
+- The clover glow and the 2-player pass are unchecked.
 
 **Next:**
-1. **Show the human reveal.**
-   - **Do:** run `{action:"pounce",target:"human"}` with `until:{"pounce.ph":"reveal"}`. If `pounce` clears without a reveal, fix `act("pounce")` in `game.js` so a forced human target always reaches "reveal".
-   - **Check:** `look` should show the "HUMAN! GOTCHA" title, the PLAYER 1 tag and `bites` going from 2 to 1.
-2. **Run the full solo round (asked again).**
-   - **Do:** walk to each `clover` and hold E, then separately let the wolf eat the player three times.
-   - **Check:** `interact` with `until:{result:"win"}`, then the "EATEN" screen with a restart. Run `{key:"KeyR"}` and check that the state resets.
-3. **Make the reveal frame less washed out and keep the wolf clear of wool.**
-   - **Do:** in the reveal, lower the exposure or sky and sea brightness, and nudge the camera so the `wolf` sits above the nearest sheep.
-   - **Check:** `look` after the AI pounce plus 150 frames. Grey should be under 55% and the `wolf` share above 6%.
+1. **Scale the wolf down and shape its head (asked again).**
+   - Scale the whole wolf group in game.js to about 2× sheep length and trim the body polygon.
+   - Add a neck to the `wolf-head` with a jaw notch under the snout, and give the ears the same near-black as `wolf-body`.
+   - Draw a curved `wolf-tail` that shows.
+   - The one call that shows it done is `look` with `zoom` [250,340,760,640]. The wolf should be about half as wide, with a visible notch, dark ears and a tail curve.
+2. **Run the clover and 2-player passes (asked again).**
+   - Get a clover position from `observe`, then run `look` with `zoom` on it. It should show three inked heart leaves.
+   - Add a glow ring when the player is near, checked with `look` `sample` at the ring pixels.
+   - Run one `interact` with KeyM, then Enter on the wolf, and check the pounce target marker.
+3. **Fix the bite card copy and placement, and enlarge the HUD.**
+   - The human bite should say "HUMAN" and "GOTCHA" in red ink, matching the brief. It now says "EATEN".
+   - Move the card so the wolf and the bitten sheep stay visible.
+   - Raise the HUD panel text, which is tiny at 1280 wide, and check it with `look` `viewports` ["laptop"].
 
-SCORE: 8.1
+SCORE: 7.2

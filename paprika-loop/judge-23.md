@@ -1,57 +1,48 @@
-**Judge verdict, session 23**
+**Judge 23 scores**
 
-1. **Looks as LOOK.md says: 8.**
-   - The `start` cell shows the sea, `cliff`, `sand`, `pines*` ×143, `wolf-rock`, the `wolf`, the `sheep*` flock and the clouds.
-   - Brightness is 64%, saturation 44%, 0% near black.
-   - There are no `Lighting:` or `Surfaces:` lines.
+I took one 3-cell `look` sheet (start, AI bite, human bite), a zoom on the right hill, one `perf`, and one `interact` (walk right, then graze with `KeyE`). The `interact` showed `player.grazing` true and `topSusp` at 0.28. There were no console errors and no `Lighting:` or `Surfaces:` lines. I did not check local 2-player, the lose card or other viewports, and I did not hear the sound.
 
-2. **Plays as DESIGN.md says: 8.**
-   - The HUD shows TIME, CLOVERS, WOLF BITES and SUSPICION, and the `clover` rings glow on the meadow.
-   - I forced the pounce through `act` and did not drive the keys or play a full round.
+1. **Looks as LOOK.md says: 8.5.**
+   - The `sky` with cloud bands and sun disc, the `ridge*` hills, the inked `pines*`, `oaks*` and `round-trees*`, the paper grain and the cream `sheep*` read as a storybook frame.
+   - `wolf-body` is the darkest shape, at 2% near black.
+   - The zoom on the right hill [640,100,1280,450] shows the diamond tone bands are gone, so the Iteration 23 fix worked.
+   - The `ground` is now smooth patches with a wobbly ink line. It still has a hard yellow-to-green edge and a faint diagonal hatch over the `pines*`.
+2. **Compared with BOARD, LOOK.png and the turnarounds: 8.**
+   - The remaining style gap is the wolf.
+   - In the interact frame `wolf-body`, `wolf-head ×4`, `wolf-leg ×8` and `wolf-tail` merge into one black lump with no ink rim, and it crowds the `sheep*`.
+   - The WOLF turnaround has a clear lean silhouette.
+3. **Clip moment: 8.5.**
+   - The AI bite shows an ink splash, a woodcut duotone freeze, a tilted "SHEEP" card with "BAA?", "Just a sheep. Bite lost." and a "baa?" bubble.
+   - The human bite shows a red "HUMAN" card with "GOTCHA", a red "PLAYER 1" stamp and a caption.
+   - Both read in 5 seconds.
+4. **Core loop and controls: 7.5.**
+   - Walk and graze work, and the `suspicion` HUD bar and `topSusp` respond.
+   - The wolf stops after 22 frames and sits on top of the flock.
+   - The `clover ×10` patches are only small green rings, so they are hard to find.
+   - I did not play through to the win or lose card.
+5. **Local 2-player: 7.** I did not run it this session, so this carries over from Judge 22. `wolfRing` and `aim` are hidden in solo as expected. The local wolf lying over `wolf-rock` was still a blob in the last check.
+6. **UI typography: 8.5.** The IM Fell panels in `#hud` and `#mode` have ink borders, with no overlap or cut-off text. The Alfa Slab stamps are in style.
+7. **Convention and performance: 7.**
+   - `perf` gives 191,354 triangles, 62 draw calls and 0.63 MB of assets.
+   - The 275 ms frame is on a software renderer, so it is not a signal.
+   - 191k triangles is high for a flat-painted look, and 234 ms of the frame is the main scene.
+   - `window.__game` is present.
+8. **Juice: 7.5.** The pounce and bite visuals work, and grazing registers. I did not run `feel` or hear the sound.
 
-3. **Clip moment: 8.**
-   - **Human cell:** "HUMAN!", "GOTCHA", "PLAYER 1 has been found." and the red PLAYER 1 tag read big on desktop. The `wolf` lies flat beside the red silhouette.
-   - **AI cell:** "AI SHEEP", "Bite wasted." and the "baa?" bubble read well on the phone. The `wolf` is still a small grey shape under the bubble, so the shrug is weak.
-   - **At 200 frames:** the human reveal is still on screen. There is no REPLAY beat, so I could not judge the sheep pop.
-
-4. **Looks like refs/01.jpg: 9.**
-   - The sea, `cliff`, `pines*`, `sand`, clouds and `wolf-rock` all show from the play camera.
-   - The picture is bright and low-poly, and the wolf sits crouched on its rock.
-
-5. **Solo fun and fair: 8.**
-   - SUSPICION, the `clover` rings, the caption line and the win/lose screens are present.
-   - I did not play a full round.
-
-6. **Local 2-player: 8.**
-   - This carries over from earlier sessions. I did not re-run it.
-
-7. **`window.__game`, no build, ~100 sheep: 8.**
-   - `window.__game` is present and there are no build files.
-   - `perf` reads 124 ms on SwiftShader (host load 6.1, a busy host), so it is no signal.
-   - It shows 76 draw calls, 102.7k triangles and 0 MB of assets.
-
-8. **Juice: 8.**
-   - The banners, bubble, tag, caption and wool read well.
-   - I did not check the sound.
-
-9. **Works at any window size, HUD readable: 7.**
-   - **Phone reveal:** the sub-line and caption are readable now.
-   - **GOTCHA overflow:** at 390 px, `#rbig` at 25vw clips the "A" at both edges and shows "GOTCH". That is the overflow the builder flagged as unverified.
-   - **Phone letterboxing:** the phone canvas still sits in a narrow band with black on both sides.
-
-10. **Faults: 8.**
-    - There are no console errors and no `Never visible` object.
-    - The clipped GOTCHA on phone is a visible fault.
+**Faults: 8.** There were no console errors. The wolf is a blob and its `wolf-head ×4` and `wolf-leg ×8` parts overlap. The triangle count is high. The ground edge is hard.
 
 **Next:**
-1. **Fix the phone GOTCHA overflow (asked again).**
-   - Lower `#rbig` to about 18vw, or add `white-space: nowrap` with a `clamp()`, inside the ≤640px query in `index.html`.
-   - Check with `look` `sheet` of `pounce human` at 150 frames, `resize: [390, 844]`. The full word "GOTCHA" should show inside the frame with no letters cut.
-2. **Add the REPLAY beat and check the sheep pop (asked again).**
-   - Ease the `sheep*` back after the reveal, then add a short zoom-back with a "REPLAY" tag and drop `aimLine`.
-   - Check with `look` `sheet` of `pounce human` at about frame 170. The banner should be gone and the "REPLAY" tag visible.
-3. **Make the AI shrug bigger.**
-   - Add a close-up of the `wolf` for the "AI SHEEP" beat, scaled up with a clear head-shake, so it is not a small grey shape under the "baa?" bubble.
-   - Check with the `ai` cell of `look` `sheet`. The `wolf` should fill about a third of the frame height.
+1. **Give the wolf an ink silhouette with readable limbs (asked again).**
+   - Add a slightly lighter dark-brown ink rim pass on `wolf-body` and `wolf-head`, as `sheep-ink*` does, and separate the `wolf-leg` meshes from the body.
+   - Tuck the stray `wolf-head ×4` copies in or remove them.
+   - The one call that shows it done is `look` with `zoom` [250, 300, 650, 650] on the start page. It should show a rim, two ears, a snout and separate legs.
+2. **Make the clover patches findable and storybook-drawn.**
+   - The `clover ×10` are faint rings.
+   - Draw each as an inked patch with a small three-leaf motif, and add a gentle glow or sparkle when the player is near.
+   - The one call that shows it done is `look` with `zoom` on a clover position, such as around [480, 550]. It should show a leaf motif in an ink outline.
+3. **Make the local wolf read clearly and occlude behind `wolf-rock` (asked again).**
+   - Press `KeyM`, then `look` with `zoom` on the wolf.
+   - The wolf's pose should be upright and distinct from the `wolfRing`, and the rock should cover its hind legs.
+   - After that, cut the triangle count by lowering the sheep or tree detail. `perf` with `variants` hiding `pines*` and `round-trees*` shows what each costs.
 
-SCORE: 8.0
+SCORE: 7.9

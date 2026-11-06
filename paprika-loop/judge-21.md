@@ -1,63 +1,49 @@
-**Judge verdict, session 21**
+**Judge 21 scores**
 
-1. **Looks as LOOK.md says: 8.**
-   - The `start` cell shows the sea, `cliff`, `sand`, `pines*` ×143, `wolf-rock`, the `wolf`, the `sheep*` flock and the clouds.
-   - Brightness is 64%, saturation 44%, 0% near black.
-   - There are no `Lighting:` or `Surfaces:` lines.
+I took one 4-cell `look` sheet (start, AI pounce, human pounce, local after `KeyM`) and one `perf`. There were no console errors and no `Lighting:` or `Surfaces:` lines. The two pounce cells were taken 10 frames in, so I did not see the stamped bite cards this round. I did not run `interact` or `feel`, check the clovers, the lose card or other viewports, or hear the sound.
 
-2. **Plays as DESIGN.md says: 8.**
-   - The HUD shows TIME, the three CLOVERS outlines, the WOLF BITES dots and the SUSPICION bar, and the `clover` rings glow on the meadow.
-   - I ran `interact` with the pounce action only, not with the keys, and I did not play a full round.
-
-3. **Clip moment: 8.**
-   - **AI cell:** the `wolf` is now fully visible, with no pine across it. The "AI SHEEP" banner, "Just a sheep. Bite wasted." and the "baa?" bubble sit beside its head. The bubble sits close to the head, but the wolf is still a dark, pale-tinted shape in the foreground and the shrug does not read clearly.
-   - **Human cell:** "GOTCHA", "HUMAN!", the red PLAYER 1 tag and the red silhouette all read. The `wolf` lies flat and dark.
-   - **Left half of the frame:** a pink wash covers the left of the human cells, apparently from the foreground `rocks*` and `sheep*` tinted by the reveal overlay. It looks like a fault.
-   - **Darkness:** near black is 6% in both cells.
-   - **Not checked:** the sheep pop and the end of the reveal.
-
-4. **Looks like refs/01.jpg: 9.**
-   - The sea, `cliff`, `pines*`, `sand`, clouds and `wolf-rock` all show from the play camera.
-   - The picture is bright and low-poly.
-
-5. **Solo fun and fair: 8.**
-   - SUSPICION, the `clover` rings, the win/lose screens and the caption line are present ("Even in nature, nobody blends in forever.").
-   - I did not play a full round.
-
-6. **Local 2-player: 8.**
-   - This carries over from earlier sessions. I did not re-run it.
-
-7. **`window.__game`, no build, ~100 sheep: 8.**
+1. **Looks as LOOK.md says: 8.5.**
+   - The start `wolf-body` is now solid black. It is the darkest shape on screen, and the sheet reports 2% near black.
+   - The `sky`, sun disc, `ridge*` hills, grain, cream `sheep*` and the pines and `oaks*` with ink outlines read as a storybook frame.
+   - The `ground` patches are broader, but the diamond tone bands on the right hill are still visible.
+2. **Compared with BOARD, LOOK.png and the turnarounds: 8.**
+   - The wolf now matches the near-black silhouette of the WOLF turnaround.
+   - The biggest remaining style gap is that the wolf is a featureless blob. In the pounce cells there are no readable paws, ears or ink edge, unlike the turnaround.
+3. **Clip moment: 8.5.**
+   - The pounce leap, enlarged wolf and caption read in the pounce cells.
+   - I did not check the bite card, splash or freeze frame this round. Judge 20 saw them hold.
+4. **Core loop and controls: 7.5.**
+   - I did not play it this round. Judge 20's `KeyD` and `KeyE` results still stand.
+   - The wolf in the start cell is partly hidden behind `wolf-rock`, so its suspicion is hard to read.
+5. **Local 2-player: 7.**
+   - The `wolfRing`, red cone and caption read.
+   - `wolf-body` is 8.1%, above the 4–7% band.
+   - The wolf still draws over `wolf-rock` and the sheep, and its legs are lost in the blob.
+6. **UI typography: 8.** The IM Fell panels, Alfa Slab stamps and caption scrolls are in style. The top-right mode hint is still tiny.
+7. **Convention and performance: 7.**
+   - `perf` gives 191,558 triangles, 57 draw calls and 0.63 MB of assets.
+   - The 262.6 ms frame is on a software renderer, so it is not a signal.
    - `window.__game` is present.
-   - `perf` reads 123 ms on SwiftShader on a busy host (load 6.7), so it is no signal.
-   - It shows 76 draw calls, 102.7k triangles and 0 MB of assets.
+8. **Juice: 7.5.** Not re-checked this round. The pounce motion reads, and I did not run `feel` or hear the sound.
 
-8. **Juice: 8.**
-   - The banners, bubble, tag, captions and wool are strong.
-   - I did not check the sound.
-
-9. **Works at any window size, HUD readable: 6.**
-   - **Phone viewport:** the HUD panel and the "(M) Mode: SOLO" hint are tiny at 390 px. The hint is hard to read.
-   - **Phone reveal:** I did not look at the reveal text at phone size. My "phone late" cell ran at the default size, so it says nothing about the phone.
-   - **Laptop:** fine.
-
-10. **Faults: 9.**
-    - There are no console errors and no `Never visible` object.
-    - The pines pop in and out at the reveal ends, hidden by the letterbox.
-    - There is a pink wash on the left of the reveal cells.
+**Faults: 8.**
+- There were no console errors.
+- The local wolf is still a blob over `wolf-rock`.
+- The ground tone bands are still visible.
+- The top-right hint text is tiny.
 
 **Next:**
-1. **Phone layout (asked again).**
-   - Scale the HUD and the "(M) Mode" hint with `clamp()` or `vw` at widths under 500 px.
-   - Check with `look` `viewports` `["phone"]`: the HUD text is about twice as big, the hint is readable and it does not cover the sheep.
-   - Then run `look` `sheet` with `pounce human` at 150 frames and `state`/`steps` `resize: [390, 844]`. "GOTCHA" and the PLAYER 1 tag should fit the width.
-2. **Clean the reveal colour.**
-   - Find the source of the pink wash on the left of the human cell: an overlay gradient, a vignette tint, or `rocks*` and `sheep*` lit red.
-   - Remove it or make it neutral.
-   - Check with `look` `sample` on the left pixels of the `human` cell, around [60, 200]. They should read as grass green and sheep white, not pink.
-3. **Check the sheep pop, then add a short "REPLAY" beat (asked again).**
-   - Run `interact` `pounce human` with `frames: 200` and `look: true`. The `sheep*` should ease back without a pop.
-   - Then add a 0.4 s zoom-back with a "REPLAY" tag and drop `aimLine`.
-   - Check by `look` `sheet` at about frame 170.
+1. **Give the wolf readable limbs and ears in every cell (asked again).**
+   - Last Open: the local wolf was not re-checked.
+   - Add a thin lighter ink rim or inner highlight on `wolf-leg*`, `wolf-head` ears and `wolf-tail`. Keep the body at 0x030203.
+   - Scale the local `wolf-body` down to about 7%.
+   - The one call that shows it done is `look` with `zoom` on the local cell. It should show separate paws and ears against the dark mass.
+2. **Make `wolf-rock` occlude the local wolf (asked again).**
+   - The wolf draws over the rock. Give the rock a higher `renderOrder` with `depthWrite` true, and the wolf `depthTest` true and a lower order.
+   - The one call that shows it done is the local sheet cell. It should show the rock covering the wolf's paws.
+3. **Flatten the ground bands and enlarge the hint text.**
+   - Soften the diamond tone bands on the right hill by lowering the vertex-colour contrast in the noise.
+   - Raise the top-right `[M] mode` hint to about 13px or larger.
+   - The one call that shows it done is `look` with `zoom` [640, 100, 1280, 450]. It should show smooth patches and a readable hint.
 
-SCORE: 8.0
+SCORE: 7.8

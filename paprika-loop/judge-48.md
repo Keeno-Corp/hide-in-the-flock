@@ -1,30 +1,46 @@
-**Session 48 verdict.** I ran the sheet (human reveal, AI reveal, start) at desktop size, the phone and tablet start views, and `perf` once. I did not play the natural clover win, 2-player mode, or the phone/tablet reveals.
+The wolf is now one near-black silhouette, but it still sits against the front flock. The win is still unproven.
 
-1. **Looks as LOOK.md says: 8.** The start moment shows `sea`, `sand`, `cliff`, `wolf-rock`, `pines*` ×141, `round-trees*` and clover rings. No `Lighting:` or `Surfaces:` lines appeared. Brightness is 64% and 0% is blown out.
-2. **Plays as DESIGN.md says: 8.** Forced `pounce` on `human` and `ai` both reach their reveals. The `div#hud` shows TIME, CLOVERS, WOLF BITES and SUSPICION. The natural win has gone unplayed for many sessions.
-3. **Clip moment: 9.**
-   - **Human reveal:** the red GOTCHA title, "PLAYER 1 has been found." and the red PLAYER 1 `div#tag` over the red figure all sit inside the frame. The new `camShake.kick(1.6)` does not push `div#tag` out at frame 110.
-   - **AI reveal:** AI SHEEP, "Just a sheep. Bite wasted." and the "baa?" bubble over the grey `wolf` all sit inside the frame.
-4. **Looks like refs/01.jpg: 9.** The start view and the tablet view show sea, sand, cliffs, pines, puffy clouds and the `wolf` on its rock. The phone view crops the pines and cliff because it is a narrow portrait frame.
-5. **Solo fun and fair: 8.** The suspicion bar, clover rings and bite lights are present. The win screen is still unseen.
-6. **Local 2-player: 8.** Carried over from earlier sessions; I did not re-run it.
-7. **`window.__game`, no build, ~100 sheep: 8.** There are 82 draw calls and 103k triangles. The 137 ms frame time is a SwiftShader artefact, so it is no signal.
-8. **Juice: 9.** The captions and the "baa?" bubble are in place. I did not check sound this session.
-9. **Works at any window size, HUD readable: 7.**
-   - **Phone and tablet starts:** the HUD is readable and sits inside the frame on both. The phone mode-help is pushed to the bottom.
-   - **Still unchecked:** the reveal titles on phone and tablet.
-   - **Still small:** the desktop HUD text is tiny.
-10. **Faults: 9.** I saw no console errors and no "Never visible" object.
+**Scores**
+
+1. **Looks as LOOK.md says: 7.5.**
+   - The `sky`, sun disc, inked `pines*`, `ridge*` and grain read as a storybook.
+   - `wolf-body` and `wolf-shoulder` are now one dark mass.
+   - The `round-trees*` and `oaks*` are still faceted and generic low-poly.
+   - The `sheep*` (×79) are still soft cream lumps with thin ink.
+2. **Compared with BOARD, LOOK.png and the turnarounds: 7.**
+   - The wolf shape is better, but `Subject: wolf` is still 3% at frame 40.
+   - `wolf-rock` and the front `sheep*` crowd the wolf.
+   - The biggest style gap is the faceted trees and soft sheep.
+3. **Clip moment: 9.5.**
+   - The pounce cell shows `wolf-body` at 50%, an ink splash and a woodcut duotone.
+   - It also shows a red `PLAYER 1` stamp and the caption "It had a name, and the name was Player One."
+4. **Core loop and controls: 7.**
+   - The HUD shows the `TIME 2:59` timer, `CLOVERS`, `WOLF BITES` and `SUSPICION`.
+   - This session I did not run `interact` and did not see the win card.
+   - The win needs three clovers and `T>=180`, per the builder's reading of game.js:839. The player is never told that.
+5. **Local 2-player: 8.** Carried over, not checked this session.
+6. **UI typography: 8.5.** Cream panels with ink borders, IM Fell text and the Alfa Slab stamp.
+7. **Convention and performance: 8.**
+   - `perf` reports 75 draw calls, 150,816 triangles and 0.63 MB of assets.
+   - The 395 ms frame is SwiftShader and is no signal.
+8. **Juice: 8.** Carried over, not checked this session.
+
+**Faults: 8.**
+- I saw no console errors and no `Lighting:` or `Surfaces:` lines.
+- The wolf is still crowded by sheep and `wolf-rock`.
 
 **Next:**
-1. **Check the reveals on phone (asked again).**
-   - **Do:** run `interact` with `{resize:[390,844]}`, `{action:"pounce",target:"human"}` and `{wait:110}`, with `look:true`. Repeat with `target:"ai"`.
-   - **Check:** the GOTCHA and AI SHEEP titles, the sub line and `div#tag` sit inside 390 px. If a title overflows, size it with `min(vw,vh)`.
-2. **Verify the natural clover win and restart (asked again).**
-   - **Do:** walk the player to each `clover` and hold `KeyE`, then run `interact` with `until:{result:"win"}`.
-   - **Check:** the win screen shows a sensible timer. After `KeyR`, `wolf.bites` is 3.
-3. **Add beyond-brief polish to the AI reveal.**
-   - **Do:** give the `wolf` a bigger shrug and a rim light, with a stronger `wool` burst.
-   - **Check:** a `sheet` of the `ai` pounce at 110 frames shows a visibly larger shrug.
+1. **Prove the win with real clovers (asked again).**
+   - Play three clover grazes, then set `T` to 179 with `eval` and step 120 frames.
+   - Also show "3:00" on the clover HUD line, or lower the win threshold so a three-clover win doesn't wait three minutes.
+   - Proof: `interact` with `expect: {result: "win"}` and `look: true` shows a stamped win card with a restart.
+2. **Make the wolf stand apart from the flock (asked again).**
+   - Add a pale rim or halo behind `wolf-body`.
+   - Move the wolf start and `wolf-rock` left and up, away from the front sheep.
+   - Proof: `look` at frame 40 shows `Subject: wolf` at 4% or more, with no `sheep*` boxes overlapping the wolf box.
+3. **Flatten `round-trees*`, `oaks*` and `ridge*` (asked again, sixth time).**
+   - Use one flat toon or unlit tint per mass, with no vertex gradient, keeping the ink outline.
+   - Give the `sheep*` flat cream fills with thicker `sheep-ink*`.
+   - Proof: `look` with `sample` at two points on one `round-trees*` crown returns near-equal colour.
 
-SCORE: 8.3
+SCORE: 7.9

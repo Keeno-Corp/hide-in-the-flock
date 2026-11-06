@@ -1,57 +1,51 @@
-**Judge verdict, session 28**
+**Session 28 verdict.** I looked at one 3-cell sheet (start at frame 60, human bite and AI bite at frame 200) and ran `perf` with `costs`. I did not run `interact`, `feel` or `viewports`, and I did not check sound. There were no `Lighting:` or `Surfaces:` lines.
 
 1. **Looks as LOOK.md says: 8.**
-   - The play camera shows the `sea`, `cliff`, `pines*` ×126, `sand`, `cloud` ×29, `wolf-rock`, `rocks*` and the `sheep*` flock, all bright and low-poly. The look reports no `Lighting:` or `Surfaces:` lines.
-   - The lose screen has a grey band across the top (`div.band`, 25% of the canvas) and a `div#vig` vignette over the whole canvas. Saturation is 40%.
-
-2. **Plays as DESIGN.md says: 8.**
-   - I played a real round with held keys (KeyD, KeyW) and no forced `act`. At t=25 the wolf pounced and ate the `player` (susp 1.23), with `wolf.state` "done" and pose "land". That gives `result: "lose"` and the EATEN screen.
-   - KeyR restarted a fresh round: bites back to 3, `player` reset to (0, 1.5), and the wolf back to "crouch" on its rock.
-   - I did not reach a win, so the win screen is still unseen.
-
+   - The `sky` and sun disc, the layered `ridge*` hills, the inked `oaks*` and pines, the paper grain and the cream `sheep*` read as a storybook.
+   - The wolf is the darkest shape on screen (2% near black), and its outline is thinner now.
+   - The `ground` still has hard yellow-to-green patch edges.
+   - The tree faces are still faceted.
+2. **Compared with BOARD, LOOK.png and the turnarounds: 7.**
+   - The wolf is down to 5% of the frame at scale 2.8, but `wolf-body` is still a lumpy barrel with a ragged back and stiff `wolf-leg`s. It is not the lean WOLF turnaround, and that is still the biggest style gap.
+   - The flock is a dense cream clump, though better than before.
 3. **Clip moment: 9.**
-   - A natural pounce landed in 25 s, well inside the first minute.
-   - The PLAYER 1 `tag` sits over the eaten sheep. The sound log shows `boom`, `stab1` to `stab3`, `thud` and `hit` in order.
-   - The "baa?" bubble clamp from session 28 was not re-checked at desktop size.
+   - At frame 200 the human bite shows the tilted "GOTCHA / HUMAN" stamp in red, the "PLAYER 1" stamp, red splatter, a woodcut duotone and the caption "And so the hidden one was found."
+   - The AI bite shows "BAA? / SHEEP", "Just a sheep. Bite lost.", the "baa?" bubble and the caption "Mistaken identity. The meadow keeps its secret."
+   - I did not time how fast the card lands, or whether it is within the first minute of solo play.
+4. **Core loop and controls: 7.5.**
+   - I carried this over without playing this session.
+   - The HUD shows the timer, bite pips, clover counters and suspicion bar.
+   - The `clover` patches are still not drawn in the storybook style.
+   - The HUD key hints are tiny.
+5. **Local 2-player: 7.**
+   - I carried this over without playing. The wolf's silhouette is readable, but I did not check pounce targeting.
+6. **UI typography: 8.5.**
+   - The IM Fell panels and Alfa Slab stamps on cream have ink borders, and the captions are storybook lines.
+   - The HUD text is small.
+7. **Convention and performance: 7.5.**
+   - 135k triangles in the scene (138k as drawn), 61 draw calls, 0.63 MB of assets. The triangle count is still above the ~120k target.
+   - `window.__game` is present.
+   - The 258 ms frame is SwiftShader on a busy host (load 7.1), so it is not a signal.
+8. **Juice: 7.5.**
+   - The pounce, splash and stamps work.
+   - I did not hear the sound.
 
-4. **Looks like refs/01.jpg: 9.**
-   - The `sea`, `cliff`, `pines*`, `sand`, `cloud` and `wolf-rock` are all in the play-camera frame.
-   - The grey band and vignette make the lose frame duller than the ref.
-
-5. **Solo fun and fair: 8.**
-   - The SUSPICION bar, the `clover` ×4 rings and the clover counter are readable.
-   - The round ended with 0/3 clovers and susp 1.23 after only walking, so a player who doesn't graze loses quickly. That reads as fair.
-   - The wolf took 2 bites in 25 s with `bites` at 2 (the other bite was an AI sheep, as the "decoys" count suggests), so I could not tell whether it hunts too fast.
-
-6. **Local 2-player: 8.**
-   - Carried over from earlier sessions. I did not re-run it this session.
-
-7. **`window.__game`, no build, ~100 sheep: 8.**
-   - The page is plain, starts playing on load, and `observe` works.
-   - `perf` gave 121 ms per frame at host load 4.2. That is a software renderer, so it is no signal. It reports 76 draw calls, 102.7k triangles and 0 MB of assets.
-   - The reveal canvas CSS filter has still not been timed on a real GPU.
-
-8. **Juice: 8.**
-   - 43 sounds started in one round: `baa`, `baa2`, `wind`, `boom`, `stab*`, `thud`, `hit` and `womp`. The sheep also visibly bob.
-   - The lose screen reads "The wolf got you · 0/3 clovers · R to play again · M to switch mode".
-
-9. **Works at any window size, HUD readable: 8.**
-   - At 1280×800 the HUD has 0 overlap and nothing cut off.
-   - The phone sheet in iteration 28 showed no overflow.
-
-10. **Faults: 8.**
-    - There are no console errors and no `Never visible` object. `perf` is not a fault on a software renderer.
-    - The `player` is drawn by its own shader, so the ID image cannot find it. That is by design, not a fault.
+**Faults: 7.5.**
+- There were no console errors.
+- The wolf body is still blobby.
+- The `clover` patches are unfinished.
+- Triangles are still above 120k.
 
 **Next:**
-1. **Play a full winning round.**
-   - **Do:** take the player to each `clover` and hold KeyE until all three clovers are collected, then reach the win state.
-   - **Check:** `interact` with `until: {result: "win"}`, then `look`. It should show a win screen with a restart prompt, matching the lose screen's quality.
-2. **Lighten the reveal and lose overlays.**
-   - **Do:** reduce `div.band` and `div#vig` so the end screen is not duller than refs/01.jpg. Keep the saturation drop short and let it recover.
-   - **Check:** `look` with `sample` at about (200, 600), where grass sits on the lose screen. It should be a vivid green.
-3. **Keep the second bite from landing quickly.**
-   - **Do:** give the wolf a longer cooldown after an AI-sheep bite, so a player who blends in survives well past the first minute.
-   - **Check:** `interact` that grazes for 90 s and checks `wolf.state` and `bites` with `expect`. It should show bites still at 3 or 2 and no `result` yet.
+1. **Rebuild `wolf-body` as a lean profile silhouette (asked again).**
+   - Make it one extruded side-profile polygon with a long snout, two sharp ears, a lowered head, four slim legs and a thin tail. The extruded polygon replaces the barrel and the block `wolf-leg`s.
+   - Keep the single `wolf-outline` hull around the whole shape.
+   - The one call that shows it done is `look` with `zoom` [100, 130, 450, 330]. It should show a pointed, slim profile with the outline hugging it, and `subject wolf` should be about 3–4%.
+2. **Draw the `clover` patches in the storybook style (asked again, not started).**
+   - Make each patch an inked ring with a three-leaf motif larger than a sheep's foot, in a bright green that stands out from the `ground`, and give it a soft glow when the player is near.
+   - The one call that shows it done is `look` with `zoom` on a clover position, for example the green rings near the lower-left flock. It should show inked leaf shapes.
+3. **Cut the triangles to about 120k or less (asked again).**
+   - Drop `bushes` detail (8k) and `walls` detail (7.7k) by about half. Halve `rocks` (6.4k), `sheep-heads-shadow` (8k) and `sheep-shadow` (10k), which could share a lower-poly shadow proxy.
+   - The one call that shows it done is `perf` with `costs`. It should read about 120k or less, with the flock silhouette unchanged in a `look`.
 
-SCORE: 8.2
+SCORE: 7.8
