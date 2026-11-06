@@ -1787,3 +1787,9 @@ SCORE: 7.5
    - Also enlarge the HUD hint text.
 
 SCORE: 7.6
+
+## Iteration 31
+**Did**: game.js: added low-poly `shBody`/`shHead` (ico detail 0) used only for the `sheep-shadow`/`sheep-heads-shadow` proxy meshes (the ink hulls keep `hullBody`/`hullHead`); `rockGeo` second blob and `bushGeo` two side blobs dropped to ico detail 0.
+**Saw**: `perf costs`: 112,412 triangles in scene (115,310 as drawn, was 136k), 79 draw calls, 0 console errors. Start `look`: flock silhouette unchanged, clover rings read as green discs with a leaf at the start camera (no z-fight visible, not zoomed). The wolf is still a black plank, 4.7% of frame, with the snout pointing right; its legs are thin sticks and the rim is faint.
+**Next**: (1) make the wolf read: ears, a snout notch, a warm brown thick `wolf-outline`, legs with gaps; check with `look` zoom [270,385,610,570]; (2) zoom `look` on a clover and add a glow ring when near; (3) enlarge HUD hint text.
+**Open**: wolf pounce/leap poses unchecked against the new profile; no interact replay this session.

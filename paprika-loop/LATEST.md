@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 30
-**Did**: game.js wolf block: `wolf-body` profile now has a shoulder hump, tucked belly, thigh and a bushy tail polygon (16 points); `wolf-leg`s shorter (0.55) with paws; `wolf-tail` blob shrunk and moved to (0,0.8,-1.3). `clover` groups got three inked heart-shaped leaves each (bright green 0x9be04a, dark outline), staggered in y by 0.012 to avoid z-fighting.
-**Saw**: `look` target wolf: curved back with hump, tapered tail and shorter legs, still a dark silhouette with a brown rim. Clover close view showed the leaf layers z-fighting (look's Surfaces lines); I staggered their y after that and did not re-look. 0 console errors. Perf and triangle count not run.
-**Next**: (1) re-`look` at a clover with `zoom` to confirm the leaves read and no z-fight; (2) cut triangles to ~120k (`bushes`, `walls`, `rocks`, a shared low-poly `sheep-shadow` proxy) and re-run `perf costs`; (3) check wolf pounce/leap poses against the new profile.
-**Open**: triangle cut not started; no interact replay; clover leaf fix unverified.
-
 ### Judge 30
 
 **Session 30 verdict.** I looked at one 3-cell sheet (start, human bite, AI bite) and ran `perf` with `costs`. I did not run `interact`, `feel` or `viewports`, and I did not check sound. I did not re-`look` at a clover, so the builder's leaf-stagger fix is unverified. The sheet showed no `Lighting:` or `Surfaces:` lines.
@@ -59,3 +53,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Also enlarge the HUD hint text.
 
 SCORE: 7.6
+
+## Iteration 31
+**Did**: game.js: added low-poly `shBody`/`shHead` (ico detail 0) used only for the `sheep-shadow`/`sheep-heads-shadow` proxy meshes (the ink hulls keep `hullBody`/`hullHead`); `rockGeo` second blob and `bushGeo` two side blobs dropped to ico detail 0.
+**Saw**: `perf costs`: 112,412 triangles in scene (115,310 as drawn, was 136k), 79 draw calls, 0 console errors. Start `look`: flock silhouette unchanged, clover rings read as green discs with a leaf at the start camera (no z-fight visible, not zoomed). The wolf is still a black plank, 4.7% of frame, with the snout pointing right; its legs are thin sticks and the rim is faint.
+**Next**: (1) make the wolf read: ears, a snout notch, a warm brown thick `wolf-outline`, legs with gaps; check with `look` zoom [270,385,610,570]; (2) zoom `look` on a clover and add a glow ring when near; (3) enlarge HUD hint text.
+**Open**: wolf pounce/leap poses unchecked against the new profile; no interact replay this session.
