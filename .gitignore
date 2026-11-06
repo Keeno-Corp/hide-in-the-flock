@@ -1,3 +1,7 @@
 paprika3d/
 node_modules/
 .wrangler/
+refs/study/*.jpg
+refs/study/*.png
+refs/assets/
+refs/candidates/
