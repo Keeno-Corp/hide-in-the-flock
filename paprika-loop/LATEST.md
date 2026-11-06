@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 23
-**Did**: game.js ground vertex colours: indigo patch is now a smooth lerp (`0.4*sm(0.5,0.9,ip)`) instead of a hard step; hill/far `Math.round(..*3)/3` banding replaced by smooth lerps. Intended to remove the diamond tone bands on the right hill.
-**Saw**: not run this session (no look/perf); change unverified visually.
-**Next**: (1) `look` zoom [640,100,1280,450] to confirm bands gone; (2) wolf ink silhouette / separate limbs in local; (3) rock occluding local wolf paws, clover grazing check.
-**Open**: wolf items untouched; verify `sm` is defined and no console errors.
-
 ### Judge 23
 
 **Judge 23 scores**
@@ -56,3 +50,9 @@ I took one 3-cell `look` sheet (start, AI bite, human bite), a zoom on the right
    - After that, cut the triangle count by lowering the sheep or tree detail. `perf` with `variants` hiding `pines*` and `round-trees*` shows what each costs.
 
 SCORE: 7.9
+
+## Iteration 24
+**Did**: game.js wolf build: added `wolf-rim` meshes, which are cloned geometry pushed out 0.05 along the normals, BackSide, colour 0x6a5546, one per wolf mesh (body, head, ears, legs, paws, tail). This gives the wolf an ink rim like `sheep-ink*`.
+**Saw**: `look` zoom [250,300,650,650] shows the rim round the wolf lump on `wolf-rock`; there are no console errors. The wolf is still a mostly black mass because its limbs overlap on the rock. I did not run `perf`. The clover patches were not touched (3 `clover` groups, each with a patch, outline and ring already).
+**Next**: (1) separate the wolf's legs and ears from the body, for example by lightening the leg colour or posing it off the rock; (2) check the local wolf with `KeyM` against `wolf-rock`; (3) cut the triangle count (`perf` variants hiding `pines*` and `round-trees*`).
+**Open**: the rim adds triangles (about double the wolf's). The clover leaf motif was not done.

@@ -295,6 +295,14 @@ const W = {};
   });
   W.tail = new THREE.Group(); W.tail.name = 'wolf-tail'; W.tail.position.set(0, 0.85, -0.95); W.body.add(W.tail);
   add(W.tail, blob(0.22, 0.24, 0.95, 0, -0.28, -0.3, -0.55));
+  // ink rim: a lighter brown shell pushed out along the normals, drawn behind each wolf mesh
+  const rimInk = new THREE.MeshBasicMaterial({ color: 0x6a5546, side: THREE.BackSide, fog: false });
+  const meshes = []; W.body.traverse(o => { if (o.isMesh && o.geometry && o.geometry.attributes.normal && o.material !== eyeMat) meshes.push(o); });
+  meshes.forEach(o => {
+    const g = o.geometry.clone(), p = g.attributes.position, n = g.attributes.normal;
+    for (let i = 0; i < p.count; i++) p.setXYZ(i, p.getX(i) + n.getX(i) * 0.05, p.getY(i) + n.getY(i) * 0.05, p.getZ(i) + n.getZ(i) * 0.05);
+    const h = new THREE.Mesh(g, rimInk); h.name = 'wolf-rim'; o.parent.add(h);
+  });
   scene.add(W.root);
 }
 // the rock the wolf watches from
