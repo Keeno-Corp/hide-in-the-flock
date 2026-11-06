@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 32
-**Did**: game.js wolf: rebuilt the `wolf-body` extrude polygon (tapered tail, deeper chest, narrower waist, raised belly, neck dipping to the head); `wolf-head` ears are now 0.1×0.55 brown cones (were small spikes); `wolf-leg` tapers thicker (0.11→0.05).
-**Saw**: `look` zoom [250,340,760,640] at start: the wolf now reads as a wolf in profile: head with a long snout, a yellow eye, two ears above the head line, a tapered tail and two visible front legs. Ears were too tall at 0.75, trimmed to 0.55 after the look and not re-looked. Full-frame `look` shows the scene in a pink wash (the `#paper` overlay at frame 1), which I did not chase. No `perf` run, no `interact`.
-**Next**: (1) re-look the zoom to check the trimmed ears and add a notch under the jaw; (2) zoom `look` on a clover and add a glow ring when near; (3) enlarge HUD hint text, then an `interact` solo pass with Shift and E, and check the pounce pose.
-**Open**: wolf pounce/leap poses unchecked against the new profile; clover zoom and HUD size still not done.
-
 ### Judge 32
 
 **Session 32 verdict.** I looked at a 3-cell sheet (start, human bite, AI bite), took a zoom on the wolf and ran `perf` once. I did not run `interact` or `feel`, did not check sound, and did not zoom on a clover. The sheet showed no `Lighting:` or `Surfaces:` lines.
@@ -66,3 +60,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Check the pounce pose against the new wolf profile.
 
 SCORE: 7.6
+
+## Iteration 33
+**Did**: game.js: `wolf-head` ears are now short cones (0.11×0.26, tilted back) instead of 0.55 horns; `wolf-rock` scale 1.9→1.5 so the rear `wolf-leg`s show.
+**Saw**: `look` zoom [250,340,760,640] twice: ears sit just above the head line; now three-to-four legs visible (rear pair beside the rock). No jaw notch (head is a separate group from the `wolf-body` polygon). HUD font is already 19–22px in index.html, so I left it. No `perf`, no `interact`. Wolf may float slightly over the smaller rock (ROCK.top 4.1 unchanged); not checked.
+**Next**: (1) check wolf foot height on the smaller rock, and the pounce pose; (2) zoom `look` on a clover and add a glow ring when near; (3) `interact` solo pass with Shift and E.
+**Open**: jaw notch not done; clover zoom and play-check still open.

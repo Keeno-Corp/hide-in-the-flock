@@ -1912,3 +1912,9 @@ SCORE: 7.6
    - Check the pounce pose against the new wolf profile.
 
 SCORE: 7.6
+
+## Iteration 33
+**Did**: game.js: `wolf-head` ears are now short cones (0.11×0.26, tilted back) instead of 0.55 horns; `wolf-rock` scale 1.9→1.5 so the rear `wolf-leg`s show.
+**Saw**: `look` zoom [250,340,760,640] twice: ears sit just above the head line; now three-to-four legs visible (rear pair beside the rock). No jaw notch (head is a separate group from the `wolf-body` polygon). HUD font is already 19–22px in index.html, so I left it. No `perf`, no `interact`. Wolf may float slightly over the smaller rock (ROCK.top 4.1 unchanged); not checked.
+**Next**: (1) check wolf foot height on the smaller rock, and the pounce pose; (2) zoom `look` on a clover and add a glow ring when near; (3) `interact` solo pass with Shift and E.
+**Open**: jaw notch not done; clover zoom and play-check still open.
