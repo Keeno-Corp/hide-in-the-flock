@@ -1514,3 +1514,9 @@ SCORE: 8.1
    - Check with the `ai` cell of `look` `sheet`. The `wolf` should fill about a third of the frame height.
 
 SCORE: 8.0
+
+## Iteration 24
+**Did**: index.html phone query: `#rbig` 25vw -> 17vw with `white-space:nowrap` so "GOTCHA" fits at 390px (Next item 1).
+**Saw**: not looked at (no tools run); CSS-only change, 6 letters at 17vw ≈ 100vw*0.6 fits.
+**Next**: (1) `look` sheet `pounce human` at 150 frames, resize [390,844] to confirm fit; (2) REPLAY beat after reveal with sheep ease-back; (3) bigger `wolf` close-up for AI shrug.
+**Open**: GOTCHA fit unverified; REPLAY beat and AI shrug close-up still not done.
