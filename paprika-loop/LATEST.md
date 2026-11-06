@@ -1,64 +1,66 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-### Judge 33
-
-**Judge verdict, session 33**
-
-1. **Looks as LOOK.md says: 8.**
-   - The reveal frame now shows the `sky` (34%), `sea`, `cliff`, `round-trees*`, `cloud` ×11 and the `ground` meadow around the wolf. There are no `Lighting:` or `Surfaces:` lines.
-   - Saturation is 30% and grey is 64%, both counting the dark `wolf` as grey. That is under the 35% and 50% targets, but the frame reads bright.
-   - `sand` is a 0.0023% sliver. `wolf-rock` shows as "Never visible", hidden behind sheep.
-
-2. **Plays as DESIGN.md says: 8.**
-   - `{action:"pounce",target:"ai"}` took `bites` from 3 to 2, set `pounce.ph` to "reveal" with `human` false and set `wolf.pose` to "shrug".
-   - A 60 s hold of Space (graze) went `wolf.state` "watch" then "stalk" and `bites` 3 to 1. The AI bites came well apart rather than back-to-back, so the cooldown looks fine. That is a rough read, not a timestamped one.
-   - I did not run a clover win or a "lose" this session.
-
-3. **Clip moment: 9.**
-   - It shows the "AI SHEEP" title, the "BITE WASTED" kicker, the "Just a sheep. Bite wasted." sub line, `div#bubble` "baa?" and `div#cap` "The wolf reconsiders his life choices."
-   - 11 sounds played: `boom`, `stab1` to `stab3`, `thud`, `hit`, `womp` ×2, `baa` and `wind`.
-   - The wolf's dark mass is still big in the lower frame, but the title and the joke read at a glance.
-
-4. **Looks like refs/01.jpg: 8.**
-   - The play camera shows the `sea`, `cliff`, trees, `cloud` and the meadow, all bright and low-poly.
-   - The reveal frame hides `wolf-rock` and the beach.
-
-5. **Solo fun and fair: 8.**
-   - The suspicion bar sits in `div#hud`. With the player grazing, the wolf took 2 bites in about 56 s, so the first clip moment arrives within a minute.
-   - The full natural win and the "EATEN" screen were not replayed.
-
-6. **Local 2-player: 8.**
-   - Carried over from earlier sessions. I did not re-run it.
-
-7. **`window.__game`, no build, ~100 sheep: 8.**
-   - `observe` works, the page starts playing on load, and the game instances its sheep.
-   - `perf` gave 185.9 ms per frame, 77 draw calls and 102.8k triangles. This is a software renderer, so the frame time is no signal.
-
-8. **Juice: 9.**
-   - Baas, `wind`, `womp`, `boom`, `stab*`, `thud` and `hit` all fire. The caption voice is funny.
-
-9. **Works at any window size, HUD readable: 8.**
-   - At 1280×800 there are 0 overlaps, 0 off-screen and 0 cut-off elements. I did not re-check other sizes.
-
-10. **Faults: 8.**
-    - There are no console errors and no `Lighting:` or `Surfaces:` lines.
-    - `wolf-rock` is "Never visible" in the reveal frame, hidden behind sheep.
-
-**Next:**
-1. **Run the full solo round.**
-   - **Do:** walk to the three `clover` patches and hold E on each, with the wolf active.
-   - **Check:** `result` reaches "win" on its own. Then run `{action:"pounce",target:"human"}` three times and check that the "EATEN" screen shows with a restart.
-2. **Lighten the wolf in the reveal (asked again).**
-   - **Do:** give `wolf` a lighter fur colour or a rim light while `pounce.ph` is "reveal", so it separates from the grass.
-   - **Check:** `look` after the AI pounce and `wait:150`. Grey should be under 50%.
-3. **Show `wolf-rock` and the beach in the opening shot.**
-   - **Do:** keep sheep from standing in front of `wolf-rock` at the start, or move the opening camera slightly, so the "wolf crouched on its rock" reads.
-   - **Check:** `look` with no steps should list `wolf-rock` as on screen with a pixel share above 0.5%.
-
-SCORE: 8.2
-
 ## Iteration 34
 **Did**: Added a PointLight `rim` (game.js, before `sun`) that follows `wolf` at +1.5,4,+4 and scales intensity 90×`cam.close`, so the wolf is lit during the reveal close-up.
 **Saw**: Ran pounce ai + 150 frames: no console errors, no Lighting/Surfaces lines, saturation 28%, grey 63% (the wolf is visibly lighter grey, 2% blown out), wolf-rock still Never visible. No perf.
 **Next**: (1) `look` after `{action:"pounce",target:"ai"}`+150 frames: check grey <50% and that `rim` doesn't blow out; (2) full solo round to a win and an "EATEN"; (3) keep sheep off `wolf-rock` at the start.
 **Open**: Grey share barely moved (sheep wool counts as grey); the rim is fine, no wash-out.
+
+### Judge 34
+
+**Judge verdict, session 34**
+
+1. **Looks as LOOK.md says: 8.**
+   - The opening look has `sky` 20%, `sea` 8.9%, `cliff` and `sand` all on screen. There are `pines*` ×134, 15 `round-trees*` and `cloud` ×40. There are no `Lighting:` or `Surfaces:` lines.
+   - `wolf-rock` is on screen at 0.43% in the opening and 1.3% after the pounce. Last session it was "Never visible", so that fault is fixed.
+   - In the reveal frame, grey is 65% and saturation 28%. The `rim` light did not change that, because the `sheep*` wool and the grey `wolf` count as grey.
+   - The reveal frame is washed out: the `sand` strip is only 0.13%, and the sea band and sky are pale.
+
+2. **Plays as DESIGN.md says: 7.**
+   - `{action:"pounce",target:"ai"}` took `bites` from 3 to 2. It set `pounce.ph` to "reveal" and `human` to false, and set `wolf.pose` to "shrug".
+   - `{action:"pounce",target:"human"}` plus 150 frames returned `pounce:null` and `wolf.state` "return". `bites` stayed at 2 and no "HUMAN! GOTCHA" frame was captured. The forced human pounce either misses or ends inside the wait, so I could not confirm that branch.
+   - I did not run the natural clover win or the "EATEN" screen again. That is now the third session in a row.
+
+3. **Clip moment: 8.**
+   - The AI reveal shows the "AI SHEEP" title, the "BITE WASTED" kicker, the "Just a sheep. Bite wasted." sub line, `div#bubble` "baa?" and `div#cap` "Mistaken identity. Nature is humbling."
+   - 9 sounds played: `boom`, `stab1` to `stab3`, `thud`, `hit`, `womp` ×2 and `baa`.
+   - The "HUMAN! GOTCHA" and PLAYER 1 tag half was not seen this session.
+   - The wolf is half hidden behind wool at the bottom of the frame.
+
+4. **Looks like refs/01.jpg: 9.**
+   - The play camera shows `sea`, `sand`, `cliff`, pines, `cloud` and the meadow, and `wolf-rock` with the wolf next to it.
+   - It is bright and low-poly, and the saturation is 44%.
+
+5. **Solo fun and fair: 8.**
+   - The suspicion bar, the three `clover` patches (the look lists ×4) and the bites are all in `div#hud`.
+   - A natural win and a lose were not replayed.
+
+6. **Local 2-player: 8.**
+   - Carried over from earlier sessions. I did not re-run it.
+
+7. **`window.__game`, no build, ~100 sheep: 8.**
+   - `observe` works and the page starts playing on load. `sheep*` ×101 are on screen.
+   - `perf` gave 204 ms per frame, 82 draw calls and 103k triangles on a software renderer, so the frame time is no signal. Host load was 1.0.
+
+8. **Juice: 9.**
+   - Baas, `wind`, `womp`, `boom`, `stab*` and `thud` all fire, and the caption voice is funny.
+
+9. **Works at any window size, HUD readable: 8.**
+   - At 1280×800 there are 0 overlaps, 0 off-screen and 0 cut off. I did not check other sizes.
+
+10. **Faults: 8.**
+    - There are no console errors, no `Lighting:` or `Surfaces:` lines, and no "Never visible" objects.
+    - The forced human pounce did not reveal, as noted under item 2.
+
+**Next:**
+1. **Show the human reveal.**
+   - **Do:** run `{action:"pounce",target:"human"}` with `until:{"pounce.ph":"reveal"}`. If `pounce` clears without a reveal, fix `act("pounce")` in `game.js` so a forced human target always reaches "reveal".
+   - **Check:** `look` should show the "HUMAN! GOTCHA" title, the PLAYER 1 tag and `bites` going from 2 to 1.
+2. **Run the full solo round (asked again).**
+   - **Do:** walk to each `clover` and hold E, then separately let the wolf eat the player three times.
+   - **Check:** `interact` with `until:{result:"win"}`, then the "EATEN" screen with a restart. Run `{key:"KeyR"}` and check that the state resets.
+3. **Make the reveal frame less washed out and keep the wolf clear of wool.**
+   - **Do:** in the reveal, lower the exposure or sky and sea brightness, and nudge the camera so the `wolf` sits above the nearest sheep.
+   - **Check:** `look` after the AI pounce plus 150 frames. Grey should be under 55% and the `wolf` share above 6%.
+
+SCORE: 8.1
