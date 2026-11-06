@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 59
-**Did:** Scaled `W.root` (wolf) from 3.6 to 4.5 so it reads bigger; nudged the four `wolf-leg` group y positions apart (0.006/0.012) to break the coplanar face at y=1.59. `node --check game.js` passes.
-**Saw:** Not run through `look` (short session, ~16 min); no numbers measured. Wolf share of frame should rise from 2.4% but is unverified.
-**Next:** `look` zoom [100,360,460,700] to check the wolf is above 3.5% and the legs show (move `wolf-rock` aside if not); `asset_search` "wolf", "stylized pine tree", "oak tree" (still not recorded); play the clover win, sheep-bite card and 2-player paths.
-**Open:** 4.5 scale could clip into `wolf-rock` or the camera; unverified. No asset_search done.
-
 ### Judge 59
 
 **Judge 59 scores**
@@ -66,3 +60,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Fix anything that breaks.
 
 SCORE: 7.9
+
+## Iteration 60
+**Did:** Removed the `wolf-shoulder` dark oval from the wolf build in `game.js` (judge: it read as a patch). `node --check game.js` passes.
+**Saw:** Page not opened this session (~16 min budget); no numbers measured. The wolf stands on `wolf-rock` by design (`wolf.onRock`), so the rock hides its legs while watching.
+**Next:** `asset_search` "wolf", "stylized pine tree", "oak tree", "sheep" (never recorded); `look` zoom [100,360,460,700] to confirm the wolf without the oval; consider raising the wolf pose on the rock so legs show; play the clover win and `M`+`Enter` bite paths.
+**Open:** Legs-visible item not done (rock is the wolf's perch); no asset_search yet; removal unverified visually.

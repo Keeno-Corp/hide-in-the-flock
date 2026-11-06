@@ -292,7 +292,6 @@ const W = {};
   ]));
   const eyeMat = new THREE.MeshBasicMaterial({ color: 0xe9c46a, fog: false });
   [-1, 1].forEach(sx => { const e = new THREE.Mesh(new THREE.SphereGeometry(0.035, 8, 6).scale(1.3, 0.8, 1), eyeMat); e.position.set(sx * 0.15, 0.06, 0.36); W.head.add(e); });
-  add(W.body, mergeGeometries([blob(0.1, 0.5, 0.9, 0.25, 0.9, 0.3), blob(0.1, 0.5, 0.9, -0.25, 0.9, 0.3)]), new THREE.MeshBasicMaterial({ color: 0x1c1814, fog: false })).name = 'wolf-shoulder';
   W.legs = [];
   [[-1, 0.72], [1, 0.72], [-1, -0.6], [1, -0.6]].forEach(([sx, z]) => {
     const g = new THREE.Group(); g.name = 'wolf-leg'; g.position.set(sx * 0.13, 0.72 + (z < 0 ? 0.012 : 0) + (sx > 0 ? 0.006 : 0), z); W.body.add(g);
