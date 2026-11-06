@@ -193,7 +193,7 @@ const pineGeo = mergeGeometries([
   mk(cone(0.22, 0.95, 5), 0x5a3d26, { p: [0, 0.475, 0] }).clone(),
   mk(cone(1.1, 1.8, 6), 0x2f6a3a, { p: [0, 1.51, 0], jit: 0.1 }), mk(cone(0.85, 1.6, 6), 0x38783f, { p: [0, 2.53, 0], jit: 0.1 }), mk(cone(0.55, 1.4, 6), 0x42874a, { p: [0, 3.46, 0], jit: 0.1 }),
 ]);
-scatterInst(pineGeo, 300, () => { const [x, z] = polar(29, 58); if (z < -20 && Math.random() < 0.97) return null; const h = gh(x, z); if (h < 0.9 || h > 10 || (z > 8 && Math.random() < 0.85)) return null; const s = rnd(0.9, 1.9); return { x, z, s, sy: s * rnd(0.9, 1.4), y: h - 0.2 }; }, { name: 'pines' });
+const pinesMesh = scatterInst(pineGeo, 300, () => { const [x, z] = polar(29, 58); if (z < -20 && Math.random() < 0.97) return null; const h = gh(x, z); if (h < 0.9 || h > 10 || (z > 8 && Math.random() < 0.85)) return null; const s = rnd(0.9, 1.9); return { x, z, s, sy: s * rnd(0.9, 1.4), y: h - 0.2 }; }, { name: 'pines' });
 const roundTreeGeo = mergeGeometries([
   mk(cone(0.2, 1.6, 5), 0x6b4a2c, { p: [0, 0.8, 0] }),
   mk(ico(1.0, 0), 0x5d9a2a, { p: [0, 2.1, 0], jit: 0.12 }), mk(ico(0.7, 0), 0x6aa930, { p: [0.55, 1.6, 0.2], jit: 0.12 }), mk(ico(0.6, 0), 0x4f8a28, { p: [-0.5, 1.7, -0.2], jit: 0.12 }),
@@ -693,6 +693,7 @@ function updateCamera(dt, rdt) {
   camera.position.set(cam.x, 15 * sc2 + 3, cam.z + 32 * sc2 + 6);
   camera.lookAt(cam.x, 5, cam.z - 8);
   let fov = 50 - 16 * cam.punch; { const a = innerWidth / innerHeight; if (a < 1.4) fov = Math.min(80, (2 * Math.atan(Math.tan(fov * Math.PI / 360) * 1.4 / a)) * 180 / Math.PI); } if (Math.abs(camera.fov - fov) > 0.01) { camera.fov = fov; camera.updateProjectionMatrix(); }
+  pinesMesh.visible = cam.close < 0.5;
   camShake.update(rdt);
 }
 

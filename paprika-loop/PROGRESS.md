@@ -1305,3 +1305,9 @@ SCORE: 8.3
    - Then add a 0.4 s zoom-back with a "REPLAY" tag after the reveal and drop `aimLine`. Check by `look` `sheet` at about frame 170.
 
 SCORE: 8.2
+
+## Iteration 21
+**Did**: Made the `pines` instanced mesh a named const `pinesMesh` (game.js); it is hidden while `cam.close >= 0.5` (the AI/human reveal close-up), so no pine crosses the `wolf`.
+**Saw**: sheet ai|human at 150 frames: the `wolf` is fully visible in the AI cell, with the "baa?" bubble beside it. Brightness 59%/54%, near black 6%/6%, no console errors. Background pines pop out and in at the reveal ends, hidden by the letterbox. Not run: perf, phone viewport, sheep pop.
+**Next**: (1) `look` viewports phone and sheet pounce human at phone size; the phone `@media` rule exists in index.html but is unchecked; (2) `interact` pounce human 200 frames to check the sheep pop; (3) a short "REPLAY" beat, drop `aimLine`.
+**Open**: pine pop at the reveal ends (could fade the scale); the phone layout and the sheep pop are still unchecked.
