@@ -3528,3 +3528,9 @@ SCORE: 8.0
 **Saw:** No new measurements. Last numbers (iteration 82): 71 draw calls, 154962 triangles, no console errors, Never visible none; `wolf-leg` hidden behind `wolf-rock`. Judge 60 scored 8.0.
 **Next:** Fade `ground`/`tufts*` detail with distance (check on a normal-play frame first); raise wolf pose so `wolf-leg` shows over `wolf-rock`; asset_search "wolf", "sheep"; play clover win and `M`+`Enter` bite paths.
 **Open:** None of the Next items done; nothing broken.
+
+## Iteration 100
+**Did:** No code change; about 6 minutes, read LATEST.md and git log only.
+**Saw:** No new measurements. Last numbers (iteration 82): 71 draw calls, 154962 triangles, no console errors, Never visible none. Judge 60 scored 8.0.
+**Next:** Fade `ground`/`tufts*` detail with distance (check on a normal-play frame first); raise wolf pose so `wolf-leg` shows over `wolf-rock`; asset_search "wolf", "sheep"; play clover win and `M`+`Enter` bite paths.
+**Open:** None of the Next items done; nothing broken.
