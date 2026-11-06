@@ -2212,3 +2212,9 @@ SCORE: 8.2
    - **Check:** `look` after the AI pounce plus 150 frames. Grey should be under 55% and the `wolf` share above 6%.
 
 SCORE: 8.1
+
+## Iteration 35
+**Did**: No code change. Verified the judge's Next item 1 and half of item 2 by playing: `{action:"pounce",target:"human"}` + `until:{"pounce.ph":"reveal"}` reaches the reveal at frame ~109 (leap is slow-motion, 1.3s of `slow` 0.13 time, so a 150-frame wait after the action is too short; use `until`).
+**Saw**: Human reveal look: "HUMAN! GOTCHA" title, "PLAYER 1 has been found." sub, red `outline` figure + PLAYER 1 `tag`, wolf in `land` pose, caption showing. Grey 48%, saturation 36%, 0% blown out, no console errors, no Lighting/Surfaces lines, nothing Never visible. Then `until:{result:"lose"}` hit at frame 187 ("EATEN" via endGame), and `KeyR` reset: result null, wolf.state "watch", bites 3. `bites` stays 3 on a human pounce by design (only AI pounces decrement it). No perf run.
+**Next**: (1) natural clover win (walk to each `clover`, hold E, `until:{result:"win"}`), still never replayed; (2) reveal frame washout in the AI case (lower exposure/sea+sky brightness in reveal, keep `wolf` clear of wool); (3) check other window sizes (phone/tablet) for HUD overlaps.
+**Open**: Win path not run this session. The judge's "bites 2→1" check for the human pounce was a mistaken expectation.
