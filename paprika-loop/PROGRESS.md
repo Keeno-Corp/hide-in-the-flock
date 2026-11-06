@@ -2692,3 +2692,9 @@ SCORE: 8.0
    - Proof: `look` at frame 40 shows `Subject: wolf` at 4% or more with no `sheep*` overlapping it.
 
 SCORE: 7.9
+
+## Iteration 46
+**Did**: No code change. Proved the 3-clover win: `checkWin` (game.js:837) needs `eatenCount()>=3 && T>=180`, and the `state` keys are `clovers` and `t`, not `eaten`.
+**Saw**: `interact` with `{state:{clovers:3,t:181}}` gives `result:"win"` ✓. The look shows the stamped "YOU BLENDED IN" card with "R to play again · M to switch mode". No console errors, nothing Never visible. The wolf is 1.6% in the win frame, crowded by sheep and `wolf-rock`.
+**Next**: Flatten `ridge*`/`oaks*`/`round-trees*`/`ground` vertex gradients. Move `wolf-rock` (ROCK game.js:259) and the wolf start to clear ground, and add a pale rim behind `wolf-body`. Make `sheep*` outlines flatter and inked.
+**Open**: Flattening, the rock move and the sheep restyle are not done. The win only fires at T>=180 even if all 3 clovers are eaten earlier, which is by design ("Three minutes").

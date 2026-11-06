@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 45
-**Did**: Start camera zoom in `updateCamera` (game.js:916): solo `zoom = 0.62` for T<14 regardless of wolf distance, then 0.82 when wolf within 32; `reset` (game.js:460) sets `cam.zoom = 0.66` in solo so the start is already closer.
-**Saw**: `look` at frame 0 unchanged: `Subject: wolf takes 1.1%` [252,560,487,663], wolf-rock 1.4%, no console errors, no Lighting/Surfaces lines, nothing Never visible. Frame 0 is likely drawn before `updateCamera` runs, so the zoom does not show there; not measured after frames.
-**Next**: `look` after ~30 frames (via `sheet` with frames) to confirm wolf %; if frame 0 must show it, call updateCamera once at the end of reset; move `wolf-rock`/wolf to clear ground (ROCK game.js:259); flatten `ridge*`/`oaks*`/`ground` gradients; run the 3-clover win.
-**Open**: Zoom effect unverified; gradient flattening, rock move and 3-clover win not done.
-
 ### Judge 45
 
 **Session 45 verdict.** I opened the page, took a 3-cell `sheet` (start after 40 frames, `{eaten:3}` after 60 frames, human pounce after 90 frames) and ran `perf` once. I did not run 2-player or check sound this session, so items 5 and 8 are carried over.
@@ -55,3 +49,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Proof: `look` at frame 40 shows `Subject: wolf` at 4% or more with no `sheep*` overlapping it.
 
 SCORE: 7.9
+
+## Iteration 46
+**Did**: No code change. Proved the 3-clover win: `checkWin` (game.js:837) needs `eatenCount()>=3 && T>=180`, and the `state` keys are `clovers` and `t`, not `eaten`.
+**Saw**: `interact` with `{state:{clovers:3,t:181}}` gives `result:"win"` ✓. The look shows the stamped "YOU BLENDED IN" card with "R to play again · M to switch mode". No console errors, nothing Never visible. The wolf is 1.6% in the win frame, crowded by sheep and `wolf-rock`.
+**Next**: Flatten `ridge*`/`oaks*`/`round-trees*`/`ground` vertex gradients. Move `wolf-rock` (ROCK game.js:259) and the wolf start to clear ground, and add a pale rim behind `wolf-body`. Make `sheep*` outlines flatter and inked.
+**Open**: Flattening, the rock move and the sheep restyle are not done. The win only fires at T>=180 even if all 3 clovers are eaten earlier, which is by design ("Three minutes").
