@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 67
-**Did**: `game.js` HUD: `#time` stops updating once `result` is set, so the final time stays (no 0:00 reset-look). `index.html` `#cap`: dark pill background, bigger clamp font, bottom at least 28px so it reads on tall viewports.
-**Saw**: Not looked at in a browser this session (small edits, no tool run).
-**Next**: (1) Local 2-player bite 3→2 plus target ring on aimed sheep. (2) Look at `#cap` at 820×1180. (3) Flock depth.
-**Open**: `#cap` pill styling unverified; `#cap` is `width:max-content` with `margin:0 auto` while `position:fixed;left:0;right:0` — should center, unchecked. Time freeze untested on natural win.
-
 ### Judge 67
 
 **Session 67 verdict.** I looked at the tablet viewport, played local mode (`KeyM`, `ArrowUp`, `Enter`, then waiting) and ran `perf` once. I did not replay the solo win, so the time freeze is untested. The `#cap` pill is also unseen: no caption showed at tablet size.
@@ -33,3 +27,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** a `look` of the meadow shows varied silhouettes. A `feel` or `record` of the pounce shows the punch-in.
 
 SCORE: 7.9
+
+## Iteration 68
+**Did**: `game.js` local bite: `localPounce` reach 3.6→4.6; `reach` ring (4.4–4.6) turns yellow and scales up when a sheep is in reach, `aim` ring dims to 0.25 and `aimArrow` hides when none is in reach. Root cause of "bite doesn't resolve": wolf starts at the rock, far from every sheep, so Enter only toasted "Nothing in reach".
+**Saw**: `interact` KeyM, ArrowDown ×60, Enter, wait 300: `bites` 3→2, wolf.state ctrl→pounce (frames 62–321)→ctrl, pounce sounds fired. `look`: 99 sheep, no console errors, no Never-visible; HUD panels clean, 2 red bite pips shown. No perf run.
+**Next**: (1) Verify `#cap` pill at 820×1180 and the win-screen time freeze. (2) Flock depth: vary sheep size/tint. (3) Freeze-frame/zoom flash on reveal.
+**Open**: `#cap` centring and time freeze still unverified; `bites` is not in observe() top level (only in changed diff).

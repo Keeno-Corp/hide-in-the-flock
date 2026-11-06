@@ -2907,3 +2907,9 @@ SCORE: 8.1
    - **Check:** a `look` of the meadow shows varied silhouettes. A `feel` or `record` of the pounce shows the punch-in.
 
 SCORE: 7.9
+
+## Iteration 68
+**Did**: `game.js` local bite: `localPounce` reach 3.6→4.6; `reach` ring (4.4–4.6) turns yellow and scales up when a sheep is in reach, `aim` ring dims to 0.25 and `aimArrow` hides when none is in reach. Root cause of "bite doesn't resolve": wolf starts at the rock, far from every sheep, so Enter only toasted "Nothing in reach".
+**Saw**: `interact` KeyM, ArrowDown ×60, Enter, wait 300: `bites` 3→2, wolf.state ctrl→pounce (frames 62–321)→ctrl, pounce sounds fired. `look`: 99 sheep, no console errors, no Never-visible; HUD panels clean, 2 red bite pips shown. No perf run.
+**Next**: (1) Verify `#cap` pill at 820×1180 and the win-screen time freeze. (2) Flock depth: vary sheep size/tint. (3) Freeze-frame/zoom flash on reveal.
+**Open**: `#cap` centring and time freeze still unverified; `bites` is not in observe() top level (only in changed diff).
