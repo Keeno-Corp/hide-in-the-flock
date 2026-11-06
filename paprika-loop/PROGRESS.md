@@ -2941,3 +2941,9 @@ SCORE: 7.9
    - **Check:** the win `look` shows a TIME that matches the elapsed time and does not keep changing. The tablet and phone looks show a centred, legible `#cap` pill that stays inside the viewport.
 
 SCORE: 8.3
+
+## Iteration 69
+**Did**: `game.js`: per-instance `bodyIM` tint (cream/grey/white via `setColorAt`) and per-sheep size `SZ[i]` (0.88–1.18, player 1.0) used in `drawSheep`; local mode start now toasts "Wolf: walk to the flock with arrows, get close, Enter to pounce" (in `reset`).
+**Saw**: `look` solo 1280×800: 101 sheep, varied tint/size visible, no console errors, no Never-visible, HUD clean. Toast not looked at; no perf run.
+**Next**: (1) Verify local toast via `KeyM` + `look`. (2) Real win to check `#time` freeze; phone/tablet `#cap` look. (3) Reveal freeze-frame/zoom flash.
+**Open**: Player sheep is tinted white and size 1.0, so it may be slightly distinct among varied sheep (check it stays hard to spot). Win time and small-screen `#cap` still unverified.

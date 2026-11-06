@@ -131,6 +131,9 @@ const HEAD_P = new THREE.Vector3(0, 0.78, 0.6);
 const N_AI = 100, N = N_AI + 1;
 const bodyIM = new THREE.InstancedMesh(sheepBodyGeo, flat(), N); bodyIM.name = 'sheep'; bodyIM.castShadow = true; bodyIM.frustumCulled = false;
 const headIM = new THREE.InstancedMesh(sheepHeadGeo, flat(), N); headIM.name = 'sheep-heads'; headIM.castShadow = true; headIM.frustumCulled = false;
+{ const tints = [0xffffff, 0xf4ecd8, 0xd9d6cf, 0xffffff, 0xece3cf, 0xbdb7ad]; const c = new THREE.Color();
+  for (let i = 0; i < N; i++) { const t = i === 0 ? 0xffffff : tints[(i * 7 + (i >> 2)) % tints.length]; c.setHex(t).multiplyScalar(0.92 + ((i * 37) % 17) / 17 * 0.1); bodyIM.setColorAt(i, c); headIM.setColorAt(i, new THREE.Color(0xffffff)); } }
+const SZ = Array.from({ length: N }, (_, i) => i === 0 ? 1 : 0.88 + ((i * 53) % 23) / 23 * 0.3);
 scene.add(bodyIM, headIM);
 
 // ───────────────────────── wolf ─────────────────────────
@@ -299,6 +302,7 @@ function reset(newMode) {
   clovers.forEach(c => { c.prog = 0; c.eaten = false; c.mesh.scale.setScalar(1); c.mesh.visible = true; });
   cam.x = P.x; cam.z = P.z; cam.punch = 0;
   hideReveal(); updateModeUI();
+  if (mode === 'local') toast('Wolf: walk to the flock with arrows, get close, Enter to pounce', 4);
   $('rclv').style.display = mode === 'solo' ? '' : 'none'; $('rsus').style.display = mode === 'solo' ? '' : 'none';
   $('hud').style.minWidth = '200px';
 }
@@ -623,7 +627,7 @@ function checkWin() {
 
 // ───────────────────────── rendering sheep ─────────────────────────
 const mB = new THREE.Matrix4(), mH = new THREE.Matrix4(), mL = new THREE.Matrix4(), q = new THREE.Quaternion(), q2 = new THREE.Quaternion(), v3 = new THREE.Vector3(), sc = new THREE.Vector3(SS, SS, SS), e3 = new THREE.Euler();
-const scK = new THREE.Vector3();
+const scK = new THREE.Vector3(), scZ = new THREE.Vector3();
 function drawSheep(dt) {
   for (let i = 0; i < N; i++) {
     const s = sheep[i]; const sp = Math.hypot(s.vx, s.vz);
@@ -633,8 +637,8 @@ function drawSheep(dt) {
     const roll = Math.sin(s.phase) * 0.06 * Math.min(1, sp);
     e3.set(s.hop > 0 ? s.spin * 0.1 : 0, s.yaw, roll, 'YXZ'); q.setFromEuler(e3);
     let k = 1; if (pounce.ph === 'reveal' && s !== pounce.target && Math.hypot(s.x - wolf.x, s.z - wolf.z) < (pounce.human ? 7 : 5.5)) k = Math.max(0.25, 1 - pounce.t * 4);
-    if (k < 1) { scK.setScalar(SS * k); mB.compose(v3.set(s.x, s.y + bob + s.hop, s.z), q, scK); } else
-    mB.compose(v3.set(s.x, s.y + bob + s.hop, s.z), q, sc);
+    if (k < 1) { scK.setScalar(SS * k * SZ[i]); mB.compose(v3.set(s.x, s.y + bob + s.hop, s.z), q, scK); } else
+    mB.compose(v3.set(s.x, s.y + bob + s.hop, s.z), q, scZ.setScalar(SS * SZ[i]));
     bodyIM.setMatrixAt(i, mB);
     const nodding = s.graze ? Math.sin(clock * 5 + i) * 0.17 : 0;
     q2.setFromEuler(e3.set(s.pitch + nodding, 0, 0));

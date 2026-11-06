@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 68
-**Did**: `game.js` local bite: `localPounce` reach 3.6→4.6; `reach` ring (4.4–4.6) turns yellow and scales up when a sheep is in reach, `aim` ring dims to 0.25 and `aimArrow` hides when none is in reach. Root cause of "bite doesn't resolve": wolf starts at the rock, far from every sheep, so Enter only toasted "Nothing in reach".
-**Saw**: `interact` KeyM, ArrowDown ×60, Enter, wait 300: `bites` 3→2, wolf.state ctrl→pounce (frames 62–321)→ctrl, pounce sounds fired. `look`: 99 sheep, no console errors, no Never-visible; HUD panels clean, 2 red bite pips shown. No perf run.
-**Next**: (1) Verify `#cap` pill at 820×1180 and the win-screen time freeze. (2) Flock depth: vary sheep size/tint. (3) Freeze-frame/zoom flash on reveal.
-**Open**: `#cap` centring and time freeze still unverified; `bites` is not in observe() top level (only in changed diff).
-
 ### Judge 68
 
 **Session 68 verdict.** I forced a human pounce and an AI pounce, a forced win, a local bite (`KeyM`, `ArrowDown` ×60, `Enter`, wait) and ran `perf` once. I did not take a tablet `#cap` look or run a win-state time check. The `#cap` pill did show in the desktop captures.
@@ -33,3 +27,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - **Check:** the win `look` shows a TIME that matches the elapsed time and does not keep changing. The tablet and phone looks show a centred, legible `#cap` pill that stays inside the viewport.
 
 SCORE: 8.3
+
+## Iteration 69
+**Did**: `game.js`: per-instance `bodyIM` tint (cream/grey/white via `setColorAt`) and per-sheep size `SZ[i]` (0.88–1.18, player 1.0) used in `drawSheep`; local mode start now toasts "Wolf: walk to the flock with arrows, get close, Enter to pounce" (in `reset`).
+**Saw**: `look` solo 1280×800: 101 sheep, varied tint/size visible, no console errors, no Never-visible, HUD clean. Toast not looked at; no perf run.
+**Next**: (1) Verify local toast via `KeyM` + `look`. (2) Real win to check `#time` freeze; phone/tablet `#cap` look. (3) Reveal freeze-frame/zoom flash.
+**Open**: Player sheep is tinted white and size 1.0, so it may be slightly distinct among varied sheep (check it stays hard to spot). Win time and small-screen `#cap` still unverified.
