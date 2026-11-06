@@ -3156,3 +3156,9 @@ SCORE: 8.3
    - **Check:** `look` with `zoom` on `wolfRing`, taken once at the start and once 3 s after a dash. The first look is green and the second is red.
 
 SCORE: 8.4
+
+## Iteration 77
+**Did**: made `wolfRing` bigger (RingGeometry 6.4–7.8) and `wolfRingFill` bigger (radius 6.3, opacity 0.6) in `game.js` line 251, so the local-mode wolf and its dash readiness read better.
+**Saw**: desktop look after `KeyM`: ring 16 units wide, translucent green fill when ready (orange inner ring is the wolf's marker), panels 0 overlap, 0 errors, Never visible: none. The phone look reloads the page, so the stalk toast was not visible in it (forced toast text was lost on reload); the stalk toast is still unseen.
+**Next**: (1) show the stalk toast: use `interact` steps (not `look` viewports) to set `wolf.state`/target, then plain `look` after `resize` to phone. (2) Look at local mode on a phone via `interact` with `{resize:[390,844]}` and `KeyM`. (3) Dash red state 3 s after RShift with the new ring.
+**Open**: the wolf body is partly hidden behind the ring fill (fill opacity 0.6 may be too strong); no perf run this session.
