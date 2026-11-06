@@ -22,7 +22,7 @@ function gh(x, z) {
   const ridge = w * 2.5 * Math.exp(-(((r - 38) / 6) ** 2));
   const mount = 9 * Math.exp(-(((x - 34) ** 2 + (z + 30) ** 2) / 150)) + 7 * Math.exp(-(((x + 36) ** 2 + (z + 28) ** 2) / 130));
   let h = 1.1 + base + ridge + mount;
-  h -= sm(-7, 1, d) * 4.5;
+  h -= sm(-8, 7, d) * 4.5;
   return h;
 }
 const SEA = -0.35;
@@ -76,7 +76,7 @@ scene.add(new THREE.HemisphereLight(0xbfe8ff, 0x7fb83a, 1.35));
     const j = (Math.sin(cx * 12.9898 + cz * 78.233) * 43758.5453) % 1;
     c.copy(grassA).lerp(grassB, Math.abs(j) * 0.9 + 0.1 * Math.sin(cx * 0.3));
     if (r > 30 || cy > 3.5) c.lerp(forest, sm(30, 38, r) * 0.8);
-    if (cy < 0.9 && r > 30) c.lerp(sand, sm(0.9, 0.1, cy));
+    if (cy < 1.1 && r > 30) c.lerp(sand, sm(1.1, 0.5, cy));
     if (ny < 0.76 && cy > 0.4) c.copy(Math.abs(j) > 0.5 ? rock : rock2);
     if (cy > 9) c.lerp(rock2, 0.7);
     for (let k = 0; k < 3; k++) { col[(i + k) * 3] = c.r; col[(i + k) * 3 + 1] = c.g; col[(i + k) * 3 + 2] = c.b; }
@@ -86,8 +86,8 @@ scene.add(new THREE.HemisphereLight(0xbfe8ff, 0x7fb83a, 1.35));
   m.name = 'ground'; m.receiveShadow = true; scene.add(m);
   const sea = new THREE.Mesh(new THREE.PlaneGeometry(900, 900).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: 0x2a98e0, roughness: 0.35, transparent: true, opacity: 0.86 }));
   sea.name = 'sea'; sea.position.y = SEA; scene.add(sea);
-  const sandRing = new THREE.Mesh(new THREE.RingGeometry(46, 62, 48, 1).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xd9c98a }));
-  sandRing.name = 'sand'; sandRing.position.y = SEA + 0.05; scene.add(sandRing);
+  const sandRing = new THREE.Mesh(new THREE.RingGeometry(44, 72, 64, 1).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xc5d6a2 }));
+  sandRing.name = 'sand'; sandRing.position.y = SEA + 0.12; scene.add(sandRing);
   const cliff = new THREE.Mesh(new THREE.IcosahedronGeometry(9, 1), new THREE.MeshStandardMaterial({ color: 0x8d8f94, flatShading: true, roughness: 1 }));
   cliff.name = 'cliff'; cliff.scale.set(1.3, 1.5, 1); cliff.position.set(34, 5, -44); scene.add(cliff);
 }
@@ -158,7 +158,7 @@ const W = {};
   W.legs = [];
   [[-1, 0.62], [1, 0.62], [-1, -0.62], [1, -0.62]].forEach(([sx, z]) => {
     const g = new THREE.Group(); g.position.set(sx * 0.26, 0.72, z); W.body.add(g);
-    add(g, mergeGeometries([mk(box(0.17, 0.62, 0.17), 0x7a6650, { p: [0, -0.3, 0] }), mk(box(0.2, 0.08, 0.28), dk, { p: [0, -0.62, 0.05] })]));
+    add(g, mergeGeometries([mk(new THREE.CylinderGeometry(0.1, 0.07, 0.62, 7), 0x7a6650, { p: [0, -0.3, 0] }), mk(box(0.2, 0.08, 0.28), dk, { p: [0, -0.62, 0.05] })]));
     W.legs.push(g);
   });
   W.tail = new THREE.Group(); W.tail.position.set(0, 0.8, -0.95); W.body.add(W.tail);

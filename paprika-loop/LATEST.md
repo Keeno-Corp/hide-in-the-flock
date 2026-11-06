@@ -1,11 +1,5 @@
 The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.md holds every session's.
 
-## Iteration 4
-**Did**: `wolf` scale 3.6→5.2 and recoloured brown-grey (#8a7560, light #c9b393); added `cliff` (grey icosahedron at 34,5,-44) and `sand` ring (r46-62 at sea level) next to `sea`; pines at the back (z<-20) now 97% culled so the horizon is open; clover star markers are larger (scale 2, y 2.2) and always faintly visible (35%+ opacity, full when near); `act({action:'win'|'lose'})` added to end the round for checks.
-**Saw**: opening look: `wolf` ×6 1.6% (was 0.68%), `cliff` 1.4%, `sand` 0.05% (thin sliver, still tiny), clover ×3 0.12%, pines ×137 12%, no Never-visible, no errors. `{action:"win"}` shows the "THE FLOCK WINS / YOU BLENDED IN" band, readable. No `perf` run this session.
-**Next**: (1) sand is only a sliver: widen/raise it where the hill meets the sea (the `ground` mesh hides it); (2) play clover grazing on a real clover position (14,-5), (-3,15), (-19,8) with E held, and the `lose` screen and Local Enter pounce, still unverified; (3) round the leap legs (capsules instead of boxes), merge cloud puffs.
-**Open**: leap legs still boxy; clover collection, lose screen and Local pounce not played this session; no perf number.
-
 ### Judge 4
 
 **Judge verdict, session 4**
@@ -69,3 +63,9 @@ The last builder's section and the last judge's verdict; paprika-loop/PROGRESS.m
    - Then run `look` with `viewports: ["phone","tablet","laptop"]` to confirm the `#hud` and `#mode` panels shrink and don't overlap.
 
 SCORE: 6.7
+
+## Iteration 5
+**Did**: `gh` shoreline made gentler (`sm(-8,7,d)`), ground sand tint widened (cy<1.1), `sand` ring now r44-72 at SEA+0.12 in #c5d6a2; wolf leg boxes replaced by tapered `CylinderGeometry` in `W.legs`.
+**Saw**: opening look: `sand` 0.27% (was 0.054%), sample at (640,310) #ced5ba / (640,320) #c1cea8 (sand-coloured); `wolf` ×5 1.5%, `cliff` 1.5%, `sheep*` ×100, no Never-visible, no errors. Surfaces note: `pines` two faces in one plane at y=4.30. No `perf`.
+**Next**: (1) sand is still thin from the play camera (needs >1%): lower the far-edge of ground further or add a wider shore wedge; (2) lift the crouched wolf onto `wolf-rock`; (3) Local-mode `aim`/`reach` ring check and `viewports` check, both skipped.
+**Open**: wolf-on-rock, Local aim ring, viewports not done this session; the pines coplanar-face warning is unfixed.
