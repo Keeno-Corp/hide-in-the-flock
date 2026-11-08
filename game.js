@@ -455,7 +455,10 @@ const pounce = { ph: null, t: 0 };
 const cam = { x: 0, z: 0, punch: 0, close: 0, fov: 45, zoom: 1 };
 
 function reset(newMode) {
+  clearTouch();
   if (newMode) mode = newMode;
+  $('touchPounce').hidden = mode !== 'local';
+  $('touchHint').textContent = mode === 'solo' ? 'Drag the field to walk · hold Graze or Run' : 'Drag left: sheep · right: wolf · hold Run to dash';
   T = 0; cam.zoom = mode === 'solo' ? 0.66 : cam.zoom; result = null; clock = 0; startleT = rnd(18, 24); zoomT = 16; decoyI = 0; pounce.ph = null; toastT = 0;
   flock.angle = rnd(0, 6.28); flock.target = flock.angle; flock.turnT = 12;
   // clusters of sheep
@@ -566,8 +569,39 @@ function keyEdge(code) {
 }
 addEventListener('keydown', e => { if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) e.preventDefault(); act({ key: e.code }); });
 addEventListener('keyup', e => act({ key: e.code, down: false }));
-addEventListener('blur', () => keys.clear());
-const kd = (...c) => c.some(k => keys.has(k));
+addEventListener('blur', () => { keys.clear(); clearTouch(); });
+const touchKeys = new Map(), sticks = new Map();
+if (navigator.maxTouchPoints > 0 || matchMedia('(any-pointer:coarse)').matches) document.body.classList.add('touch-enabled');
+addEventListener('pointerdown', e => { if (e.pointerType === 'touch') document.body.classList.add('touch-enabled'); });
+function clearTouch() { touchKeys.clear(); sticks.clear(); }
+const kd = (...c) => c.some(k => keys.has(k) || [...touchKeys.values()].some(held => held.has(k)));
+const fieldCanvas = renderer.domElement;
+fieldCanvas.addEventListener('pointerdown', e => {
+  if (e.pointerType !== 'touch') return;
+  e.preventDefault(); fieldCanvas.setPointerCapture(e.pointerId);
+  sticks.set(e.pointerId, { x: e.clientX, y: e.clientY, wolf: mode === 'local' && e.clientX > innerWidth / 2 });
+});
+fieldCanvas.addEventListener('pointermove', e => {
+  const stick = sticks.get(e.pointerId); if (!stick) return;
+  const dx = e.clientX - stick.x, dy = e.clientY - stick.y;
+  const [left, right, up, down] = stick.wolf ? ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'] : ['KeyA', 'KeyD', 'KeyW', 'KeyS'];
+  const held = new Set();
+  if (dx < -10) held.add(left); if (dx > 10) held.add(right);
+  if (dy < -10) held.add(up); if (dy > 10) held.add(down);
+  touchKeys.set(e.pointerId, held);
+});
+function releaseTouch(e) { touchKeys.delete(e.pointerId); sticks.delete(e.pointerId); }
+for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) addEventListener(type, releaseTouch);
+document.addEventListener('visibilitychange', () => { if (document.hidden) clearTouch(); });
+for (const [id, held] of [['touchGraze', ['KeyE']], ['touchRun', ['ShiftLeft', 'ShiftRight']]]) {
+  $(id).addEventListener('pointerdown', e => {
+    if (e.pointerType !== 'touch') return;
+    e.preventDefault(); e.currentTarget.setPointerCapture(e.pointerId); touchKeys.set(e.pointerId, new Set(held));
+  });
+}
+$('touchMode').onclick = () => keyEdge('KeyM');
+$('touchRestart').onclick = () => keyEdge('KeyR');
+$('touchPounce').onclick = () => keyEdge('Enter');
 
 // ───────────────────────── flock AI ─────────────────────────
 function startle() {
