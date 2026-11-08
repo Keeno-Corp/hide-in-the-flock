@@ -593,10 +593,10 @@ fieldCanvas.addEventListener('pointermove', e => {
 function releaseTouch(e) { touchKeys.delete(e.pointerId); sticks.delete(e.pointerId); }
 for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) addEventListener(type, releaseTouch);
 document.addEventListener('visibilitychange', () => { if (document.hidden) clearTouch(); });
-for (const [id, held] of [['touchGraze', ['KeyE']], ['touchRun', ['ShiftLeft', 'ShiftRight']]]) {
+for (const [id, held] of [['touchGraze', () => ['KeyE']], ['touchRun', () => mode === 'local' ? ['ShiftRight'] : ['ShiftLeft', 'ShiftRight']]]) {
   $(id).addEventListener('pointerdown', e => {
     if (e.pointerType !== 'touch') return;
-    e.preventDefault(); e.currentTarget.setPointerCapture(e.pointerId); touchKeys.set(e.pointerId, new Set(held));
+    e.preventDefault(); e.currentTarget.setPointerCapture(e.pointerId); touchKeys.set(e.pointerId, new Set(held()));
   });
 }
 $('touchMode').onclick = () => keyEdge('KeyM');
