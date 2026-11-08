@@ -11,7 +11,14 @@
 @font-face{font-family:"Alfa Slab One";src:url(./fonts/AlfaSlabOne.ttf);font-display:block}
 :root{--ink:#2a1c12;--paper:#efe3c8;--paper2:#e4d3ad;--red:#b3261e;--sage:#4a5a24}
 html,body{margin:0;height:100%;background:#d9a49a;overflow:hidden;font-family:"IM Fell English",Georgia,"Times New Roman",serif;color:var(--ink);user-select:none}
-canvas{display:block}
+canvas{display:block;touch-action:none}
+#touchControls{display:none}
+body.touch-enabled #touchControls{display:flex;position:fixed;z-index:11;left:10px;right:10px;bottom:max(12px,env(safe-area-inset-bottom));flex-wrap:wrap;justify-content:center;gap:6px;touch-action:none}
+#touchControls p{width:100%;margin:0;text-align:center;font-size:16px;background:var(--paper);border:2px solid var(--ink);border-radius:3px}
+#touchControls button{font:18px "IM Fell English",Georgia,serif;color:var(--ink);background:var(--paper);border:2px solid var(--ink);border-radius:6px;min-height:48px;padding:6px 10px;touch-action:none}
+#touchControls button:active{background:var(--sage);color:var(--paper)}
+body.touch-enabled #mode{top:auto;bottom:110px}
+body.touch-enabled #cap{bottom:160px}
 .panel{position:fixed;background:var(--paper);background-image:radial-gradient(ellipse at 30% 20%,#f6ecd5,var(--paper2));color:var(--ink);border:3px solid var(--ink);border-radius:3px;padding:8px 14px 9px;pointer-events:none;box-shadow:4px 4px 0 var(--ink),inset 0 0 0 3px var(--paper),inset 0 0 0 4px #2a1c1266}
 #hud{z-index:10;top:14px;left:16px;min-width:210px;transform:rotate(-.6deg)}
 #hud .row{display:flex;align-items:center;gap:10px;margin:2px 0;font-size:27px}
@@ -69,6 +76,10 @@ canvas{display:block}
 <div id="bubble">baa?</div><div id="tag">PLAYER 1</div>
 <div id="flash"></div>
 <div id="paper"></div>
+<div id="touchControls" aria-label="Touch controls">
+ <p id="touchHint">Drag the field to walk</p>
+ <button id="touchGraze">Graze</button><button id="touchRun">Run</button><button id="touchPounce" hidden>Bite</button><button id="touchMode">Mode</button><button id="touchRestart">Restart</button>
+</div>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
 <script type="module" src="./game.js"></script>
 </body></html>
